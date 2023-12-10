@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+
+}
+
+@media (prefers-color-scheme: dark) {
+
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+
+}
+
+body {
+
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+
+}
+
+.navlink {
+
+  @apply font-normal;
+  @apply text-sm;
+  @apply text-white;
+  @apply decoration-2 transition-all;
+  @apply bg-zinc-900;
+  @apply hover:bg-zinc-800;
+  @apply px-3;
+  @apply py-[.375rem];
+  @apply border;
+  @apply border-zinc-800;
+  @apply hover:border-zinc-700;
+  @apply rounded-md;
+  @apply flex;
+  @apply gap-1.5;
+
+}
+
+.navlink-full {
+
+  @extend .navlink;
+  @apply bg-white;
+  @apply text-black;
+  @apply hover:bg-neutral-300;
+
+}
+
+.dropdown-menu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.dropdown-menu.open {
+  max-height: 200px;
+  transition: max-height 0.3s ease-in;
+}
