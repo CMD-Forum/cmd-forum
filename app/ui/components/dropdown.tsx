@@ -4,13 +4,30 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { IconType } from 'react-icons';
-import { UserIcon, DocumentTextIcon, Cog6ToothIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/solid';
+import { UserIcon, 
+  DocumentTextIcon, 
+  Cog6ToothIcon, 
+  ArrowRightOnRectangleIcon, 
+  PlusIcon, 
+  Bars4Icon, 
+  ViewColumnsIcon, 
+  ChevronDoubleUpIcon, 
+  FireIcon,
+  NewspaperIcon,
+  ArchiveBoxIcon,
+} from '@heroicons/react/24/solid';
 
 const iconMap = {
     UserIcon: UserIcon,
-    DocumentTextIcon: DocumentTextIcon,
+    ViewColumnsIcon: ViewColumnsIcon,
     Cog6ToothIcon: Cog6ToothIcon,
     ArrowRightOnRectangleIcon: ArrowRightOnRectangleIcon,
+    PlusIcon: PlusIcon,
+    Bars4Icon: Bars4Icon,
+    ChevronDoubleUpIcon: ChevronDoubleUpIcon,
+    FireIcon: FireIcon,
+    NewspaperIcon: NewspaperIcon,
+    ArchiveBoxIcon: ArchiveBoxIcon,
 };
 
 interface DropdownProps {
@@ -38,11 +55,12 @@ export default function Dropdown({ items, btn_title }: DropdownItemProps) {
 
   return (
     <div>
-      <button onClick={toggleDropdown} className='navlink-full'>
-        {btn_title}
+      <button onClick={toggleDropdown} className='navlink align-middle'>
+        <Bars4Icon className="font-medium h-5 w-5" />
+        <p className='h-full align-middle'>{btn_title}</p>
       </button>
       {isOpen && (
-        <ul className='flex flex-col gap-2 absolute top-14 bg-zinc-800 w-fit py-2 rounded-md transition-all border-zinc-700 border-[1px]'>
+        <ul className='flex flex-col gap-2 absolute bg-zinc-900 w-fit py-2 px-2 rounded-md transition-all border-zinc-800 border-[1px] drop-shadow-xl'>
           {items.map((item, index) => (
             <DropdownItem key={index} text={item.text} link={item.link} icon={item.icon} />
           ))}
@@ -56,13 +74,16 @@ export function DropdownItem(props: DropdownProps) {
 
     const Icon = iconMap[props.icon];
   return (
-    <li className='w-full'>
+    <li className='w-full flex px-2 h-5] hover:bg-zinc-700 transition-all rounded-md'>
+      <Icon className='w-6' />
       <Link
-        className='flex w-full hover:bg-zinc-700 transition-all px-2 py-1 min-h-[30px] max-h-fit text-sm min-w-[125px] gap-2'
+        className='flex w-full transition-all px-2 py-1 min-h-[30px] max-h-fit text-sm min-w-[125px] gap-2 content-center'
         href={props.link}
       >
-        <Icon className='w-6' />
-        {props.text}
+        <div className='w-full h-full flex items-center'>
+          <p className='h-fit'>{props.text}</p>  
+        </div>
+        
       </Link>
     </li>
   );
