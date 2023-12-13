@@ -71,6 +71,7 @@ export default function Dropdown({ items, btn_title }: DropdownItemProps) {
 
 export function DropdownItem(props: DropdownProps) {
 
+    // @ts-expect-error: Complains about types, don't know why
     const Icon = iconMap[props.icon];
   return (
     <li className='w-full flex px-2 h-5] hover:bg-zinc-700 transition-all rounded-md'>
