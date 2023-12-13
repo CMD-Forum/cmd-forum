@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { IconType } from 'react-icons';
 import { UserIcon, 
   DocumentTextIcon, 
   Cog6ToothIcon, 
