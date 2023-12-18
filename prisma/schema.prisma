@@ -36,6 +36,7 @@ model Post {
   content     String
   tagline     String
   imageurl    String?
+  imagealt    String?
   public      Boolean     @default(true)
   author      User        @relation(fields: [authorId], references: [id])
   authorId    Int

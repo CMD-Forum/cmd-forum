@@ -3,9 +3,26 @@
 import { CardPost } from '@/app/ui/components/posts/post';
 import { useState, useEffect } from 'react';
 
+interface Post {
+
+    id: number;
+    title: string;
+    community: string;
+    author: string;
+    upvotes: number;
+    downvotes: number;
+    submitted: string;
+    ratio: string;
+    subtitle: string;
+    link: string;
+    image_alt?: string;
+    image_src?: string;
+
+}
+
 export default function PostList() {
 
-    const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState<Post[]>([]);
 
     useEffect(() => {
 

@@ -15,7 +15,8 @@ interface PostProps {
     submitted: string;
     subtitle: string;
     link: string;
-    
+    image_src?: string | URL;
+    image_alt?: string;
 
 }
 
