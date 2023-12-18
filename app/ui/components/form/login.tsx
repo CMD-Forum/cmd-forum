@@ -26,7 +26,7 @@ function ErrorMessage(props: { message: string }) {
 const LoginForm = () => {
 
     const router = useRouter();
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string | null>(null);
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -59,6 +59,7 @@ const LoginForm = () => {
             
         } else {
 
+            setError(null);
             setIsLoading(false);
             window.location.replace('/');
 
