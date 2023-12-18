@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export function UNIMPLEMENTED() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 w-full mt-[-4rem]">
+    <main className="flex min-h-screen flex-col items-center justify-center w-full mt-[-4rem]">
       <div className="error flex flex-col gap-4 justify-center w-full">
             <div className="error flex flex-col gap-4 justify-center w-full">
 

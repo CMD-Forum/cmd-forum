@@ -3,53 +3,90 @@ import Image from 'next/image';
 import { 
     ArrowRightOnRectangleIcon,
     Cog6ToothIcon,
-    DocumentTextIcon,
     HomeIcon,
     PlusIcon,
     UserIcon,
     MagnifyingGlassIcon,
-    ViewColumnsIcon
+    ViewColumnsIcon,
+    BookOpenIcon,
+    ShieldCheckIcon
 } from '@heroicons/react/24/solid'
 import '@/app/ui/components/dropdown'
-import React, { useState } from 'react';
-import Dropdown from '@/app/ui/components/dropdown';
+import React from 'react';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../lib/auth';
+import { LogoutButton } from './components/navigation/navigation';
 
-export function Navigation() {
+export async function Navigation() {
+
+  const session = await getServerSession(authOptions)
+
   return (
+
     <div className='navigation sticky top-0'>
       
-      <div className='w-full h-16 backdrop-blur-3xl px-5 flex transition-all duration-500 bg-zinc-950 border-b-[1px] border-zinc-900'>
+      <Link className='absolute top-0 h-16 w-44 z-50' href="/"></Link>
+
+      <div className='w-full h-16 backdrop-blur-md px-5 flex transition-all bg-zinc-950 sm:border-b-[1px] border-zinc-900'>
+          
           <Image src='/images/logo/cmd.png' alt='CMD Logo' width='125' height='100'></Image>
           <div className='flex items-center gap-2 justify-end ml-auto' id='navlinks'>
-              <Link className='navlink' href='/search'><MagnifyingGlassIcon className="font-medium h-5 w-5" />Search</Link>
-              <Link className='navlink-full' href='/posts/create'><PlusIcon className="font-medium h-5 w-5" />Create</Link>
-              <Dropdown items={[
 
-                  { text: 'Your Account', link: '/account', icon: 'UserIcon' },
-                  { text: 'Posts', link: '/account/posts', icon: 'ViewColumnsIcon' },
-                  { text: 'Settings', link: '/account/settings', icon: 'Cog6ToothIcon' },
-                  { text: 'Logout', link: '/logout', icon: 'ArrowRightOnRectangleIcon' },
+              {session?.user ? (
 
-              ]} btn_title="Your Account" />
+                <LogoutButton />
 
+              ) : (
+
+                <Link className='navlink topnavlink' href='/login'><ArrowRightOnRectangleIcon className="font-medium h-5 w-5" /><p>Login</p></Link> 
+
+              )}
+              
+
+              <Link className='navlink-full topnavlink' href='/posts/create'><PlusIcon className="font-medium h-5 w-5" /><p>Create</p></Link>
+          
           </div>
+
       </div>
 
+      
        
     </div>
     
   );
+
+}
+
+export function Bottombar() {
+
+  return (
+
+    <div className='flex flex-row bg-zinc-950 border-b-[1px] px-2 gap-2 w-full backdrop-blur-md transition-all border-zinc-900 sm:hidden fixed left-0 bottom-0 z-30'>
+
+        <Link className='bottombar-link' href='/'><HomeIcon className="font-medium h-5 w-5" /><p>Home</p></Link>
+        <Link className='bottombar-link' href='/posts'><ViewColumnsIcon className="font-medium h-5 w-5" /><p>Posts</p></Link>
+        <Link className='bottombar-link' href='/account'><UserIcon className="font-medium h-5 w-5" /><p>Account</p></Link>
+        <Link className='bottombar-link' href='/account/settings'><Cog6ToothIcon className="font-medium h-5 w-5" /><p>Settings</p></Link>
+
+    </div>
+
+  );
+
 }
 
 export function Sidebar() {
 
   return (
 
-    <div className='flex flex-col gap-2 px-3 py-3 pl-[100px] w-[400px] max-w-[400px] min-w-[400px] bg-zinc-950 border-zinc-950 border-l-[1px]'>
-      <Link className='navlink-sidebar' href='/'><HomeIcon className="font-medium h-5 w-5" />Homepage</Link>
-      <Link className='navlink-sidebar' href='/posts'><ViewColumnsIcon className="font-medium h-5 w-5" />Posts</Link>
-      <hr className='border-zinc-900'></hr>
-      <Link className='navlink-sidebar' href='/search'><MagnifyingGlassIcon className="font-medium h-5 w-5" />Search</Link>
+    <div className='flex-col gap-2 px-3 py-3 max-w-[400px] bg-zinc-950 border-zinc-950 border-l-[1px] hidden sm:flex lg:!w-[400px]'>
+      
+      <Link className='navlink-sidebar !w-fit lg:!w-full' href='/'><HomeIcon className="font-medium h-5 w-5" /><p className='hidden lg:flex'>Homepage</p></Link>
+      <Link className='navlink-sidebar !w-fit lg:!w-full' href='/posts'><ViewColumnsIcon className="font-medium h-5 w-5" /><p className='hidden lg:flex'>Posts</p></Link>
+      <Link className='navlink-sidebar !w-fit lg:!w-full' href='/account'><UserIcon className="font-medium h-5 w-5" /><p className='hidden lg:flex'>Account</p></Link>
+      <hr className='border-zinc-900 mt-1 mb-1'></hr>
+      <Link className='navlink-sidebar !w-fit lg:!w-full' href='/search'><MagnifyingGlassIcon className="font-medium h-5 w-5" /><p className='hidden lg:flex'>Search</p></Link>
+      <Link className='navlink-sidebar !w-fit lg:!w-full' href='/account/settings'><Cog6ToothIcon className="font-medium h-5 w-5" /><p className='hidden lg:flex'>Settings</p></Link>
+
     </div>  
 
   )
@@ -69,16 +106,18 @@ export function Infobar(infobar: InfobarProps ) {
 
   return (
 
-    <div className='flex flex-col gap-2 px-3 py-3 pr-[100px] w-[400px] max-w-[400px] min-w-[400px] bg-zinc-950 border-zinc-950 border-l-[1px] ml-auto'>
+    <div className='flex-col gap-2 px-3 py-3 lg:!w-[400px] bg-zinc-950 border-zinc-950 border-l-[1px] ml-auto hidden 2xl:flex'>
+        
         <h1 className='text-2xl font-sans font-bold antialiased w-full'>{infobar.community}</h1>
-        <Link className='link_bg-t-full w-full justify-center' href={`/c/${infobar.community}/rules`}><MagnifyingGlassIcon className="font-medium h-5 w-5" />Rules</Link>
+        <Link className='link_bg-t-full w-full justify-center items-center' href={`/c/${infobar.community}/rules`}><BookOpenIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Rules</p></Link>
+        <Link className='link_bg-t-full w-full justify-center items-center' href={`/c/${infobar.community}/rules`}><ShieldCheckIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Moderation</p></Link>
         <h3 className='text-bold'>Administrators</h3>
         <ol>
           {infobar.administrators.map((admin: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined, index: React.Key | null | undefined) => (
             <li key={index} className='text-gray-300'>{admin}</li>
           ))}
         </ol>
-        <hr className='border-gray-300'></hr>
+        <hr className='border-b-[1px] border-zinc-900 mb-2'></hr>
 
     </div>  
 

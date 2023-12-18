@@ -42,7 +42,8 @@ body {
   @apply decoration-2 transition-all;
   @apply bg-zinc-900;
   @apply hover:bg-zinc-800;
-  @apply px-3;
+  @apply px-2;
+  @apply md:px-3;
   @apply py-2;
   @apply border;
   @apply border-zinc-800;
@@ -52,6 +53,14 @@ body {
   @apply gap-1.5;
   @apply items-center;
   @apply w-fit;
+  @apply min-h-[38px]
+
+}
+
+.topnavlink p {
+    
+  @apply hidden;
+  @apply md:flex;
 
 }
 
@@ -67,6 +76,25 @@ body {
   @apply bg-white;
   @apply text-black;
   @apply hover:bg-neutral-300;
+
+}
+
+.navlink-full:disabled {
+
+  @apply bg-neutral-500;
+  @apply hover:cursor-not-allowed;
+
+}
+
+.navlink-destructive {
+
+  @extend .navlink-full;
+  @apply bg-red-500;
+  @apply border-zinc-800;
+  @apply border-[1px];
+  @apply hover:bg-red-700;
+  @apply transition-all;
+  @apply text-white;
 
 }
 
@@ -90,14 +118,14 @@ body {
 
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.3s ease-out;
+  transition: all 0.3s ease-out;
 
 }
 
 .dropdown-menu.open {
-  
+    
   max-height: 200px;
-  transition: max-height 0.3s ease-in;
+  transition: all 0.3s ease-in;
 
 }
 
@@ -109,14 +137,82 @@ body {
 
 }
 
-.post-img {
-
-  backdrop-filter: blur(5px);
-
-}
-
 .pos-unset {
 
   position: unset !important;
 
+}
+
+.generic_field {
+
+  @apply bg-zinc-800;
+  @apply text-white;
+  @apply rounded-md;
+  @apply h-9;
+  @apply px-2;
+  @apply transition-all;
+
+}
+
+.generic_field.errored {
+
+  box-shadow: 0 0 0 .2rem rgb(252 165 165) !important;
+
+}
+
+.generic_field:focus {
+
+  box-shadow: 0 0 0 .2rem #fff;
+  outline: none;
+    
+}
+
+.bottombar-link {
+
+  @apply focus:bg-zinc-900;
+  @apply hover:bg-zinc-900;
+  @apply transition-all;
+  @apply flex;
+  @apply flex-col;
+  @apply items-center;
+  @apply justify-center;
+  @apply w-full;
+  @apply px-2;
+  @apply py-2;
+  @apply rounded-lg;
+
+}
+
+.bottombar-link p {
+
+  @apply text-sm;
+
+}
+
+.btn-dropdown:disabled {
+
+  @apply bg-zinc-950;
+  @apply hover:border-zinc-800;
+  @apply cursor-not-allowed;
+  @apply text-gray-300;
+
+}
+
+.spinner {
+
+  @apply h-full;
+  animation-name: spin;
+  animation-duration: 500ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
