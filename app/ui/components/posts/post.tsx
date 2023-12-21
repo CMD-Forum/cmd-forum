@@ -75,9 +75,11 @@ export function CardPost(post: PostProps) {
 
                 <div className="text-sm">
 
+                    {/* @ts-expect-error */}
                     <Link className="w-fit hover:underline" href={`/c/${post.community.name}`}>{post.community.name}</Link>
                     <div className="flex flex-row">
 
+                        {/* @ts-expect-error */}
                         <h4 className="w-fit text-gray-300"><Link href={`/user/${post.author.id}`} className='hover:underline'>{post.author.username}</Link> • {post.submitted} • {post.ratio}</h4>   
 
                     </div>    

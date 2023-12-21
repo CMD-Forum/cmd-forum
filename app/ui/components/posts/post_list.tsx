@@ -53,7 +53,7 @@ export default function PostList() {
                     submitted={post.submitted}
                     ratio={post.ratio}
                     subtitle={post.subtitle}
-                    link={`/c/${post.community.name}/post/${post.id}`}
+                    link={`/c/${post.community}/post/${post.id}`}
                     image_alt={post.image_alt}
                     image_src={post.image_src}
 
