@@ -28,7 +28,7 @@ export default function PostList() {
 
         const fetchPosts = async () => {
 
-            const res = await fetch('/api/posts');  // Replace '/api/posts' with your actual API endpoint.
+            const res = await fetch('/api/posts');
             const data = await res.json();
             setPosts(data);
 
@@ -40,7 +40,7 @@ export default function PostList() {
 
     return (
         <>
-            {posts.map((post) => (
+            {Array.isArray(posts) && posts.map((post) => (
 
                 <CardPost 
 
@@ -53,7 +53,7 @@ export default function PostList() {
                     submitted={post.submitted}
                     ratio={post.ratio}
                     subtitle={post.subtitle}
-                    link={`/${post.community}/c/post/${post.id}`}
+                    link={`/c/${post.community.name}/post/${post.id}`}
                     image_alt={post.image_alt}
                     image_src={post.image_src}
 

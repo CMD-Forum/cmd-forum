@@ -9,13 +9,20 @@ import {
     MagnifyingGlassIcon,
     ViewColumnsIcon,
     BookOpenIcon,
-    ShieldCheckIcon
+    ShieldCheckIcon,
+    PencilSquareIcon,
+    ChatBubbleBottomCenterTextIcon,
+    CalendarDaysIcon
 } from '@heroicons/react/24/solid'
 import '@/app/ui/components/dropdown'
 import React from 'react';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../lib/auth';
 import { LogoutButton } from './components/navigation/navigation';
+import remarkGfm from 'remark-gfm';
+import ReactMarkdown from 'react-markdown';
+import remarkBreaks from "remark-breaks";
+import rehypeRaw from 'rehype-raw';
 
 export async function Navigation() {
 
@@ -108,9 +115,52 @@ export function Infobar(infobar: InfobarProps ) {
 
     <div className='flex-col gap-2 px-3 py-3 lg:!w-[400px] bg-zinc-950 border-zinc-950 border-l-[1px] ml-auto hidden 2xl:flex'>
         
-        <h1 className='text-2xl font-sans font-bold antialiased w-full'>{infobar.community}</h1>
+        <div className='flex flex-row gap-2 items-center mt-4'>
+
+          <img src='https://placehold.co/400' className='h-[32px] rounded-[100%]' />
+          <h1 className='text-2xl font-sans font-bold antialiased w-full'>{infobar.community}</h1> 
+
+        </div>
+
+        <div className='flex flex-row gap-3 items-center mt-2'>
+
+          <div className='flex flex-row gap-1'>
+
+            <CalendarDaysIcon className='w-[20px]' />
+            <p className='text-sm'>19/12/2023</p>
+
+          </div>         
+
+        </div>
+
+        <div className='flex flex-row gap-3 items-center mb-4 mt-4'>
+
+          <div className='flex flex-row gap-1'>
+
+            <UserIcon className='w-[20px]' />
+            <p className='text-sm'>24k</p>
+
+          </div>
+
+          <div className='flex flex-row gap-1'>
+
+            <PencilSquareIcon className='w-[20px]' />
+            <p className='text-sm'>152k</p>
+
+          </div>
+
+          <div className='flex flex-row gap-1'>
+
+            <ChatBubbleBottomCenterTextIcon className='w-[20px]' />
+            <p className='text-sm'>58k</p>
+
+          </div>
+          
+
+        </div>
+        
         <Link className='link_bg-t-full w-full justify-center items-center' href={`/c/${infobar.community}/rules`}><BookOpenIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Rules</p></Link>
-        <Link className='link_bg-t-full w-full justify-center items-center' href={`/c/${infobar.community}/rules`}><ShieldCheckIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Moderation</p></Link>
+        <Link className='link_bg-t-full w-full justify-center items-center' href={`/c/${infobar.community}/moderation`}><ShieldCheckIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Moderation</p></Link>
         <h3 className='text-bold'>Administrators</h3>
         <ol>
           {infobar.administrators.map((admin: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined, index: React.Key | null | undefined) => (
@@ -118,6 +168,16 @@ export function Infobar(infobar: InfobarProps ) {
           ))}
         </ol>
         <hr className='border-b-[1px] border-zinc-900 mb-2'></hr>
+
+        <div className='infobar-markdown prose'>
+
+          <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]} rehypePlugins={[rehypeRaw]}>
+            
+            {infobar.main.toString()}
+
+          </ReactMarkdown>
+
+        </div>
 
     </div>  
 

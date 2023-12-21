@@ -4,7 +4,17 @@ import { NextResponse } from 'next/server';
 export async function GET(req: Request) {
     try {
 
-        const posts = await prisma.post.findMany();
+        const posts = await prisma.post.findMany({
+            include: {
+                author: true,
+                community: {
+                    select: {
+                        name: true
+                    }
+                }
+            }
+        });        
+              
         return NextResponse.json(posts, { status: 500 })
 
     } catch (error) {

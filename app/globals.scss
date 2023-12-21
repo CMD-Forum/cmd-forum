@@ -216,3 +216,26 @@ body {
     transform: rotate(360deg);
   }
 }
+
+// MD
+
+.infobar-markdown hr {
+
+  @apply border-b-[1px];
+  @apply border-zinc-900;
+  @apply mb-2;
+
+}
+
+.infobar-markdown h1 {
+
+  @apply font-[600];
+  @apply text-[1.5em];
+  line-height: 1.25;
+  @apply mt-[24px];
+  @apply mb-[16px];
+  @apply border-b-[1px];
+  @apply border-zinc-900;
+  @apply pb-[0.3em];
+
+}

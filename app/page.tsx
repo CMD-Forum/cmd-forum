@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Dropdown from '@/app/ui/components/dropdown';
 import '@/app/ui/components/posts/post';
 import PostList from './ui/components/posts/post_list';
+import { CardPost } from '@/app/ui/components/posts/post';
 
 export default async function Home(this: any) {
 
@@ -32,6 +33,7 @@ export default async function Home(this: any) {
 
             </div>
 
+            {/*<CardPost title='test' community='meta' author='test' upvotes={5} downvotes={2} ratio='25%' submitted='Yesterday, 20:42 GMT' subtitle='okay' link='okay' />*/}
             <PostList />
 
         </div>

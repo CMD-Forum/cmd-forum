@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
   output   = "../node_modules/.prisma/client"
@@ -12,36 +9,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Models
-
 model Community {
   id             Int      @id @default(autoincrement())
   createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt @default(now())
+  updatedAt      DateTime @default(now()) @updatedAt
   name           String   @unique @db.VarChar(50)
   image          String
   public         Boolean  @default(true)
   administrators Json
-
   posts          Post[]
 }
 
 model Post {
-  id          Int         @id @default(autoincrement())
-  community   Community   @relation(fields: [communityId], references: [id])
-  communityId Int         @default(1)
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt @default(now())
-  title       String      @db.VarChar(255)
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now()) @updatedAt
+  title       String    @db.VarChar(255)
   content     String
   tagline     String
   imageurl    String?
-  imagealt    String?
-  public      Boolean     @default(true)
-  author      User        @relation(fields: [authorId], references: [id])
+  public      Boolean   @default(true)
   authorId    Int
-  upvotes     Int         @default(0)
-  downvotes   Int         @default(0)
+  downvotes   Int       @default(0)
+  upvotes     Int       @default(0)
+  communityId Int       @default(1)
+  imagealt    String?
+  author      User      @relation(fields: [authorId], references: [id])
+  community   Community @relation(fields: [communityId], references: [id])
 }
 
 model User {
