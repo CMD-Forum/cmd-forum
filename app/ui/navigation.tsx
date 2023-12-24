@@ -34,7 +34,7 @@ export async function Navigation() {
       
       <Link className='absolute top-0 h-16 w-44 z-50' href="/"></Link>
 
-      <div className='w-full h-16 backdrop-blur-md px-5 flex transition-all bg-zinc-950 sm:border-b-[1px] border-zinc-900'>
+      <div className='w-full h-16 backdrop-blur-sm bg-transparent px-5 flex transition-all sm:border-b-[1px] border-zinc-900'>
           
           <Image src='/images/logo/cmd.png' alt='CMD Logo' width='125' height='100'></Image>
           <div className='flex items-center gap-2 justify-end ml-auto' id='navlinks'>
@@ -162,11 +162,17 @@ export function Infobar(infobar: InfobarProps ) {
         <Link className='link_bg-t-full w-full justify-center items-center' href={`/c/${infobar.community}/rules`}><BookOpenIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Rules</p></Link>
         <Link className='link_bg-t-full w-full justify-center items-center' href={`/c/${infobar.community}/moderation`}><ShieldCheckIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Moderation</p></Link>
         <h3 className='text-bold'>Administrators</h3>
+
         <ol>
-          {infobar.administrators.map((admin: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined, index: React.Key | null | undefined) => (
+
+          {infobar.administrators.map((admin: string | number | boolean, index: React.Key | null | undefined) => (
+            
             <li key={index} className='text-gray-300'>{admin}</li>
+
           ))}
+
         </ol>
+
         <hr className='border-b-[1px] border-zinc-900 mb-2'></hr>
 
         <div className='infobar-markdown prose'>

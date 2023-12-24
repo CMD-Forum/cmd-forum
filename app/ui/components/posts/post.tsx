@@ -3,9 +3,11 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { ArrowUpIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
 
 interface PostProps {
 
+    id: number;
     title: string;
     author: string;
     community: string;
@@ -15,14 +17,14 @@ interface PostProps {
     submitted: string;
     subtitle: string;
     link: string;
-    image_src?: string | URL;
+    imageurl?: string;
     image_alt?: string;
 
 }
 
 interface ImageProps {
 
-    image_src?: string | URL;
+    imageurl?: string | URL;
     image_alt?: string; 
 
 }
@@ -33,9 +35,9 @@ export function PostImage(image: ImageProps) {
 
     useEffect(() => {
 
-        if (image.image_src) {
+        if (image.imageurl) {
 
-            fetch(image.image_src)
+            fetch(image.imageurl)
 
                 .then(response => response.blob())
 
@@ -48,15 +50,19 @@ export function PostImage(image: ImageProps) {
 
         }
 
-    }, [image.image_src]);
+    }, [image.imageurl]);
+
+    console.log(imageUrl)
 
     if (imageUrl) {
 
         return (
 
             <div className='post-img'>
+
                 {/* @ts-ignore: Do not change, NextJS will block all external domains for images unless otherwise configured. Sizing is also an issue. */}
-                <Image src={imageUrl} alt={image.image_alt} className='rounded-xl mb-2 mt-2 object-contain max-h-96 h-auto static pos-unset' fill={true}></Image>    
+                <img src={imageUrl} alt={image.image_alt} className='rounded-xl mb-2 mt-2 object-contain max-h-96 h-auto static pos-unset'></img>    
+            
             </div>
 
         )
@@ -80,7 +86,7 @@ export function CardPost(post: PostProps) {
                     <div className="flex flex-row">
 
                         {/* @ts-expect-error */}
-                        <h4 className="w-fit text-gray-300"><Link href={`/user/${post.author.id}`} className='hover:underline'>{post.author.username}</Link> • {post.submitted} • {post.ratio}</h4>   
+                        <h4 className="w-fit text-gray-300 flex gap-2"><Link href={`/user/${post.author.id}`} className='hover:underline flex gap-1'>{post.author.name} <p className='text-zinc-500'>{`@${post.author.username}`}</p></Link> <p>•</p> {post.submitted} <p className='hidden sm:flex'>•</p> <p className='hidden sm:flex'>{post.ratio}</p></h4>   
 
                     </div>    
 
@@ -89,10 +95,18 @@ export function CardPost(post: PostProps) {
                 <Link href={post.link} className="w-fit font-sans font-semibold text-lg hover:underline">{post.title}</Link>
 
                 
-                <PostImage image_src='https://placehold.co/200x400' image_alt='test'/>
-                
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={post.imageurl} alt={post.image_alt}/>
                 
                 <p className='text-gray-300'>{post.subtitle}</p>
+
+        	    <div className='flex gap-2 mt-2 bg-zinc-900 rounded-md w-fit justify-center items-center'>
+
+                    <button className='navlink'><ChevronUpIcon className="font-medium h-4 w-4" /></button>
+                    <p>{post.upvotes - post.downvotes}</p>
+                    <button className='navlink'><ChevronDownIcon className="font-medium h-4 w-4" /></button>
+
+                </div>
 
             </div>
 

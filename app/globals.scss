@@ -48,7 +48,7 @@ body {
   /*@apply border;
   @apply border-zinc-800;
   @apply hover:border-zinc-700;*/
-  @apply rounded-md;
+  @apply rounded;
   @apply flex;
   @apply gap-1.5;
   @apply items-center;
@@ -169,8 +169,7 @@ body {
 
 .bottombar-link {
 
-  @apply focus:bg-zinc-900;
-  @apply hover:bg-zinc-900;
+  @apply hover:text-gray-400;
   @apply transition-all;
   @apply flex;
   @apply flex-col;

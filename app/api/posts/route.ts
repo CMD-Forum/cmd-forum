@@ -6,11 +6,32 @@ export async function GET(req: Request) {
 
         const posts = await prisma.post.findMany({
             include: {
-                author: true,
-                community: {
+
+                author: {
+
                     select: {
-                        name: true
+
+                        id: true,
+                        name: true,
+                        username: true,
+                        createdAt: true,
+                        updatedAt: true
+
                     }
+
+                },
+
+                community: {
+
+                    select: {
+
+                        id: true,
+                        name: true,
+                        image: true,
+                        public: true
+
+                    }
+
                 }
             }
         });        
