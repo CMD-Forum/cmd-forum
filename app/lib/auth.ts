@@ -51,9 +51,24 @@ export const authOptions: NextAuthOptions = {
 
                         email: credentials?.email 
 
-                    }
+                    },
+
+                    select: {
+
+                        id: true,
+                        email: true,
+                        username: true,
+                        password: true,
+                        createdAt: true,
+                        updatedAt: true,
+                        name: true,
+                        profile_image: true
+
+                    },
 
                 })
+
+                // console.log("existingUser: ", existingUser);
 
                 if ( ! existingUser ) {
 
@@ -65,7 +80,7 @@ export const authOptions: NextAuthOptions = {
 
                 if ( ! passwordMatch ) {
 
-                    return null;
+                    return "Password is incorrect.";
 
                 }
 
@@ -75,6 +90,7 @@ export const authOptions: NextAuthOptions = {
                     username: existingUser.username,
                     email: existingUser.email,
                     name: existingUser.name,
+                    profile_image: existingUser.profile_image
 
                 }
 
@@ -87,6 +103,8 @@ export const authOptions: NextAuthOptions = {
 
         async jwt({ token, user }) {
 
+            // console.log("User in JWT Callback: ", user);
+
             if ( user ) {
 
                 return {
@@ -94,6 +112,7 @@ export const authOptions: NextAuthOptions = {
                     ...token,
                     username: user.username,
                     name: user.name,
+                    profile_image: user.profile_image,
 
                 }
 
@@ -114,6 +133,7 @@ export const authOptions: NextAuthOptions = {
                     ...session.user,
                     username: token.username,
                     name: token.name,
+                    profile_image: token.profile_image,
 
                 }
 

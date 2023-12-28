@@ -2,9 +2,16 @@
 
 import { CardPost } from '@/app/ui/components/posts/post';
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+
+const variants = {
+
+    hidden: { opacity: 0, y: -20 },
+    visible: { opacity: 1, y: 0 },
+    
+};
 
 interface Post {
-
     id: number;
     title: string;
     community: string;
@@ -16,39 +23,43 @@ interface Post {
     link: string;
     image_alt?: string;
     image_src?: string;
-
 }
 
 export default function PostList() {
-
+    const [isLoading, setIsLoading] = useState(true);
     const [posts, setPosts] = useState<Post[]>([]);
 
     useEffect(() => {
-
         const fetchPosts = async () => {
-
+            setIsLoading(true);
             const res = await fetch('/api/posts');
             const data = await res.json();
             setPosts(data);
-
+            setIsLoading(false);
         };
 
         fetchPosts();
-
     }, []);
+
+    if (isLoading) {
+        return <div className='post-loading-text'></div>;
+    }
 
     return (
         <>
             {Array.isArray(posts) && posts.map((post) => {
-
                 const totalVotes = post.upvotes + post.downvotes;
                 const ratio = totalVotes > 0 ? ((post.upvotes / totalVotes) * 100).toFixed(2) : '0';
         
                 return (
-
-                    <CardPost 
-
-                        key={post.id}
+                    <motion.div 
+                      key={post.id}
+                      variants={variants}
+                      initial="hidden"
+                      animate="visible"
+                      transition={{ ease: "easeInOut", duration: 0.8, type: "spring" }}
+                    >
+                      <CardPost 
                         id={post.id}
                         title={post.title}
                         community={post.community}
@@ -61,15 +72,10 @@ export default function PostList() {
                         link={`/c/${post.community.name}/post/${post.id}`}
                         image_alt={post.image_alt}
                         imageurl={post.image_src}
-                        
-                    />
-                );
-
+                      />
+                    </motion.div>
+                  );
             })}
-
         </>
-
     );
-
 }
-

@@ -7,7 +7,11 @@ const account = async () => {
 
     if (session?.user) {
 
-        return <div>Hello, {session?.user.username}.</div>;    
+        return (
+
+            <div>Hello, {session?.user.username}.</div>
+
+        )    
 
     } 
 

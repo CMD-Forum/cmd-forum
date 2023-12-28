@@ -11,7 +11,7 @@ export function AlertWarning(props: WarningProps) {
 
     return (
 
-        <div className='w-full bg-zinc-950 border-zinc-800 border-[1px] rounded-md px-5 py-5'>
+        <div className='w-full bg-zinc-950 border-zinc-800 border-[1px] rounded-md p-5 facebookTheme:p-3 facebookTheme:border-[#b3b3b3] facebookTheme:bg-white facebookTheme:rounded-none'>
             
             <div className='flex gap-1 items-center'>
 

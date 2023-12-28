@@ -5,7 +5,8 @@ declare module "next-auth" {
     interface User {
 
         username: string,
-        name: string
+        name: string,
+        profile_image: string,
 
     }
 
@@ -14,14 +15,16 @@ declare module "next-auth" {
         user: User & {
 
             username: string,
-            name: string
+            name: string,
+            profile_image: string,
 
         }
 
         token: {
 
             username: string,
-            name: string
+            name: string,
+            profile_image: string
 
         }
 

@@ -69,11 +69,11 @@ const LoginForm = () => {
 
     return ( 
 
-        <form className="flex flex-col gap-2 bg-zinc-950 px-10 py-10 rounded-lg" onSubmit={form.handleSubmit(OnSubmit)}>
+        <form className="flex flex-col gap-2 bg-zinc-950 px-10 py-10 rounded-lg facebookTheme:bg-white" onSubmit={form.handleSubmit(OnSubmit)}>
 
-            <h2 className="text-xl font-semibold">Login to CMD.</h2>
+            <h2 className="text-xl font-semibold facebookTheme:font-bold facebookTheme:text-[15px]">Login to CMD.</h2>
 
-            <hr className="border-b-[1px] border-zinc-900 mb-2"></hr>
+            <hr className="border-zinc-900 mt-1 mb-1 facebookTheme:border-[#b3b3b3] facebookTheme:mt-0"></hr>
 
             {/* */}
 
@@ -82,7 +82,7 @@ const LoginForm = () => {
 
             {/* */}
 
-            Email:
+            <div className="flex gap-1 facebookTheme:text-[11px]">Email<p className="text-[#fca5a5]">*</p></div>
             <input
                 {...form.register('email')}
                 placeholder="Email"
@@ -98,7 +98,7 @@ const LoginForm = () => {
 
             {/* */}
 
-            Password:
+            <div className="flex gap-1 facebookTheme:text-[11px]">Password<p className="text-[#fca5a5]">*</p></div>
             <input
                 type="password"
                 {...form.register('password')}
@@ -124,7 +124,7 @@ const LoginForm = () => {
 
             {/*<pre>Validation status: {JSON.stringify(zo.validation, null, 2)}</pre>*/}
 
-            {error && <AlertWarning title="Login failed" text="Please check all details are correct." />}
+            {error && <AlertWarning title="Login Failure" text={error} />}
 
         </form>
     

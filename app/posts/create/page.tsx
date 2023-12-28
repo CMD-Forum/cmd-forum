@@ -1,11 +1,19 @@
-import { UNIMPLEMENTED } from '@/app/ui/unimplemented';
+import CreatePostForm from "@/app/ui/components/form/create_post";
+import { Suspense } from "react";
 
-export default function unimplemented() {
+const page = () => {
 
-    return (
+    return ( 
 
-        <UNIMPLEMENTED />
 
-    )
+        <div className="flex flex-col justify-center m-auto max-w-3xl">
 
+            <CreatePostForm />
+                        
+        </div>
+
+    );
+    
 }
+
+export default page;

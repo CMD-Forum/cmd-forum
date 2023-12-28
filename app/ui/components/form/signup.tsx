@@ -24,6 +24,11 @@ const FormSchema = z.
 
                 message: "Your username must be at least 2 characters."
 
+            })
+            .max(20, {
+
+                message: "Your username must be no longer than 20 characters."
+
             }),
 
         name: z
@@ -33,6 +38,11 @@ const FormSchema = z.
 
                 message: "Your name must be at least 2 characters."
 
+            })
+            .max(20, {
+                
+                message: "Your name must not be longer than 20 characters."
+                
             }),
 
         email: z
@@ -62,7 +72,7 @@ const FormSchema = z.
 
 function ErrorMessage(props: { message: string }) {
 
-    return <p className="dark:text-red-300 text-sm">{props.message}</p>;
+    return <p className="dark:text-red-300 text-sm facebookTheme:text-[11px]">{props.message}</p>;
     
 }
 
@@ -120,19 +130,19 @@ const SignupForm = () => {
 
     return ( 
 
-        <form ref={zo.ref} className="flex flex-col gap-2 bg-zinc-950 px-10 py-10 rounded-lg">
+        <form ref={zo.ref} className="flex flex-col gap-2 bg-zinc-950 px-10 py-10 rounded-lg facebookTheme:bg-white">
 
-            <h2 className="text-xl font-semibold">Signup for CMD.</h2>
+            <h2 className="text-xl font-semibold facebookTheme:font-bold facebookTheme:text-[15px]">Signup for CMD.</h2>
 
-            <hr className="border-b-[1px] border-zinc-900 mb-2"></hr>
+            <hr className="border-zinc-900 mt-1 mb-1 facebookTheme:border-[#b3b3b3] facebookTheme:mt-0"></hr>
 
             {/* */}
 
-            {error && <AlertWarning title="Login failed" text="Please check all details are correct." />}
+            {error && <AlertWarning title="Signup failed" text={error} />}
 
             <Link href="/login" className="w-fit hover:underline text-gray-300">Have an account?</Link>
 
-            <p className="dark:text-gray-300 text-sm p-0 m-0" suppressHydrationWarning>
+            <p className="dark:text-gray-300 text-sm p-0 m-0 facebookTheme:hidden" suppressHydrationWarning>
                 
                 Your username is unique, your name is not. 
 
@@ -148,7 +158,7 @@ const SignupForm = () => {
 
             
 
-            <div className="flex gap-1">Name<p className="text-[#fca5a5]">*</p></div>
+            <div className="flex gap-1 facebookTheme:text-[11px]">Name<p className="text-[#fca5a5]">*</p></div>
             <input
                 type="text"
                 name={zo.fields.name()}
@@ -164,7 +174,7 @@ const SignupForm = () => {
 
             {/* */}
 
-            <div className="flex gap-1">Username<p className="text-[#fca5a5]">*</p></div>
+            <div className="flex gap-1 facebookTheme:text-[11px]">Username<p className="text-[#fca5a5]">*</p></div>
             <input
                 type="text"
                 name={zo.fields.username()}
@@ -180,7 +190,7 @@ const SignupForm = () => {
 
             {/* */}
 
-            <div className="flex gap-1">Email Address<p className="text-[#fca5a5]">*</p></div>
+            <div className="flex gap-1 facebookTheme:text-[11px]">Email Address<p className="text-[#fca5a5]">*</p></div>
             <input
                 type="email"
                 name={zo.fields.email()}
@@ -196,7 +206,7 @@ const SignupForm = () => {
 
             {/* */}
 
-            <div className="flex gap-1">Password<p className="text-[#fca5a5]">*</p></div>
+            <div className="flex gap-1 facebookTheme:text-[11px]">Password<p className="text-[#fca5a5]">*</p></div>
             <input
                 type="password"
                 name={zo.fields.password()}
@@ -212,7 +222,7 @@ const SignupForm = () => {
 
             {/* */}
 
-            <div className="flex gap-1">Confirm Password<p className="text-[#fca5a5]">*</p></div>
+            <div className="flex gap-1 facebookTheme:text-[11px]">Confirm Password<p className="text-[#fca5a5]">*</p></div>
             <input
                 type="password"
                 name={zo.fields.confirmpassword()}

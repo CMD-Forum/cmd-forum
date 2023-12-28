@@ -2,9 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.scss'
 import { Navigation, Sidebar, Infobar, Bottombar } from '@/app/ui/navigation'
-import { authOptions } from './lib/auth'
-import { getServerSession } from 'next-auth'
-import { useEffect, useState } from 'react'
+import NextAuthProvider from './nextauthprovider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -27,37 +25,39 @@ export default async function RootLayout({
 
   return (
 
-    <html lang="en" className={inter.className}>
+    <NextAuthProvider>
 
-      <head>
+      <html lang="en" className={`defaultTheme facebookTheme:font-facebook_link ${inter.className}`}>
 
-        <link rel='shortcut icon' href='/images/favicon/favicon.ico' />
+        <head>
 
-      </head>
+          <link rel='shortcut icon' href='/images/favicon/favicon.ico' />
 
-      <body className='bg-zinc-950 text-white overflow-scroll overflow-x-hidden h-full relative'>
+        </head>
+
+        <body className='bg-zinc-950 facebookTheme:bg-white text-white facebookTheme:text-black overflow-scroll overflow-x-hidden h-full relative'>
 
           <Navigation />
 
-          <div className='flex h-full justify-center m-auto max-w-[100rem] bg-[#0c0c0e]'>
+          <div className='flex h-full justify-center m-auto max-w-[100rem] bg-[#0c0c0e] facebookTheme:bg-white'>
 
             <Sidebar />
 
-            <div className='w-full m-auto p-6 lg:p-12'>
+            <div className='w-full p-6 lg:p-12'>
 
               {children}    
 
             </div>
 
-            <Infobar community='Meta' administrators={['James Doyle', 'Ciarán Doyle']} main="# Markdown\n\n## hello" /> 
-
           </div>
 
-          <Bottombar />
+        <Bottombar />
 
-      </body>
+        </body>
 
-    </html>
+      </html>
+
+    </NextAuthProvider>
 
   )
 }
