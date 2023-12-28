@@ -17,7 +17,23 @@ export default async function CommunityPage({ params }: { params: { community: s
 
     return( 
     
-        <h1>Community not found.</h1>
+        <div className='flex-row gap-2 px-5 py-5 rounded-md w-full bg-zinc-950 facebookTheme:bg-white border-zinc-950 border-l-[1px]'>
+        
+            <div className='flex-col'>
+
+                <div className='flex flex-row gap-3 items-center mt-4'>
+
+                    <div className='flex flex-col'>
+
+                        <h1 className='text-2xl font-sans font-bold antialiased w-full'>Community not found</h1>   
+                        <h2 className="text-gray-300">Make sure you typed it correctly.</h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
 
     );
 

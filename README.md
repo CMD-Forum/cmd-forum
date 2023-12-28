@@ -1,4 +1,4 @@
-[CMD Forum](/public/main_bgcmd.png)
+![CMD Forum](/public/main_bgcmd.png)
 
 # CMD Forum
 

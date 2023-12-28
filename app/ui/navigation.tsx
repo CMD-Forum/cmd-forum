@@ -117,7 +117,7 @@ export function Infobar(infobar: InfobarProps ) {
             <div className='flex flex-col'>
 
               <h1 className='text-2xl font-sans font-bold antialiased w-full'>{infobar.community}</h1>   
-              <h2>{infobar.community_description}</h2>
+              <h2 className='text-gray-300'>{infobar.community_description}</h2>
 
             </div>
 
