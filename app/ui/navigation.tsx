@@ -23,9 +23,10 @@ import ReactMarkdown from 'react-markdown';
 import remarkBreaks from "remark-breaks";
 import rehypeRaw from 'rehype-raw';
 import { prisma } from '@/app/lib/db';
-import Acc_Dropdown from './components/dropdowns/account_dropdown';
+import { Acc_Dropdown, NoAccount_Dropdown } from './components/dropdowns/account_dropdown';
 import NavSideItems from './components/nav_sideitem';
 import SearchBar from './components/form/searchbar';
+import 'github-markdown-css'
 
 export async function Navigation() {
 
@@ -42,18 +43,24 @@ export async function Navigation() {
   }
 
   return (
-    <div className='navigation sticky top-0 facebookTheme:bg-facebook_blue m-auto'>
+    <div className='navigation sticky top-0 facebookTheme:bg-facebook_blue m-auto z-50'>
       <Link className='absolute top-0 h-16 w-44 z-50 hidden md:flex' href="/"></Link>
       <div className='m-auto facebookTheme:lg:w-[980px] facebookTheme:w-full h-16 backdrop-blur-sm bg-transparent px-5 flex transition-all sm:border-b-[1px] border-zinc-900 facebookTheme:bg-facebook_blue'>
         <Image src='/images/logo/cmd.png' alt='CMD Logo' width='125' height='100' className='hidden md:flex'></Image>
         <SearchBar />
         <div className='flex items-center gap-2 justify-end ml-auto' id='navlinks'>
+          
           {session?.user ? (
-              <Acc_Dropdown />
+
+            <Acc_Dropdown />
+
           ) : (
-            <Link className='navlink topnavlink' href='/login'><ArrowRightOnRectangleIcon className="font-medium h-5 w-5" /><p>Login</p></Link> 
+
+            <NoAccount_Dropdown />
+
           )}
-          <Link className='navlink-full topnavlink' href='/posts/create'><PlusIcon className="font-medium h-5 w-5" /><p>Create</p></Link>
+
+          <Link className='navlink-full topnavlink' href='/create'><PlusIcon className="font-medium h-5 w-5" /><p>Create</p></Link>
         </div>
       </div>
     </div>
@@ -80,7 +87,6 @@ export function Bottombar() {
 
 export function Sidebar() {
 
-
   return (
 
     <NavSideItems />
@@ -95,24 +101,33 @@ interface InfobarProps {
   community_image: string;
   community_description: string;
   community_dn: string; // Community Display Name
-  // @ts-ignore: Still works, notify if breaks
+  // @ts-ignore: Still works, notify if breaks || EDIT: 29/12/2023 -- Administrators is being reworked so this will most likely change in the near future, however it isn't a priority.
   administrators: Array;
   main: string;
   createdAt: string;
   
 }
 
+
+
 export function Infobar(infobar: InfobarProps ) {
+
+  const markdown = `
+
+  ${infobar.main}
+
+  `;
 
   return (
 
-    <div className='flex-row gap-2 px-5 py-5 rounded-md w-full bg-zinc-950 facebookTheme:bg-white border-zinc-950 border-l-[1px]'>
+    <div className='flex-row gap-2 px-5 py-5 rounded-md facebookTheme:rounded-none w-full bg-zinc-950 facebookTheme:bg-white border-zinc-950 border-l-[1px]'>
         
         <div className='flex-col'>
 
-          <div className='flex flex-row gap-3 items-center mt-4'>
+          <div className='flex flex-row gap-3 items-center'>
 
-            <img src={infobar.community_image} className='h-[56px] rounded' />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={infobar.community_image} className='h-[56px] rounded' alt={`${infobar.community}'s Community Image`} />
 
             <div className='flex flex-col'>
 
@@ -177,13 +192,9 @@ export function Infobar(infobar: InfobarProps ) {
 
         <hr className='border-b-[1px] border-zinc-900 facebookTheme:border-[#b3b3b3] mb-2'></hr>
 
-        <div className='infobar-markdown'>
+        <div className='markdown-body'>
 
-          <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]} rehypePlugins={[rehypeRaw]}>
-            
-            {infobar.main}
-
-          </ReactMarkdown>
+          <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]} rehypePlugins={[rehypeRaw]}>{markdown}</ReactMarkdown>
 
         </div>
 

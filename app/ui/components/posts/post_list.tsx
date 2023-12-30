@@ -69,7 +69,7 @@ export default function PostList() {
                         submitted={new Date(post.createdAt).toLocaleDateString()}
                         ratio={`${ratio}%`}
                         subtitle={post.tagline}
-                        link={`/c/${post.community.name}/post/${post.id}`}
+                        link={`/posts/${post.id}`}
                         image_alt={post.image_alt}
                         imageurl={post.image_src}
                       />

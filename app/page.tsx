@@ -14,7 +14,7 @@ export default async function Home(this: any) {
 
             <div className="flex flex-col">
 
-                <h1 className="text-3xl font-sans font-bold antialiased w-full">Trending</h1>
+                <h1 className="header">Trending</h1>
                 <p className="text-gray-300 font-bold antialiased w-full">Popular posts recently</p>   
 
             </div>

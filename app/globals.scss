@@ -330,7 +330,7 @@ a {
 
 // MD
 
-.infobar-markdown {
+/*.infobar-markdown {
 
   all: revert;
   @apply *:whitespace-pre-wrap; 
@@ -352,10 +352,27 @@ a {
   @apply text-[1.5em];
   line-height: 1.25;
   @apply mt-[24px];
-  @apply mb-[16px];
   @apply border-b-[1px];
   @apply border-zinc-900;
   @apply pb-[0.3em];
+
+}
+
+.infobar-markdown h2 {
+
+  @apply font-[600];
+  @apply text-[1.5em];
+  line-height: 1.25;
+  @apply mt-[24px];
+  @apply border-b-[1px];
+  @apply border-zinc-900;
+  @apply pb-[0.3em];
+
+} */
+
+.markdown-body {
+
+  @apply bg-transparent #{!important};
 
 }
 
@@ -369,5 +386,16 @@ a {
 
   @apply facebookTheme:font-bold;
   @apply facebookTheme:text-facebook_blue;
+
+}
+
+// Text
+
+.header {
+
+  @apply text-3xl; 
+  @apply font-sans; 
+  @apply font-bold; 
+  @apply antialiased;
 
 }

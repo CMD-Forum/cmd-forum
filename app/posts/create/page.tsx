@@ -1,19 +1,11 @@
 import CreatePostForm from "@/app/ui/components/form/create_post";
-import { Suspense } from "react";
 
-const page = () => {
+export default function PostCreatePage() {
 
-    return ( 
+    return (
 
-
-        <div className="flex flex-col justify-center m-auto max-w-3xl">
-
-            <CreatePostForm />
-                        
-        </div>
+        <CreatePostForm />
 
     );
-    
-}
 
-export default page;
+}
