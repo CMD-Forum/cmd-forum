@@ -33,12 +33,19 @@ const LoginForm = () => {
 
     const searchParams = useSearchParams();
     const search = searchParams.get('success')
+    var ref = searchParams.get('ref')
 
     var showSuccess = false;
 
     if (search === "true") {
 
         showSuccess = true;
+
+    }
+
+    if ( ! ref || ref === "") {
+
+        ref = "/"
 
     }
 
@@ -73,7 +80,7 @@ const LoginForm = () => {
 
             setError(null);
             setIsLoading(false);
-            window.location.replace('/');
+            window.location.replace(ref);
 
         }
 
@@ -138,6 +145,7 @@ const LoginForm = () => {
 
             <button disabled={!form.formState.isValid || isLoading} type="submit" className="navlink-full !w-full sm:!w-fit justify-center min-w-[62px]">
                 
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 {isLoading ? <img src="/spinner.svg" alt="Loading..." className="spinner"/>  : 'Login' }
                 
             </button>

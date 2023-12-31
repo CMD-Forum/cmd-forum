@@ -30,15 +30,19 @@ import 'github-markdown-css'
 
 export async function Navigation() {
 
-  const session = await getServerSession(authOptions)
+  var session = await getServerSession(authOptions)
 
-  if (session) {
+  if (session && session.user && session.user.username) {
 
     const p_user = await prisma.user.findUnique({
 
         where: { username: session.user.username },
 
-    })
+    });
+
+  } else {
+
+    session = null
 
   }
 
