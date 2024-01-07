@@ -24,6 +24,7 @@ const support = async () => {
                     <h1 className="text-3xl font-sans font-bold antialiased w-full">The Typical Post</h1>
                     <p className="text-gray-300 font-bold antialiased w-full mb-2">Below is your typical post.</p>   
 
+                    {/* @ts-ignore-error */}
                     <CardPost title="This is the title." community="Community" id={1} author="1" upvotes={2} downvotes={1} ratio="50.00%" submitted="19/12/2023" subtitle="The tagline is here" link="" />
 
                 </div>
