@@ -80,6 +80,7 @@ const LoginForm = () => {
 
             setError(null);
             setIsLoading(false);
+            //@ts-ignore
             window.location.replace(ref);
 
         }

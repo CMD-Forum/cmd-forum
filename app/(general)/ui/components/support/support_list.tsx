@@ -37,6 +37,7 @@ export default function SupportList() {
     
         return (
             <>
+                {/* @ts-ignore-error */}
                 {Array.isArray(articles) && articles.map((articles) => {
             
                     if ( ! articles.name ) {

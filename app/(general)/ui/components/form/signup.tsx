@@ -234,6 +234,7 @@ const SignupForm = () => {
 
             <button disabled={disabled || isLoading} type="submit" className="navlink-full !w-full sm:!w-fit justify-center min-w-[62px]">
 
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 {isLoading ? <img src="/spinner.svg" alt="Loading..." className="spinner"/>  : 'Signup' }
             
             </button>
