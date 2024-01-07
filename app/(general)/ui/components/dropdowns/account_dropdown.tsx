@@ -6,12 +6,15 @@ import {
   UserIcon,
   PlusIcon,
   ArrowRightEndOnRectangleIcon,
-  ArrowLeftEndOnRectangleIcon
-} from '@heroicons/react/24/solid';
-import { ArrowRightOnRectangleIcon } from '@heroicons/react/20/solid';
+  ArrowLeftEndOnRectangleIcon,
+  Bars3Icon,
+  ChevronDownIcon,
+  Cog6ToothIcon
+} from '@heroicons/react/16/solid';
 import { useSession } from "next-auth/react"
 import { signOut } from "next-auth/react";
 import { AnimatePresence, motion } from "framer-motion";
+
 
 export function Acc_Dropdown() {
 
@@ -70,12 +73,13 @@ export function Acc_Dropdown() {
 
     return (
 
-      <button onClick={toggleDropdown} className='navlink bg-zinc-950 hover:!bg-zinc-800 max-w-none min-w-fit !py-2 !px-3'>
-
+      <button className='navlink bg-[#1F1F1F] hover:!bg-zinc-800 max-w-none min-w-fit !py-0 !pr-0 !pl-0 z-20'>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="font-medium h-6 w-6 rounded" src={'/images/favicon/favicon.svg'} alt='Loading profile image...' />
-        <p className='whitespace-nowrap'>Loading...</p>
-
+        <img src='/images/favicon/favicon.svg' className='h-[36px] mr-1.5 rounded-l' alt='Loading' />
+        <p className='font-medium mr-1.5'>Loading</p>
+        <div className='bg-[#1A1A1A] w-fit h-[36px] px-1.5 py-1.5 flex items-center rounded-r'>
+          <ChevronDownIcon className='size-5' />
+        </div>
       </button>
 
     );
@@ -86,12 +90,13 @@ export function Acc_Dropdown() {
   
     <div className='w-fit min-w-fit'>
 
-      <button onClick={toggleDropdown} className='navlink bg-zinc-950 hover:!bg-zinc-800 max-w-none min-w-fit !py-2 !px-3'>
-
+      <button onClick={toggleDropdown} className='navlink bg-[#1F1F1F] hover:!bg-zinc-800 max-w-none min-w-fit !py-0 !pr-0 !pl-0 z-20'>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="font-medium h-6 w-6 rounded" src={session?.user.profile_image || '/images/favicon/favicon.svg'} alt='Your Profile Image' />
-        <p className='whitespace-nowrap'>{session?.user.name}</p>
-
+        <img src={session?.user.profile_image} className='h-[36px] mr-1.5 rounded-l' alt='Your profile image' />
+        <p className='font-medium mr-1.5'>{session?.user.name}</p>
+        <div className='w-fit h-[36px] px-1.5 py-1.5 flex items-center rounded-r bg-[#1A1A1A]'>
+          <ChevronDownIcon className='size-5' />
+        </div>
       </button>
 
       <AnimatePresence>
@@ -99,7 +104,7 @@ export function Acc_Dropdown() {
         {isOpen && (
   
           <motion.ul 
-                  className='flex flex-col absolute bg-zinc-900/75 backdrop-blur-sm min-w-[150px] w-fit p-2 rounded-md transition-all top-14 px-0 facebookTheme:rounded-none facebookTheme:border-[#b3b3b3] facebookTheme:border-[1px] facebookTheme:bg-white'
+                  className='flex flex-col absolute bg-zinc-900/75 backdrop-blur-sm min-w-[150px] w-fit p-2 rounded-md transition-all top-[75px] px-0 facebookTheme:rounded-none facebookTheme:border-[#b3b3b3] facebookTheme:border-[1px] facebookTheme:bg-white'
                   ref={dropdownRef}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -109,12 +114,17 @@ export function Acc_Dropdown() {
                   
                   <li className='flex gap-1.5 items-center hover:bg-[#3e63dd] facebookTheme:min-h-0 facebookTheme:h-[21px] facebookTheme:hover:bg-[#eff2f7] transition-all facebookTheme:transition-none px-3 leading-[35px] text-[15px] text-left text-white facebookTheme:text-black cursor-pointer'>
                     <UserIcon className='size-5' />
-                    <a href='/account' className='facebookTheme:flex facebookTheme:items-center text-[14px]'>Account Info</a>
+                    <a href='/account' className='facebookTheme:flex facebookTheme:items-center text-[14px]'>Account</a>
                   </li>
 
                   <li className='gap-1.5 items-center hover:bg-[#3e63dd] facebookTheme:min-h-0 facebookTheme:h-[21px] facebookTheme:hover:bg-[#eff2f7] transition-all facebookTheme:transition-none flex px-3 leading-[35px] text-[15px] text-left text-white facebookTheme:text-black cursor-pointer'>
                     <PlusIcon className='size-5' />
                     <a href='/posts/create' className='facebookTheme:flex facebookTheme:items-center text-[14px]'>Create Post</a>
+                  </li>
+
+                  <li className='gap-1.5 items-center hover:bg-[#3e63dd] facebookTheme:min-h-0 facebookTheme:h-[21px] facebookTheme:hover:bg-[#eff2f7] transition-all facebookTheme:transition-none flex px-3 leading-[35px] text-[15px] text-left text-white facebookTheme:text-black cursor-pointer'>
+                    <Cog6ToothIcon className='size-5' />
+                    <a href='/account/settings' className='facebookTheme:flex facebookTheme:items-center text-[14px]'>Settings</a>
                   </li>
 
                   <hr className='border-zinc-800 w-[80%] m-auto mt-1 mb-1 facebookTheme:border-[#b3b3b3] facebookTheme:mt-0 facebookTheme:w-full'></hr>
@@ -196,12 +206,13 @@ export function NoAccount_Dropdown() {
 
     return (
 
-      <button onClick={toggleDropdown} className='navlink bg-zinc-950 hover:!bg-zinc-800 max-w-none min-w-fit !py-2 !px-3'>
-
+      <button onClick={toggleDropdown} className='navlink bg-[#1F1F1F] hover:!bg-zinc-800 max-w-none min-w-fit !py-0 !pr-0 !pl-0 z-20'>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="font-medium h-6 w-6 rounded" src={'/images/favicon/favicon.svg'} alt='Loading profile image...' />
-        <p className='whitespace-nowrap'>Loading...</p>
-
+        <img src='/images/favicon/favicon.svg' className='h-[36px] mr-1.5 rounded-l' alt='Your profile image' />
+        <p className='font-medium mr-1.5'>Loading</p>
+        <div className='bg-[#1A1A1A] w-fit h-[36px] px-1.5 py-1.5 flex items-center rounded-r'>
+          <ChevronDownIcon className='size-5' />
+        </div>
       </button>
 
     );
@@ -212,10 +223,14 @@ export function NoAccount_Dropdown() {
   
     <div className='w-fit min-w-fit'>
 
-      <button onClick={toggleDropdown} className='navlink bg-zinc-950 hover:!bg-zinc-800 max-w-none min-w-fit !py-2 !px-3'>
-        
-        <p className='whitespace-nowrap'>Login or Signup</p>
-
+      
+      <button onClick={toggleDropdown} className='navlink bg-[#1F1F1F] hover:!bg-zinc-800 max-w-none min-w-fit !py-0 !pr-0 !pl-0 z-20'>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src='/images/favicon/favicon.svg' className='h-[36px] mr-1.5 rounded-l' alt='Loading' />
+        <p className='font-medium mr-1.5'>Login or Signup</p>
+        <div className='bg-[#1A1A1A] w-fit h-[36px] px-1.5 py-1.5 flex items-center rounded-r'>
+          <ChevronDownIcon className='size-5' />
+        </div>
       </button>
 
       <AnimatePresence>
@@ -223,7 +238,7 @@ export function NoAccount_Dropdown() {
         {isOpen && (
   
           <motion.ul 
-                  className='flex flex-col absolute bg-zinc-900/75 backdrop-blur-sm min-w-[150px] w-fit p-2 rounded-md transition-all top-14 px-0 facebookTheme:rounded-none facebookTheme:border-[#b3b3b3] facebookTheme:border-[1px] facebookTheme:bg-white'
+                  className='flex flex-col absolute bg-zinc-900/75 backdrop-blur-sm min-w-[150px] w-fit p-2 rounded-md transition-all top-[75px] px-0 facebookTheme:rounded-none facebookTheme:border-[#b3b3b3] facebookTheme:border-[1px] facebookTheme:bg-white'
                   ref={dropdownRef}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}

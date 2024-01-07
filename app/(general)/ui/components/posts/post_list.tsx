@@ -32,7 +32,7 @@ export default function PostList() {
     useEffect(() => {
         const fetchPosts = async () => {
             setIsLoading(true);
-            const res = await fetch('/api/posts');
+            const res = await fetch('/api/posts/getAll');
             const data = await res.json();
             setPosts(data);
             setIsLoading(false);
@@ -48,8 +48,6 @@ export default function PostList() {
     return (
         <>
             {Array.isArray(posts) && posts.map((post) => {
-                const totalVotes = post.upvotes + post.downvotes;
-                const ratio = totalVotes > 0 ? ((post.upvotes / totalVotes) * 100).toFixed(2) : '0';
         
                 return (
                     <motion.div 
@@ -67,9 +65,7 @@ export default function PostList() {
                         upvotes={post.upvotes}
                         downvotes={post.downvotes}
                         submitted={new Date(post.createdAt).toLocaleDateString()}
-                        ratio={`${ratio}%`}
                         subtitle={post.tagline}
-                        link={`/posts/${post.id}`}
                         image_alt={post.image_alt}
                         imageurl={post.image_src}
                       />

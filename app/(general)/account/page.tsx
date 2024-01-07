@@ -1,15 +1,34 @@
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/(general)/lib/auth";
+import { prisma } from "@/app/(general)/lib/db";
+import ProfileMain from "../ui/components/account/ProfileMain";
 
-import { authOptions } from '@/app/(general)/lib/auth';
-import { getServerSession, Session, User } from "next-auth";
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { AlertWarning } from '../ui/components/alert';
+const Account = async () => {
 
-const Account = () => {
+    var session = await getServerSession(authOptions)
+
+  
+    const p_user = await prisma.user.findUnique({
+  
+        where: { 
+            username: session.user.username 
+        },
+  
+    });
+
+    const p_user_post_count = await prisma.post.count({
+        where: {
+            authorId: p_user?.id
+        }
+    })
+
+    const createdAt = p_user?.createdAt.toLocaleDateString()
 
     return (
 
-        <div>Hello, user.</div>
+        <div>
+            <ProfileMain username={session?.user.name} profile_image_src={session?.user.profile_image} description={p_user.description} createdAt={createdAt} postCount={p_user_post_count} />
+        </div>
 
     )    
 

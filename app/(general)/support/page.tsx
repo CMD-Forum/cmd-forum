@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SupportList from "../ui/components/support/support_list";
 
 const support = async () => {
 
@@ -15,11 +16,7 @@ const support = async () => {
 
                 </div>
 
-                <div className="flex flex-col w-full bg-zinc-950 p-5 border-zinc-900 border-[1px] rounded-md">
-                    <Link href="/support/understand-posting" className="w-fit font-sans font-semibold text-lg hover:underline">Understand Posting</Link>    
-                    <p className="text-gray-300">The terminology and all you need to understand.</p>
-                </div>
-                
+                <SupportList />
 
              </div>
 

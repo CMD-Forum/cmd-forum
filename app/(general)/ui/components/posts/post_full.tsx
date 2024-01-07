@@ -19,7 +19,7 @@ export default function FullPost(post: PostProps) {
 
     return (
 
-        <div className="flex w-full bg-zinc-950 h-fit rounded-md px-5 py-5">
+        <div className="flex w-full !bg-[#131313] h-fit rounded-md px-5 py-5">
 
             <div className="flex w-full bg-transparent h-fit flex-col">
 

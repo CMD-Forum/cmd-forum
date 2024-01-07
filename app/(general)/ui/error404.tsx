@@ -3,8 +3,7 @@ import Link from 'next/link'
 
 export function Error404() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center w-full mt-[-4rem]">
-      <div className="error flex flex-col gap-4 justify-center w-full">
+      <div className="error flex flex-col gap-4 justify-center w-full mt-auto mb-auto">
             <div className="error flex flex-col gap-4 justify-center w-full">
 
                 <div className="flex flex-col text-center">
@@ -19,6 +18,5 @@ export function Error404() {
                 
             </div>
         </div>
-    </main>
   )
 }

@@ -36,7 +36,7 @@ export default async function CommunityPage({ params }: { params: { community: s
 
   return (
 
-    <main className="">
+    <main>
 
         <Infobar community={dbCommunity?.name} community_dn={dbCommunity.display_name} administrators={dbCommunity?.admin_ids} main={dbCommunity.sidebar_md} createdAt={dbCommunity?.createdAt.toLocaleDateString()} community_image={dbCommunity?.image} community_description={dbCommunity.description} /> 
 

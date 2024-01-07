@@ -17,10 +17,8 @@ interface PostProps {
     community: string;
     upvotes: number;
     downvotes: number;
-    ratio: string;
     submitted: string;
     subtitle: string;
-    link: string;
     imageurl?: string;
     image_alt?: string;
 
@@ -78,9 +76,12 @@ export function PostImage(image: ImageProps) {
 
 export function CardPost(post: PostProps) {
 
+    const totalVotes = post.upvotes + post.downvotes;
+    const ratio = totalVotes > 0 ? ((post.upvotes / totalVotes) * 100).toFixed(0) : 'Unknown';
+
     return (
 
-        <div className="flex w-full bg-zinc-950 facebookTheme:bg-white h-fit rounded-md facebookTheme:rounded-none px-5 py-5 border-zinc-900 facebookTheme:border-[#b3b3b3] border-[1px]">
+        <div className="flex w-full bg-[#131313] facebookTheme:bg-white h-fit rounded-md facebookTheme:rounded-none px-5 py-5 border-zinc-900 facebookTheme:border-[#b3b3b3] border-[1px]">
 
             <div className="flex w-full bg-transparent h-fit flex-col">
 
@@ -91,13 +92,13 @@ export function CardPost(post: PostProps) {
                     <div className="flex flex-row">
 
                         {/* @ts-ignore-error */}
-                        <h4 className="w-fit text-gray-300 flex gap-2"><Link href={`/user/${post.author.username}`} className='hover:underline flex gap-1'>{post.author.name} <p className='text-zinc-500'>{`@${post.author.username}`}</p></Link> <p className='facebookTheme:text-[#808080]'>•</p> <p className='facebookTheme:text-[#808080]'>{post.submitted}</p> <p className='hidden sm:flex facebookTheme:text-[#808080]'>•</p> <p className='hidden sm:flex'><p className='facebookTheme:text-[#808080]'>{post.ratio}</p></p></h4>   
+                        <h4 className="w-fit text-gray-300 flex gap-2"><Link href={`/user/${post.author.username}`} className='hover:underline flex gap-1'>{post.author.name} <p className='text-zinc-500'>{`@${post.author.username}`}</p></Link> <p className='facebookTheme:text-[#808080]'>•</p> <p className='facebookTheme:text-[#808080]'>{post.submitted}</p> <p className='hidden sm:flex facebookTheme:text-[#808080]'>•</p> <p className='hidden sm:flex'><p className='facebookTheme:text-[#808080]'>{ratio}%</p></p></h4>   
 
                     </div>    
 
                 </div>
                 
-                <Link href={post.link} className="w-fit font-sans font-semibold text-lg hover:underline facebookTheme:text-lg">{post.title}</Link>
+                <Link href={`/posts/${post.id}`} className="w-fit font-sans font-semibold text-lg hover:underline facebookTheme:text-lg">{post.title}</Link>
 
                 
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -141,7 +142,7 @@ export function FullPost(post: FullPostProps) {
 
     return (
 
-        <div className="flex w-full bg-zinc-950 facebookTheme:bg-white h-fit rounded-b-md facebookTheme:rounded-none px-5 py-5 border-zinc-900 facebookTheme:border-[#b3b3b3] border-[1px]">
+        <div className="rounded-t-md flex w-full bg-[#131313] facebookTheme:bg-white h-fit rounded-b-md facebookTheme:rounded-none px-5 py-5 border-zinc-900 facebookTheme:border-[#b3b3b3] border-[1px]">
 
             <div className="flex w-full bg-transparent h-fit flex-col">
 

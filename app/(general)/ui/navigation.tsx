@@ -14,6 +14,7 @@ import {
     ChatBubbleBottomCenterTextIcon,
     CalendarDaysIcon
 } from '@heroicons/react/24/solid'
+import { FaAndroid, FaApple, FaGithub } from "react-icons/fa6";
 import '@/app/(general)/ui/components/dropdown'
 import React from 'react';
 import { getServerSession } from 'next-auth';
@@ -24,9 +25,10 @@ import remarkBreaks from "remark-breaks";
 import rehypeRaw from 'rehype-raw';
 import { prisma } from '@/app/(general)/lib/db';
 import { Acc_Dropdown, NoAccount_Dropdown } from './components/dropdowns/account_dropdown';
-import NavSideItems from './components/nav_sideitem';
-import SearchBar from './components/form/searchbar';
+import { BottombarItems, CommunityInfobarItems, NavSideItems, TopbarItems } from './components/nav_sideitem';
+import SearchBar from './components/search/searchbar';
 import 'github-markdown-css'
+import { inter } from './fonts';
 
 export async function Navigation() {
 
@@ -47,28 +49,44 @@ export async function Navigation() {
   }
 
   return (
-    <div className='navigation sticky top-0 facebookTheme:bg-facebook_blue m-auto z-50'>
-      <Link className='absolute top-0 h-16 w-44 z-50 flex' href="/"></Link>
-      <div className='m-auto facebookTheme:lg:w-[980px] facebookTheme:w-full h-16 backdrop-blur-sm bg-transparent px-5 flex transition-all sm:border-b-[1px] border-zinc-900 facebookTheme:bg-facebook_blue'>
-        <Image src='/images/logo/cmd.png' alt='CMD Logo' width='125' height='100' className='flex'></Image>
-        <SearchBar />
-        <div className='flex items-center gap-2 justify-end ml-auto' id='navlinks'>
+
+      <div className='sticky top-0 z-50 m-auto facebookTheme:lg:w-[980px] facebookTheme:w-full h-[100px] items-center bg-[#0F0F0F] px-6 md:px-16 flex transition-all facebookTheme:bg-facebook_blue'>
+        
+        <div className='md:ml-auto md:mr-auto flex gap-32'>
+
+          <div className='flex items-center mr-auto h-full w-fit gap-12'>
           
-          {session?.user ? (
+            <Link className={`z-50 flex ${inter.className} font-extrabold text-4xl`} href="/"><p>CMD /&gt;</p></Link>  
+            <TopbarItems />
 
-            <Acc_Dropdown />
+          </div>
 
-          ) : (
+          <div className='flex items-center justify-end ml-auto' id='navlinks'>
+          
+            {session?.user ? (
 
-            <NoAccount_Dropdown />
+              <div className='hidden md:flex gap-2'>
 
-          )}
+                <Acc_Dropdown />  
+                <Link className='navlink-full topnavlink' href='/create'><PlusIcon className="font-medium h-5 w-5" /><p>Create</p></Link>
 
-          <Link className='navlink-full topnavlink' href='/create'><PlusIcon className="font-medium h-5 w-5" /><p>Create</p></Link>
+              </div>
+              
+
+            ) : (
+
+              <NoAccount_Dropdown />
+
+            )}
+
+          </div>
+
         </div>
+
       </div>
-    </div>
+
   );
+
 }
 
 
@@ -76,14 +94,7 @@ export function Bottombar() {
 
   return (
 
-    <div className='max-w-full flex flex-row bg-zinc-950 facebookTheme:bg-facebook_blue border-b-[1px] px-2 gap-2 w-full backdrop-blur-md transition-all border-zinc-900 sm:hidden fixed left-0 bottom-0 z-30'>
-
-        <Link className='bottombar-link' href='/'><HomeIcon className="font-medium h-5 w-5" /><p>Home</p></Link>
-        <Link className='bottombar-link' href='/posts'><ViewColumnsIcon className="font-medium h-5 w-5" /><p>Posts</p></Link>
-        <Link className='bottombar-link' href='/account'><UserIcon className="font-medium h-5 w-5" /><p>Account</p></Link>
-        <Link className='bottombar-link' href='/account/settings'><Cog6ToothIcon className="font-medium h-5 w-5" /><p>Settings</p></Link>
-
-    </div>
+    <BottombarItems />
 
   );
 
@@ -95,7 +106,7 @@ export function Sidebar() {
 
     <NavSideItems />
 
-  )
+  );
 
 }
 
@@ -114,96 +125,70 @@ interface InfobarProps {
 
 
 
-export function Infobar(infobar: InfobarProps ) {
-
-  const markdown = `
-
-  ${infobar.main}
-
-  `;
+export function Infobar(infobar: InfobarProps) {
 
   return (
 
-    <div className='flex-row gap-2 px-5 py-5 rounded-md facebookTheme:rounded-none w-full bg-zinc-950 facebookTheme:bg-white border-zinc-950 border-l-[1px]'>
-        
-        <div className='flex-col'>
+    <CommunityInfobarItems 
+      community={infobar.community} 
+      community_image={infobar.community_image} 
+      community_description={infobar.community_description}
+      community_dn={infobar.community_dn}
+      administrators={infobar.administrators}
+      main={infobar.main}
+      createdAt={infobar.createdAt} 
+    />
 
-          <div className='flex flex-row gap-3 items-center'>
+  );
 
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={infobar.community_image} className='h-[56px] rounded' alt={`${infobar.community}'s Community Image`} />
+}
 
-            <div className='flex flex-col'>
+export function Footer() {
 
-              <h1 className='text-2xl font-sans font-bold antialiased w-full'>{infobar.community}</h1>   
-              <h2 className='text-gray-300'>{infobar.community_description}</h2>
+  const currentYear = new Date().getFullYear();
 
-            </div>
+  return (
 
-          </div>
+    <div className='w-full mt-auto p-10 bg-[#0F0F0F] z-50'>
 
-          
+      <div className='m-auto w-fit'>
 
-          <div className='flex flex-row gap-3 items-center mt-2'>
+        <hr className='border-b-[1px] border-zinc-900 facebookTheme:border-[#b3b3b3] mb-4' />
 
-            <div className='flex flex-row gap-3'>
+        <div className='flex gap-6 px-4'>
 
-              <div className='flex flex-row gap-1'>
-                <CalendarDaysIcon className='w-[20px]' />
-                <p className='text-sm'>19/12/2023</p>  
-              </div>
-              
-              <div className='flex flex-row gap-1'>
-                <UserIcon className='w-[20px]' />
-                <p className='text-sm'>24k</p>
-              </div>
+          <Link className={`z-50 flex ${inter.className} font-extrabold text-4xl w-fit`} href="/"><p>CMD /&gt;</p></Link>  
 
-              <div className='flex flex-row gap-1'>
-                <PencilSquareIcon className='w-[20px]' />
-                <p className='text-sm'>152k</p>
-              </div>
+          <div className='flex flex-col'>
 
-              <div className='flex flex-row gap-1'>
-                <ChatBubbleBottomCenterTextIcon className='w-[20px]' />
-                <p className='text-sm'>58k</p>
-              </div>
-
-            </div>     
-
-            
+            <p className='text-[#C5C3C0] text-sm font-light'>&copy; {currentYear} CMD Forum, all rights reserved. Content is the property of their respective owners.</p> 
+            <p className='text-[#C5C3C0] text-sm font-light'>All efforts have been made to abide by copyright law, however errors may be made.</p>
 
           </div>
-
-          <div className='flex flex-row gap-2 mt-3 mb-3'>
-
-            <Link className='navlink justify-center items-center' href={`/c/${infobar.community}/rules`}><BookOpenIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Rules</p></Link>
-            <Link className='navlink justify-center items-center' href={`/c/${infobar.community}/moderation`}><ShieldCheckIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Moderation</p></Link>    
-
-          </div>
-          
 
         </div>
 
-        <ol>
+        <hr className='border-b-[1px] border-zinc-900 facebookTheme:border-[#b3b3b3] mt-4 mb-4' />
 
-          {infobar.administrators.map((admin: string | number | boolean, index: React.Key | null | undefined) => (
-            
-            <li key={index} className='text-gray-300'>{admin}</li>
+        <ul className='flex gap-4 m-auto w-fit mb-2'>
+          
+          <Link className='text-[#C5C3C0] hover:text-white transition-all flex items-center gap-1.5' href="https://github.com/CMD-Forum/cmd-forum"><FaGithub className="size-4" />Github</Link>
+          <Link className='text-[#C5C3C0] hover:text-white transition-all flex items-center gap-1.5' href="#"><FaAndroid className="size-4" />Android</Link>
+          <Link className='text-[#C5C3C0] hover:text-white transition-all flex items-center gap-1.5' href="#"><FaApple className="size-4" />iOS</Link>          
+          
+        </ul>  
 
-          ))}
+        <ul className='flex gap-4 m-auto w-fit'>
 
-        </ol>
+          <Link className='text-[#C5C3C0] hover:text-white transition-all flex items-center gap-1.5' href="/support/1">About Us</Link>
+          <Link className='text-[#C5C3C0] hover:text-white transition-all flex items-center gap-1.5' href="/support/3">Legal</Link>   
 
-        <hr className='border-b-[1px] border-zinc-900 facebookTheme:border-[#b3b3b3] mb-2'></hr>
+        </ul>
 
-        <div className='markdown-body'>
+      </div>
 
-          <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]} rehypePlugins={[rehypeRaw]}>{markdown}</ReactMarkdown>
+    </div>
 
-        </div>
-
-    </div>  
-
-  )
+  );
 
 }

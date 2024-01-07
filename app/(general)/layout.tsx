@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.scss'
-import { Navigation, Sidebar, Infobar, Bottombar } from '@/app/(general)/ui/navigation'
+import { Navigation, Sidebar, Infobar, Bottombar, Footer } from '@/app/(general)/ui/navigation'
 import NextAuthProvider from './nextauthprovider'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -85,13 +85,11 @@ export default async function RootLayout({
 
         </head>
 
-        <body className='bg-zinc-950 facebookTheme:bg-white text-white facebookTheme:text-black overflow-scroll overflow-x-hidden h-full relative'>
+        <body className='bg-[#0c0c0c] facebookTheme:bg-white text-white facebookTheme:text-black overflow-scroll overflow-x-hidden h-vh relative'>
 
           <Navigation />
 
-          <div className='flex h-full justify-center m-auto max-w-[100rem] bg-[#0c0c0e] facebookTheme:bg-white'>
-
-            <Sidebar />
+          <div className='flex h-full justify-center m-auto max-w-[75rem] bg-[#0c0c0c] facebookTheme:bg-white'>
 
             <div className='w-full p-6 lg:p-12'>
 
@@ -102,6 +100,8 @@ export default async function RootLayout({
           </div>
 
         <Bottombar />
+
+        <Footer />
 
         </body>
 

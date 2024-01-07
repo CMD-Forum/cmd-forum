@@ -9,7 +9,7 @@ import { useZorm } from "react-zorm"; // Form Building
 import { inter } from "../../fonts";
 import GoogleSignInButton from "./oauth/GoogleSignInButton";
 import MicrosoftSignInButton from "./oauth/MicrosoftSignInButton";
-import { POST } from "@/app/(general)/api/user/route";
+import { POST } from "@/app/(general)/api/account/createAccount/route";
 import { useRouter } from "next/navigation";
 import { AlertFailure, AlertSuccess, AlertWarning } from "@/app/(general)/ui/components/alert"
 
@@ -92,7 +92,7 @@ const SignupForm = () => {
 
             setIsLoading(true);
 
-            const response = await fetch('/api/user', {
+            const response = await fetch('/api/account/createAccount', {
 
                 method: 'POST',
                 headers: {

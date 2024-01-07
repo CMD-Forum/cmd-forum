@@ -7,7 +7,7 @@ export default function CreatePage() {
 
         <div className="flex flex-col lg:flex-row gap-2">
         
-            <Link href="/c/create" className="flex flex-row bg-zinc-950 hover:bg-zinc-800 p-5 border-zinc-900 border-[1px] rounded-md gap-5 transition-all w-full h-full font-sans font-semibold text-lg items-center">
+            <Link href="/create/community" className="flex flex-row bg-[#131313] hover:bg-zinc-800 p-5 rounded-md gap-5 transition-all w-full h-full font-sans font-semibold text-lg items-center">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <ChatBubbleBottomCenterTextIcon className="size-10 min-h-10 min-w-10" />
                 <div className="flex flex-col leading-6">
@@ -16,7 +16,7 @@ export default function CreatePage() {
                 </div>
             </Link>
 
-            <Link href="/posts/create" className="flex flex-row bg-zinc-950 hover:bg-zinc-800 p-5 border-zinc-900 border-[1px] rounded-md gap-5 transition-all w-full h-full font-sans font-semibold text-lg items-center">
+            <Link href="/create/post" className="flex flex-row bg-[#131313] hover:bg-zinc-800 p-5 rounded-md gap-5 transition-all w-full h-full font-sans font-semibold text-lg items-center">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <NewspaperIcon className="size-10 min-h-10 min-w-10" />
                 <div className="flex flex-col leading-6">

@@ -25,7 +25,7 @@ export default function Framermotion_workaround(props: WhyIsThisAThingProps) {
 
     <AnimatePresence>
       <motion.div 
-        className="flex min-h-screen flex-col w-full"
+        className="flex min-h-screen flex-col w-full "
         variants={variants}
         initial="hidden"
         animate="visible"

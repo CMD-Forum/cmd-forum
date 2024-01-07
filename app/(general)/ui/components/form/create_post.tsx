@@ -65,7 +65,7 @@ const CreatePostForm = () => {
 
     return ( 
 
-        <form className="flex flex-col gap-2 bg-zinc-950 facebookTheme:bg-white px-10 py-10 rounded-lg max-w-3xl m-auto" onSubmit={form.handleSubmit(OnSubmit)}>
+        <form className="flex flex-col gap-2 bg-[#131313] facebookTheme:bg-white px-10 py-10 rounded-lg max-w-3xl" onSubmit={form.handleSubmit(OnSubmit)}>
 
             <h2 className="text-xl font-semibold facebookTheme:font-bold facebookTheme:text-[15px]">Create Post</h2>
 

@@ -1,20 +1,22 @@
 generator client {
-  provider = "prisma-client-js"
-  output   = "../node_modules/.prisma/client"
-  seed     = "node prisma/seed.js"
+  provider        = "prisma-client-js"
+  output          = "../node_modules/.prisma/client"
+  seed            = "node prisma/seed.js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model Community {
   id             Int      @id @default(autoincrement())
   createdAt      DateTime @default(now())
   updatedAt      DateTime @default(now()) @updatedAt
-  name           String   @unique @db.VarChar(50) @default("")
-  display_name   String   @unique @db.VarChar(50) @default("")
+  name           String   @unique @default("") @db.VarChar(50)
+  display_name   String   @unique @default("") @db.VarChar(50)
   description    String   @default("Your description here.")
   image          String   @default("/images/favicon/favicon.svg")
   public         Boolean  @default(true)
@@ -32,25 +34,37 @@ model Post {
   content     String
   tagline     String
   imageurl    String?
+  imagealt    String?
   public      Boolean   @default(true)
   authorId    Int
   downvotes   Int       @default(0)
   upvotes     Int       @default(0)
   communityId Int       @default(1)
-  imagealt    String?
   author      User      @relation(fields: [authorId], references: [id])
   community   Community @relation(fields: [communityId], references: [id])
 }
 
 model User {
-  id            Int      @id @default(autoincrement())
-  email         String   @unique
-  username      String   @unique
+  id            Int         @id @default(autoincrement())
+  email         String      @unique
+  username      String      @unique
+  description   String      @db.VarChar(100) @default("This user has not set this description.")
   password      String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
   name          String
-  profile_image String   @default("/images/favicon/favicon.svg")
+  profile_image String      @default("/images/favicon/favicon.svg")
   posts         Post[]
   admin         Community[]
+  Support       Support?    @relation(fields: [supportId], references: [authorId])
+  supportId     Int?
+}
+
+model Support {
+  id        Int    @id @default(autoincrement())
+  authorId  Int    @unique
+  author    User[]
+  content   String @default("# Support Article \n Edit this article!")
+  title     String @default("Article has no name")
+  tagline   String @default("Article has no tagline")
 }
