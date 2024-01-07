@@ -137,7 +137,9 @@ export default async function SearchResults(search: SearchResultProps) {
                             downvotes={result.downvotes}
                             submitted={result.createdAt.toLocaleDateString()}
                             subtitle={result.tagline}
+                            // @ts-ignore
                             community={result.community}
+                            // @ts-ignore
                             author={result.author}
                         
                         >
