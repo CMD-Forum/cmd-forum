@@ -111,7 +111,7 @@ const LoginForm = () => {
 
             {/* */}
 
-            <div className="flex gap-1 facebookTheme:text-[11px]">Email<p className="text-[#fca5a5]">*</p></div>
+            <div className="flex gap-1 facebookTheme:text-[11px] font-medium">Email<p className="text-[#fca5a5]">*</p></div>
             <input
                 {...form.register('email')}
                 placeholder="Email"
@@ -127,7 +127,7 @@ const LoginForm = () => {
 
             {/* */}
 
-            <div className="flex gap-1 facebookTheme:text-[11px]">Password<p className="text-[#fca5a5]">*</p></div>
+            <div className="flex gap-1 facebookTheme:text-[11px] font-medium">Password<p className="text-[#fca5a5]">*</p></div>
             <input
                 type="password"
                 {...form.register('password')}

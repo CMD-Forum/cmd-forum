@@ -200,7 +200,7 @@ const SignupForm = () => {
 
             {/* */}
 
-            <div className="flex gap-1 facebookTheme:text-[11px]">Password<p className="text-[#fca5a5]">*</p></div>
+            <div className="flex gap-1 facebookTheme:text-[11px] font-medium">Password<p className="text-[#fca5a5]">*</p></div>
             <input
                 type="password"
                 name={zo.fields.password()}
@@ -216,7 +216,7 @@ const SignupForm = () => {
 
             {/* */}
 
-            <div className="flex gap-1 facebookTheme:text-[11px]">Confirm Password<p className="text-[#fca5a5]">*</p></div>
+            <div className="flex gap-1 facebookTheme:text-[11px] font-medium">Confirm Password<p className="text-[#fca5a5]">*</p></div>
             <input
                 type="password"
                 name={zo.fields.confirmpassword()}

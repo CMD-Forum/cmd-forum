@@ -1,33 +1,13 @@
 import Link from 'next/link';
-import Image from 'next/image';
-import { 
-    ArrowRightOnRectangleIcon,
-    Cog6ToothIcon,
-    HomeIcon,
-    PlusIcon,
-    UserIcon,
-    MagnifyingGlassIcon,
-    ViewColumnsIcon,
-    BookOpenIcon,
-    ShieldCheckIcon,
-    PencilSquareIcon,
-    ChatBubbleBottomCenterTextIcon,
-    CalendarDaysIcon
-} from '@heroicons/react/24/solid'
+import { PlusIcon } from '@heroicons/react/24/solid'
 import { FaAndroid, FaApple, FaGithub } from "react-icons/fa6";
 import '@/app/(general)/ui/components/dropdown'
 import React from 'react';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../lib/auth';
-import remarkGfm from 'remark-gfm';
-import ReactMarkdown from 'react-markdown';
-import remarkBreaks from "remark-breaks";
-import rehypeRaw from 'rehype-raw';
 import { prisma } from '@/app/(general)/lib/db';
 import { Acc_Dropdown, NoAccount_Dropdown } from './components/dropdowns/account_dropdown';
 import { BottombarItems, CommunityInfobarItems, NavSideItems, TopbarItems } from './components/nav_sideitem';
-import SearchBar from './components/search/searchbar';
-import 'github-markdown-css'
 import { inter } from './fonts';
 
 export async function Navigation() {
@@ -56,7 +36,7 @@ export async function Navigation() {
 
           <div className='flex items-center mr-auto h-full w-fit gap-12'>
           
-            <Link className={`z-50 flex ${inter.className} font-extrabold text-4xl`} href="/"><p>CMD /&gt;</p></Link>  
+            <Link className={`z-50 flex ${inter.className} font-extrabold text-4xl hover:text-accent_blue transition-all`} href="/"><p>CMD /&gt;</p></Link>  
             <TopbarItems />
 
           </div>
@@ -157,7 +137,7 @@ export function Footer() {
 
         <div className='flex gap-6 px-4'>
 
-          <Link className={`z-50 flex ${inter.className} font-extrabold text-4xl w-fit`} href="/"><p>CMD /&gt;</p></Link>  
+          <Link className={`flex ${inter.className} font-extrabold text-4xl w-fit`} href="/"><p>CMD /&gt;</p></Link>  
 
           <div className='flex flex-col'>
 

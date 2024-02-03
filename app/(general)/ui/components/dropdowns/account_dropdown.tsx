@@ -88,7 +88,7 @@ export function Acc_Dropdown() {
 
   return (
   
-    <div className='w-fit min-w-fit'>
+    <div className='min-w-fit relative'>
 
       <button onClick={toggleDropdown} className='navlink bg-[#1F1F1F] hover:!bg-zinc-800 max-w-none min-w-fit !py-0 !pr-0 !pl-0 z-20'>
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -104,33 +104,36 @@ export function Acc_Dropdown() {
         {isOpen && (
   
           <motion.ul 
-                  className='flex flex-col absolute bg-zinc-900/75 backdrop-blur-sm min-w-[150px] w-fit p-2 rounded-md transition-all top-[75px] px-0 facebookTheme:rounded-none facebookTheme:border-[#b3b3b3] facebookTheme:border-[1px] facebookTheme:bg-white'
+                  className='w-auto flex flex-col absolute right-0 bg-[#131313] border-zinc-800 border-[1px] backdrop-blur-sm min-w-[150px] pb-2 rounded-md transition-all top-[40px] px-0 facebookTheme:rounded-none facebookTheme:border-[#b3b3b3] facebookTheme:border-[1px] facebookTheme:bg-white'
                   ref={dropdownRef}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ ease: "easeInOut", duration: 0.15 }}
           >
-                  
-                  <li className='flex gap-1.5 items-center hover:bg-[#3e63dd] facebookTheme:min-h-0 facebookTheme:h-[21px] facebookTheme:hover:bg-[#eff2f7] transition-all facebookTheme:transition-none px-3 leading-[35px] text-[15px] text-left text-white facebookTheme:text-black cursor-pointer'>
-                    <UserIcon className='size-5' />
-                    <a href='/account' className='facebookTheme:flex facebookTheme:items-center text-[14px]'>Account</a>
+
+                  <li className='flex gap-1.5 items-center bg-zinc-800 facebookTheme:min-h-0 facebookTheme:h-[21px] facebookTheme:hover:bg-[#eff2f7] transition-all facebookTheme:transition-none px-3 pr-9 py-2 leading-[35px] text-[15px] text-left text-white facebookTheme:text-black cursor-pointer'>
+                    {/* @ts-ignore */}
+                    <img src={session?.user.profile_image} className='w-6 rounded-sm mr-1.5'></img>
+                    <p className='leading-5 whitespace-nowrap max-w-full overflow-ellipsis'>{session?.user.email}</p>
                   </li>
 
-                  <li className='gap-1.5 items-center hover:bg-[#3e63dd] facebookTheme:min-h-0 facebookTheme:h-[21px] facebookTheme:hover:bg-[#eff2f7] transition-all facebookTheme:transition-none flex px-3 leading-[35px] text-[15px] text-left text-white facebookTheme:text-black cursor-pointer'>
-                    <PlusIcon className='size-5' />
+                  <hr className='border-zinc-800 w-full m-auto mb-2 facebookTheme:border-[#b3b3b3] facebookTheme:mt-0 facebookTheme:w-full'></hr>
+
+                  <li className='gap-1.5 items-center hover:bg-zinc-800 facebookTheme:min-h-0 facebookTheme:h-[21px] facebookTheme:hover:bg-[#eff2f7] transition-all facebookTheme:transition-none flex px-3 leading-[35px] text-[15px] text-left text-white facebookTheme:text-black cursor-pointer'>
+                    <PlusIcon className='size-5 mr-1.5' />
                     <a href='/posts/create' className='facebookTheme:flex facebookTheme:items-center text-[14px]'>Create Post</a>
                   </li>
 
-                  <li className='gap-1.5 items-center hover:bg-[#3e63dd] facebookTheme:min-h-0 facebookTheme:h-[21px] facebookTheme:hover:bg-[#eff2f7] transition-all facebookTheme:transition-none flex px-3 leading-[35px] text-[15px] text-left text-white facebookTheme:text-black cursor-pointer'>
-                    <Cog6ToothIcon className='size-5' />
+                  <li className='gap-1.5 items-center hover:bg-zinc-800 facebookTheme:min-h-0 facebookTheme:h-[21px] facebookTheme:hover:bg-[#eff2f7] transition-all facebookTheme:transition-none flex px-3 leading-[35px] text-[15px] text-left text-white facebookTheme:text-black cursor-pointer'>
+                    <Cog6ToothIcon className='size-5 mr-1.5' />
                     <a href='/account/settings' className='facebookTheme:flex facebookTheme:items-center text-[14px]'>Settings</a>
                   </li>
 
-                  <hr className='border-zinc-800 w-[80%] m-auto mt-1 mb-1 facebookTheme:border-[#b3b3b3] facebookTheme:mt-0 facebookTheme:w-full'></hr>
+                  <hr className='border-zinc-800 w-full m-auto mt-2 mb-2 facebookTheme:border-[#b3b3b3] facebookTheme:mt-0 facebookTheme:w-full'></hr>
 
-                  <li className='gap-1.5 items-center hover:bg-[#3e63dd] facebookTheme:min-h-0 facebookTheme:h-[21px] facebookTheme:hover:bg-[#eff2f7] transition-all facebookTheme:transition-none flex px-3 leading-[35px] text-[15px] text-left text-white facebookTheme:text-black cursor-pointer'>
-                    <ArrowLeftEndOnRectangleIcon className='size-5' />
+                  <li className='gap-1.5 items-center hover:bg-zinc-800 facebookTheme:min-h-0 facebookTheme:h-[21px] facebookTheme:hover:bg-[#eff2f7] transition-all facebookTheme:transition-none flex px-3 leading-[35px] text-[15px] text-left text-white facebookTheme:text-black cursor-pointer'>
+                    <ArrowLeftEndOnRectangleIcon className='size-5 mr-1.5' />
                     <button className='facebookTheme:flex facebookTheme:items-center text-[14px]' onClick={() => signOut({
                       redirect: true,
                       callbackUrl: `${window.location.origin}/login`,
@@ -206,7 +209,7 @@ export function NoAccount_Dropdown() {
 
     return (
 
-      <button onClick={toggleDropdown} className='navlink bg-[#1F1F1F] hover:!bg-zinc-800 max-w-none min-w-fit !py-0 !pr-0 !pl-0 z-20'>
+      <button onClick={toggleDropdown} className='navlink bg-[#131313] hover:!bg-zinc-800 max-w-none min-w-fit !py-0 !pr-0 !pl-0 z-20'>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src='/images/favicon/favicon.svg' className='h-[36px] mr-1.5 rounded-l' alt='Your profile image' />
         <p className='font-medium mr-1.5'>Loading</p>
@@ -238,7 +241,7 @@ export function NoAccount_Dropdown() {
         {isOpen && (
   
           <motion.ul 
-                  className='flex flex-col absolute bg-zinc-900/75 backdrop-blur-sm min-w-[150px] w-fit p-2 rounded-md transition-all top-[75px] px-0 facebookTheme:rounded-none facebookTheme:border-[#b3b3b3] facebookTheme:border-[1px] facebookTheme:bg-white'
+                  className='flex flex-col absolute bg-[#1A1A1A] border-zinc-800 border-[1px] backdrop-blur-sm min-w-[150px] w-fit p-2 rounded-md transition-all top-[75px] px-0 facebookTheme:rounded-none facebookTheme:border-[#b3b3b3] facebookTheme:border-[1px] facebookTheme:bg-white'
                   ref={dropdownRef}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -246,12 +249,12 @@ export function NoAccount_Dropdown() {
                   transition={{ ease: "easeInOut", duration: 0.15 }}
           >
                   
-                  <li className='flex gap-1.5 items-center hover:bg-[#3e63dd] facebookTheme:min-h-0 facebookTheme:h-[21px] facebookTheme:hover:bg-[#eff2f7] transition-all facebookTheme:transition-none px-3 leading-[35px] text-[15px] text-left text-white facebookTheme:text-black cursor-pointer'>
+                  <li className='flex gap-1.5 items-center hover:bg-zinc-800 facebookTheme:min-h-0 facebookTheme:h-[21px] facebookTheme:hover:bg-[#eff2f7] transition-all facebookTheme:transition-none px-3 leading-[35px] text-[15px] text-left text-white facebookTheme:text-black cursor-pointer'>
                     <ArrowRightEndOnRectangleIcon className='size-5' />
                     <Link href='/login' className='facebookTheme:flex facebookTheme:items-center text-[14px]'>Login</Link>
                   </li>
 
-                  <li className='gap-1.5 items-center hover:bg-[#3e63dd] facebookTheme:min-h-0 facebookTheme:h-[21px] facebookTheme:hover:bg-[#eff2f7] transition-all facebookTheme:transition-none flex px-3 leading-[35px] text-[15px] text-left text-white facebookTheme:text-black cursor-pointer'>
+                  <li className='gap-1.5 items-center hover:bg-zinc-800 facebookTheme:min-h-0 facebookTheme:h-[21px] facebookTheme:hover:bg-[#eff2f7] transition-all facebookTheme:transition-none flex px-3 leading-[35px] text-[15px] text-left text-white facebookTheme:text-black cursor-pointer'>
                     <PlusIcon className='size-5' />
                     <Link href='/signup' className='facebookTheme:flex facebookTheme:items-center text-[14px]'>Signup</Link>
                   </li>

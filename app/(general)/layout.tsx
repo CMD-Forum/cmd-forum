@@ -89,11 +89,17 @@ export default async function RootLayout({
 
           <Navigation />
 
-          <div className='flex h-full justify-center m-auto max-w-[75rem] bg-[#0c0c0c] facebookTheme:bg-white'>
+          <div className='flex h-full m-auto bg-[#0c0c0c] facebookTheme:bg-white'>
 
-            <div className='w-full p-6 lg:p-12'>
+            <Sidebar />        
 
-              {children}    
+            <div className='flex flex-col justify-center max-w-[70rem] w-[70rem] p-6 lg:p-12 m-auto'>
+
+              <div className='max-w-[70rem]'>
+
+                {children}    
+
+              </div>
 
             </div>
 

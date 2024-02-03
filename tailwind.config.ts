@@ -16,6 +16,10 @@ const config: Config = {
       boxShadow: {
         'facebook_bs': '0 1px 0 rgba(0, 0, 0, .1)',
       },
+      colors: {
+        'semitransparent': 'rgba(0, 0, 0, 0.5)',
+        'accent_blue': '#1a9fff',
+      },
     },
     fontFamily: {
       'sans': ['ui-sans-serif', 'system-ui'],

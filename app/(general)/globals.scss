@@ -44,9 +44,9 @@ body {
   @apply hover:bg-zinc-800;
   @apply px-3;
   @apply py-2;
-  /*@apply border;
+  @apply border-[1px];
   @apply border-zinc-800;
-  @apply hover:border-zinc-700;*/
+  @apply hover:border-zinc-500;
   @apply rounded;
   @apply flex;
   @apply gap-1.5;
@@ -108,6 +108,7 @@ body {
   @apply bg-white;
   @apply text-black;
   @apply hover:bg-neutral-300;
+  @apply border-white;
 
   // facebookTheme
 
@@ -139,6 +140,7 @@ body {
 
   @apply bg-neutral-500;
   @apply hover:cursor-not-allowed;
+  @apply border-neutral-500;
 
 }
 
@@ -151,13 +153,18 @@ body {
 
 .navlink-destructive {
 
-  @extend .navlink-full;
-  @apply bg-red-500;
-  @apply border-zinc-800;
-  @apply border-[1px];
+  @extend .navlink;
+  @apply text-red-500 #{!important};
+  @apply hover:text-white #{!important};
+  @apply focus:text-white #{!important};
   @apply hover:bg-red-700;
+  @apply hover:border-red-500;
+  @apply focus:bg-red-700;
+  @apply focus:border-red-500;
   @apply transition-all;
   @apply text-white;
+  @apply border-[1px];
+  @apply border-zinc-800;
 
 }
 
@@ -296,12 +303,13 @@ a {
   @apply defaultTheme:rounded-md;
   @apply defaultTheme:h-9;
   @apply defaultTheme:px-2;
-  @apply defaultTheme:transition-all;
   @apply defaultTheme:outline-none;
-  @apply defaultTheme:focus:border-sky-700; 
-  @apply defaultTheme:focus:ring; 
-  @apply defaultTheme:focus:ring-sky-600; 
-  @apply defaultTheme:focus:ring-opacity-50;
+  @apply defaultTheme:focus:ring-[2px];
+  @apply defaultTheme:hover:ring-[2px];
+  @apply defaultTheme:focus:ring-[#0060df] #{!important};
+  @apply defaultTheme:hover:ring-[#d4d4d4];
+  @apply defaultTheme:transition-all;
+  @apply duration-200 #{!important};
 
   // facebookTheme
 
@@ -319,12 +327,9 @@ a {
 
 .generic_field.errored {
 
-  @apply defaultTheme:border-red-700; 
-  @apply defaultTheme:ring; 
-  @apply defaultTheme:ring-red-600; 
-  @apply defaultTheme:ring-opacity-50;
-
-  // facebookTheme
+  @apply defaultTheme:ring-[2px];
+  @apply defaultTheme:ring-red-700;
+  @apply defaultTheme:transition-all;
 
 }
 
@@ -378,6 +383,8 @@ a {
   animation-duration: 500ms;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
+  @apply text-black;
+  color: black !important;
 
 }
 
@@ -391,6 +398,12 @@ a {
 }
 
 // MD
+
+.wmde-markdown {
+
+  @apply bg-transparent #{!important};
+
+}
 
 /*.infobar-markdown {
 
