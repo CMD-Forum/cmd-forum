@@ -81,7 +81,7 @@ function createPost(postData: any) {
 
 }  
 
-function CreatePostForm() {
+export function CreatePostForm() {
 
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<false | true | null>(null);

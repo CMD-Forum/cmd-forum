@@ -1,4 +1,4 @@
-import CreatePostForm from "@/app/(general)/ui/components/form/create_post";
+import { CreatePostForm } from "@/app/(general)/ui/components/form/create_post";
 import { Suspense } from "react";
 
 const page = () => {
