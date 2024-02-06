@@ -19,7 +19,7 @@ export function NavSideItems() {
             
             <div className='flex-col gap-2 facebookTheme:gap-0 facebookTheme:sm:pl-6 px-3 py-3 facebookTheme:px-0 max-w-[300px] bg-[#0F0F0F] sticky facebookTheme:bg-white border-zinc-950 border-l-[1px] facebookTheme:border-[#b3b3b3] facebookTheme:border-l-0 facebookTheme:border-r-[1px] hidden sm:flex lg:!w-[400px]'>
                 
-                <div className="flex-col sticky top-[115px] gap-2 px-2 py-3">
+                <div className="flex-col sticky top-[115px] gap-2 px-2 !first:pt-0 !last:pb-0">
 
                     <Link className={`navlink-sidebar ${pathname == "/" ? "active" : ""}`} href='/' prefetch={true}><HomeIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /><p className='hidden lg:flex'>Homepage</p></Link>
                     <Link className={`navlink-sidebar ${pathname == "/posts" ? "active" : ""}`} href='/posts' prefetch={true}><ViewColumnsIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /><p className='hidden lg:flex'>Posts</p></Link>

@@ -9,6 +9,7 @@ import rehypeRaw from 'rehype-raw';
 import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 import MarkdownPreview from '@uiw/react-markdown-preview';
+import { AlertWarning } from '../alert';
 
 interface PostProps {
 
@@ -209,6 +210,7 @@ export function FullPost(post: FullPostProps) {
 
                     {/*<ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]} rehypePlugins={[rehypeRaw]}>{post.body}</ReactMarkdown>*/}
                     <MarkdownPreview source={post.body} />
+                    <AlertWarning title='Warning' text='Make sure you set the MT-55 Header if preforming this option.' />
 
                 </div>
 

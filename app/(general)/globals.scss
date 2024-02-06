@@ -186,6 +186,8 @@ body {
   @apply border-0;
   @apply w-fit; 
   @apply lg:w-full;
+  @apply mt-2;
+  @apply mb-2;
 
   // facebookTheme
 
@@ -405,6 +407,15 @@ a {
 
 }
 
+.wmde-markdown blockquote {
+
+  @apply bg-transparent #{!important};
+  @apply hover:text-white;
+  @apply transition-all;
+  @apply hover:border-white #{!important};
+
+}
+
 /*.infobar-markdown {
 
   all: revert;
@@ -449,7 +460,7 @@ a {
 
   @apply bg-transparent #{!important};
   @apply rounded-md;
-  @apply *:rounded-sm;
+  @apply *:rounded-md;
 
 }
 
