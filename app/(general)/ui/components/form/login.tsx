@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
@@ -162,4 +162,14 @@ const LoginForm = () => {
     
 }
 
-export default LoginForm;
+function SuspenseForm (props:any) {
+
+    return (
+        <Suspense>
+            <LoginForm />
+        </Suspense>
+    );
+
+}
+
+export default SuspenseForm;
