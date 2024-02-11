@@ -1,11 +1,14 @@
+
+<h1 align="center">CMD Forum</h1>
+<h3 align="center">Forum site built in React</h3>
+
+<hr />
+
 ![CMD Forum](/public/main_bgcmd.png)
 
-![Static Badge](https://img.shields.io/badge/status-alpha_development-green)
-![Static Badge](https://img.shields.io/badge/latest_release-1.0.0-blue)
+<div align="center"><img src="https://img.shields.io/badge/status-alpha_development-green"></img> <img src="https://img.shields.io/badge/latest_release-1.0.0-blue"></img></div>
 
-# CMD Forum
-
-Forum site with authentication (via NextAuth), posting, etc.
+<hr />
 
 ## Browser Support
 
