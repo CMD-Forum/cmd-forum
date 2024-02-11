@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-$accent-blue: #0284c7;
+$accent-blue: #2f81f7; // Thanks Github
 
 /*/ :root {
 
@@ -109,6 +109,7 @@ body {
   @apply text-black;
   @apply hover:bg-neutral-300;
   @apply border-white;
+  @apply defaultTheme:border-0;
 
   // facebookTheme
 
@@ -300,16 +301,18 @@ a {
 
 .generic_field {
 
-  @apply defaultTheme:bg-zinc-800;
+  @apply defaultTheme:bg-[#0c0c0c];
   @apply defaultTheme:text-white;
   @apply defaultTheme:rounded-md;
   @apply defaultTheme:h-9;
   @apply defaultTheme:px-2;
   @apply defaultTheme:outline-none;
-  @apply defaultTheme:focus:ring-[2px];
-  @apply defaultTheme:hover:ring-[2px];
-  @apply defaultTheme:focus:ring-[#0060df] #{!important};
-  @apply defaultTheme:hover:ring-[#d4d4d4];
+  @apply defaultTheme:focus:outline-[#2f81f7];
+  @apply defaultTheme:outline-offset-[-1px];
+  @apply defaultTheme:focus:outline-2;
+  @apply border-[1px];
+  @apply border-zinc-800;
+  @apply hover:border-zinc-500;
   @apply defaultTheme:transition-all;
   @apply duration-200 #{!important};
 
