@@ -10,7 +10,7 @@ export default async function Home(this: any) {
 
     <main className="flex min-h-screen flex-col w-full">
 
-      <div className="error flex flex-col gap-4 w-full">
+      <div className="error flex flex-col w-full">
 
             <div className="flex flex-col">
 
@@ -18,23 +18,13 @@ export default async function Home(this: any) {
                 <p className="text-gray-300 font-bold antialiased w-full">Popular posts recently</p>   
 
             </div>
-            
-            <div className="flex flex-row gap-2 w-full">
 
-                <Link className='navlink-full w-full' href='/account/posts'>My Posts</Link> 
-                <Dropdown items={[
-
-                  { text: 'Hot', link: '/posts/hot', icon: 'FireIcon' },
-                  { text: 'New', link: '/posts/new', icon: 'NewspaperIcon' },
-                  { text: 'Rising', link: '/posts/rising', icon: 'ChevronDoubleUpIcon' },
-                  { text: 'Old', link: '/posts/old', icon: 'ArchiveBoxIcon' },
-
-                ]} btn_title="Sort Posts" disabled={true}/>
-
-            </div>
+            <hr className="border-border facebookTheme:border-[#b3b3b3] mb-4 mt-4" />
 
             {/*<CardPost title='test' community='meta' author='test' upvotes={5} downvotes={2} ratio='25%' submitted='Yesterday, 20:42 GMT' subtitle='okay' link='okay' />*/}
-            <PostList />
+            <div className='flex flex-col gap-4'>
+              <PostList />  
+            </div>
 
         </div>
 

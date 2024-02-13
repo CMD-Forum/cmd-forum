@@ -12,6 +12,7 @@ import MicrosoftSignInButton from "./oauth/MicrosoftSignInButton";
 import { POST } from "@/app/(general)/api/account/createAccount/route";
 import { useRouter } from "next/navigation";
 import { AlertFailure, AlertSuccess, AlertWarning } from "@/app/(general)/ui/components/alert"
+import Alert from "../new_alert";
 
 const FormSchema = z.
 
@@ -124,15 +125,16 @@ const SignupForm = () => {
 
     return ( 
 
-        <form ref={zo.ref} className="flex flex-col gap-2 bg-zinc-950 px-10 py-10 rounded-lg facebookTheme:bg-white max-w-3xl ml-auto">
+        <form ref={zo.ref} className="flex flex-col gap-2 bg-zinc-950 px-10 py-10 rounded-lg facebookTheme:bg-white max-w-3xl sm:w-[505px] ml-auto">
 
-            <h2 className="text-xl font-semibold facebookTheme:font-bold facebookTheme:text-[15px]">Signup for CMD.</h2>
+            <h2 className="header">Signup for CMD.</h2>
 
-            <hr className="border-zinc-900 mt-1 mb-1 facebookTheme:border-[#b3b3b3] facebookTheme:mt-0"></hr>
+            <hr className="border-border facebookTheme:border-[#b3b3b3] mb-2 mt-2" /> 
 
             {/* */}
 
-            {error && <AlertWarning title="Signup Failed" text={error} />}
+            {/* @ts-ignore-error */}
+            {error && <Alert type='alert' title='Signup Failed' description='Try again later, our systems may be down.' />}
 
             <Link href="/login" className="w-fit hover:underline text-gray-300">Have an account?</Link>
 
@@ -239,9 +241,9 @@ const SignupForm = () => {
             
             </button>
 
-            <hr className="border-b-[1px] border-zinc-900 mb-2"></hr>
+            <hr className="border-border mb-2"></hr>
 
-            <div className="flex flex-col gap-2 md:flex-row">
+            <div className="flex flex-col gap-2">
                 
                 <GoogleSignInButton>Login with Google</GoogleSignInButton>    
                 <MicrosoftSignInButton>Login with Microsoft</MicrosoftSignInButton>  

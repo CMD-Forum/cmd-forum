@@ -77,7 +77,7 @@ export default async function RootLayout({
 
     <NextAuthProvider>
 
-      <html lang="en" className={`defaultTheme facebookTheme:font-facebook_link __className_e66fe9`}>
+      <html lang="en" className={`defaultTheme facebookTheme:font-facebook_link ${inter.className}`}>
 
         <head>
 
@@ -91,11 +91,12 @@ export default async function RootLayout({
             <Navigation />  
           </div>
           
-          <div className='flex justify-center m-auto bg-[url("/images/uploaded/code.png")] bg-[#0c0c0e] facebookTheme:bg-white items-center min-h-dvh w-full p-6 lg:p-12'>
+          <div className='flex justify-center m-auto bg-[url("/images/uploaded/code.png")] scale-[1.1] h-full facebookTheme:bg-white items-center min-h-dvh w-full p-6 lg:p-12'>
 
               {children}    
 
           </div>
+
 
         </body>
 

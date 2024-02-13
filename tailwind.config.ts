@@ -19,6 +19,12 @@ const config: Config = {
       colors: {
         'semitransparent': 'rgba(0, 0, 0, 0.5)',
         'accent_blue': '#1a9fff',
+        'primary': '#1c1c1c',
+        'background': '#0f0f0f',
+        'card': '#0F0F0F',
+        'card-light': '#131313',
+        'border': '#1b1d1e',
+        'notification': '#ff453a',
       },
     },
     fontFamily: {

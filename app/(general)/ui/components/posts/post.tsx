@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { ArrowUpIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
@@ -10,6 +10,7 @@ import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 import MarkdownPreview from '@uiw/react-markdown-preview';
 import { AlertWarning } from '../alert';
+import { FullPostSkeleton } from '../../fallback/Post';
 
 interface PostProps {
 
@@ -83,7 +84,7 @@ export function CardPost(post: PostProps) {
 
     return (
 
-        <div className="flex w-full relative group transition-all bg-[#131313] facebookTheme:bg-white h-fit rounded-md facebookTheme:rounded-none px-5 py-5 border-zinc-900 facebookTheme:border-[#b3b3b3] border-[1px]">
+        <div className="flex w-full relative group transition-all bg-card border-[1px] border-border facebookTheme:bg-white h-fit rounded-md facebookTheme:rounded-none px-5 py-5 facebookTheme:border-zinc-900">
 
             <Link className='w-full flex-1 h-full absolute left-0 top-0 z-10' href={`/posts/${post.id}`}></Link>
 
@@ -120,7 +121,7 @@ export function CardPost(post: PostProps) {
 
                 </div>
                 
-                <Link href={`/posts/${post.id}`} className="w-fit font-sans font-semibold text-lg z-20 group-hover:text-[#C5C3C0] transition-all facebookTheme:text-lg">{post.title}</Link>
+                <Link href={`/posts/${post.id}`} className="w-fit font-sans font-semibold text-lg z-20 group-hover:text-gray-300 transition-all facebookTheme:text-lg">{post.title}</Link>
                 
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={post.imageurl} alt={post.image_alt}/>
@@ -163,67 +164,71 @@ export function FullPost(post: FullPostProps) {
 
     return (
 
-        <div className="rounded-t-md flex w-full bg-[#131313] facebookTheme:bg-white h-fit rounded-b-md facebookTheme:rounded-none px-5 py-5 border-zinc-900 facebookTheme:border-[#b3b3b3] border-[1px]">
+        <Suspense fallback={<FullPostSkeleton />}>
 
-            <div className="flex w-full bg-transparent h-fit flex-col px-2">
+            <div className="md:rounded-md flex w-full bg-card border-[1px] border-border facebookTheme:bg-white h-fit facebookTheme:rounded-none px-5 py-5 facebookTheme:border-[#b3b3b3]">
 
-                <div className="text-sm">
+                <div className="flex w-full bg-transparent h-fit flex-col px-2">
 
-                    <div>
-                        {/*<img src={post.community.image}*/}
-                        <Link className="w-fit hover:underline" href={`/c/${post.community}`}>{post.community}</Link>    
+                    <div className="text-sm">
+
+                        <div>
+                            {/*<img src={post.community.image}*/}
+                            <Link className="w-fit hover:underline" href={`/c/${post.community}`}>{post.community}</Link>    
+                        </div>
+                        
+                        <div className="flex flex-row">
+
+                            <h4 className="w-fit text-gray-300 flex gap-2">
+                                <Link href={`/user/${post.author.username}`} className='hover:underline flex gap-1'>{post.author.name} 
+                                    <p className='text-zinc-500'>{`@${post.author.username}`}</p>
+                                </Link> 
+                                <p className='facebookTheme:text-[#808080]'>•</p> 
+                                <p className='facebookTheme:text-[#808080]'>{post.submitted}</p> 
+                                <p className='hidden sm:flex facebookTheme:text-[#808080]'>•</p>
+                                <p className='hidden sm:flex'><span className='facebookTheme:text-[#808080]'>{post.ratio}</span></p>
+                            </h4>   
+
+                        </div>    
+
                     </div>
                     
-                    <div className="flex flex-row">
+                    <h1 className="w-fit font-sans font-semibold text-lg facebookTheme:text-lg">{post.title}</h1>
+                    
+                    {post.imageurl ?
 
-                        <h4 className="w-fit text-gray-300 flex gap-2"><Link href={`/user/${post.author.username}`} className='hover:underline flex gap-1'>{post.author.name} <p className='text-zinc-500'>{`@${post.author.username}`}</p></Link> <p className='facebookTheme:text-[#808080]'>•</p> <p className='facebookTheme:text-[#808080]'>{post.submitted}</p> <p className='hidden sm:flex facebookTheme:text-[#808080]'>•</p> <p className='hidden sm:flex'><p className='facebookTheme:text-[#808080]'>{post.ratio}</p></p></h4>   
+                    <div className="relative rounded-md mt-2 mb-2 max-h-96 overflow-hidden">
+                        <div 
+                            style={{ 
+                                backgroundImage: `url(${post.imageurl})`,
+                                backgroundSize: 'cover',
+                            }} 
+                            className="absolute inset-0 filter blur-xl"
+                        />
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={post.imageurl} alt={post.image_alt} className="relative m-auto max-h-96" />
+                    </div>
 
-                    </div>    
+                    :
 
-                </div>
-                
-                <h1 className="w-fit font-sans font-semibold text-lg facebookTheme:text-lg">{post.title}</h1>
-                
-                {post.imageurl ?
+                    <span id='No Image Attached'></span>
 
-                <div className="relative rounded-md mt-2 mb-2 max-h-96 overflow-hidden">
-                    <div 
-                        style={{ 
-                            backgroundImage: `url(${post.imageurl})`,
-                            backgroundSize: 'cover',
-                        }} 
-                        className="absolute inset-0 filter blur-xl"
-                    />
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={post.imageurl} alt={post.image_alt} className="relative m-auto max-h-96" />
-                </div>
+                    }
+                    
+                    {/*<p className='text-gray-300 facebookTheme:text-[11px] facebookTheme:text-black'>{post.subtitle}</p>*/}
 
-                :
+                    <div className='markdown-body'>
 
-                <span id='No Image Attached'></span>
+                        {/*<ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]} rehypePlugins={[rehypeRaw]}>{post.body}</ReactMarkdown>*/}
+                        <MarkdownPreview source={post.body} />
 
-                }
-                
-                {/*<p className='text-gray-300 facebookTheme:text-[11px] facebookTheme:text-black'>{post.subtitle}</p>*/}
-
-                <div className='markdown-body'>
-
-                    {/*<ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]} rehypePlugins={[rehypeRaw]}>{post.body}</ReactMarkdown>*/}
-                    <MarkdownPreview source={post.body} />
-
-                </div>
-
-        	    <div className='flex gap-2 mt-2 bg-zinc-900 rounded-md w-fit justify-center items-center facebookTheme:bg-white facebookTheme:border-[1px] facebookTheme:rounded-none facebookTheme:h-[26px]'>
-
-                    <button className='navlink facebookTheme:min-h-0 facebookTheme:rounded-none facebookTheme:w-[30px] facebookTheme:h-full facebookTheme:bg-facebook-grey-btn facebookTheme:text-black facebookTheme:items-center facebookTheme:flex facebookTheme:justify-center facebookTheme:p-0'><ChevronUpIcon className="font-medium h-4 w-4" /></button>
-                    <p className='facebookTheme:font-bold'>{post.upvotes - post.downvotes}</p>
-                    <button className='navlink facebookTheme:min-h-0 facebookTheme:rounded-none facebookTheme:w-[30px] facebookTheme:h-full facebookTheme:bg-facebook-grey-btn facebookTheme:text-black facebookTheme:items-center facebookTheme:flex facebookTheme:justify-center facebookTheme:p-0'><ChevronDownIcon className="font-medium h-4 w-4" /></button>
+                    </div>
 
                 </div>
 
             </div>
 
-        </div>
+        </Suspense>
 
     )
 

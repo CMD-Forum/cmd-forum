@@ -40,13 +40,12 @@ body {
   @apply text-sm;
   @apply text-white;
   @apply decoration-2 transition-all;
-  @apply bg-[#1F1F1F];
+  @apply bg-card;
   @apply hover:bg-zinc-800;
   @apply px-3;
   @apply py-2;
   @apply border-[1px];
-  @apply border-zinc-800;
-  @apply hover:border-zinc-500;
+  @apply border-border;
   @apply rounded;
   @apply flex;
   @apply gap-1.5;
@@ -233,10 +232,10 @@ a {
 
 .topbar-link {
 
-  @apply text-[16px];
+  @apply text-[15px];
   @apply font-semibold;
-  @apply text-[#C5C3C0];
-  @apply hover:text-white;
+  @apply text-gray-300;
+  @apply hover:text-gray-200;
   @apply transition-all;
   @apply hidden;
   @apply lg:flex;
@@ -246,28 +245,8 @@ a {
 
 .topbar-link.active {
 
-  @apply text-[#1a9fff];
+  @apply text-white;
 
-}
-
-.topbar-link::after {
-
-  content: "";
-  position: absolute;
-  bottom: -1.5px;
-  left: 50%;
-  display: block;
-  background-color: #1a9fff;
-  width: 0%;
-  transform: translateX(-50%);
-  height: 3px;
-  border-radius: 3px;
-  transition: width 0.15s ease-in-out;
-
-}
-
-.topbar-link.active::after {
-  width: 100%;
 }
 
 .dropdown-menu {
@@ -307,12 +286,9 @@ a {
   @apply defaultTheme:h-9;
   @apply defaultTheme:px-2;
   @apply defaultTheme:outline-none;
-  @apply defaultTheme:focus:outline-[#2f81f7];
-  @apply defaultTheme:outline-offset-[-1px];
-  @apply defaultTheme:focus:outline-2;
   @apply border-[1px];
-  @apply border-zinc-800;
-  @apply hover:border-zinc-500;
+  @apply border-border;
+  @apply focus:border-white #{!important};
   @apply defaultTheme:transition-all;
   @apply duration-200 #{!important};
 
@@ -332,9 +308,7 @@ a {
 
 .generic_field.errored {
 
-  @apply defaultTheme:ring-[2px];
-  @apply defaultTheme:ring-red-700;
-  @apply defaultTheme:transition-all;
+  @apply defaultTheme:border-red-700;
 
 }
 

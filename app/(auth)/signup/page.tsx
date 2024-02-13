@@ -10,7 +10,7 @@ const page = () => {
 
     return ( 
 
-        <div className="flex flex-col justify-center max-w-3xl md:ml-auto h-full">
+        <div>
 
             <SignupForm />
 

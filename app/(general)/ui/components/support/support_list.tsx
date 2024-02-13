@@ -55,8 +55,8 @@ export default function SupportList() {
                           transition={{ ease: "easeInOut", duration: 0.8, type: "spring" }}
                         >
                         
-                        <Link className="flex flex-col w-full bg-[#131313] p-5 hover:bg-zinc-800 rounded-md transition-all" href={`/support/${articles.id}`}>
-                            <h2 className="w-fit font-sans font-semibold text-lg">{articles.title}</h2>    
+                        <Link className="flex flex-col w-full bg-card border-border border-[1px] p-5 group rounded-md transition-all" href={`/support/${articles.id}`}>
+                            <h2 className="w-fit font-sans font-semibold text-lg group-hover:text-gray-300 transition-all">{articles.title}</h2>    
                             <p className="text-gray-300">{articles.tagline}</p>
                         </Link>
 

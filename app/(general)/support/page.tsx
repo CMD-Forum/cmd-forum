@@ -7,7 +7,7 @@ const support = async () => {
 
         <main className="flex min-h-screen flex-col w-full">
 
-            <div className="error flex flex-col gap-4 w-full">
+            <div className="error flex flex-col w-full">
 
                 <div className="flex flex-col">
 
@@ -16,7 +16,11 @@ const support = async () => {
 
                 </div>
 
-                <SupportList />
+                <hr className="border-border facebookTheme:border-[#b3b3b3] mb-4 mt-4" /> 
+
+                <div className="flex flex-col gap-4">
+                    <SupportList />    
+                </div>
 
              </div>
 

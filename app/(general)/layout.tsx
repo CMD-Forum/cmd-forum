@@ -89,7 +89,7 @@ export default async function RootLayout({
 
           <Navigation />
 
-          <div className='flex h-full m-auto bg-[#0c0c0c] facebookTheme:bg-white'>
+          <div className='flex h-full m-auto bg-[#09090b] facebookTheme:bg-white'>
 
             <Sidebar />        
 

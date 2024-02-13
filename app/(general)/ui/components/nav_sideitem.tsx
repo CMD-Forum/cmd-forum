@@ -8,6 +8,8 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
 import rehypeRaw from "rehype-raw";
+import { Suspense } from "react";
+import NavSideItemsFallback from "../fallback/NavSideItems";
 
 export function NavSideItems() {
 
@@ -17,18 +19,22 @@ export function NavSideItems() {
 
         <AnimatePresence>
             
-            <div className='flex-col gap-2 facebookTheme:gap-0 facebookTheme:sm:pl-6 px-3 py-3 facebookTheme:px-0 max-w-[300px] bg-[#0F0F0F] sticky facebookTheme:bg-white border-zinc-950 border-l-[1px] facebookTheme:border-[#b3b3b3] facebookTheme:border-l-0 facebookTheme:border-r-[1px] hidden sm:flex lg:!w-[400px]'>
+            <div className='flex-col gap-2 facebookTheme:gap-0 facebookTheme:sm:pl-6 px-3 py-3 facebookTheme:px-0 max-w-[300px] bg-card sticky facebookTheme:bg-white border-zinc-950 border-l-[1px] facebookTheme:border-[#b3b3b3] facebookTheme:border-l-0 facebookTheme:border-r-[1px] hidden sm:flex md:hidden lg:!w-[400px]'>
                 
-                <div className="flex-col sticky top-[115px] gap-2 px-2 !first:pt-0 !last:pb-0">
+                <Suspense fallback={<NavSideItemsFallback />}>
 
-                    <Link className={`navlink-sidebar ${pathname == "/" ? "active" : ""}`} href='/' prefetch={true}><HomeIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /><p className='hidden lg:flex'>Homepage</p></Link>
-                    <Link className={`navlink-sidebar ${pathname == "/posts" ? "active" : ""}`} href='/posts' prefetch={true}><ViewColumnsIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /><p className='hidden lg:flex'>Posts</p></Link>
-                    <Link className={`navlink-sidebar ${pathname == "/account" ? "active" : ""}`} href='/account' prefetch={true}><UserIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /><p className='hidden lg:flex'>Account</p></Link>
-                    <hr className='border-zinc-900 mt-1 mb-1 facebookTheme:border-[#b3b3b3] facebookTheme:hidden'></hr>
-                    <Link className={`navlink-sidebar ${pathname == "/search" ? "active" : ""}`} href='/search' prefetch={true}><MagnifyingGlassIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /><p className='hidden lg:flex'>Search</p></Link>
-                    <Link className={`navlink-sidebar ${pathname == "/account/settings" ? "active" : ""}`} href='/account/settings' prefetch={true}><Cog6ToothIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /><p className='hidden lg:flex'>Settings</p></Link>                    
-               
-                </div>
+                    <div className="flex-col sticky top-[115px] gap-2 px-2 !first:pt-0 !last:pb-0">
+
+                        <Link className={`navlink-sidebar ${pathname == "/" ? "active" : ""}`} href='/' prefetch={true}><HomeIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /><p className='hidden lg:flex'>Homepage</p></Link>
+                        <Link className={`navlink-sidebar ${pathname == "/c" ? "active" : ""}`} href='/c' prefetch={true}><ViewColumnsIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /><p className='hidden lg:flex'>Community</p></Link>
+                        <Link className={`navlink-sidebar ${pathname == "/account" ? "active" : ""}`} href='/account' prefetch={true}><UserIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /><p className='hidden lg:flex'>Account</p></Link>
+                        <hr className='border-zinc-900 mt-1 mb-1 facebookTheme:border-[#b3b3b3] facebookTheme:hidden'></hr>
+                        <Link className={`navlink-sidebar ${pathname == "/search" ? "active" : ""}`} href='/search' prefetch={true}><MagnifyingGlassIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /><p className='hidden lg:flex'>Search</p></Link>
+                        <Link className={`navlink-sidebar ${pathname == "/account/settings" ? "active" : ""}`} href='/account/settings' prefetch={true}><Cog6ToothIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /><p className='hidden lg:flex'>Settings</p></Link>                    
+                
+                    </div>
+
+                </Suspense>
 
             </div> 
 
@@ -63,7 +69,7 @@ export function TopbarItems() {
 
     return (
 
-        <div className='gap-4 hidden md:flex'>
+        <div className='gap-6 hidden md:flex'>
 
             <Link className={`topbar-link ${pathname == "/" ? "active" : ""}`} href='/'>HOME</Link>
             <Link className={`topbar-link ${pathname.startsWith("/c/") || pathname == "/c" ? "active" : ""}`} href='/c/'>COMMUNITY</Link>
@@ -109,7 +115,7 @@ export function CommunityInfobarItems(infobar: InfobarProps) {
             transition={{ ease: "easeInOut", duration: 0.8, type: "spring" }}
         >
 
-            <div className='flex-row gap-2 px-5 py-5 rounded-md facebookTheme:rounded-none w-full bg-[#131313] facebookTheme:bg-white'>
+            <div className='flex-row gap-2 p-8 rounded-md facebookTheme:rounded-none w-full bg-card border-[1px] border-border facebookTheme:bg-white'>
                 
                 <div className='flex-col'>
 
@@ -179,7 +185,7 @@ export function CommunityInfobarItems(infobar: InfobarProps) {
 
                 </ol>
 
-                <hr className='border-b-[1px] border-zinc-900 facebookTheme:border-[#b3b3b3] mb-2'></hr>
+                <hr className=' border-zinc-900 facebookTheme:border-[#b3b3b3] mb-2'></hr>
 
                 <div className='markdown-body'>
 
