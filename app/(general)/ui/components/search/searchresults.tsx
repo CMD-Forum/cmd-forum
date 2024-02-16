@@ -129,7 +129,7 @@ export default async function SearchResults(search: SearchResultProps) {
 
                 {results && results.map((result) => (
                         
-                    <div className="mb-4" key={result.id}>
+                    <div className="mb-4 w-full" key={result.id}>
                         <CardPost 
                             id={result.id}
                             title={result.title}

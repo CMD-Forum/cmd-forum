@@ -1,22 +1,19 @@
-'use client';
+"use client";
 
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useState } from "react";
 import Link from "next/link";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod" // Form Validation
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { AlertSuccess, AlertWarning } from "../alert";
-import { useSearchParams } from 'next/navigation'
 import GoogleSignInButton from "./oauth/GoogleSignInButton";
 import MicrosoftSignInButton from "./oauth/MicrosoftSignInButton";
 import Alert from "../new_alert";
+import { login } from "@/app/(general)/lib/actions/login";
+import { useTransition } from "react";
 
-const FormSchema = z.object({
+export const LoginSchema = z.object({
 
-    email: z.string().min(1, "Email is required.").email("Your email must be in a valid format."),
-
+    email: z.string().min(1, "Email is required.").email("Email must be in a valid format."),
     password: z.string().min(1, "Password is required.")
 
 })
@@ -29,32 +26,14 @@ function ErrorMessage(props: { message: string }) {
 
 const LoginForm = () => {
 
-    const router = useRouter();
-    const [error, setError] = useState<string | null>(null);
+    const [isPending, startTransition] = useTransition();
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | undefined>("");
+    const [success, setSuccess] = useState<string | undefined>("");
 
-    const searchParams = useSearchParams();
-    const success = searchParams.get('success')
-    var ref = searchParams.get('ref')
+    const form = useForm<z.infer<typeof LoginSchema>>({
 
-    var showSuccess = false;
-
-    if (success === "true") {
-
-        showSuccess = true;
-
-    }
-
-    if ( ! ref || ref === "") {
-
-        ref = "/"
-
-    }
-
-    const form = useForm<z.infer<typeof FormSchema>>({
-
-        resolver: zodResolver(FormSchema),
+        resolver: zodResolver(LoginSchema),
         defaultValues: {
             email: '',
             password: '',
@@ -62,37 +41,24 @@ const LoginForm = () => {
 
     });
 
-    const OnSubmit = async (values: z.infer<typeof FormSchema>) => {
 
-        setIsLoading(true);
+    const onSubmit = (values: z.infer<typeof LoginSchema>) => {
 
-        const signInData = await signIn('credentials', {
+        setError("");
+        setSuccess("");
 
-            email: values.email,
-            password: values.password,
-            redirect: false,
-
+        startTransition(() => {
+            login(values)
+                .then((data) => {
+                    setError(data?.error);
+                    setSuccess(data?.success);
+                })
         });
-
-        if (signInData?.error) {
-            
-            setError(signInData.error);
-            setIsLoading(false);
-            
-        } else {
-
-            setError(null);
-            setIsLoading(false);
-            //@ts-ignore
-            window.location.replace(ref);
-
-        }
-
     };
 
     return ( 
 
-        <form className="flex flex-col gap-2 bg-zinc-950 px-10 py-10 rounded-lg facebookTheme:bg-white max-w-3xl sm:w-[505px] ml-auto" onSubmit={form.handleSubmit(OnSubmit)}>
+        <form className="flex flex-col gap-2 bg-zinc-950 px-10 py-10 rounded-lg facebookTheme:bg-white max-w-3xl sm:w-[505px] ml-auto" onSubmit={form.handleSubmit(onSubmit)}>
 
             <h2 className="header">Login to CMD.</h2>
 
@@ -100,9 +66,20 @@ const LoginForm = () => {
 
             {/* */}
 
-            {showSuccess ? (
+            {success ? (
 
-                <Alert type='notice' title='Signup Success' description='Your account has been created, have fun!' />
+                <Alert type='notice' title='Signup Success' description={success} />
+
+            ): (
+
+                <pre></pre>
+
+            )}
+
+            
+            {error ? (
+
+                <Alert type='error' title='Login Failed' description={error} />
 
             ): (
 
@@ -117,6 +94,7 @@ const LoginForm = () => {
             <div className="flex gap-1 facebookTheme:text-[11px] font-medium">Email<p className="text-[#fca5a5]">*</p></div>
             <input
                 {...form.register('email')}
+                disabled={isPending}
                 placeholder="Email"
                 className={`generic_field ${form.formState.errors.email ? "errored" : ""}`}
             />
@@ -134,6 +112,7 @@ const LoginForm = () => {
             <input
                 type="password"
                 {...form.register('password')}
+                disabled={isPending}
                 placeholder="Password"
                 className={`generic_field ${form.formState.errors.email ? "errored" : ""}`}
             />
@@ -147,17 +126,15 @@ const LoginForm = () => {
 
             {/* */}
 
-            <button disabled={!form.formState.isValid || isLoading} type="submit" className="navlink-full !w-full sm:!w-[60px] h-[36px] justify-center min-w-[62px]">
+            <button disabled={!form.formState.isValid || isPending} type="submit" className="navlink-full !w-full sm:!w-[60px] h-[36px] justify-center min-w-[62px]">
                 
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                {isLoading ? <img src="/spinner.svg" alt="Loading..." className="spinner"/>  : 'Login' }
+                {isPending ? <img src="/spinner.svg" alt="Loading..." className="spinner"/>  : 'Login' }
                 
             </button>
             {/* */}
 
             {/*<pre>Validation status: {JSON.stringify(zo.validation, null, 2)}</pre>*/}
-
-            {error && <AlertWarning title="Login Failure" text={error} />}
 
             <hr className="border-border mb-2"></hr>
 
@@ -174,14 +151,4 @@ const LoginForm = () => {
     
 }
 
-function SuspenseForm (props:any) {
-
-    return (
-        <Suspense>
-            <LoginForm />
-        </Suspense>
-    );
-
-}
-
-export default SuspenseForm;
+export default LoginForm;

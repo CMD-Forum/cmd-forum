@@ -1,20 +1,11 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/(general)/lib/auth";
+import { auth } from "@/auth";
 import { prisma } from "@/app/(general)/lib/db";
-import ProfileMain from "../ui/components/account/ProfileMain";
-import { useRouter } from "next/navigation";
+import ProfileMain from "@/app/(general)/ui/components/account/ProfileMain";
+import { redirect } from 'next/navigation';
 
 const Account = async () => {
 
-    var session = await getServerSession(authOptions)
-
-    const router = useRouter();
-
-    if ( ! session ) {
-
-        router.push("/login");
-
-    };
+    const session = await auth();
   
     const p_user = await prisma.user.findUnique({
   

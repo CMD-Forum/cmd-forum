@@ -180,14 +180,14 @@ body {
 .navlink-sidebar {
 
   @extend .navlink;
-  @apply h-8;
+  @apply h-fit;
   @apply w-full;
   @apply bg-transparent;
   @apply border-0;
-  @apply w-fit; 
-  @apply lg:w-full;
+  @apply w-full;
   @apply mt-2;
   @apply mb-2;
+  @apply p-2.5;
 
   // facebookTheme
 
@@ -280,7 +280,7 @@ a {
 
 .generic_field {
 
-  @apply defaultTheme:bg-[#0c0c0c];
+  @apply defaultTheme:bg-card;
   @apply defaultTheme:text-white;
   @apply defaultTheme:rounded-md;
   @apply defaultTheme:h-9;

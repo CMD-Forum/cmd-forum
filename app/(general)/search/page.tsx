@@ -17,22 +17,33 @@ export default function Search({
 
     return (
 
-        <div className='w-full m-auto flex-row gap-2 px-5 py-5 rounded-md facebookTheme:rounded-none bg-[#131313] facebookTheme:bg-white'>
+      <div className="error flex flex-col w-full">
 
             <div className="flex flex-col">
 
                 <h1 className="header">Search</h1>
-                <p className="text-gray-300 font-bold antialiased w-full">Search the database for content you want.</p>   
+                <p className="text-gray-300 font-bold antialiased w-full">Find that post you liked</p>   
 
             </div>
 
-            <hr className='border-b-[1px] border-zinc-900 facebookTheme:border-[#b3b3b3] mt-2 mb-3.5' />
+            <hr className="border-border facebookTheme:border-[#b3b3b3] mb-4 mt-4" />
 
-            <SearchBar />   
+            <SearchBar />
 
-            <hr className='border-b-[1px] border-zinc-900 facebookTheme:border-[#b3b3b3] mt-2 mb-3.5' />
+            <hr className='border-border facebookTheme:border-[#b3b3b3] mb-4 mt-4' />
 
-            <SearchResults query={query} currentPage={currentPage} type={type}/>
+            <div className='flex flex-col gap-4'>
+                {query ?
+                
+                    <>
+                        <SearchResults query={query} currentPage={currentPage} type={type} />  
+                        <h1 className="text-gray-300 font-bold antialiased w-fit m-auto">Looks like you've reached the end.</h1>                    
+                    </>
+
+                :
+                    <h1 className="text-gray-300 font-bold antialiased w-fit m-auto">Search for results to show</h1>
+                }
+            </div>
 
         </div>
 

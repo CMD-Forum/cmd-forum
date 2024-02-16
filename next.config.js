@@ -3,3 +3,9 @@
 module.exports = {
     
 };
+
+const nextConfig = {
+    experimental: {
+        serverActions: true,
+    },
+}

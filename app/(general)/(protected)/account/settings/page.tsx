@@ -1,4 +1,8 @@
-export default function SettingsPage() {
+import { auth } from "@/auth"
+
+export default async function SettingsPage() {
+
+    const session = await auth();
 
     return (
 
@@ -6,7 +10,7 @@ export default function SettingsPage() {
 
             <div className="flex flex-col mb-4">
 
-                <h1 className="header">Settings</h1>
+                <h1 className="header">{ JSON.stringify(session) }</h1>
                 <p className="text-gray-300 font-bold antialiased w-full">Your account settings.</p>   
 
             </div>

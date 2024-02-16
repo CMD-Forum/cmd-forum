@@ -75,8 +75,6 @@ export default async function RootLayout({
 
   return (
 
-    <NextAuthProvider>
-
       <html lang="en" className={`defaultTheme facebookTheme:font-facebook_link ${inter.className}`}>
 
         <head>
@@ -105,15 +103,11 @@ export default async function RootLayout({
 
           </div>
 
-        <Bottombar />
-
         <Footer />
 
         </body>
 
       </html>
-
-    </NextAuthProvider>
 
   )
 }

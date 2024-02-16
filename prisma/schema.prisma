@@ -1,3 +1,11 @@
+//                                                                                                                                   //
+// This file is the schema for Prisma.                                                                                               //
+// Run ``npx prisma migrate`` after connecting to your database.                                                                     //
+//                                                                                                                                   //
+// Note that Prisma Studio seems to mess up markdown formatting, so try to avoid using it for anything other than one line markdown. //
+// It's still fine for non-markdown stuff.                                                                                           //                                                                                     //
+//                                                                                                                                   //
+
 generator client {
   provider        = "prisma-client-js"
   output          = "../node_modules/.prisma/client"
@@ -5,23 +13,27 @@ generator client {
   previewFeatures = ["fullTextSearch"]
 }
 
+generator docs { // Thanks, prisma-docs-generator: https://github.com/pantharshit00/prisma-docs-generator
+  provider = "node node_modules/prisma-docs-generator"
+}
+
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "postgresql" // Change if using a different database, obviously.
+  url      = env("DATABASE_URL") // Change this in your ``.env``.
 }
 
 model Community {
   id             Int      @id @default(autoincrement())
   createdAt      DateTime @default(now())
   updatedAt      DateTime @default(now()) @updatedAt
-  name           String   @unique @default("") @db.VarChar(50)
-  display_name   String   @unique @default("") @db.VarChar(50)
+  name           String   @unique @default("") @db.VarChar(50) // Name used in URL to find community
+  display_name   String   @unique @default("") @db.VarChar(50) // Name shown when
   description    String   @default("Your description here.")
-  image          String   @default("/images/favicon/favicon.svg")
+  image          String   @default("/images/favicon/favicon.svg") // Image that is shown for the community, defaults to the favicon.
   public         Boolean  @default(true)
   admin_ids      Json     @default("[]")
   administrators User[]
-  sidebar_md     String   @default("# Edit your community sidebar in the admin panel.")
+  sidebar_md     String   @default("# Edit your community sidebar in the admin panel.") // Originally there was a sidebar, but that got scrapped. This is now shown below the community information.
   posts          Post[]
 }
 

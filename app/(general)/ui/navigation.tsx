@@ -3,8 +3,7 @@ import { PlusIcon } from '@heroicons/react/24/solid'
 import { FaAndroid, FaApple, FaGithub } from "react-icons/fa6";
 import '@/app/(general)/ui/components/dropdown'
 import React from 'react';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '../lib/auth';
+import { auth } from '@/auth';
 import { prisma } from '@/app/(general)/lib/db';
 import { Acc_Dropdown, NoAccount_Dropdown } from './components/dropdowns/account_dropdown';
 import { BottombarItems, CommunityInfobarItems, NavSideItems, TopbarItems } from './components/nav_sideitem';
@@ -12,7 +11,7 @@ import { inter } from './fonts';
 
 export async function Navigation() {
 
-  var session = await getServerSession(authOptions)
+  const session = await auth();
 
   if (session && session.user && session.user.username) {
 
@@ -24,20 +23,21 @@ export async function Navigation() {
 
   } else {
 
-    session = null
+    null
 
   }
 
   return (
 
-      <div className='sticky top-0 z-50 facebookTheme:lg:w-[980px] facebookTheme:w-full h-[60px] items-center bg-transparent backdrop-blur-md px-6 md:px-16 flex transition-all facebookTheme:bg-facebook_blue'>
+      <div className='sticky top-0 z-40 facebookTheme:lg:w-[980px] facebookTheme:w-full h-[60px] items-center bg-card lg:bg-transparent lg:backdrop-blur-md px-6 md:px-16 flex transition-all facebookTheme:bg-facebook_blue'>
         
-        <div className=' md:ml-32 md:mr-32 flex gap-32'>
+        <div className='flex gap-32'>
 
           <div className='flex items-center mr-auto h-full w-fit gap-12'>
           
-            <Link className={`z-50 flex ${inter.className} font-extrabold text-3xl hover:text-accent_blue transition-all`} href="/"><p>CMD /&gt;</p></Link>  
+            <Link className={`z-50 ml-10 md:ml-0 flex ${inter.className} font-extrabold text-3xl hover:text-gray-300 transition-all`} href="/"><p>CMD /&gt;</p></Link>  
             <TopbarItems />
+            <p>{ session?.user.username }</p>
 
           </div>
 

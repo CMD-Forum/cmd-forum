@@ -1,6 +1,19 @@
 "use client";
 
-import { BookOpenIcon, CalendarDaysIcon, ChatBubbleBottomCenterTextIcon, Cog6ToothIcon, HomeIcon, MagnifyingGlassIcon, PencilSquareIcon, ShieldCheckIcon, UserIcon, ViewColumnsIcon } from "@heroicons/react/20/solid";
+import { 
+    BookOpenIcon, 
+    CalendarDaysIcon, 
+    ChatBubbleBottomCenterTextIcon, 
+    Cog6ToothIcon, 
+    HomeIcon, 
+    MagnifyingGlassIcon, 
+    PencilSquareIcon, 
+    ShieldCheckIcon, 
+    UserIcon, 
+    ViewColumnsIcon, 
+    Bars3Icon,
+    XMarkIcon
+} from "@heroicons/react/20/solid";
 import Link from "next/link"
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
@@ -8,35 +21,49 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
 import rehypeRaw from "rehype-raw";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import NavSideItemsFallback from "../fallback/NavSideItems";
 
 export function NavSideItems() {
 
     const pathname = usePathname();
+    const [expanded, setExpanded] = useState(false);
 
     return (
 
-        <AnimatePresence>
-            
-            <div className='flex-col gap-2 facebookTheme:gap-0 facebookTheme:sm:pl-6 px-3 py-3 facebookTheme:px-0 max-w-[300px] bg-card sticky facebookTheme:bg-white border-zinc-950 border-l-[1px] facebookTheme:border-[#b3b3b3] facebookTheme:border-l-0 facebookTheme:border-r-[1px] hidden sm:flex md:hidden lg:!w-[400px]'>
-                
-                <Suspense fallback={<NavSideItemsFallback />}>
+        <AnimatePresence mode="wait" initial={false}>
 
-                    <div className="flex-col sticky top-[115px] gap-2 px-2 !first:pt-0 !last:pb-0">
+            <>
+                <button className={`navlink-sidebar fixed top-0 z-[100] ml-2 lg:hidden !w-fit !border-[1px] !border-border`} onClick={() => setExpanded(!expanded)}><Bars3Icon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /></button>
+            </>
 
-                        <Link className={`navlink-sidebar ${pathname == "/" ? "active" : ""}`} href='/' prefetch={true}><HomeIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /><p className='hidden lg:flex'>Homepage</p></Link>
-                        <Link className={`navlink-sidebar ${pathname == "/c" ? "active" : ""}`} href='/c' prefetch={true}><ViewColumnsIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /><p className='hidden lg:flex'>Community</p></Link>
-                        <Link className={`navlink-sidebar ${pathname == "/account" ? "active" : ""}`} href='/account' prefetch={true}><UserIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /><p className='hidden lg:flex'>Account</p></Link>
-                        <hr className='border-zinc-900 mt-1 mb-1 facebookTheme:border-[#b3b3b3] facebookTheme:hidden'></hr>
-                        <Link className={`navlink-sidebar ${pathname == "/search" ? "active" : ""}`} href='/search' prefetch={true}><MagnifyingGlassIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /><p className='hidden lg:flex'>Search</p></Link>
-                        <Link className={`navlink-sidebar ${pathname == "/account/settings" ? "active" : ""}`} href='/account/settings' prefetch={true}><Cog6ToothIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /><p className='hidden lg:flex'>Settings</p></Link>                    
+            <motion.div 
+                className={`w-screen h-screen overflow-hidden absolute ${expanded === true ? "z-[1000]" : "-z-50"} bg-semitransparent`}
+                animate={{
+                    opacity: expanded ? "100%" : "0%",
+                }}
+                exit={{
+                    opacity: expanded ? "100%" : "0%",
+                }}
+            >
+                <motion.div 
+                    className="bg-card fixed top-0 h-dvh z-40 w-[300px] px-4 py-2"
+                    animate={{
+                        x: expanded ? "0px" : "-300px",
+                    }}
+                    exit={{
+                        x: expanded ? "0px" : "-300px",
+                    }}
+                    transition={{ type: "tween" }}     
+                >
                 
+                    <div>
+                        <button className={`navlink-sidebar fixed top-0 z-[100] ml-2 lg:hidden !w-fit !border-[1px] !border-border`} onClick={() => setExpanded(!expanded)}><XMarkIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /></button>
                     </div>
+                    <Link className="navlink-sidebar" href={"/"} prefetch={true}>test</Link>
 
-                </Suspense>
-
-            </div> 
+                </motion.div>                
+            </motion.div>
 
         </AnimatePresence> 
 

@@ -164,7 +164,7 @@ export function FullPost(post: FullPostProps) {
 
     return (
 
-        <Suspense fallback={<FullPostSkeleton />}>
+        <Suspense fallback={<FullPostSkeleton />} key={1}>
 
             <div className="md:rounded-md flex w-full bg-card border-[1px] border-border facebookTheme:bg-white h-fit facebookTheme:rounded-none px-5 py-5 facebookTheme:border-[#b3b3b3]">
 
