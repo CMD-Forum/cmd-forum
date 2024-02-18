@@ -44,7 +44,7 @@ This will start a HTTPS development server. HTTPS is required for authentication
 > [!NOTE]
 > `npm run dev` runs `next dev --experimental-https`
 
-### Credits
+## Credits
 
 CMD/> uses the following packages, so check them out:
 
