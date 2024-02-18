@@ -41,7 +41,7 @@ npm run dev
 
 This will start a HTTPS development server. HTTPS is required for authentication to work on Chromium browsers, however Firefox will work regardless.
 
-> [!NOTE] Info
+> [!NOTE]
 > `npm run dev` runs `next dev --experimental-https`
 
 ### Credits
