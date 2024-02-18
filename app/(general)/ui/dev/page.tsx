@@ -13,6 +13,8 @@ export default function DeveloperPage() {
             <hr className="border-border facebookTheme:border-[#b3b3b3] mb-4 mt-4" />
 
             <h2 className="text-gray-300 font-bold antialiased w-full">Buttons</h2>              
+
+            <button className="navlink">navlink</button>
         </div>
 
     );

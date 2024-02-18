@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.scss'
 import { Navigation, Sidebar, Infobar, Bottombar, Footer } from '@/app/(general)/ui/navigation'
-import NextAuthProvider from './nextauthprovider'
+import { SessionProvider } from 'next-auth/react'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -75,39 +75,47 @@ export default async function RootLayout({
 
   return (
 
-      <html lang="en" className={`defaultTheme facebookTheme:font-facebook_link ${inter.className}`}>
+    <SessionProvider>
 
-        <head>
+        <html lang="en" className={`defaultTheme facebookTheme:font-facebook_link ${inter.className}`}>
 
-          <link rel='shortcut icon' href='/images/favicon/favicon.ico' />
+          <head>
 
-        </head>
+            <link rel='shortcut icon' href='/images/favicon/favicon.ico' />
 
-        <body className='bg-[#0c0c0c] facebookTheme:bg-white text-white facebookTheme:text-black overflow-scroll overflow-x-hidden h-vh relative'>
+          </head>
 
-          <Navigation />
+          <body id='body' className='bg-[#0c0c0c] facebookTheme:bg-white text-white facebookTheme:text-black overflow-scroll overflow-x-hidden h-vh relative'>
 
-          <div className='flex h-full m-auto bg-[#09090b] facebookTheme:bg-white'>
+            <div id='modal-root'>
 
-            <Sidebar />        
+              <Navigation />
 
-            <div className='flex flex-col justify-center max-w-[70rem] w-[70rem] p-6 lg:p-12 m-auto'>
+                <div className='flex h-full m-auto bg-[#09090b] facebookTheme:bg-white'>
 
-              <div className='max-w-[70rem]'>
+                  <Sidebar />        
 
-                {children}    
+                  <div className='flex flex-col justify-center max-w-[70rem] w-[70rem] p-6 lg:p-12 m-auto'>
 
-              </div>
+                    <div className='max-w-[70rem]'>
+
+                      {children}    
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              <Footer />
 
             </div>
 
-          </div>
+          </body>
 
-        <Footer />
+        </html>
 
-        </body>
-
-      </html>
+    </SessionProvider>
 
   )
 }

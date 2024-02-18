@@ -20,7 +20,7 @@ export default async function PostView({ params }: { params: { id: number } }) {
 
   const post = await prisma.post.findUnique({
     where: {
-      id: Number(params.id)
+      id: params.id
     },
     include: {
       community: {

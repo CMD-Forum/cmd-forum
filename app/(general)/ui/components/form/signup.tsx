@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
 import Alert from "../new_alert";
 import { signup } from "@/app/(general)/lib/actions/signup";
+import { OAuthButtons } from "./oauth/OAuthButtons";
 
 export const SignupSchema = z.
 
@@ -235,9 +236,14 @@ const SignupForm = () => {
                 {isPending ? <img src="/spinner.svg" alt="Loading..." className="spinner"/>  : 'Signup' }
                 
             </button>
-            {/* */}
 
-            {/*<pre>Validation status: {JSON.stringify(zo.validation, null, 2)}</pre>*/}
+            <hr />
+
+            <div className="flex flex-col gap-2">
+
+                <OAuthButtons width_full={true} />
+
+            </div>
 
         </form>
     

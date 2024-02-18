@@ -1,10 +1,10 @@
-"use server";
+
 
 import * as z from "zod";
 import { AuthError } from "next-auth";
 
-import { signIn } from "@/auth";
-import { LoginSchema } from "../../ui/components/form/login";
+import { signIn } from "next-auth/react";
+import { LoginSchema } from "../schemas";
 import { defaultLoginRedirect } from "@/routes";
 
 export async function login(values: z.infer<typeof LoginSchema>,) {

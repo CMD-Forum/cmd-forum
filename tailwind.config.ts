@@ -17,7 +17,7 @@ const config: Config = {
         'facebook_bs': '0 1px 0 rgba(0, 0, 0, .1)',
       },
       colors: {
-        'semitransparent': 'rgba(0, 0, 0, 0.5)',
+        'semitransparent': 'rgba(0, 0, 0, 0.75)',
         'accent_blue': '#1a9fff',
         'primary': '#1c1c1c',
         'background': '#0f0f0f',

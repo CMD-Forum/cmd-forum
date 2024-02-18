@@ -5,18 +5,12 @@ import Link from "next/link";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod" // Form Validation
-import GoogleSignInButton from "./oauth/GoogleSignInButton";
-import MicrosoftSignInButton from "./oauth/MicrosoftSignInButton";
 import Alert from "../new_alert";
 import { login } from "@/app/(general)/lib/actions/login";
 import { useTransition } from "react";
-
-export const LoginSchema = z.object({
-
-    email: z.string().min(1, "Email is required.").email("Email must be in a valid format."),
-    password: z.string().min(1, "Password is required.")
-
-})
+import { LoginSchema } from "@/app/(general)/lib/schemas";
+import { OAuthButtons } from "./oauth/OAuthButtons";
+import { useSearchParams } from 'next/navigation'
 
 function ErrorMessage(props: { message: string }) {
 
@@ -56,6 +50,9 @@ const LoginForm = () => {
         });
     };
 
+    const searchParams = useSearchParams();
+    const query_error = searchParams.get('error');
+
     return ( 
 
         <form className="flex flex-col gap-2 bg-zinc-950 px-10 py-10 rounded-lg facebookTheme:bg-white max-w-3xl sm:w-[505px] ml-auto" onSubmit={form.handleSubmit(onSubmit)}>
@@ -65,6 +62,13 @@ const LoginForm = () => {
             <hr className="border-border facebookTheme:border-[#b3b3b3] mb-2 mt-2" /> 
 
             {/* */}
+
+            {query_error === "OAuthCallbackError" ? <Alert type="error" title="Authentication Failed" description="The external provider cancelled the login, please try again." /> : null }
+            {query_error === "OAuthSigninError" ? <Alert type="error" title="Authentication Failed" description="The login failed for an unknown reason, please try again." /> : null }
+            {query_error === "AdapterError" ? <Alert type="error" title="Authentication Failed" description="The database is currently experiencing issues, please try again later." /> : null }
+            {query_error === "CredentialsSignin" ? <Alert type="alert" title="Authentication Failed" description="The username or password was incorrect." /> : null }
+            {query_error === "AuthorizedCallbackError" ? <Alert type="alert" title="Authentication Failed" description="The account does not exist or has not verified their email." /> : null }
+            {query_error === "OAuthAccountNotLinked" ? <Alert type="alert" title="Authentication Failed" description="The external email is associated with an existing account." /> : null }
 
             {success ? (
 
@@ -136,12 +140,11 @@ const LoginForm = () => {
 
             {/*<pre>Validation status: {JSON.stringify(zo.validation, null, 2)}</pre>*/}
 
-            <hr className="border-border mb-2"></hr>
+            <hr />
 
             <div className="flex flex-col gap-2">
     
-                <GoogleSignInButton>Login with Google</GoogleSignInButton>    
-                <MicrosoftSignInButton>Login with Microsoft</MicrosoftSignInButton>  
+                <OAuthButtons width_full={true} />
 
             </div>
 

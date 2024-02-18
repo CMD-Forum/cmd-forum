@@ -41,7 +41,7 @@ body {
   @apply text-white;
   @apply decoration-2 transition-all;
   @apply bg-card;
-  @apply hover:bg-zinc-800;
+  @apply hover:bg-border;
   @apply px-3;
   @apply py-2;
   @apply border-[1px];
@@ -391,6 +391,14 @@ a {
   @apply transition-all;
   @apply hover:border-white #{!important};
 
+}
+
+hr {
+
+  @apply border-border;
+  @apply mt-1;
+  @apply mb-1;
+  
 }
 
 /*.infobar-markdown {
