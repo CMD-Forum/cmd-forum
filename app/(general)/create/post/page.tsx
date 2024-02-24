@@ -6,7 +6,7 @@ const page = () => {
     return ( 
 
 
-        <div className="flex flex-col justify-center m-auto max-w-3xl">
+        <div className="flex flex-col justify-center m-auto max-w-5xl">
 
             <CreatePostForm />
                         

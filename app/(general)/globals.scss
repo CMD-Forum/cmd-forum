@@ -136,6 +136,12 @@ body {
 
 }
 
+.navlink-full.icon {
+
+  @apply p-2;
+
+}
+
 .navlink-full:disabled {
 
   @apply bg-neutral-500;
@@ -234,7 +240,7 @@ a {
 
   @apply text-[15px];
   @apply font-semibold;
-  @apply text-gray-300;
+  @apply text-gray-400;
   @apply hover:text-gray-200;
   @apply transition-all;
   @apply hidden;
@@ -392,6 +398,53 @@ a {
   @apply hover:border-white #{!important};
 
 }
+
+.wmde-markdown hr {
+  @apply border-border #{!important};
+  @apply border-0 #{!important};
+  @apply border-t-[1px] #{!important};
+  @apply h-[1px] #{!important};
+}
+
+.wmde-markdown-var {
+  @apply bg-card #{!important};
+  @apply border-border #{!important};
+  @apply border-1 #{!important};
+}
+
+.md-editor {
+  @apply rounded-md #{!important};
+  @apply z-0;
+}
+
+.md-editor-toolbar-warp {
+  @apply border-b-border #{!important};
+  @apply p-1.5 #{!important};
+  @apply z-[999] #{!important};
+}
+
+.md-editor-toolbar-warp > .md-editor-toolbar > button {
+  @apply text-gray-300 #{!important};
+  @apply hover:text-white #{!important};
+  @apply border-1 #{!important};
+  @apply border-border #{!important};
+  @apply hover:bg-border #{!important};
+  @apply w-8 #{!important};
+  @apply h-8 #{!important};
+  @apply p-1.5 #{!important};
+  @apply rounded #{!important};
+}
+
+.md-editor-toolbar-warp > .md-editor-toolbar > button.active {
+  @apply text-white #{!important};
+  @apply bg-border #{!important};
+}
+
+.md-editor-preview {
+  @apply bg-transparent #{!important};
+}
+
+// hr
 
 hr {
 

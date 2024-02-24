@@ -33,7 +33,7 @@ export function NavSideItems() {
 
     const pathname = usePathname();
     const [expanded, setExpanded] = useState(false);
-    const { data: session, update } = useSession()
+    const { data: session, update } = useSession();
 
     return (
 
@@ -44,16 +44,13 @@ export function NavSideItems() {
             </>
 
             <motion.div 
-                className={`w-full top-0 left-0 h-full overflow-hidden absolute ${expanded === true ? "z-[1000]" : "-z-50"} bg-semitransparent fixed`}
+                className={`w-full top-0 left-0 h-dvh overflow-hidden absolute ${expanded === true ? "z-[1000]" : "-z-50"} bg-semitransparent fixed`}
                 animate={{
-                    opacity: expanded ? "100%" : "0%",
-                }}
-                exit={{
                     opacity: expanded ? "100%" : "0%",
                 }}
             >
                 <motion.div 
-                    className="bg-card fixed top-0 z-40 w-[300px] px-4 py-2 h-full"
+                    className="bg-card fixed top-0 z-40 w-[300px] px-4 py-2 h-full flex flex-col"
                     animate={{
                         x: expanded ? "0px" : "-300px",
                     }}
@@ -69,7 +66,7 @@ export function NavSideItems() {
                     </div>
 
                     <Link 
-                        className={`navlink-sidebar ${pathname === "/" ? "active" : null}`} 
+                        className={`navlink-sidebar !mt-4 ${pathname === "/" ? "active" : null}`} 
                         href={"/"} 
                         prefetch={true}>
                         <HomeIcon className="w-5 h-5 mr-1" />
@@ -77,7 +74,7 @@ export function NavSideItems() {
                     </Link>
 
                     <Link 
-                        className={`navlink-sidebar ${pathname === "/c" ? "active" : null}`} 
+                        className={`navlink-sidebar !mt-0 ${pathname === "/c" ? "active" : null}`} 
                         href={"/c"} 
                         prefetch={true}>
                         <ViewColumnsIcon className="w-5 h-5 mr-1" />
@@ -89,14 +86,16 @@ export function NavSideItems() {
                     {session 
                     ?
 
-                        <Link 
-                            className={`navlink-sidebar mt-auto`} 
-                            href={"/account"} 
-                            prefetch={true}>
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={session.user.profile_image} className="w-5 h-5 rounded-sm mr-1" alt="Your Account Image" />
-                            {session.user.name}
-                        </Link>   
+                        <div className="mt-auto">
+                            <Link 
+                                className={`navlink-sidebar mt-auto`} 
+                                href={"/account"} 
+                                prefetch={true}>
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img src={session.user.profile_image} className="w-5 h-5 rounded-sm mr-1" alt="Your Account Image" />
+                                {session.user.name}
+                            </Link>   
+                        </div>
 
                     :
 
@@ -145,11 +144,10 @@ export function TopbarItems() {
 
         <div className='gap-6 hidden md:flex'>
 
-            <Link className={`topbar-link ${pathname == "/" ? "active" : ""}`} href='/'>HOME</Link>
-            <Link className={`topbar-link ${pathname.startsWith("/c/") || pathname == "/c" ? "active" : ""}`} href='/c/'>COMMUNITY</Link>
-            <Link className={`topbar-link ${pathname.startsWith("/posts") ? "active" : ""}`} href='/posts/'>POSTS</Link>
-            <Link className={`topbar-link ${pathname.startsWith("/support") ? "active" : ""}`} href='/support/'>SUPPORT</Link>            
-            <Link className={`topbar-link ${pathname.startsWith("/search") ? "active" : ""}`} href='/search/'>SEARCH</Link>
+            <Link className={`topbar-link ${pathname == "/" ? "active" : ""}`} href='/'>Home</Link>
+            <Link className={`topbar-link ${pathname.startsWith("/c") || pathname == "/c" ? "active" : ""}`} href='/c/'>Community</Link>
+            <Link className={`topbar-link ${pathname.startsWith("/posts") ? "active" : ""}`} href='/posts/'>Posts</Link>       
+            <Link className={`topbar-link ${pathname.startsWith("/search") ? "active" : ""}`} href='/search/'>Search</Link>
 
         </div>
 

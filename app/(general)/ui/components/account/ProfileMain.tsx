@@ -14,9 +14,9 @@ const variants = {
 interface ProfileProps {
 
     username: string;
-    profile_image_src: string;
+    image: string;
     description: string;
-    createdAt: string;
+    createdAt: Date;
     postCount: string | number;
 
 }
@@ -33,14 +33,14 @@ export default function ProfileMain(user: ProfileProps) {
             transition={{ ease: "easeInOut", duration: 0.8, type: "spring" }}
         >
 
-            <div className='flex-row gap-2 px-5 py-5 rounded-md facebookTheme:rounded-none w-full bg-[#131313] facebookTheme:bg-white'>
+            <div className='flex-row gap-2 px-5 py-5 rounded-md facebookTheme:rounded-none w-full bg-card border-border border-[1px] facebookTheme:bg-white'>
                 
                 <div className='flex-col'>
 
                     <div className='flex flex-row gap-3 items-center'>
 
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={user.profile_image_src} className='h-[56px] rounded' alt={`${user.username}'s Profile Image`} />
+                        <img src={user.image} className='h-[56px] rounded-md' alt={`${user.username}'s Profile Image`} />
 
                         <div className='flex flex-col'>
 
@@ -51,15 +51,13 @@ export default function ProfileMain(user: ProfileProps) {
 
                     </div>
 
-                
-
                     <div className='flex flex-row gap-3 items-center mt-2'>
 
                         <div className='flex flex-row gap-3'>
 
                             <div className='flex flex-row gap-1'>
                                 <CalendarDaysIcon className='w-[20px]' />
-                                <p className='text-sm'>{user.createdAt}</p>  
+                                <p className='text-sm'>{user.createdAt.toLocaleDateString()}</p>  
                             </div>
 
                             <div className='flex flex-row gap-1'>

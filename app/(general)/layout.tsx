@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.scss'
 import { Navigation, Sidebar, Infobar, Bottombar, Footer } from '@/app/(general)/ui/navigation'
 import { SessionProvider } from 'next-auth/react'
+import { auth } from '@/auth'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -73,9 +74,11 @@ export default async function RootLayout({
 
 }) {
 
+  const session = await auth();
+
   return (
 
-    <SessionProvider>
+    <SessionProvider session={session}>
 
         <html lang="en" className={`defaultTheme facebookTheme:font-facebook_link ${inter.className}`}>
 
@@ -85,7 +88,7 @@ export default async function RootLayout({
 
           </head>
 
-          <body id='body' className='bg-[#0c0c0c] facebookTheme:bg-white text-white facebookTheme:text-black overflow-scroll overflow-x-hidden h-vh relative'>
+          <body id='body' className='bg-card facebookTheme:bg-white text-white facebookTheme:text-black overflow-scroll overflow-x-hidden h-vh relative'>
 
             <div id='modal-root'>
 

@@ -1,43 +1,29 @@
 import Link from 'next/link';
-import { PlusIcon } from '@heroicons/react/24/solid'
+import { PlusIcon } from '@heroicons/react/16/solid'
 import { FaAndroid, FaApple, FaGithub } from "react-icons/fa6";
-import '@/app/(general)/ui/components/dropdown'
 import React from 'react';
 import { auth } from '@/auth';
 import { prisma } from '@/app/(general)/lib/db';
-import { Acc_Dropdown, NoAccount_Dropdown } from './components/dropdowns/account_dropdown';
 import { BottombarItems, CommunityInfobarItems, NavSideItems, TopbarItems } from './components/nav_sideitem';
 import { inter } from './fonts';
+import LogoutButton from './components/signoutButton';
+import { Dropdown } from './components/dropdown/dropdown';
+import TopnavDropdown from './components/dropdown/topnav_dropdown';
 
 export async function Navigation() {
 
   const session = await auth();
 
-  if (session && session.user && session.user.username) {
-
-    const p_user = await prisma.user.findUnique({
-
-        where: { username: session.user.username },
-
-    });
-
-  } else {
-
-    null
-
-  }
-
   return (
 
-      <div className='sticky top-0 z-40 facebookTheme:lg:w-[980px] facebookTheme:w-full h-[60px] items-center bg-card lg:bg-transparent lg:backdrop-blur-md px-6 md:px-16 flex transition-all facebookTheme:bg-facebook_blue'>
+      <div className='sticky top-0 z-40 h-[60px] items-center bg-card lg:bg-transparent lg:backdrop-blur px-6 md:px-16 flex transition-all'>
         
-        <div className='flex gap-32'>
+        <div className='flex gap-32 w-full'>
 
           <div className='flex items-center mr-auto h-full w-fit gap-12'>
           
             <Link className={`z-50 ml-10 md:ml-0 flex ${inter.className} font-extrabold text-3xl hover:text-gray-300 transition-all`} href="/"><p>CMD /&gt;</p></Link>  
             <TopbarItems />
-            <p>{ session?.user.username }</p>
 
           </div>
 
@@ -45,8 +31,11 @@ export async function Navigation() {
           
             {session?.user ? (
 
-              null
-              
+              <div className='ml-auto flex gap-4'>
+
+                <TopnavDropdown />
+
+              </div>
 
             ) : (
 
@@ -128,9 +117,9 @@ export function Footer() {
 
       <div className='m-auto w-fit'>
 
-        <hr className=' border-border facebookTheme:border-[#b3b3b3] mb-4' />
+        <hr className='mb-4' />
 
-        <div className='flex gap-6 px-4'>
+        <div className='flex gap-2 lg:gap-6 px-4 flex-col lg:flex-row'>
 
           <Link className={`flex ${inter.className} font-extrabold text-4xl w-fit`} href="/"><p>CMD /&gt;</p></Link>  
 
@@ -143,15 +132,17 @@ export function Footer() {
 
         </div>
 
-        <hr className=' border-border facebookTheme:border-[#b3b3b3] mt-4 mb-4' />
+        <hr className='mt-4 mb-4' />
 
-        <ul className='flex gap-4 m-auto w-fit mb-2'>
+        <ul className='flex flex-col sm:flex-row gap-4 m-auto w-fit mb-2 items-center'>
           
           <Link className='text-gray-300 hover:text-white transition-all flex items-center gap-1.5' href="https://github.com/CMD-Forum/cmd-forum"><FaGithub className="size-4" />Github</Link>
           <Link className='text-gray-300 hover:text-white transition-all flex items-center gap-1.5' href="#"><FaAndroid className="size-4" />Android</Link>
           <Link className='text-gray-300 hover:text-white transition-all flex items-center gap-1.5' href="#"><FaApple className="size-4" />iOS</Link>          
           
         </ul>  
+
+        <hr className='mt-4 mb-4 sm:hidden' />
 
         <ul className='flex gap-4 m-auto w-fit'>
 

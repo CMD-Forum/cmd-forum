@@ -14,7 +14,6 @@ import { getUserByEmail, getUserById } from "./app/(general)/lib/data";
 import bcrypt from "bcryptjs";
 import { UserRole } from "@prisma/client";
 import GitHub from "next-auth/providers/github";
-import Spotify from "next-auth/providers/spotify";
 
 export type ExtendedUser = DefaultSession["user"] & {
     role: UserRole;
@@ -36,11 +35,20 @@ export const {
   signIn,
   signOut,
 } = NextAuth({
-    // @ts-ignore: Why did I use TypeScript for this project without understanding it?
-    debug: true,
+    events: {
+        async linkAccount({ user }) {
+            await prisma.user.update({
+                where: { id: user.id },
+                data: { emailVerified: new Date() }
+            })
+        }
+    },
+    // @ts-ignore
+    debug: false,
     pages: {
         signIn: "/login",
-        error: "/login"
+        signOut: "/logout",
+        error: "/login",
     },
     //@ts-ignore
     adapter: PrismaAdapter(prisma),
@@ -50,9 +58,9 @@ export const {
         async signIn({ user }) {
             const existingUser = await getUserById(user.id);
 
-            /*if ( ! existingUser || existingUser.emailVerified === false ) {
+            /*if ( ! existingUser || existingUser.emailVerified === null ) {
                 return false;
-            }*/
+            }*/ // This is broken for OAuth, so is disabled for now.
 
             return true;
         },
@@ -74,6 +82,10 @@ export const {
             if (session.user && token.picture) {
                 session.user.profile_image = token.picture;
             }
+
+            if (session.user && token.username) {
+                session.user.username = token.username;
+            }
             
             return session;
         },
@@ -94,7 +106,8 @@ export const {
             }
 
             token.role = existingUser.role;
-            token.picture = existingUser.profile_image;
+            token.picture = existingUser.image;
+            token.username = existingUser.username;
 
             return token;
         }
@@ -105,12 +118,13 @@ export const {
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
         profile(profile) {
             return {
-              id: profile.id.toString(),
-              name: profile.name || profile.login,
-              email: profile.email,
-              image: profile.avatar_url,
-              username: profile.login,
-            } as NextAuthUserWithStringId;
+                id: profile.id.toString(),
+                name: profile.name || profile.login,
+                email: profile.email,
+                image: profile.avatar_url,
+                username: profile.login,
+                description: profile.bio,
+            } as unknown as NextAuthUserWithStringId;
           },
       }),
       Credentials({

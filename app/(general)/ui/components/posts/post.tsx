@@ -1,16 +1,11 @@
 "use client";
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { Suspense, useEffect, useState } from 'react';
-import { ArrowUpIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
-import ReactMarkdown from 'react-markdown';
-import rehypeRaw from 'rehype-raw';
-import remarkBreaks from 'remark-breaks';
-import remarkGfm from 'remark-gfm';
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
 import MarkdownPreview from '@uiw/react-markdown-preview';
-import { AlertWarning } from '../alert';
 import { FullPostSkeleton } from '../../fallback/Post';
+import rehypeSanitize from "rehype-sanitize";
 
 interface PostProps {
 
@@ -127,11 +122,11 @@ export function CardPost(post: PostProps) {
                 <img src={post.imageurl} alt={post.image_alt}/>
                 <p className='text-gray-300 facebookTheme:text-[11px] facebookTheme:text-black'>{post.subtitle}</p>
 
-        	    <div className='flex border-[1px] border-zinc-800 transition-all gap-2 mt-2 z-20 bg-[#1F1F1F] rounded w-fit justify-center items-center facebookTheme:bg-white facebookTheme:border-[1px] facebookTheme:rounded-none facebookTheme:h-[26px]'>
+        	    <div className='flex transition-all gap-2 mt-2 z-20 bg-card rounded w-fit justify-center items-center facebookTheme:bg-white facebookTheme:border-[1px] facebookTheme:rounded-none facebookTheme:h-[26px]'>
 
-                    <button className='navlink z-20 !border-0 !rounded-r-none facebookTheme:min-h-0 facebookTheme:rounded-none facebookTheme:w-[30px] facebookTheme:h-full facebookTheme:bg-facebook-grey-btn facebookTheme:text-black facebookTheme:items-center facebookTheme:flex facebookTheme:justify-center facebookTheme:p-0'><ChevronUpIcon className="font-medium h-4 w-4" /></button>
+                    <button className='navlink z-20'><ChevronUpIcon className="font-medium h-4 w-4" /></button>
                     <p className='facebookTheme:font-bold px-1 text-white'>{post.upvotes - post.downvotes}</p>
-                    <button className='navlink z-20 !border-0 !rounded-l-none facebookTheme:min-h-0 facebookTheme:rounded-none facebookTheme:w-[30px] facebookTheme:h-full facebookTheme:bg-facebook-grey-btn facebookTheme:text-black facebookTheme:items-center facebookTheme:flex facebookTheme:justify-center facebookTheme:p-0'><ChevronDownIcon className="font-medium h-4 w-4" /></button>
+                    <button className='navlink z-20'><ChevronDownIcon className="font-medium h-4 w-4" /></button>
 
                 </div>
 
@@ -162,9 +157,11 @@ interface FullPostProps {
 
 export function FullPost(post: FullPostProps) {
 
+    const rehypePlugins = [rehypeSanitize];
+
     return (
 
-        <Suspense fallback={<FullPostSkeleton />} key={1}>
+        <Suspense fallback={<FullPostSkeleton />} key={post.id}>
 
             <div className="md:rounded-md flex w-full bg-card border-[1px] border-border facebookTheme:bg-white h-fit facebookTheme:rounded-none px-5 py-5 facebookTheme:border-[#b3b3b3]">
 
@@ -220,7 +217,7 @@ export function FullPost(post: FullPostProps) {
                     <div className='markdown-body'>
 
                         {/*<ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]} rehypePlugins={[rehypeRaw]}>{post.body}</ReactMarkdown>*/}
-                        <MarkdownPreview source={post.body} />
+                        <MarkdownPreview source={post.body} rehypePlugins={rehypePlugins} />
 
                     </div>
 

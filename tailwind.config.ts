@@ -26,6 +26,9 @@ const config: Config = {
         'border': '#1b1d1e',
         'notification': '#ff453a',
       },
+      borderWidth: {
+        '1': '1px' 
+      }
     },
     fontFamily: {
       'sans': ['ui-sans-serif', 'system-ui'],

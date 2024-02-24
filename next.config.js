@@ -1,11 +1,9 @@
 /** @type {import('next').NextConfig} */
 
-module.exports = {
-    
-};
-
 const nextConfig = {
     experimental: {
-        serverActions: true,
+      typedRoutes: true,
     },
 }
+
+module.exports = nextConfig
