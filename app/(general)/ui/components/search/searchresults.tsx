@@ -102,7 +102,8 @@ export default async function SearchResults(search: SearchResultProps) {
                         name: true,
                         username: true,
                         createdAt: true,
-                        updatedAt: true
+                        updatedAt: true,
+                        image: true,
 
                     }
 
@@ -114,6 +115,7 @@ export default async function SearchResults(search: SearchResultProps) {
 
                         id: true,
                         name: true,
+                        display_name: true,
                         image: true,
                         public: true
 
@@ -129,7 +131,7 @@ export default async function SearchResults(search: SearchResultProps) {
 
                 {results && results.map((result) => (
                         
-                    <div className="mb-4 w-full" key={result.id}>
+                    <div className="w-full" key={result.id}>
                         <CardPost 
                             id={result.id}
                             title={result.title}
@@ -137,13 +139,11 @@ export default async function SearchResults(search: SearchResultProps) {
                             downvotes={result.downvotes}
                             submitted={result.createdAt.toLocaleDateString()}
                             subtitle={result.tagline}
-                            // @ts-ignore
                             community={result.community}
-                            // @ts-ignore
                             author={result.author}
-                        
                         >
                         </CardPost>
+                        <hr className="!mt-0 !mb-0" />
                     </div>
 
                 ))}

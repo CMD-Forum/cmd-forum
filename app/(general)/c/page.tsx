@@ -1,7 +1,7 @@
 export default function CommunityPage() {
 
     return (
-        <>
+        <div className="p-6">
             <div className="flex flex-col">
 
                 <h1 className="header">Community</h1>
@@ -10,7 +10,7 @@ export default function CommunityPage() {
             </div>
 
             <hr className="border-border facebookTheme:border-[#b3b3b3] mb-4 mt-4" />        
-        </>
+        </div>
 
     );
 

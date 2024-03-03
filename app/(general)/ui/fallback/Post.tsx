@@ -10,19 +10,19 @@ export function FullPostSkeleton() {
 
                     <div>
 
-                        <div className="animate-pulse h-[17px] w-20 rounded-sm"></div>  
+                        <div className="animate-pulse bg-slate-500 h-[17px] w-20 rounded-sm"></div>  
                         
                     </div>
                     
                     <div className="flex flex-row">
 
-                        <div className="animate-pulse h-[20px] w-[200px]"></div>   
+                        <div className="animate-pulse bg-slate-500 h-[20px] w-[200px]"></div>   
 
                     </div>    
 
                 </div>
                 
-                <div className="animate-pulse h-[28px] w-40 rounded-sm"></div>
+                <div className="animate-pulse h-[28px] bg-slate-500 w-40 rounded-sm"></div>
 
             </div>
 

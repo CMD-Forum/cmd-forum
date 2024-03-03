@@ -28,6 +28,7 @@ import NavSideItemsFallback from "../fallback/NavSideItems";
 import { inter } from "../fonts";
 import { useSession } from "next-auth/react"
 import Modal from "./modal";
+import TopnavDropdown from "./dropdown/dropdown";
 
 export function NavSideItems() {
 
@@ -35,38 +36,50 @@ export function NavSideItems() {
     const [expanded, setExpanded] = useState(false);
     const { data: session, update } = useSession();
 
+    const toggleDrawer = () => {
+        if ( expanded === true ) {
+            setExpanded(false);
+            document.body.style.overflow = "scroll";
+        } else if ( expanded === false ) {
+            setExpanded(true);
+            document.body.style.overflow = "hidden";
+        }
+    }
+
     return (
 
-        <AnimatePresence mode="wait" initial={false}>
+        <AnimatePresence initial={false} key={"sidebar_topanimatepresence"}>
 
             <>
-                <button className={`navlink-sidebar fixed top-0 z-[100] ml-2 lg:hidden !w-fit !border-[1px] !border-border`} onClick={() => setExpanded(!expanded)}><Bars3Icon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /></button>
+                <button className={`navlink-sidebar fixed top-[9px] z-[100] ml-2 lg:hidden !w-fit !border-[1px] !border-border`} onClick={() => toggleDrawer()}><Bars3Icon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /></button>
             </>
 
             <motion.div 
-                className={`w-full top-0 left-0 h-dvh overflow-hidden absolute ${expanded === true ? "z-[1000]" : "-z-50"} bg-semitransparent fixed`}
+                className={`w-full top-0 left-0 h-dvh overflow-scroll fixed ${expanded === true ? "z-[1000]" : "-z-50"} bg-semitransparent fixed`}
                 animate={{
                     opacity: expanded ? "100%" : "0%",
                 }}
+                key={"sidebar_firstmotiondiv"}
             >
                 <motion.div 
-                    className="bg-card fixed top-0 z-40 w-[300px] px-4 py-2 h-full flex flex-col"
+                    className="bg-card fixed top-0 z-40 w-[300px] px-4 py-2 h-full flex flex-col overflow-scroll gap-1"
                     animate={{
                         x: expanded ? "0px" : "-300px",
                     }}
                     exit={{
                         x: expanded ? "0px" : "-300px",
                     }}
-                    transition={{ type: "tween" }}     
+                    transition={{ type: "tween" }}   
+                    key={"sidebar_secondmotiondiv"}  
                 >
                 
-                    <div className="w-full h-fit flex flex-row-reverse mt-1">
-                        <button className={`navlink-sidebar  z-[100] !mb-0 !mt-0 !w-fit !border-[1px] !border-border`} onClick={() => setExpanded(!expanded)}><XMarkIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /></button>
+                    <div className="w-full h-fit flex flex-row-reverse mt-1 mb-4">
+                        <button className={`navlink-sidebar  z-[100] !mb-0 !mt-0 !w-fit !border-[1px] !border-border`} onClick={() => toggleDrawer()}><XMarkIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /></button>
                         <h1 className={`${inter.className} font-extrabold text-3xl mr-auto flex items-center hover:text-gray-300 transition-all cursor-pointer`}>CMD/&gt;</h1>
                     </div>
 
                     <Link 
-                        className={`navlink-sidebar !mt-4 ${pathname === "/" ? "active" : null}`} 
+                        className={`navlink-sidebar ${pathname === "/" ? "active" : null}`} 
                         href={"/"} 
                         prefetch={true}>
                         <HomeIcon className="w-5 h-5 mr-1" />
@@ -74,39 +87,22 @@ export function NavSideItems() {
                     </Link>
 
                     <Link 
-                        className={`navlink-sidebar !mt-0 ${pathname === "/c" ? "active" : null}`} 
+                        className={`navlink-sidebar ${pathname === "/c" ? "active" : null}`} 
                         href={"/c"} 
                         prefetch={true}>
                         <ViewColumnsIcon className="w-5 h-5 mr-1" />
                         Community
                     </Link>
 
+                    <Link 
+                        className={`navlink-sidebar ${pathname === "/search" ? "active" : null}`} 
+                        href={"/search"} 
+                        prefetch={true}>
+                        <MagnifyingGlassIcon className="w-5 h-5 mr-1" />
+                        Search
+                    </Link>
+
                     <hr />
-
-                    {session 
-                    ?
-
-                        <div className="mt-auto">
-                            <Link 
-                                className={`navlink-sidebar mt-auto`} 
-                                href={"/account"} 
-                                prefetch={true}>
-                                {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img src={session.user.profile_image} className="w-5 h-5 rounded-sm mr-1" alt="Your Account Image" />
-                                {session.user.name}
-                            </Link>   
-                        </div>
-
-                    :
-
-                        <Modal>
-                            <Modal.Title>Login or Signup for CMD/&gt; aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</Modal.Title>
-                            <Modal.Subtitle>Would you like to login or signup?</Modal.Subtitle>
-                            <Modal.Button type="navlink-full" onClick={ () => null }>Login</Modal.Button>
-                            <Modal.Button type="navlink" onClick={ () => null }>Close</Modal.Button>
-                        </Modal>
-
-                    }
 
                 </motion.div>                
             </motion.div>
@@ -142,7 +138,7 @@ export function TopbarItems() {
 
     return (
 
-        <div className='gap-6 hidden md:flex'>
+        <div className='gap-1 hidden md:flex'>
 
             <Link className={`topbar-link ${pathname == "/" ? "active" : ""}`} href='/'>Home</Link>
             <Link className={`topbar-link ${pathname.startsWith("/c") || pathname == "/c" ? "active" : ""}`} href='/c/'>Community</Link>

@@ -39,7 +39,7 @@ model Community {
   description    String   @default("Your description here.")
   image          String   @default("/images/favicon/favicon.svg") // Image that is shown for the community, defaults to the favicon.
   public         Boolean  @default(true)
-  admin_ids      Json     @default("[]")
+  admin_ids      String[] @default([""])
   administrators User[]
   sidebar_md     String   @default("# Edit your community sidebar in the admin panel.") // Originally there was a sidebar, but that got scrapped. This is now shown below the community information.
   posts          Post[]

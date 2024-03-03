@@ -1,14 +1,11 @@
 import Link from 'next/link';
-import { PlusIcon } from '@heroicons/react/16/solid'
 import { FaAndroid, FaApple, FaGithub } from "react-icons/fa6";
 import React from 'react';
 import { auth } from '@/auth';
-import { prisma } from '@/app/(general)/lib/db';
 import { BottombarItems, CommunityInfobarItems, NavSideItems, TopbarItems } from './components/nav_sideitem';
 import { inter } from './fonts';
-import LogoutButton from './components/signoutButton';
-import { Dropdown } from './components/dropdown/dropdown';
-import TopnavDropdown from './components/dropdown/topnav_dropdown';
+import Dropdown, { DropdownButton, DropdownCustom, DropdownLink, DropdownUser } from './components/dropdown/dropdown';
+import { ArrowRightEndOnRectangleIcon, Cog6ToothIcon, MegaphoneIcon, PlusIcon } from '@heroicons/react/24/solid';
 
 export async function Navigation() {
 
@@ -16,13 +13,13 @@ export async function Navigation() {
 
   return (
 
-      <div className='sticky top-0 z-40 h-[60px] items-center bg-card lg:bg-transparent lg:backdrop-blur px-6 md:px-16 flex transition-all'>
+      <div className='sticky top-0 z-40 h-[60px] items-center bg-transparent backdrop-blur px-8 flex transition-all'>
         
-        <div className='flex gap-32 w-full'>
+        <div className='flex justify-between w-full'>
 
           <div className='flex items-center mr-auto h-full w-fit gap-12'>
           
-            <Link className={`z-50 ml-10 md:ml-0 flex ${inter.className} font-extrabold text-3xl hover:text-gray-300 transition-all`} href="/"><p>CMD /&gt;</p></Link>  
+            <Link className={`z-50 ml-10 lg:ml-0 flex ${inter.className} font-extrabold text-3xl hover:text-gray-300 transition-all`} href="/"><p>CMD /&gt;</p></Link>  
             <TopbarItems />
 
           </div>
@@ -31,10 +28,25 @@ export async function Navigation() {
           
             {session?.user ? (
 
-              <div className='ml-auto flex gap-4'>
+              <div className={"flex flex-row gap-2"}>
+                <div className='ml-auto flex gap-4'>
 
-                <TopnavDropdown />
+                  <Dropdown alignRight={true} accountHeading={true} headerText={""} headerIcon={null}>
+                    <DropdownUser />
+                    <hr className='mt-2 mb-2' />
+                    <DropdownLink text={"Settings"} icon={<Cog6ToothIcon />} link={"/account/settings"} />
+                    <DropdownLink text={"Logout"} icon={<ArrowRightEndOnRectangleIcon />} link={"/ui/dev"} />
+                    <hr className='mt-2 mb-2' />
+                    <DropdownCustom className={"hover:bg-card"}>
+                      <div className='flex flex-col gap-1 items-center'>
+                        <div className='label'><MegaphoneIcon className='w-4 h-4'/>Version 1.1 is here at last!</div>              
+                      </div>
+                    </DropdownCustom>
+                  </Dropdown>
 
+                </div>
+
+                <Link className={"navlink-full !px-2 !hidden md:!flex"} href={"/create"}><PlusIcon className={"w-5 h-5"}></PlusIcon></Link>              
               </div>
 
             ) : (

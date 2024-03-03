@@ -16,7 +16,8 @@ export async function GET( req: Request ) {
                         name: true,
                         username: true,
                         createdAt: true,
-                        updatedAt: true
+                        updatedAt: true,
+                        image: true,
 
                     }
 
@@ -28,6 +29,7 @@ export async function GET( req: Request ) {
 
                         id: true,
                         name: true,
+                        display_name: true,
                         image: true,
                         public: true
 

@@ -1,18 +1,21 @@
 
 <h1 align="center">CMD Forum</h1>
-<h3 align="center">Forum site built in React</h3>
 
-<hr />
 
 ![CMD Forum](/public/main_bgcmd.png)
 
-<div align="center"><img src="https://img.shields.io/badge/status-alpha_development-green"></img> <img src="https://img.shields.io/badge/latest_release-1.1.0-blue"></img></div>
+<div align="center"><img src="https://img.shields.io/badge/status-alpha_development-green" alt="Development Status: Alpha"></img> <img src="https://img.shields.io/badge/latest_release-1.1.0-blue" alt="Latest Release: 1.1.0"></img></div>
 
-<hr />
+<h3 align="center">Forum site built in React</h3>
+
+---
 
 ## Getting Started
 
 ### Create a GitHub OAuth App
+
+> [!WARNING]
+> This step is required for authentication with GitHub to work.
 
 1. Go to your GitHub settings.
 2. Scroll down and go to `Developer Settings > OAuth Apps`.
@@ -46,6 +49,16 @@ This will start a HTTPS development server. HTTPS is required for authentication
 
 ## Credits
 
+### Inspiration
+
+- [Reddit](https://old.reddit.com)
+- Lemmy
+  - [Photon](https://github.com/Xyphyn/photon) especially for a lot of inspiration with the UI.
+  - Base Lemmy UI as well.
+- [Discuit](https://www.discuit.net)
+
+### Packages
+
 CMD/> uses the following packages, so check them out:
 
 ```json
@@ -57,11 +70,13 @@ CMD/> uses the following packages, so check them out:
     "@heroicons/react": "^2.1.1",
     "@hookform/resolvers": "^3.3.2",
     "@prisma/client": "^5.9.1",
+    "@uiw/react-markdown-editor": "^6.0.0",
     "@uiw/react-markdown-preview": "^5.0.7",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "framer-motion": "^10.16.16",
     "github-markdown-css": "^5.5.0",
+    "katex": "^0.16.9",
     "next": "^14.1.0",
     "next-auth": "^5.0.0-beta.4",
     "next-dev-https": "^0.13.3",
@@ -69,8 +84,7 @@ CMD/> uses the following packages, so check them out:
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.49.2",
-    "react-icons": "^4.12.0",
-    "react-markdown": "^9.0.1",
+    "react-icons": "^5.0.1",
     "react-popper": "^2.3.0",
     "react-tooltip": "^5.25.0",
     "react-zorm": "^0.9.0",
@@ -81,7 +95,6 @@ CMD/> uses the following packages, so check them out:
     "sass": "^1.69.5",
     "tailwind-variants": "^0.2.0",
     "use-debounce": "^10.0.0",
-    "xss": "^1.0.14",
     "zod": "^3.22.4"
 
     Development Dependencies:

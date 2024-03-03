@@ -33,7 +33,7 @@ export default function ProfileMain(user: ProfileProps) {
             transition={{ ease: "easeInOut", duration: 0.8, type: "spring" }}
         >
 
-            <div className='flex-row gap-2 px-5 py-5 rounded-md facebookTheme:rounded-none w-full bg-card border-border border-[1px] facebookTheme:bg-white'>
+            <div className='flex-row gap-2 rounded-md w-full bg-transparent'>
                 
                 <div className='flex-col'>
 

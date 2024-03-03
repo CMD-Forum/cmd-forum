@@ -91,7 +91,7 @@ export default async function RootLayout({
             <Navigation />  
           </div>
           
-          <div className='flex justify-center m-auto bg-[url("/images/uploaded/code.png")] scale-[1.1] h-full facebookTheme:bg-white items-center min-h-dvh w-full p-6 lg:p-12'>
+          <div className='flex justify-center m-auto bg-[url("/images/uploaded/code.png")] h-full facebookTheme:bg-white items-center min-h-dvh w-full p-6 lg:p-12' style={{ backgroundSize: "2100px", backgroundPositionX: "-35px", backgroundPositionY: "-35px" }}>
 
               {children}    
 

@@ -1,6 +1,7 @@
-import type { Config } from 'tailwindcss'
+const { withTV } = require('tailwind-variants/transformer');
 
-const config: Config = {
+/** @type {import('tailwindcss').Config} */
+module.exports = withTV({
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -17,14 +18,13 @@ const config: Config = {
         'facebook_bs': '0 1px 0 rgba(0, 0, 0, .1)',
       },
       colors: {
-        'semitransparent': 'rgba(0, 0, 0, 0.75)',
-        'accent_blue': '#1a9fff',
-        'primary': '#1c1c1c',
-        'background': '#0f0f0f',
-        'card': '#0F0F0F',
-        'card-light': '#131313',
-        'border': '#1b1d1e',
-        'notification': '#ff453a',
+        'semitransparent': 'hsla(0, 0%, 0%, 0.75)',
+        'primary': 'hsl(0, 0%, 11%)',
+        'background': 'hsl(240, 10%, 4%)',
+        'card': 'hsl(0, 0%, 6%)',
+        'card-light': 'hsl(0, 0%, 7%)',
+        'border': 'hsl(200, 5%, 11%)',
+        'accent-blue': 'hsl(215, 93%, 58%)',
       },
       borderWidth: {
         '1': '1px' 
@@ -36,6 +36,7 @@ const config: Config = {
       'mono': ['ui-monospace', 'SFMono-Regular'],
       'display': ['Oswald'],
       'body': ['"Open Sans"'],
+      'IBM_PLEX_MONO': ['var(--font-ibm_plex_mono)'],
       'facebook_link': ['"lucida grande",tahoma,verdana,arial,sans-serif'],
     }
   },
@@ -62,5 +63,4 @@ const config: Config = {
       ]
     })
   ],
-}
-export default config
+})

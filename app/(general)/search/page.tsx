@@ -17,7 +17,7 @@ export default function Search({
 
     return (
 
-      <div className="error flex flex-col w-full">
+      <div className="error flex flex-col w-full p-6">
 
             <div className="flex flex-col">
 
@@ -37,7 +37,7 @@ export default function Search({
                 
                     <>
                         <SearchResults query={query} currentPage={currentPage} type={type} />  
-                        <h1 className="text-gray-300 font-bold antialiased w-fit m-auto">Looks like you've reached the end.</h1>                    
+                        <h1 className="text-gray-300 font-bold antialiased w-fit m-auto">Looks like you&apos;ve reached the end.</h1>                    
                     </>
 
                 :
@@ -46,6 +46,8 @@ export default function Search({
             </div>
 
         </div>
+
+        
 
     )
 

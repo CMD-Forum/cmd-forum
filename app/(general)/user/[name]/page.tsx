@@ -2,6 +2,7 @@ import ProfileMain from "@/app/(general)/ui/components/account/ProfileMain";
 import { prisma } from "@/app/(general)/lib/db";
 import { Error404 } from "../../ui/error404";
 import PostListCustom from "../../ui/components/posts/post_list_custom";
+import PostListByUser from "../../ui/components/posts/post_list_custom";
 
 export default async function UserPage({ params }: { params: { name: string } }) {
 
@@ -29,7 +30,7 @@ export default async function UserPage({ params }: { params: { name: string } })
 
         return (
 
-            <>
+            <div className="p-6">
                 <ProfileMain 
                     username={user.username} 
                     image={user.image} 
@@ -38,8 +39,16 @@ export default async function UserPage({ params }: { params: { name: string } })
                     postCount={user_post_count} 
                 />        
 
-                <PostListCustom post={posts} />
-            </>
+
+                <p className="text-gray-300 font-bold antialiased w-full text-center md:text-left mt-4">{user.username}&apos;{user.username.endsWith("s") ? "" : "s"} Posts</p>   
+
+                <hr className="mt-2" />
+
+                <div className="flex flex-col">
+                    <PostListByUser username={user.username} />                             
+                </div>
+                
+            </div>
 
         )
 

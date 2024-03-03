@@ -3,6 +3,7 @@
 import { CardPost } from '@/app/(general)/ui/components/posts/post';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { getAllPostsFromUsername } from '@/app/(general)/lib/data';
 
 const variants = {
 
@@ -11,33 +12,52 @@ const variants = {
     
 };
 
-interface Post {
-    id: number;
-    title: string;
-    community: string;
-    author: string;
-    upvotes: number;
-    downvotes: number;
-    createdAt: string;
-    tagline: string;
-    link: string;
-    image_alt?: string;
-    image_src?: string;
-}
-
-export default function PostListCustom( post: any ) {
-    const [posts, setPosts] = useState<Post[]>([]);
+export default function PostListByUser( { username }: { username: string } ) {
+    const [loading, setIsLoading] = useState<boolean>(true);
+    const [posts, setPosts] = useState<any>([]);
 
     useEffect(() => {
-        setPosts(post);
-    }, [post])
-    
+        const fetchPosts = async () => {
+            setIsLoading(true);
+            try {
+                const data = await getAllPostsFromUsername( username );
+                setPosts(data);
+                setIsLoading(false);                
+            } catch (error) {
+                return (
+                   <h2 className='header'>This user&apos;s posts could not be returned.</h2> 
+                );
+            } finally {
+                setIsLoading(false);
+            }
+
+        };
+        fetchPosts();
+    }, [username])
+
+    if ( loading ) {
+        return (
+            <div className='flex flex-col gap-4 mt-4'>
+                <div className='flex w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'></div>
+                <div className='flex w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'></div>    
+                <div className='flex w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'></div>    
+                <div className='flex w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'></div>            
+            </div>
+        );
+    }
 
     return (
         <>
             {Array.isArray(posts) && posts.map((post) => {
         
                 return (
+                    <motion.div 
+                        key={post.id}
+                        variants={variants}
+                        initial="hidden"
+                        animate="visible"
+                        transition={{ ease: "easeInOut", duration: 0.8, type: "spring" }}
+                    >
                       <CardPost 
                         key={post.id}
                         id={post.id}
@@ -51,6 +71,8 @@ export default function PostListCustom( post: any ) {
                         image_alt={post.image_alt}
                         imageurl={post.image_src}
                       />
+                      <hr className='!mt-0 !mb-0'></hr>
+                    </motion.div>
                   );
             })}
         </>

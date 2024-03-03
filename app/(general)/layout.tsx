@@ -1,11 +1,14 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, IBM_Plex_Mono } from 'next/font/google'
 import './globals.scss'
 import { Navigation, Sidebar, Infobar, Bottombar, Footer } from '@/app/(general)/ui/navigation'
 import { SessionProvider } from 'next-auth/react'
 import { auth } from '@/auth'
+import NextTopLoader from 'nextjs-toploader';
+import CookieBanner from './ui/components/cookies/cookie_banners'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] });
+const ibm_plex_mono = IBM_Plex_Mono({ subsets: ["latin"], weight: "400", variable: "--font-ibm_plex_mono" })
 
 const metadataBaseUrl = process.env.NODE_ENV === 'production' 
 
@@ -80,7 +83,7 @@ export default async function RootLayout({
 
     <SessionProvider session={session}>
 
-        <html lang="en" className={`defaultTheme facebookTheme:font-facebook_link ${inter.className}`}>
+        <html lang="en" className={`defaultTheme ${inter.className} ${ibm_plex_mono.variable}`}>
 
           <head>
 
@@ -88,17 +91,24 @@ export default async function RootLayout({
 
           </head>
 
-          <body id='body' className='bg-card facebookTheme:bg-white text-white facebookTheme:text-black overflow-scroll overflow-x-hidden h-vh relative'>
+          <body id='body' className='bg-background text-white overflow-scroll overflow-x-hidden h-vh relative'>
+
+            <NextTopLoader
+              color='#FFFFFF'
+              showSpinner={false}
+              height={1}
+              zIndex={999999}
+            />
 
             <div id='modal-root'>
 
               <Navigation />
 
-                <div className='flex h-full m-auto bg-[#09090b] facebookTheme:bg-white'>
+                <div className='flex h-full m-auto bg-background'>
 
                   <Sidebar />        
 
-                  <div className='flex flex-col justify-center max-w-[70rem] w-[70rem] p-6 lg:p-12 m-auto'>
+                  <div className='flex flex-col justify-center max-w-[70rem] w-[70rem] lg:p-12 !pt-0 m-auto'>
 
                     <div className='max-w-[70rem]'>
 

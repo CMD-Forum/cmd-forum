@@ -1,4 +1,3 @@
-import '@/app/(general)/ui/components/posts/post_full';
 import { FullPost } from '@/app/(general)/ui/components/posts/post';
 import { prisma } from '@/app/(general)/lib/db';
 import Framermotion_workaround from './framermotion_workaround';

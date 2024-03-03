@@ -1,14 +1,12 @@
-import Link from 'next/link';
-import Dropdown from '@/app/(general)/ui/components/dropdown';
 import '@/app/(general)/ui/components/posts/post';
 import PostList from './ui/components/posts/post_list';
-import { CardPost } from '@/app/(general)/ui/components/posts/post';
+import Dropdown from './ui/components/dropdown/dropdown';
 
 export default async function Home(this: any) {
 
   return (
 
-    <main className="flex min-h-screen flex-col w-full">
+    <main className="flex min-h-screen flex-col w-full p-6">
 
       <div className="error flex flex-col w-full">
 
@@ -19,10 +17,9 @@ export default async function Home(this: any) {
 
             </div>
 
-            <hr className="border-border facebookTheme:border-[#b3b3b3] mb-4 mt-4" />
+            <hr className="border-border mb-0 mt-4" />
 
-            {/*<CardPost title='test' community='meta' author='test' upvotes={5} downvotes={2} ratio='25%' submitted='Yesterday, 20:42 GMT' subtitle='okay' link='okay' />*/}
-            <div className='flex flex-col gap-4'>
+            <div className='flex flex-col'>
               <PostList />  
             </div>
 

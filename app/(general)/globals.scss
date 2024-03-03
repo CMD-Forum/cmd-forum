@@ -40,66 +40,28 @@ body {
   @apply text-sm;
   @apply text-white;
   @apply decoration-2 transition-all;
-  @apply bg-card;
+  @apply bg-transparent;
   @apply hover:bg-border;
   @apply px-3;
   @apply py-2;
   @apply border-[1px];
   @apply border-border;
-  @apply rounded;
+  @apply rounded-md;
   @apply flex;
   @apply gap-1.5;
   @apply items-center;
   @apply w-fit;
 
-  // facebookTheme
-
-  @apply facebookTheme:text-white;
-  
-  @apply facebookTheme:rounded-none;
-
-  @apply facebookTheme:border-[#999];
-  @apply facebookTheme:border-[1px];
-  @apply facebookTheme:border-b-[#888];
-  @apply facebookTheme:shadow-facebook_bs;
-
-  @apply facebookTheme:font-bold;
-  @apply facebookTheme:text-[11px];
-
-  @apply facebookTheme:pt-[2px];
-  @apply facebookTheme:pb-[2px];
-  @apply facebookTheme:pl-[6px];
-  @apply facebookTheme:pr-[6px];
-
-  @apply facebookTheme:min-w-0;
-  @apply facebookTheme:min-h-0;
-
-  @apply facebookTheme:text-black #{!important};
-  @apply facebookTheme:no-underline #{!important};
-
-
-  
-  @apply facebookTheme:bg-[url(/themes/facebook/btn_back.png)];
-
-  @apply facebookTheme:focus:border-[#000];
-  @apply facebookTheme:transition-none;
-
-  @apply facebookTheme:focus:bg-ddd #{!important};
-
 }
 
-.topnavlink p {
-    
-  @apply hidden;
-  @apply md:flex;
+.navlink-ghost {
+
+  @extend .navlink;
+  @apply bg-transparent;
+  @apply hover:bg-border;
+  @apply border-0;
 
 }
-
-/*/ .navlink:focus {
-
-  box-shadow: 0 0 0 .25rem $accent-blue;
-
-} /*/
 
 .navlink-full {
 
@@ -109,30 +71,6 @@ body {
   @apply hover:bg-neutral-300;
   @apply border-white;
   @apply defaultTheme:border-0;
-
-  // facebookTheme
-
-  @apply facebookTheme:bg-[url(/themes/facebook/btn_back.png)];
-  
-  @apply facebookTheme:rounded-none;
-
-  @apply facebookTheme:border-[#999];
-  @apply facebookTheme:border-[1px];
-  @apply facebookTheme:border-b-[#888];
-  @apply facebookTheme:shadow-facebook_bs;
-
-  @apply facebookTheme:font-bold;
-  @apply facebookTheme:text-[11px];
-
-  @apply facebookTheme:pt-[2px];
-  @apply facebookTheme:pb-[2px];
-  @apply facebookTheme:pl-[6px];
-  @apply facebookTheme:pr-[6px];
-
-  @apply facebookTheme:min-w-0;
-  @apply facebookTheme:min-h-0;
-
-  @apply facebookTheme:focus:bg-ddd #{!important};
 
 }
 
@@ -177,8 +115,8 @@ body {
 .navlink-success {
 
   @extend .navlink-full;
-  @apply bg-[#5c7e10];
-  @apply hover:bg-[#7ea64b];
+  @apply bg-green-600;
+  @apply hover:bg-green-700;
   @apply text-white;
 
 }
@@ -191,54 +129,19 @@ body {
   @apply bg-transparent;
   @apply border-0;
   @apply w-full;
-  @apply mt-2;
-  @apply mb-2;
   @apply p-2.5;
 
-  // facebookTheme
-
-  @apply facebookTheme:bg-white #{!important};
-  @apply facebookTheme:hover:bg-[#eff2f7];
-  @apply facebookTheme:text-black;
-  @apply facebookTheme:rounded-none;
-  @apply facebookTheme:text-[11px];
-  @apply facebookTheme:text-[#333];
-  @apply facebookTheme:leading-[13px];
-  @apply facebookTheme:pl-[8px];
-  @apply facebookTheme:pr-[8px];
-  @apply facebookTheme:pt-[3px];
-  @apply facebookTheme:pb-[4px];
-  @apply facebookTheme:h-[21px];
-  @apply facebookTheme:transition-none;
-  @apply facebookTheme:min-h-0;
-  @apply facebookTheme:border-b-[1px];
-  @apply facebookTheme:border-white;
-  @apply facebookTheme:font-facebook_link;
-
-}
-
-a {
-  @apply facebookTheme:text-[#3b5998];
-  @apply facebookTheme:hover:underline;
-  @apply facebookTheme:font-bold;
-  @apply facebookTheme:text-[11px];
 }
 
 .navlink-sidebar.active {
 
-  @apply bg-zinc-800;
-
-  // facebookTheme
-
-  @apply facebookTheme:bg-[#d8dfea];
-  @apply facebookTheme:text-black;
-  @apply facebookTheme:font-bold;
+  @apply bg-border;
 
 }
 
 .topbar-link {
 
-  @apply text-[15px];
+  @apply text-[14px];
   @apply font-semibold;
   @apply text-gray-400;
   @apply hover:text-gray-200;
@@ -246,12 +149,16 @@ a {
   @apply hidden;
   @apply lg:flex;
   @apply relative;
+  @apply px-4;
+  @apply py-2;
+  @apply rounded-full;
 
 }
 
 .topbar-link.active {
 
   @apply text-white;
+  @apply bg-border;
 
 }
 
@@ -286,29 +193,16 @@ a {
 
 .generic_field {
 
-  @apply defaultTheme:bg-card;
-  @apply defaultTheme:text-white;
-  @apply defaultTheme:rounded-md;
-  @apply defaultTheme:h-9;
-  @apply defaultTheme:px-2;
-  @apply defaultTheme:outline-none;
-  @apply border-[1px];
+  @apply bg-card;
+  @apply text-white;
+  @apply rounded-md;
+  @apply h-9;
+  @apply px-2;
+  @apply outline-none;
   @apply border-border;
+  @apply border-2;
   @apply focus:border-white #{!important};
-  @apply defaultTheme:transition-all;
-  @apply duration-200 #{!important};
-
-  // facebookTheme
-
-  @apply facebookTheme:border-[#1d2a5b];
-  @apply facebookTheme:m-0;
-  @apply facebookTheme:pb-[4px];
-  @apply facebookTheme:border-[1px];
-  @apply facebookTheme:border-[#bdc7d8];
-  @apply facebookTheme:text-[11px];
-  @apply facebookTheme:p-[3px];
-  @apply facebookTheme:rounded-none;
-  @apply facebookTheme:text-[#333];
+  @apply transition-all;
 
 }
 
@@ -333,10 +227,6 @@ a {
   @apply overflow-hidden;
   @apply font-bold;
   @apply text-zinc-400;
-
-  // facebookTheme
-
-  @apply facebookTheme:text-white;
 
 }
 
@@ -363,23 +253,42 @@ a {
 
 .spinner {
 
-  @apply h-full;
-  animation-name: spin;
-  animation-duration: 500ms;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-  @apply text-black;
-  color: black !important;
+  @apply animate-spin;
 
 }
 
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
+.label {
+  @apply rounded-full;
+  @apply w-fit;
+  @apply border-border;
+  @apply transition-all;
+  @apply border-1;
+  @apply bg-card;
+  @apply h-fit;
+  @apply text-xs;
+  @apply px-2.5;
+  @apply py-0.5;
+  @apply flex;
+  @apply gap-1;
+
+  &.success {
+    @apply text-green-400;
+    @apply bg-green-500/20;
+    @apply border-green-500/30;
   }
-  to {
-    transform: rotate(360deg);
+
+  &.failure {
+    @apply text-red-400;
+    @apply bg-red-500/20;
+    @apply border-red-500/30;
   }
+
+  &.gray {
+    @apply text-white;
+    @apply bg-neutral-500/20;
+    @apply border-neutral-500/30;
+  }
+
 }
 
 // MD
@@ -454,46 +363,6 @@ hr {
   
 }
 
-/*.infobar-markdown {
-
-  all: revert;
-  @apply *:whitespace-pre-wrap; 
-  @apply whitespace-pre-wrap;
-
-}
-
-.infobar-markdown hr {
-
-  @apply border-b-[1px];
-  @apply border-zinc-900;
-  @apply mb-2;
-
-}
-
-.infobar-markdown h1 {
-
-  @apply font-[600];
-  @apply text-[1.5em];
-  line-height: 1.25;
-  @apply mt-[24px];
-  @apply border-b-[1px];
-  @apply border-zinc-900;
-  @apply pb-[0.3em];
-
-}
-
-.infobar-markdown h2 {
-
-  @apply font-[600];
-  @apply text-[1.5em];
-  line-height: 1.25;
-  @apply mt-[24px];
-  @apply border-b-[1px];
-  @apply border-zinc-900;
-  @apply pb-[0.3em];
-
-} */
-
 .markdown-body {
 
   @apply bg-transparent #{!important};
@@ -513,11 +382,6 @@ hr {
 .post-loading-text {
 
   @apply text-lg;
-
-  // facebookTheme
-
-  @apply facebookTheme:font-bold;
-  @apply facebookTheme:text-facebook_blue;
 
 }
 

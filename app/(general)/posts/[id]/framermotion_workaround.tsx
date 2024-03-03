@@ -1,6 +1,5 @@
 "use client";
 
-import '@/app/(general)/ui/components/posts/post_full'
 import { FullPost } from '@/app/(general)/ui/components/posts/post'
 import { AnimatePresence, motion } from 'framer-motion';
 

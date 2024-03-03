@@ -117,9 +117,45 @@ export async function getAllPostsFromUsername( username: string ) {
     const posts = await prisma.post.findMany({
         where: {
             author: {
-                username: username
+                username: {
+                    equals: username
+                }
+            }
+        },
+        include: {
+            community: true,
+            author: {
+                select: {
+                    username: true,
+                    name: true,
+                    createdAt: true,
+                    updatedAt: true,
+                    image: true,
+                }
             }
         }
     })
+
+    return posts;
+
+}
+
+// createCommunity
+
+/**
+ * 
+ */
+
+export async function createCommunity( { community_name, description, admin_ids }: { community_name: string, description: string, admin_ids: string[] } ) {
+
+    const post = await prisma.community.create({
+        data: {
+            name: community_name.toLowerCase(),
+            display_name: community_name,
+            description: description,
+        }
+    });
+
+    return post;
 
 }

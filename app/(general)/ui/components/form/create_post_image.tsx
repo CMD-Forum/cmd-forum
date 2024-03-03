@@ -7,9 +7,6 @@ import { zodResolver } from "@hookform/resolvers/zod" // Form Validation
 import Alert from "../new_alert";
 import { useSession } from "next-auth/react";
 import { createPost, getCommunityByName } from "@/app/(general)/lib/data";
-import { FaGithub, FaMarkdown } from "react-icons/fa6";
-import Link from "next/link";
-import MarkdownEditor from '@uiw/react-markdown-editor';
 
 const FormSchema = z.object({
 
@@ -48,7 +45,7 @@ function ErrorMessage(props: { message: string }) {
     
 }
 
-export default function CreatePostForm() {
+export default function CreateImagePostForm() {
 
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<false | true | null>(null);
@@ -93,10 +90,10 @@ export default function CreatePostForm() {
   
           title: values.title,
           communityId: post_community.id,
-          content: content,
+          content: "",
           tagline: values.tagline,
-          imageurl: null,
-          imagealt: null,
+          imageurl: values.image_url,
+          imagealt: values.image_alt,
           authorId: session.user.id,
   
         };
@@ -129,7 +126,7 @@ export default function CreatePostForm() {
 
         <form className="flex flex-col gap-2 bg-transparent rounded-lg" onSubmit={form.handleSubmit(OnSubmit)}>
 
-            <h2 className="header text-center sm:text-left">Create Post</h2>
+            <h2 className="header text-center sm:text-left">Create Image Post</h2>
 
             <hr className='border-border mt-1 mb-1'></hr>
 
@@ -185,27 +182,6 @@ export default function CreatePostForm() {
 
             {/* */}
 
-            <div className="flex gap-1 font-medium">Content<p className="text-[#fca5a5]">*</p></div>
-            <MarkdownEditor
-                value={content}
-                onChange={setContent}
-                enablePreview={true}
-                enableScroll={true}
-            />
-
-            <div className="flex gap-2 flex-col md:flex-row w-full">
-                <Link href={"https://github.github.com/gfm/"} className="flex gap-2 hover:bg-border rounded p-2 transition-all items-center justify-center w-full md:w-fit">
-                    <FaMarkdown className="h-5 w-7 text-gray-300 hover:text-white transition-all" />
-                    <p className="text-sm text-gray-300 group-hover:text-white transition-all">Supports Markdown</p>    
-                </Link>
-                <Link href={"https://uiwjs.github.io/react-markdown-editor/"} className="flex gap-1 hover:bg-border rounded p-2 items-center justify-center transition-all w-full md:w-fit">
-                    <FaGithub className="h-5 w-7 text-gray-300 hover:text-white transition-all group-hover:text-white" />
-                    <p className="text-sm text-gray-300 group-hover:text-white transition-all">React Markdown Editor</p>    
-                </Link>
-            </div>
-
-            {/* */}
-
             <div className="flex gap-1 font-medium">
                 Tagline
                 <p className="text-[#fca5a5]">*</p>
@@ -220,6 +196,45 @@ export default function CreatePostForm() {
 
                 // @ts-expect-error
                 <ErrorMessage message={form.formState.errors.tagline.message} />
+
+            )}
+
+            {/* */}
+
+            <div className="flex gap-1 font-medium">
+                Image
+                <p className="text-[#fca5a5]">*</p>
+            </div>
+            <input
+                {...form.register('image_url')}
+                placeholder="https://www.imgur.com/testurl"
+                className={`generic_field ${form.formState.errors.image_url ? "errored" : ""}`}
+            />
+
+            {form.formState.errors.image_url && (
+
+                // @ts-expect-error
+                <ErrorMessage message={form.formState.errors.image_url.message} />
+
+            )}
+
+            {/* */}
+
+
+            <div className="flex gap-1 font-medium">
+                Accessibility Tag
+                <p className="text-[#fca5a5]">*</p>
+            </div>
+            <input
+                {...form.register('image_alt')}
+                placeholder="Code that appears to be React in an IDE."
+                className={`generic_field ${form.formState.errors.image_url ? "errored" : ""}`}
+            />
+
+            {form.formState.errors.image_alt && (
+
+                // @ts-expect-error
+                <ErrorMessage message={form.formState.errors.image_alt.message} />
 
             )}
 
