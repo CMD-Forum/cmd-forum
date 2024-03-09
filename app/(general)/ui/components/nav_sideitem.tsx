@@ -138,7 +138,7 @@ export function TopbarItems() {
 
     return (
 
-        <div className='gap-1 hidden md:flex bg-card rounded-full p-1'>
+        <div className='gap-1 hidden md:flex rounded-full p-1'>
 
             <Link className={`topbar-link ${pathname == "/" ? "active" : ""}`} href='/'>Home</Link>
             <Link className={`topbar-link ${pathname.startsWith("/c/") || pathname == "/c" ? "active" : ""}`} href='/c/'>Community</Link>

@@ -4,10 +4,9 @@ import React from 'react';
 import { auth } from '@/auth';
 import { BottombarItems, CommunityInfobarItems, NavSideItems, TopbarItems } from './components/nav_sideitem';
 import { inter } from './fonts';
-import Dropdown, { DropdownButton, DropdownCustom, DropdownLink, DropdownUser } from './components/dropdown/dropdown';
+import Dropdown, { DropdownCustom, DropdownLink, DropdownUser } from './components/dropdown/dropdown';
 import { ArrowRightEndOnRectangleIcon, Cog6ToothIcon, MegaphoneIcon, PlusIcon } from '@heroicons/react/24/solid';
 import LogoutButton from './components/signoutButton';
-import { signOut } from 'next-auth/react';
 
 export async function Navigation() {
 

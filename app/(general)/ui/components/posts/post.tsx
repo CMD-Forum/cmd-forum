@@ -78,9 +78,6 @@ export function PostImage(image: ImageProps) {
 
 export function CardPost(post: PostProps) {
 
-    const totalVotes = post.upvotes + post.downvotes;
-    const ratio = totalVotes > 0 ? ((post.upvotes / totalVotes) * 100).toFixed(0) : 'Unknown';
-
     const text = post.title;
     const url = `https://localhost:3000/posts/${post.id}`;
     const title = "CMD/>";
@@ -140,7 +137,27 @@ export function CardPost(post: PostProps) {
                 
                 <Link href={`/posts/${post.id}`} className="w-fit font-sans font-semibold text-[18px] md:text-lg group-hover:text-gray-300 transition-all facebookTheme:text-lg">{post.title}</Link>
                 
-                <img src={post.imageurl} alt={post.image_alt}/>
+                {post.imageurl 
+                
+                    ?
+
+                        <div className="relative rounded-md mt-2 mb-2 max-h-96 overflow-hidden">
+                            <div 
+                                style={{ 
+                                    backgroundImage: `url(${post.imageurl})`,
+                                    backgroundSize: 'cover',
+                                }} 
+                                className="absolute inset-0 filter blur-xl"
+                            />
+                            <img src={post.imageurl} alt={post.image_alt} className="relative m-auto max-h-96" />
+                        </div>
+
+                    :
+
+                        <span id='No Image Attached'></span>
+
+                }
+
                 <p className='text-gray-300'>{post.subtitle}</p>
 
                 <div className='flex flex-row mt-4'>
