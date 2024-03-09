@@ -77,8 +77,6 @@ export default function Dropdown({ alignRight = false, children, accountHeading 
                                 className={`navlink ${headerClassName} ${headerIcon ? "!px-2" : "!border-0 "} hover:!bg-border !mt-0 flex !font-medium ${open === true ? "!bg-border" : "!bg-transparent"}`}
                                 onClick={() => setIsOpen(!open)}
                             >
-
-                            { headerText ? headerText : null }
                             { headerIcon ?
 
                                 // @ts-ignore
@@ -88,7 +86,9 @@ export default function Dropdown({ alignRight = false, children, accountHeading 
                                 :
                                 null
                             
-                            }                            
+                            }       
+                            { headerText ? headerText : null }
+                     
                             </button>
 
                         </div>
@@ -96,7 +96,7 @@ export default function Dropdown({ alignRight = false, children, accountHeading 
 
                     <AnimatePresence>
                         <motion.div 
-                            className={`bg-card ${className} shadow border-border border-1 rounded-md w-max h-max p-2 z-50 group min-w-52 ${alignRight === true ? 'right-0' : 'left-0'} shadow-xl absolute`}
+                            className={`bg-card ${className} shadow border-border border-1 rounded-md w-max h-max p-1 z-50 group min-w-52 ${alignRight === true ? 'right-0' : 'left-0'} shadow-xl absolute`}
                             initial={{
                                 y: '0px',
                                 opacity: '0%',
@@ -113,7 +113,7 @@ export default function Dropdown({ alignRight = false, children, accountHeading 
                                 display: 'hidden',
                             }}
                             transition={{
-                                duration: 0.15,
+                                duration: 0.12,
                             }}
                             ref={dropdownMenuRef}
                         >
@@ -222,7 +222,7 @@ export const DropdownUser = () => {
         return (
 
                 <Link 
-                    href={"/account"} 
+                    href={`/user/${session.user.username}`} 
                     className="hover:bg-border w-full p-2 rounded-md flex gap-2 items-center transition-all text-sm group-[hidden]:hidden"
                 >
                     {/* @ts-ignore */}

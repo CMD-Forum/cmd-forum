@@ -7,6 +7,9 @@ import MarkdownPreview from '@uiw/react-markdown-preview';
 import { FullPostSkeleton } from '../../fallback/Post';
 import rehypeSanitize from "rehype-sanitize";
 import Dropdown, { DropdownCustom, DropdownLink, DropdownShare } from '../dropdown/dropdown';
+import BackButton, { BackButtonNormal } from './back_button';
+import Hovercard from '../dropdown/hovercard';
+import { useSession } from 'next-auth/react';
 
 interface PostProps {
 
@@ -108,9 +111,17 @@ export function CardPost(post: PostProps) {
                                     :
 
                                     <div className='hidden md:flex flex-row gap-2'>  
-                                        <Link href={`/user/${post.author.username}`} className='hover:underline flex gap-1'>{post.author.name}
-                                            <p className='text-zinc-500'>{`@${post.author.username}`}</p>
-                                        </Link> 
+                                        <Hovercard headerText={`@${post.author.username}`} headerIcon={null} headerClassName={"text-sm"}>
+                                            <div className='flex flex-row gap-4 p-4 w-full max-w-[300px]'>
+                                                {/* @ts-ignore */}
+                                                <img src={post.author.image} className='w-6 h-6 rounded-sm' alt='Profile Image'></img>
+                                                <div className='flex flex-col'>
+                                                    <Link href={`/user/${post.author.username}`} className='hover:underline w-fit font-medium'>@{post.author.username}</Link>     
+                                                    {/* @ts-ignore */}
+                                                    <p>{post.author.description}</p>             
+                                                </div>
+                                            </div>
+                                        </Hovercard>
                                         <p className='hidden sm:flex'>•</p> 
                                         <p className='hidden sm:flex'>{post.submitted}</p>                         
                                     </div>
@@ -127,7 +138,7 @@ export function CardPost(post: PostProps) {
 
                 </div>
                 
-                <Link href={`/posts/${post.id}`} className="w-fit font-sans font-semibold text-[18px] md:text-lg z-20 group-hover:text-gray-300 transition-all facebookTheme:text-lg">{post.title}</Link>
+                <Link href={`/posts/${post.id}`} className="w-fit font-sans font-semibold text-[18px] md:text-lg group-hover:text-gray-300 transition-all facebookTheme:text-lg">{post.title}</Link>
                 
                 <img src={post.imageurl} alt={post.image_alt}/>
                 <p className='text-gray-300'>{post.subtitle}</p>
@@ -138,7 +149,7 @@ export function CardPost(post: PostProps) {
                         <Dropdown headerIcon={<EllipsisVerticalIcon />} alignRight={true} accountHeading={false} headerClassName={"mt-4"}>
                             <DropdownLink text={post.author.username} icon={<img src={post.author.image} alt={post.author.username}></img>} link={`/user/${post.author.username}`}></DropdownLink>
                             <DropdownLink text={post.community.display_name} icon={<img src={post.community.image} alt={post.community.display_name}></img>} link={`/c/${post.community.name}`}></DropdownLink>
-                            <hr className='mt-2 !mb-2'/>
+                            <hr className='mt-1 !mb-1'/>
                             <DropdownShare icon={<ShareIcon />} text={text} title={title} url={url} />
                         </Dropdown>                                
                     </div>
@@ -188,28 +199,41 @@ export function FullPost(post: FullPostProps) {
 
             <div className="rounded-md flex w-full bg-transparent h-fit facebookTheme:rounded-none px-5 py-5">
 
-                <div className="flex w-full bg-transparent h-fit flex-col px-2">
+                <div className="flex w-full bg-transparent h-fit flex-col">
 
-                    <div className="text-sm">
+                    <div className="text-sm relative">
 
-                        <div>
-                            <img src={post.community.image} className='w-8 rounded-sm' alt={post.community.name}></img>
-                            <Link className="w-fit hover:underline" href={`/c/${post.community}`}>{post.community}</Link>    
+                        <BackButtonNormal className={"absolute right-0"} />
+
+                        <div className='flex flex-row gap-2 items-center'>
+                            <img src={post.community.image} className='w-8 h-8 rounded-sm' alt={post.community.name}></img>
+                            <div className='flex flex-col'>
+                                <Link className="w-fit hover:underline" href={`/c/${post.community.name}`}>{post.community.name}</Link>    
+                                <div className="flex flex-row">
+                                    <h4 className="w-fit flex gap-2">
+                                        <Hovercard headerText={`@${post.author.username}`} headerIcon={null} headerClassName={"text-sm"}>
+                                            <div className='flex flex-row gap-4 p-4 w-full max-w-[300px]'>
+                                                {/* @ts-ignore */}
+                                                <img src={post.author.image} className='w-6 h-6 rounded-sm' alt='Profile Image'></img>
+                                                <div className='flex flex-col'>
+                                                    <Link href={`/user/${post.author.username}`} className='hover:underline w-fit font-medium'>@{post.author.username}</Link>     
+                                                    {/* @ts-ignore */}
+                                                    <p>{post.author.description}</p>             
+                                                </div>
+                                            </div>
+                                        </Hovercard>
+                                        <p className='facebookTheme:text-[#808080]'>•</p> 
+                                        <p className='facebookTheme:text-[#808080]'>{post.submitted}</p> 
+                                        <p className='hidden sm:flex facebookTheme:text-[#808080]'>•</p>
+                                        <p className='hidden sm:flex'><span className='facebookTheme:text-[#808080]'>{post.ratio}</span></p>
+                                    </h4>   
+
+                                </div>                                   
+                            </div>
+                            
                         </div>
                         
-                        <div className="flex flex-row">
-
-                            <h4 className="w-fit text-gray-300 flex gap-2">
-                                <Link href={`/user/${post.author.username}`} className='hover:underline flex gap-1'>{post.author.name} 
-                                    <p className='text-zinc-500'>{`@${post.author.username}`}</p>
-                                </Link> 
-                                <p className='facebookTheme:text-[#808080]'>•</p> 
-                                <p className='facebookTheme:text-[#808080]'>{post.submitted}</p> 
-                                <p className='hidden sm:flex facebookTheme:text-[#808080]'>•</p>
-                                <p className='hidden sm:flex'><span className='facebookTheme:text-[#808080]'>{post.ratio}</span></p>
-                            </h4>   
-
-                        </div>    
+ 
 
                     </div>
                     

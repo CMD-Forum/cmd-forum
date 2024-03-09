@@ -127,7 +127,7 @@ export default function CreatePostForm() {
   
     return (
 
-        <form className="flex flex-col gap-2 bg-transparent rounded-lg" onSubmit={form.handleSubmit(OnSubmit)}>
+        <form className="flex flex-col gap-2 bg-transparent rounded-lg !w-full" onSubmit={form.handleSubmit(OnSubmit)}>
 
             <h2 className="header text-center sm:text-left">Create Post</h2>
 

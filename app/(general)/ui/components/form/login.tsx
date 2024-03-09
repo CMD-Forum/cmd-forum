@@ -55,11 +55,12 @@ const LoginForm = () => {
 
     return ( 
 
-        <form className="flex flex-col gap-2 bg-zinc-950 px-10 py-10 rounded-lg facebookTheme:bg-white max-w-3xl sm:w-[505px] ml-auto" onSubmit={form.handleSubmit(onSubmit)}>
+        <form className="flex flex-col gap-2 bg-background rounded-lg w-[80%] md:w-[50%] max-w-xl" onSubmit={form.handleSubmit(onSubmit)}>
 
-            <h2 className="header">Login to CMD.</h2>
+            <h2 className="header !text-4xl text-center">Login to CMD</h2>
+            <p className={`text-gray-300 font-bold text-center mb-2`}>Login to your existing CMD account.</p>
 
-            <hr className="border-border facebookTheme:border-[#b3b3b3] mb-2 mt-2" /> 
+            <Link href={"/signup"} className="text-center text-sm text-gray-300 hover:underline cursor-pointer">Don&apos;t have an account?</Link>
 
             {/* */}
 
@@ -91,7 +92,7 @@ const LoginForm = () => {
 
             )}
 
-            <Link href="/signup" className="w-fit hover:underline text-gray-300">Don&apos;t have an account?</Link>            
+    
 
             {/* */}
 
@@ -99,7 +100,7 @@ const LoginForm = () => {
             <input
                 {...form.register('email')}
                 disabled={isPending}
-                placeholder="Email"
+                placeholder="johndoe@example.com"
                 className={`generic_field ${form.formState.errors.email ? "errored" : ""}`}
             />
 
@@ -117,7 +118,7 @@ const LoginForm = () => {
                 type="password"
                 {...form.register('password')}
                 disabled={isPending}
-                placeholder="Password"
+                placeholder="********"
                 className={`generic_field ${form.formState.errors.email ? "errored" : ""}`}
             />
 
@@ -130,7 +131,7 @@ const LoginForm = () => {
 
             {/* */}
 
-            <button disabled={!form.formState.isValid || isPending} type="submit" className="navlink-full !w-full sm:!w-[60px] h-[36px] justify-center min-w-[62px]">
+            <button disabled={!form.formState.isValid || isPending} type="submit" className="navlink-full !w-full h-[36px] justify-center min-w-[62px]">
                 
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 {isPending ? <img src="/spinner.svg" alt="Loading..." className="spinner"/>  : 'Login' }
@@ -140,13 +141,18 @@ const LoginForm = () => {
 
             {/*<pre>Validation status: {JSON.stringify(zo.validation, null, 2)}</pre>*/}
 
-            <hr />
+            <div className="flex flex-row relative mt-4 mb-4">
+                <span className="w-full border-b-1 border-border"></span>
+                <p className="absolute right-[50%] bottom-0 px-2 bg-background translate-x-2/4 translate-y-2/4 text-sm text-gray-300">OR LOGIN WITH</p>
+            </div>
 
             <div className="flex flex-col gap-2">
     
                 <OAuthButtons width_full={true} />
 
             </div>
+
+            <p className="text-center mt-4 text-sm text-gray-300">By logging in to CMD, you agree to the terms and conditions.</p>
 
         </form>
     

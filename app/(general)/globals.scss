@@ -51,6 +51,9 @@ body {
   @apply gap-1.5;
   @apply items-center;
   @apply w-fit;
+  @apply focus:ring-2;
+  @apply ring-border;
+  @apply outline-none;
 
 }
 
@@ -69,8 +72,11 @@ body {
   @apply bg-white;
   @apply text-black;
   @apply hover:bg-neutral-300;
-  @apply border-white;
-  @apply defaultTheme:border-0;
+  @apply focus:bg-neutral-300;
+  @apply border-border;
+  @apply border-1;
+  @apply focus:ring-2;
+  @apply ring-white;
 
 }
 
@@ -98,17 +104,13 @@ body {
 .navlink-destructive {
 
   @extend .navlink;
-  @apply text-red-500 #{!important};
-  @apply hover:text-white #{!important};
-  @apply focus:text-white #{!important};
-  @apply hover:bg-red-700;
-  @apply hover:border-red-500;
-  @apply focus:bg-red-700;
-  @apply focus:border-red-500;
+  @apply bg-red-700;
+  @apply hover:bg-red-600;
+  @apply focus:bg-red-600;
+  @apply focus:ring-2;
+  @apply ring-red-700;
   @apply transition-all;
-  @apply text-white;
-  @apply border-[1px];
-  @apply border-zinc-800;
+  @apply text-white #{!important};
 
 }
 
@@ -193,23 +195,29 @@ body {
 
 .generic_field {
 
-  @apply bg-card;
+  @apply bg-transparent;
   @apply text-white;
   @apply rounded-md;
   @apply h-9;
   @apply px-2;
   @apply outline-none;
-  @apply border-border;
-  @apply border-2;
-  @apply focus:border-white #{!important};
+  @apply ring-border;
+  @apply ring-1;
+  @apply focus:ring-2;
+  @apply focus:ring-white #{!important};
   @apply transition-all;
 
 }
 
 .generic_field.errored {
 
-  @apply defaultTheme:border-red-700;
+  @apply ring-red-500;
 
+}
+
+.generic_field:disabled {
+  @apply text-gray-300;
+  @apply cursor-not-allowed;
 }
 
 .bottombar-link {

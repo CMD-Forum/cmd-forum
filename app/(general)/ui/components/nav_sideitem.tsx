@@ -138,10 +138,10 @@ export function TopbarItems() {
 
     return (
 
-        <div className='gap-1 hidden md:flex'>
+        <div className='gap-1 hidden md:flex bg-card rounded-full p-1'>
 
             <Link className={`topbar-link ${pathname == "/" ? "active" : ""}`} href='/'>Home</Link>
-            <Link className={`topbar-link ${pathname.startsWith("/c") || pathname == "/c" ? "active" : ""}`} href='/c/'>Community</Link>
+            <Link className={`topbar-link ${pathname.startsWith("/c/") || pathname == "/c" ? "active" : ""}`} href='/c/'>Community</Link>
             <Link className={`topbar-link ${pathname.startsWith("/posts") ? "active" : ""}`} href='/posts/'>Posts</Link>       
             <Link className={`topbar-link ${pathname.startsWith("/search") ? "active" : ""}`} href='/search/'>Search</Link>
 
@@ -183,7 +183,7 @@ export function CommunityInfobarItems(infobar: InfobarProps) {
             transition={{ ease: "easeInOut", duration: 0.8, type: "spring" }}
         >
 
-            <div className='flex-row gap-2 p-8 rounded-md facebookTheme:rounded-none w-full bg-card border-[1px] border-border facebookTheme:bg-white'>
+            <div className='flex-row gap-2 p-6 rounded-md w-full bg-transparent'>
                 
                 <div className='flex-col'>
 

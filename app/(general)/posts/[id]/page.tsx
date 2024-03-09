@@ -43,11 +43,11 @@ export default async function PostView({ params }: { params: { id: string } }) {
     return (
 
       <div className='flex flex-col gap-2'>
-        <div className='gap-2 p-8 rounded-md w-full bg-card border-border border-[1px]'>
+        <div className='gap-2 p-6 rounded-md w-full bg-transparent'>
           <h1 className='text-2xl font-sans font-bold antialiased w-full'>Oops, we&apos;ve hit a wall!</h1>   
           <h2 className="text-gray-300">The requested post couldn&apos;t be found.</h2>
           <div className="flex md:flex-row flex-col gap-2 mt-2">
-            <BackButton title='Back'/> 
+            <BackButton title='Back' width_full={true}/> 
             <Link className='navlink !w-full !justify-center md:!w-fit' href='/'><HomeIcon className="font-medium h-5 w-5" />Home</Link>
             <Link className='navlink !w-full !justify-center md:!w-fit' href='/search'><MagnifyingGlassIcon className="font-medium h-5 w-5" />Search</Link>                            
           </div>

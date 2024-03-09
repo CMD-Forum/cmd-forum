@@ -2,7 +2,7 @@ import SignupForm from "@/app/(general)/ui/components/form/signup";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: 'Signup - CMD/>',
+    title: 'Signup',
     description: 'Signup for CMD/>',
 }
 
@@ -10,11 +10,7 @@ const page = () => {
 
     return ( 
 
-        <div>
-
-            <SignupForm />
-
-        </div>
+        <SignupForm />
 
     );
     

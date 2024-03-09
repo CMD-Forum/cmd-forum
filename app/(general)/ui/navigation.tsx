@@ -6,6 +6,8 @@ import { BottombarItems, CommunityInfobarItems, NavSideItems, TopbarItems } from
 import { inter } from './fonts';
 import Dropdown, { DropdownButton, DropdownCustom, DropdownLink, DropdownUser } from './components/dropdown/dropdown';
 import { ArrowRightEndOnRectangleIcon, Cog6ToothIcon, MegaphoneIcon, PlusIcon } from '@heroicons/react/24/solid';
+import LogoutButton from './components/signoutButton';
+import { signOut } from 'next-auth/react';
 
 export async function Navigation() {
 
@@ -17,7 +19,7 @@ export async function Navigation() {
         
         <div className='flex justify-between w-full'>
 
-          <div className='flex items-center mr-auto h-full w-fit gap-12'>
+          <div className='flex items-center mr-auto h-full w-fit gap-10'>
           
             <Link className={`z-50 ml-10 lg:ml-0 flex ${inter.className} font-extrabold text-3xl hover:text-gray-300 transition-all`} href="/"><p>CMD /&gt;</p></Link>  
             <TopbarItems />
@@ -33,10 +35,10 @@ export async function Navigation() {
 
                   <Dropdown alignRight={true} accountHeading={true} headerText={""} headerIcon={null}>
                     <DropdownUser />
-                    <hr className='mt-2 mb-2' />
+                    <hr className='mt-1 mb-1' />
                     <DropdownLink text={"Settings"} icon={<Cog6ToothIcon />} link={"/account/settings"} />
-                    <DropdownLink text={"Logout"} icon={<ArrowRightEndOnRectangleIcon />} link={"/ui/dev"} />
-                    <hr className='mt-2 mb-2' />
+                    <LogoutButton className={"hover:bg-border w-full p-2 rounded-md flex gap-2 items-center transition-all text-sm"}><ArrowRightEndOnRectangleIcon className='w-5 h-5' />Logout</LogoutButton>
+                    <hr className='mt-1 mb-1' />
                     <DropdownCustom className={"hover:bg-card"}>
                       <div className='flex flex-col gap-1 items-center'>
                         <div className='label'><MegaphoneIcon className='w-4 h-4'/>Version 1.1 is here at last!</div>              

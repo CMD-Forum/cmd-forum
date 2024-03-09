@@ -19,7 +19,7 @@ export default async function CommunityPage({ params }: { params: { community: s
 
     return( 
     
-        <div className='flex-row gap-2 p-8 rounded-md facebookTheme:rounded-none w-full bg-card facebookTheme:bg-white border-border border-[1px]'>
+        <div className='flex-row gap-2 p-6 rounded-md w-full bg-transparent'>
             <div className='flex-col'>
                 <div className='flex flex-row gap-3 items-center'>
                     <div className='flex flex-col'>

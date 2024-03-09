@@ -12,7 +12,7 @@ const variants = {
 };
 
 interface Post {
-    id: number;
+    id: string;
     title: string;
     community: string;
     author: string;

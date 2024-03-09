@@ -35,7 +35,7 @@ export default function Framermotion_workaround(props: WhyIsThisAThingProps) {
           id={props.post.id}
           title={props.post.title} 
           author={props.post.author} 
-          community={props.post.community.name} 
+          community={props.post.community} 
           upvotes={props.post.upvotes} 
           downvotes={props.post.downvotes} 
           ratio={`${props.ratio}%`} 

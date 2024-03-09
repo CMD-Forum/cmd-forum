@@ -13,11 +13,11 @@ export async function GET( req: Request ) {
                     select: {
 
                         id: true,
-                        name: true,
                         username: true,
                         createdAt: true,
                         updatedAt: true,
                         image: true,
+                        description: true,
 
                     }
 

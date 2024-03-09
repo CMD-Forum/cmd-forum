@@ -21,13 +21,14 @@ export const SignupSchema = z.
                 message: "Your username must be at least 2 characters."
 
             })
-            .max(20, {
+            .max(15, {
 
-                message: "Your username must be no longer than 20 characters."
+                message: "Your username must be no longer than 15 characters."
 
-            }),
+            })
+            .regex(/^[a-zA-Z0-9_-]+$/, "Your username must only contains letters, numbers, underscores and hyphens."),
 
-        name: z
+        /*name: z
         
             .string()
             .min(2, {
@@ -35,11 +36,11 @@ export const SignupSchema = z.
                 message: "Your name must be at least 2 characters."
 
             })
-            .max(20, {
+            .max(15, {
                 
-                message: "Your name must not be longer than 20 characters."
+                message: "Your name must not be longer than 15 characters."
                 
-            }),
+            }),*/
 
         email: z
         
@@ -85,7 +86,7 @@ const SignupForm = () => {
         resolver: zodResolver(SignupSchema),
         defaultValues: {
             username: '',
-            name: '',
+            // name: '',
             email: '',
             password: '',
             confirmpassword: '',
@@ -110,11 +111,12 @@ const SignupForm = () => {
 
     return ( 
 
-        <form className="flex flex-col gap-2 bg-zinc-950 px-10 py-10 rounded-lg facebookTheme:bg-white max-w-3xl sm:w-[505px] ml-auto" onSubmit={form.handleSubmit(onSubmit)}>
+        <form className="flex flex-col gap-2 bg-background rounded-lg w-[80%] md:w-[50%] max-w-xl" onSubmit={form.handleSubmit(onSubmit)}>
 
-            <h2 className="header">Signup for CMD.</h2>
+            <h2 className="header !text-4xl text-center">Signup for CMD.</h2>
+            <p className={`text-gray-300 font-bold text-center mb-2`}>Signup for an account with CMD/&gt;.</p>
 
-            <hr className="border-border facebookTheme:border-[#b3b3b3] mb-2 mt-2" /> 
+            <Link href={"/login"} className="text-center text-sm text-gray-300 hover:underline cursor-pointer">Already have an account?</Link>
 
             {/* */}
 
@@ -137,9 +139,7 @@ const SignupForm = () => {
 
                 <pre></pre>
 
-            )}
-
-            <Link href="/login" className="w-fit hover:underline text-gray-300">Already have an account?</Link>            
+            )}         
 
             {/* */}
 
@@ -147,7 +147,7 @@ const SignupForm = () => {
             <input
                 {...form.register('username')}
                 disabled={isPending}
-                placeholder="Username"
+                placeholder="john_doe"
                 className={`generic_field ${form.formState.errors.username ? "errored" : ""}`}
             />
 
@@ -160,11 +160,11 @@ const SignupForm = () => {
 
             {/* */}
 
-            <div className="flex gap-1 facebookTheme:text-[11px] font-medium">Name<p className="text-[#fca5a5]">*</p></div>
+            {/*<div className="flex gap-1 facebookTheme:text-[11px] font-medium">Name<p className="text-[#fca5a5]">*</p></div>
             <input
                 {...form.register('name')}
                 disabled={isPending}
-                placeholder="Name"
+                placeholder="John Doe"
                 className={`generic_field ${form.formState.errors.name ? "errored" : ""}`}
             />
 
@@ -175,13 +175,14 @@ const SignupForm = () => {
 
             )}
 
+            */}
             {/* */}
 
             <div className="flex gap-1 facebookTheme:text-[11px] font-medium">Email<p className="text-[#fca5a5]">*</p></div>
             <input
                 {...form.register('email')}
                 disabled={isPending}
-                placeholder="Email"
+                placeholder="johndoe@example.com"
                 className={`generic_field ${form.formState.errors.email ? "errored" : ""}`}
             />
 
@@ -199,7 +200,7 @@ const SignupForm = () => {
                 type="password"
                 {...form.register('password')}
                 disabled={isPending}
-                placeholder="Password"
+                placeholder="********"
                 className={`generic_field ${form.formState.errors.email ? "errored" : ""}`}
             />
 
@@ -217,7 +218,7 @@ const SignupForm = () => {
                 type="password"
                 {...form.register('confirmpassword')}
                 disabled={isPending}
-                placeholder="Confirm Password"
+                placeholder="********"
                 className={`generic_field ${form.formState.errors.confirmpassword ? "errored" : ""}`}
             />
 
@@ -230,14 +231,17 @@ const SignupForm = () => {
 
             {/* */}
 
-            <button disabled={!form.formState.isValid || isPending} type="submit" className="navlink-full !w-full sm:!w-[70px] h-[36px] justify-center min-w-[62px]">
+            <button disabled={!form.formState.isValid || isPending} type="submit" className="navlink-full !w-full h-[36px] justify-center">
                 
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 {isPending ? <img src="/spinner.svg" alt="Loading..." className="spinner"/>  : 'Signup' }
                 
             </button>
 
-            <hr />
+            <div className="flex flex-row relative mt-4 mb-4">
+                <span className="w-full border-b-1 border-border"></span>
+                <p className="absolute right-[50%] bottom-0 px-2 bg-background translate-x-2/4 translate-y-2/4 text-sm text-gray-300">OR SIGNUP WITH</p>
+            </div>
 
             <div className="flex flex-col gap-2">
 

@@ -1,6 +1,3 @@
-import { CardPost } from "../components/posts/post";
-import { button } from "../variants";
-
 export default function DeveloperPage() {
 
     return (
@@ -13,18 +10,23 @@ export default function DeveloperPage() {
 
             </div>
 
-            <hr className="border-border facebookTheme:border-[#b3b3b3] mb-4 mt-4" />
+            <hr className="border-border mb-4 mt-4" />
 
             <h2 className="text-gray-300 font-bold antialiased w-full">Buttons</h2>              
 
             <div className="flex flex-col gap-2 mt-4">
-                <button className={button({ type: 'normal' })}>normal</button>
-                <button className={button({ type: 'ghost' })}>ghost</button>
-                <button className={button({ type: 'full' })}>full</button>
-                <button className={button({ type: 'destructive' })}>destructive</button>
-                <button className={button({ type: 'success' })}>success</button>
-                <button className={button({ type: 'sidebar' })}>sidebar</button>                
+                <button className={"navlink"}>normal</button>
+                <button className={"navlink-ghost"}>ghost</button>
+                <button className={"navlink-full"}>full</button>
+                <button className={"navlink-destructive"}>destructive</button>          
             </div>   
+
+            <h2 className="text-gray-300 font-bold antialiased w-full mt-4">Inputs</h2>
+
+            <div className="flex flex-col gap-2 mt-4">       
+                <input className="generic_field" placeholder="This is an input."></input> 
+                <input className="generic_field errored" placeholder="This is an errored input."></input> 
+            </div>             
 
         </div>
 

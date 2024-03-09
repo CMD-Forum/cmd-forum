@@ -1,6 +1,5 @@
 import '@/app/(general)/ui/components/posts/post';
 import PostList from './ui/components/posts/post_list';
-import Dropdown from './ui/components/dropdown/dropdown';
 
 export default async function Home(this: any) {
 

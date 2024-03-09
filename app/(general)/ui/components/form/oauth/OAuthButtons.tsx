@@ -18,7 +18,7 @@ export function OAuthButtons( props: OAuthButtonsProps ) {
 
     return (
 
-        <button className={`${props.width_full === true ? "!w-full justify-center" : ""} navlink`} type="button" onClick={() => onClick("github")}><FaGithub className="w-5 h-5" />Login with GitHub</button>
+        <button className={`${props.width_full === true ? "!w-full justify-center" : ""} navlink`} type="button" onClick={() => onClick("github")}><FaGithub className="w-5 h-5" />GitHub</button>
 
     );
 

@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import '@/app/(general)/globals.scss'
 import { Navigation, Sidebar, Infobar, Bottombar } from '@/app/(general)/ui/navigation'
 import NextAuthProvider from '@/app/(general)/nextauthprovider'
+import NextTopLoader from 'nextjs-toploader'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -77,7 +78,7 @@ export default async function RootLayout({
 
     <NextAuthProvider>
 
-      <html lang="en" className={`defaultTheme facebookTheme:font-facebook_link ${inter.className}`}>
+      <html lang="en" className={`defaultTheme ${inter.className}`}>
 
         <head>
 
@@ -85,13 +86,20 @@ export default async function RootLayout({
 
         </head>
 
-        <body className=' facebookTheme:bg-white text-white facebookTheme:text-black overflow-scroll overflow-x-hidden h-full relative'>
+        <body className='text-white overflow-scroll overflow-x-hidden h-full relative'>
 
-          <div className='bg-zinc-950 w-full'>
+          <NextTopLoader
+              color='#FFFFFF'
+              showSpinner={false}
+              height={1}
+              zIndex={999999}
+          />
+
+          <div className='bg-background w-full'>
             <Navigation />  
           </div>
           
-          <div className='flex justify-center m-auto bg-[url("/images/uploaded/code.png")] h-full facebookTheme:bg-white items-center min-h-dvh w-full p-6 lg:p-12' style={{ backgroundSize: "2100px", backgroundPositionX: "-35px", backgroundPositionY: "-35px" }}>
+          <div className='flex justify-center m-auto bg-background h-full items-center min-h-dvh w-full p-6'>
 
               {children}    
 

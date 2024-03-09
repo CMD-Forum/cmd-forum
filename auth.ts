@@ -67,6 +67,7 @@ export const {
 
         async session({ token, session, user }) {
 
+            // @ts-ignore
             if (session.user) session.profile = token.profile;
 
             // console.log({ sessionToken: token})
@@ -84,7 +85,13 @@ export const {
             }
 
             if (session.user && token.username) {
+                // @ts-ignore
                 session.user.username = token.username;
+            }
+
+            if (session.user && token.description) { 
+                // @ts-ignore
+                session.user.description = token.description;
             }
             
             return session;
@@ -108,6 +115,7 @@ export const {
             token.role = existingUser.role;
             token.picture = existingUser.image;
             token.username = existingUser.username;
+            token.description = existingUser.description;
 
             return token;
         }
