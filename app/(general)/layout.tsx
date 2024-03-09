@@ -6,6 +6,7 @@ import { SessionProvider } from 'next-auth/react'
 import { auth } from '@/auth'
 import NextTopLoader from 'nextjs-toploader';
 import CookieBanner from './ui/components/cookies/cookie_banners'
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({ subsets: ['latin'] });
 const ibm_plex_mono = IBM_Plex_Mono({ subsets: ["latin"], weight: "400", variable: "--font-ibm_plex_mono" })
@@ -84,6 +85,8 @@ export default async function RootLayout({
     <SessionProvider session={session}>
 
         <html lang="en" className={`defaultTheme ${inter.className} ${ibm_plex_mono.variable}`}>
+
+          <SpeedInsights />
 
           <head>
 
