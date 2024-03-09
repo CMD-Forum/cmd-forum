@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
@@ -18,7 +18,7 @@ function ErrorMessage(props: { message: string }) {
     
 }
 
-const LoginForm = () => {
+export default function LoginForm() {
 
     const [isPending, startTransition] = useTransition();
 
@@ -158,5 +158,3 @@ const LoginForm = () => {
     );
     
 }
-
-export default LoginForm;

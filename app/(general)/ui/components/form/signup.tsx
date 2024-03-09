@@ -73,7 +73,7 @@ function ErrorMessage(props: { message: string }) {
     
 }
 
-const SignupForm = () => {
+export default function SignupForm () {
 
     const [isPending, startTransition] = useTransition();
 
@@ -254,6 +254,3 @@ const SignupForm = () => {
     );
     
 }
-
-
-export default SignupForm;
