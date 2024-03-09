@@ -75,6 +75,7 @@ CMD/> uses the following packages, so check them out:
     "@vercel/speed-insights": "^1.0.10",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
+    "date-fns": "^3.3.1",
     "framer-motion": "^10.16.16",
     "github-markdown-css": "^5.5.0",
     "katex": "^0.16.9",
@@ -95,6 +96,7 @@ CMD/> uses the following packages, so check them out:
     "sass": "^1.69.5",
     "tailwind-variants": "^0.2.0",
     "use-debounce": "^10.0.0",
+    "xss": "^1.0.15",
     "zod": "^3.22.4"
 
     Development Dependencies:

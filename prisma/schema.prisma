@@ -64,24 +64,26 @@ model Post {
 }
 
 model User {
-  id            String      @id @default(cuid())
-  email         String      @unique
-  emailVerified DateTime?
-  username      String      @unique
-  description   String      @db.VarChar(100) @default("This user has not set their description.")
-  password      String?
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  name          String      
-  profile_image String      @default("/images/favicon/favicon.svg") // Deprecated, do not use.
-  image         String      @default("/images/favicon/favicon.svg")
-  posts         Post[]
-  admin         Community[]
-  Support       Support?    @relation(fields: [supportId], references: [authorId])
-  supportId     String?
-  role          UserRole    @default(USER)
-  accounts      Account[]
-  sessions      Session[]
+  id                 String      @id @default(cuid())
+  email              String      @unique
+  emailVerified      DateTime?
+  emailLastUpdate    DateTime?
+  username           String      @unique
+  usernameLastUpdate DateTime?
+  description        String      @db.VarChar(100) @default("This user has not set their description.")
+  password           String?
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+  name               String      // Deprecated, do not use.
+  profile_image      String      @default("/images/favicon/favicon.svg") // Deprecated, do not use.
+  image              String      @default("/images/favicon/favicon.svg")
+  posts              Post[]
+  admin              Community[]
+  Support            Support?    @relation(fields: [supportId], references: [authorId])
+  supportId          String?
+  role               UserRole    @default(USER)
+  accounts           Account[]
+  sessions           Session[]
 }
 
 model Account {

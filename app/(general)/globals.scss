@@ -57,6 +57,14 @@ body {
 
 }
 
+.navlink:disabled {
+
+  @apply text-gray-300;
+  @apply hover:bg-transparent;
+  @apply cursor-not-allowed;
+
+}
+
 .navlink-ghost {
 
   @extend .navlink;

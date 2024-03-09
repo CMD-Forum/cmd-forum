@@ -93,6 +93,11 @@ export const {
                 // @ts-ignore
                 session.user.description = token.description;
             }
+
+            if (session.user && token.usernameLastUpdated) { 
+                // @ts-ignore
+                session.user.usernameLastUpdated = token.usernameLastUpdated;
+            }
             
             return session;
         },
@@ -116,6 +121,7 @@ export const {
             token.picture = existingUser.image;
             token.username = existingUser.username;
             token.description = existingUser.description;
+            token.usernameLastUpdated = existingUser.usernameLastUpdate;
 
             return token;
         }

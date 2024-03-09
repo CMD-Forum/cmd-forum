@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { createPortal } from 'react-dom';
 
-export default function Modal({ children, btnText }: { children: React.ReactNode, btnText: string }) {
+export default function Modal({ children, btnText, btnDisabled }: { children: React.ReactNode, btnText: string, btnDisabled?: boolean }) {
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -22,7 +22,7 @@ export default function Modal({ children, btnText }: { children: React.ReactNode
     return (
 
         <>
-            <button className="navlink" onClick={() => setIsOpen(true)}>{ btnText }</button>
+            <button className="navlink" onClick={() => setIsOpen(true)} disabled={btnDisabled}>{ btnText }</button>
                 
             {createPortal(
             
@@ -104,9 +104,12 @@ Modal.Subtitle = Subtitle;
 
 // Modal.Button
 
-const Button = ({ children, className = "", type = "navlink" || "navlink-full" || "navlink-destructive" || "navlink-success" || "navlink-sidebar" || "navlink-small", onClick, ...other }: { children: React.ReactNode, className?: string, type: string, onClick?: MouseEventHandler<HTMLButtonElement> }) => (
+const Button = ({ children, className = "", type, loadingVariable, onClick, ...other }: { children: React.ReactNode, className?: string, type: "navlink" | "navlink-full" | "navlink-destructive" | "navlink-success" | "navlink-sidebar"| "navlink-small", loadingVariable?: any, onClick?: MouseEventHandler<HTMLButtonElement> }) => (
     
-    <button className={`${type} ${className} !w-full md:!w-fit justify-center transition-all`} onClick={onClick} {...other}>{ children }</button>
+    <button className={`${type} ${className} !w-full md:!w-fit justify-center transition-all`} onClick={onClick} {...other}>
+        { loadingVariable === false ? children : null }
+        { loadingVariable === true ? <img src="/spinner_black.svg" alt="Loading..." className="spinner"/>  : null }
+    </button>
 
 )
 

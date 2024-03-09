@@ -2,7 +2,7 @@
 
 import { PencilSquareIcon, CalendarDaysIcon } from "@heroicons/react/24/solid";
 import { useSession } from "next-auth/react";
-import ChangeAccountName from "./ChangeAccountName";
+import ChangeAccountName from "./ChangeAccountDetails";
 
 export default function AccountSettings() {
 

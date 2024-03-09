@@ -46,6 +46,8 @@ export async function ChangeAccountUsername( { userID, newUsername } : { userID:
                     return { error: "The database couldn't be reached, please try again later." }
                 case "P1008":
                     return { error: "The change took too long to complete, please try again later." }
+                case "P2002":
+                    return { error: "Sorry, that username is taken." }
                 default:
                     return { error: "Sorry, something went wrong. Please try again later."}
 

@@ -133,7 +133,6 @@ const LoginForm = () => {
 
             <button disabled={!form.formState.isValid || isPending} type="submit" className="navlink-full !w-full h-[36px] justify-center min-w-[62px]">
                 
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 {isPending ? <img src="/spinner.svg" alt="Loading..." className="spinner"/>  : 'Login' }
                 
             </button>
