@@ -1,7 +1,7 @@
-import type { Metadata, Viewport } from 'next'
+import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import '@/app/(general)/globals.scss'
-import { Navigation, Sidebar, Infobar, Bottombar } from '@/app/(general)/ui/navigation'
+import { Navigation } from '@/app/(general)/ui/navigation'
 import NextAuthProvider from '@/app/(general)/nextauthprovider'
 import NextTopLoader from 'nextjs-toploader'
 
@@ -58,10 +58,6 @@ export const metadata: Metadata = {
     },
     description: APP_DESCRIPTION,
   },
-};
-
-export const viewport: Viewport = {
-  themeColor: "#09090b",
 };
 
 export default async function RootLayout({

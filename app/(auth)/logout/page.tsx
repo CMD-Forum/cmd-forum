@@ -1,7 +1,4 @@
-import { HomeIcon, MagnifyingGlassIcon } from '@heroicons/react/24/solid'
-import Link from 'next/link'
 import { signOut } from "@/auth";
-import SignOutButton from '@/app/(general)/ui/components/signoutButton';
 
 export default async function logout() {
 

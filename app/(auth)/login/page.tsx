@@ -1,20 +1,11 @@
 import LoginForm from "@/app/(general)/ui/components/form/login";
-import { Metadata } from "next";
 
-export const metadata: Metadata = {
-    title: 'Login',
-    description: 'Login for CMD/>',
-}
-
-const page = () => {
+export default function LoginPage() {
 
     return ( 
-
 
         <LoginForm />    
 
     );
     
 }
-
-export default page;

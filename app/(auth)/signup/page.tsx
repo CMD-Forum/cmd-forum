@@ -1,12 +1,6 @@
 import SignupForm from "@/app/(general)/ui/components/form/signup";
-import { Metadata } from "next";
 
-export const metadata: Metadata = {
-    title: 'Signup',
-    description: 'Signup for CMD/>',
-}
-
-const page = () => {
+export default function SignupPage () {
 
     return ( 
 
@@ -15,5 +9,3 @@ const page = () => {
     );
     
 }
-
-export default page;
