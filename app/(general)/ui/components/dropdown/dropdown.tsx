@@ -142,10 +142,11 @@ export default function Dropdown({ alignRight = false, children, accountHeading 
  * @param {string} [icon] 
  */
 
-export const DropdownLink = ({ text, icon, link }: { text: string, icon: React.ReactElement | null, link: __next_route_internal_types__.RouteImpl<string> | UrlObject }) => {
+export const DropdownLink = ({ text, icon, link }: { text: string, icon: React.ReactElement | null, link: __next_route_internal_types__.RouteImpl<string> | UrlObject | string }) => {
 
     return (
         <Link 
+            // @ts-ignore
             href={ link } 
             className="hover:bg-border w-full p-2 rounded-md flex gap-2 items-center transition-all text-sm group-[hidden]:hidden"
         >
