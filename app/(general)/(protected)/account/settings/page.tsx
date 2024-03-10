@@ -7,7 +7,7 @@ export default async function SettingsPage() {
 
     return (
 
-        <div className="flex md:flex-row flex-col p-6">
+        <div className="flex md:flex-row flex-col p-6 mt-6">
 
             <SettingsTabs />
 

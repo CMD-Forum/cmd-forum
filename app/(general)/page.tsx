@@ -1,18 +1,18 @@
 import '@/app/(general)/ui/components/posts/post';
 import PostList from './ui/components/posts/post_list';
 
-export default async function Home(this: any) {
+export default function HomePage() {
 
   return (
 
-    <main className="flex min-h-screen flex-col w-full p-6">
+    <main className="flex min-h-screen flex-col w-full p-6 mt-6">
 
       <div className="error flex flex-col w-full">
 
             <div className="flex flex-col">
 
                 <h1 className="header">Trending</h1>
-                <p className="text-gray-300 font-bold antialiased w-full">Popular posts recently</p>   
+                <p className="text-gray-300 font-medium antialiased w-full">Popular posts recently</p>   
 
             </div>
 

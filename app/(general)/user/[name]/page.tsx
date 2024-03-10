@@ -30,7 +30,7 @@ export default async function UserPage({ params }: { params: { name: string } })
 
         return (
 
-            <div className="p-6">
+            <div className="p-6 mt-6">
                 <ProfileMain 
                     username={user.username} 
                     image={user.image} 

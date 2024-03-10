@@ -67,7 +67,7 @@ export default async function PostView({ params }: { params: { id: string } }) {
 
   return (
 
-    <div>
+    <div className='mt-6'>
 
       <Framermotion_workaround post={post} submitted={submitted} ratio={ratio} />
 

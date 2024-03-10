@@ -13,7 +13,9 @@ import {
     ViewColumnsIcon, 
     Bars3Icon,
     XMarkIcon,
-    UserCircleIcon
+    UserCircleIcon,
+    ArrowRightEndOnRectangleIcon,
+    UserPlusIcon
 } from "@heroicons/react/20/solid";
 import Link from "next/link"
 import Image from "next/image";
@@ -83,15 +85,23 @@ export function NavSideItems() {
                         href={"/"} 
                         prefetch={true}>
                         <HomeIcon className="w-5 h-5 mr-1" />
-                        Homepage
+                        Home
                     </Link>
 
                     <Link 
-                        className={`navlink-sidebar ${pathname === "/c" ? "active" : null}`} 
+                        className={`navlink-sidebar ${pathname.startsWith("/c/") || pathname === "/c" ? "active" : null}`} 
                         href={"/c"} 
                         prefetch={true}>
                         <ViewColumnsIcon className="w-5 h-5 mr-1" />
                         Community
+                    </Link>
+
+                    <Link 
+                        className={`navlink-sidebar ${pathname.startsWith("/posts/") || pathname === "/posts" ? "active" : null}`} 
+                        href={"/posts/"} 
+                        prefetch={true}>
+                        <ChatBubbleBottomCenterTextIcon className="w-5 h-5 mr-1" />
+                        Posts
                     </Link>
 
                     <Link 
@@ -103,6 +113,42 @@ export function NavSideItems() {
                     </Link>
 
                     <hr />
+
+                    { session 
+
+                    ?
+
+                    <div className="mt-auto flex flex-col mb-2">
+                        <Link 
+                            className={`navlink-sidebar ${pathname === `/user/${session.user.username}` ? "active" : null}`} 
+                            href={`/user/${session.user.username}`} 
+                            prefetch={true}>
+                            { session.user.image ? <img className="w-5 h-5 mr-1 rounded" src={session.user.image} alt={"Your profile image."} /> : <UserIcon className="w-5 h-5 mr-1" /> }
+                            {session.user.username}
+                        </Link>
+                    </div>
+                    
+                    :
+
+                    <div className="mt-auto gap-1 flex flex-col mb-2">
+                        <Link 
+                            className={`navlink-sidebar ${pathname === "/login" ? "active" : null}`} 
+                            href={"/login"} 
+                            prefetch={true}>
+                            <ArrowRightEndOnRectangleIcon className="w-5 h-5 mr-1" />
+                            Login
+                        </Link>      
+
+                        <Link 
+                            className={`navlink-sidebar ${pathname === "/signup" ? "active" : null}`} 
+                            href={"/signup"} 
+                            prefetch={true}>
+                            <UserPlusIcon className="w-5 h-5 mr-1" />
+                            Signup
+                        </Link>              
+                    </div>
+                    
+                    }
 
                 </motion.div>                
             </motion.div>
@@ -138,7 +184,7 @@ export function TopbarItems() {
 
     return (
 
-        <div className='gap-1 hidden md:flex rounded-full p-1'>
+        <div className='hidden md:flex rounded-full p-1'>
 
             <Link className={`topbar-link ${pathname == "/" ? "active" : ""}`} href='/'>Home</Link>
             <Link className={`topbar-link ${pathname.startsWith("/c/") || pathname == "/c" ? "active" : ""}`} href='/c/'>Community</Link>

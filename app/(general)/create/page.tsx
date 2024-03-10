@@ -4,7 +4,7 @@ export default function CreatePage() {
 
     return (
 
-        <div className="p-6">
+        <div className="p-6 mt-6">
         
             <CreateTabs />
         

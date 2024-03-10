@@ -17,12 +17,12 @@ export default function Search({
 
     return (
 
-      <div className="error flex flex-col w-full p-6">
+      <div className="error flex flex-col w-full p-6 mt-6">
 
             <div className="flex flex-col">
 
                 <h1 className="header">Search</h1>
-                <p className="text-gray-300 font-bold antialiased w-full">Find that post you liked</p>   
+                <p className="text-gray-300 font-medium antialiased w-full">Find that post you liked</p>   
 
             </div>
 

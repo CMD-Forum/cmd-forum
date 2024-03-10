@@ -3,10 +3,10 @@ import Link from 'next/link'
 
 export function Error404() {
   return (
-        <div className='gap-2 p-6 rounded-md w-full bg-transparent'>
-          <h1 className='text-2xl font-sans font-bold antialiased w-full'>Oops, we&apos;ve hit a wall!</h1>   
-          <h2 className="text-gray-300">The requested page couldn&apos;t be found.</h2>
-          <div className="flex md:flex-row flex-col gap-2 mt-2">
+        <div className='gap-2 p-6 mt-6 rounded-md w-full bg-transparent'>
+          <h1 className='header'>Oops, we&apos;ve hit a wall!</h1>   
+          <h2 className="text-gray-300 font-medium antialiased w-full">The requested page couldn&apos;t be found.</h2>
+          <div className="flex md:flex-row flex-col gap-2 mt-4">
             <Link className='navlink !w-full !justify-center md:!w-fit' href='/'><HomeIcon className="font-medium h-5 w-5" />Home</Link>
             <Link className='navlink !w-full !justify-center md:!w-fit' href='/search'><MagnifyingGlassIcon className="font-medium h-5 w-5" />Search</Link>                            
           </div>

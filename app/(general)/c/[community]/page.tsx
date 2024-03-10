@@ -19,7 +19,7 @@ export default async function CommunityPage({ params }: { params: { community: s
 
     return( 
     
-        <div className='flex-row gap-2 p-6 rounded-md w-full bg-transparent'>
+        <div className='flex-row gap-2 p-6 rounded-md w-full bg-transparent mt-6'>
             <div className='flex-col'>
                 <div className='flex flex-row gap-3 items-center'>
                     <div className='flex flex-col'>
@@ -40,7 +40,7 @@ export default async function CommunityPage({ params }: { params: { community: s
 
   return (
 
-    <main>
+    <main className="mt-12">
 
         <Infobar community={dbCommunity?.name} community_dn={dbCommunity.display_name} administrators={dbCommunity?.admin_ids} main={dbCommunity.sidebar_md} createdAt={dbCommunity?.createdAt.toLocaleDateString()} community_image={dbCommunity?.image} community_description={dbCommunity.description} /> 
 

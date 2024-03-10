@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { createPortal } from 'react-dom';
 
-export default function Modal({ children, btnText, btnDisabled }: { children: React.ReactNode, btnText: string, btnDisabled?: boolean }) {
+export default function Modal({ children, btnText, btnClassName, btnType = "navlink", btnDisabled }: { children: React.ReactNode, btnText: string, btnClassName?: string, btnType?: string, btnDisabled?: boolean }) {
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -19,64 +19,71 @@ export default function Modal({ children, btnText, btnDisabled }: { children: Re
     const button = getChildrenOnDisplayName(children, "Button")
     const custom = getChildrenOnDisplayName(children, "Custom")
 
-    return (
+    if (typeof window === "object") {
 
-        <>
-            <button className="navlink" onClick={() => setIsOpen(true)} disabled={btnDisabled}>{ btnText }</button>
+        return (
+
+            <>
+                <button className={`${btnType} ${btnClassName}`} onClick={() => setIsOpen(true)} disabled={btnDisabled}>{ btnText }</button>
+                    
+                {createPortal(
                 
-            {createPortal(
-            
-            
-                <AnimatePresence>
+                
+                    <AnimatePresence>
 
-                    {isOpen &&
+                        {isOpen &&
 
-                        <motion.div 
-                            className='fixed w-dvw h-dvh inset-0 flex items-center justify-center z-[1000000] bg-semitransparent px-6'
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ ease: "linear", duration: 0.1 }}
-                        >
-
-                            
-                            <motion.div
+                            <motion.div 
+                                className='fixed w-dvw h-dvh inset-0 flex items-center justify-center z-[1000000] bg-semitransparent px-6'
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
                                 transition={{ ease: "linear", duration: 0.1 }}
-                                className={`bg-background rounded-md fixed text-wrap h-fit !min-w-0 max-w-[425px] border-border border-1 p-6 flex flex-col`}
                             >
 
-                                <button className="w-fit h-fit absolute top-2 right-2 focus:ring-2 ring-white rounded-md p-1 transition-all" onClick={() => setIsOpen(false)}>
-                                    <XMarkIcon className="w-5 h-5 flex text-gray-300 hover:text-white cursor-pointer transition-all"></XMarkIcon>        
-                                </button>
-
-                                {title}    
                                 
-                                {subtitle}
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ ease: "linear", duration: 0.1 }}
+                                    className={`bg-background rounded-md fixed text-wrap h-fit !min-w-0 max-w-[425px] border-border border-1 flex flex-col`}
+                                >
 
-                                {subtitle ? null : <div className="mb-4" /> }
+                                    <button className="w-fit h-fit absolute top-2 right-2 focus:ring-2 ring-white rounded-md p-1 transition-all" onClick={() => setIsOpen(false)}>
+                                        <XMarkIcon className="w-5 h-5 flex text-gray-300 hover:text-white cursor-pointer transition-all"></XMarkIcon>        
+                                    </button>
 
-                                {custom}
+                                    <div className="p-6">
 
-                                <div className="flex flex-col md:!flex-row gap-2">
-                                    {button}    
-                                </div>
-                                
-                                
-                            </motion.div>    
-                        </motion.div>
-                        
-                    }
+                                        {title}    
+                                        
+                                        {subtitle}
 
-                </AnimatePresence>,
-                document.body
-            )}         
-        </>
-    
+                                        {custom}
 
-    );
+                                    </div>
+
+                                    <div className="flex flex-col md:!flex-row gap-2 bg-card px-6 py-3 justify-end border-t-1 border-border">
+                                        {button}    
+                                    </div>
+                                    
+                                    
+                                </motion.div>    
+                            </motion.div>
+                            
+                        }
+
+                    </AnimatePresence>,
+                    document.body
+                )}         
+            </>
+        
+
+        );
+
+    }
+
 
 }
 

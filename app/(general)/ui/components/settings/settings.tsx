@@ -3,6 +3,7 @@
 import { PencilSquareIcon, CalendarDaysIcon } from "@heroicons/react/24/solid";
 import { useSession } from "next-auth/react";
 import ChangeAccountName from "./ChangeAccountDetails";
+import { Settings_ChangeAccountUsername, Settings_DeleteAccount } from "./settings_sections";
 
 export default function AccountSettings() {
 
@@ -12,11 +13,11 @@ export default function AccountSettings() {
         <div className='mb-4 w-full'>
 
             <h2 className='header'>Account Details</h2>
-            <p className="text-gray-300 font-bold antialiased w-full mb-3">Change the account details for {session?.user.username}.</p>
+            <p className="text-gray-300 font-medium antialiased w-full mb-4">Change the account details for {session?.user.username}.</p>
 
-            <div className='border-1 border-border rounded-md'>
+            <div className='rounded-md flex flex-col gap-4'>
 
-                <div className="p-6 border-b-1 border-border">
+                <div className="p-6 border-1 border-border rounded-md">
                     <div className='flex-row gap-2 rounded-md w-full bg-transparent'>
                     
                         <div className='flex-col'>
@@ -45,42 +46,11 @@ export default function AccountSettings() {
 
                 {/* */}
 
-                <div className='flex md:flex-row flex-col gap-2 items-center border-b-1 border-border p-4'>
-
-                    <div className='flex flex-col mr-auto'>
-                        
-                        <h3 className='font-bold text-sm'>Change your username</h3>    
-                        <p className='text-sm'>Don&apos;t like your username? Change it!</p>
-
-                    </div>
-                    
-                    <div className='flex flex-row mr-auto md:mr-0 md:ml-auto w-fit'>
-
-                        { session && 
-                            <ChangeAccountName userID={session?.user.id} />                        
-                        }
-
-                    </div>
-
-                </div>
+                <Settings_ChangeAccountUsername />
 
                 {/* */}
 
-                <div className='flex md:flex-row flex-col gap-2 items-center p-4'>
-
-                    <div className='flex flex-col mr-auto'>
-
-                        <h3 className='font-bold text-sm'>Delete your account</h3>    
-                        <p className='text-sm'>This action cannot be reversed, be sure you want to do it.</p>
-
-                    </div>
-
-                    <div className='flex flex-row mr-auto md:mr-0 md:ml-auto w-fit'>
-
-                        <button className='navlink-destructive'>Delete Account</button>
-
-                    </div>
-                </div>
+                <Settings_DeleteAccount />
 
                 {/* */}
 

@@ -5,7 +5,7 @@ import { auth } from '@/auth';
 import { BottombarItems, CommunityInfobarItems, NavSideItems, TopbarItems } from './components/nav_sideitem';
 import { inter } from './fonts';
 import Dropdown, { DropdownCustom, DropdownLink, DropdownUser } from './components/dropdown/dropdown';
-import { ArrowRightEndOnRectangleIcon, Cog6ToothIcon, MegaphoneIcon, PlusIcon } from '@heroicons/react/24/solid';
+import { ArrowRightEndOnRectangleIcon, Cog6ToothIcon, MegaphoneIcon, PlusIcon, QuestionMarkCircleIcon, UserPlusIcon } from '@heroicons/react/24/solid';
 import LogoutButton from './components/signoutButton';
 
 export async function Navigation() {
@@ -14,7 +14,7 @@ export async function Navigation() {
 
   return (
 
-      <div className='sticky top-0 z-40 h-[60px] items-center bg-transparent backdrop-blur px-8 flex transition-all'>
+      <div className='sticky top-0 z-40 h-[60px] items-center bg-card backdrop-blur px-8 flex transition-all border-b-1 border-border'>
         
         <div className='flex justify-between w-full'>
 
@@ -27,20 +27,20 @@ export async function Navigation() {
 
           <div className='flex items-center justify-end ml-auto'>
           
-            {session?.user ? (
+            {session ? (
 
               <div className={"flex flex-row gap-2"}>
                 <div className='ml-auto flex gap-4'>
 
                   <Dropdown alignRight={true} accountHeading={true} headerText={""} headerIcon={null}>
                     <DropdownUser />
-                    <hr className='mt-1 mb-1' />
+                    <hr className='mt-2 mb-2' />
                     <DropdownLink text={"Settings"} icon={<Cog6ToothIcon />} link={"/account/settings"} />
-                    <LogoutButton className={"hover:bg-border w-full p-2 rounded-md flex gap-2 items-center transition-all text-sm"}><ArrowRightEndOnRectangleIcon className='w-5 h-5' />Logout</LogoutButton>
-                    <hr className='mt-1 mb-1' />
+                    <LogoutButton className={"hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm"}><ArrowRightEndOnRectangleIcon className='w-5 h-5' />Logout</LogoutButton>
+                    <hr className='mt-2 mb-2' />
                     <DropdownCustom className={"hover:bg-card"}>
                       <div className='flex flex-col gap-1 items-center'>
-                        <div className='label'><MegaphoneIcon className='w-4 h-4'/>Version 1.1 is here at last!</div>              
+                        <Link className='label cursor-pointer' href={"/updates/v1.1"}><MegaphoneIcon className='w-4 h-4'/>Version 1.1 is here at last!</Link>              
                       </div>
                     </DropdownCustom>
                   </Dropdown>
@@ -52,7 +52,25 @@ export async function Navigation() {
 
             ) : (
 
-              null
+              <div className={"flex-row gap-2 hidden md:flex"}>
+                <div className={"ml-auto flex gap-4"}>
+
+                  <Dropdown alignRight={true} headerText={"Login or Signup"} headerIcon={null} headerClassName={"!border-1 !border-border"}> 
+                    <DropdownLink text={"Login"} icon={<ArrowRightEndOnRectangleIcon />} link={"/login"} />
+                    <DropdownLink text={"Signup"} icon={<UserPlusIcon />} link={"/signup"} />
+                    <hr className='mt-2 mb-2' />
+                    <DropdownLink text={"About CMD/>"} icon={<QuestionMarkCircleIcon />} link={"/about"} />                    
+                    <hr className='mt-2 mb-2' />
+                    <DropdownCustom className={"hover:bg-card"}>
+                      <div className='flex flex-col gap-1 items-center'>
+                        <Link className='label cursor-pointer' href={"/updates/v1.1"}><MegaphoneIcon className='w-4 h-4'/>Version 1.1 is here at last!</Link>              
+                      </div>
+                    </DropdownCustom>
+                  </Dropdown>
+
+                </div>
+
+              </div>
 
             )}
 
@@ -126,7 +144,7 @@ export function Footer() {
 
   return (
 
-    <div className='w-full mt-auto p-10 bg-card z-50'>
+    <div className='w-full mt-auto p-10 bg-card z-50 border-t-1 border-b-1 border-border'>
 
       <div className='m-auto w-fit'>
 

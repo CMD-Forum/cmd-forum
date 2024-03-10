@@ -96,7 +96,7 @@ export default function Dropdown({ alignRight = false, children, accountHeading 
 
                     <AnimatePresence>
                         <motion.div 
-                            className={`bg-card ${className} shadow border-border border-1 rounded-md w-max h-max p-1 z-50 group min-w-52 ${alignRight === true ? 'right-0' : 'left-0'} shadow-xl absolute`}
+                            className={`bg-card ${className} shadow border-border border-1 rounded-md w-max h-max py-2 z-50 group min-w-52 ${alignRight === true ? 'right-0' : 'left-0'} shadow-xl absolute`}
                             initial={{
                                 y: '0px',
                                 opacity: '0%',
@@ -148,7 +148,7 @@ export const DropdownLink = ({ text, icon, link }: { text: string, icon: React.R
         <Link 
             // @ts-ignore
             href={ link } 
-            className="hover:bg-border w-full p-2 rounded-md flex gap-2 items-center transition-all text-sm group-[hidden]:hidden"
+            className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden"
         >
 
             { icon ? (
@@ -174,7 +174,7 @@ export const DropdownButton = ({ text, icon, onClick }: { text: string, icon: Re
     return (
         <button 
             onClick={onClick}
-            className="hover:bg-border w-full p-2 rounded-md flex gap-2 items-center transition-all text-sm group-[hidden]:hidden"
+            className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden"
         >
 
             {React.cloneElement(icon, {
@@ -192,7 +192,7 @@ export const DropdownItem = ({ text, icon }: { text: string, icon: React.ReactEl
 
     return (
         <div 
-            className="hover:bg-border w-full p-2 rounded-md flex gap-2 items-center transition-all text-sm group-[hidden]:hidden"
+            className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden"
         >
 
             { icon ? (
@@ -217,14 +217,14 @@ export const DropdownItem = ({ text, icon }: { text: string, icon: React.ReactEl
 
 export const DropdownUser = () => {
 
-    const { data: session, update } = useSession()
+    const { data: session, update } = useSession();
 
     if ( session ) {
         return (
 
                 <Link 
                     href={`/user/${session.user.username}`} 
-                    className="hover:bg-border w-full p-2 rounded-md flex gap-2 items-center transition-all text-sm group-[hidden]:hidden"
+                    className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden"
                 >
                     {/* @ts-ignore */}
                     <img src={session?.user.image} className="w-5 h-5 rounded-sm" alt="Your profile image"></img>
@@ -241,7 +241,7 @@ export const DropdownShare = ({ title, text, url, icon }: { title: string, text:
     return (
 
             <button 
-                className="hover:bg-border w-full p-2 rounded-md flex gap-2 items-center transition-all text-sm group-[hidden]:hidden"
+                className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden"
                 onClick={() => navigator.share({ title: title, text: text, url: url })}
             >
 
@@ -262,7 +262,7 @@ export const DropdownCustom = ({ children, className }: { children: React.ReactN
     return (
 
             <div 
-                className={`${className ? className : null} hover:bg-border w-full p-2 rounded-md flex gap-2 items-center transition-all text-sm group-[hidden]:hidden`}
+                className={`${className ? className : null} hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden`}
             >
                 { children }
             </div>

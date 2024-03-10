@@ -51,44 +51,19 @@ export default async function SearchResults(search: SearchResultProps) {
 
             where: {
 
-                OR: [
-                    {
-                        content: {
-                            contains: formattedQuery,
-                            mode: "insensitive",
-                        },
-                    },
-                    {
-                        author: {
-                            
-                            name: {
+                title: {
 
-                                contains: formattedQuery,
-                                mode: "insensitive",
-
-                            },
-
-                        },
-                    },
-                    {
-                        title: {
-
-                            contains: formattedQuery,
-                            mode: "insensitive"
-
-                        }
-                    },
-                    {
-
-                        tagline: {
-
-                            contains: formattedQuery,
-                            mode: "insensitive"
-
-                        }
-
+                    search: formattedQuery
+                       
+                },
+                content: {
+                    search: formattedQuery
+                },
+                author: {
+                    username: {
+                        search: formattedQuery
                     }
-                ]
+                }
 
             },
 

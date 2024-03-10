@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import '@/app/(general)/globals.scss'
-import { Navigation } from '@/app/(general)/ui/navigation'
+import { Navigation, Sidebar } from '@/app/(general)/ui/navigation'
 import NextAuthProvider from '@/app/(general)/nextauthprovider'
 import NextTopLoader from 'nextjs-toploader'
 
@@ -91,9 +91,8 @@ export default async function RootLayout({
               zIndex={999999}
           />
 
-          <div className='bg-background w-full'>
-            <Navigation />  
-          </div>
+          <Navigation />  
+          <Sidebar />
           
           <div className='flex justify-center m-auto bg-background h-full items-center min-h-dvh w-full p-6'>
 

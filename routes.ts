@@ -6,6 +6,8 @@
 
 */
 
+import { env } from "process";
+
 export const privateRoutes: string[] = [
     "/account",
     "/account/settings",
@@ -44,4 +46,5 @@ export const apiAuthPrefix: string = "/api/auth";
 
 */
 
-export const defaultLoginRedirect: string = "https://localhost:3000/account"
+// @ts-ignore
+export const defaultLoginRedirect: string = process.env.CURRENT_URL
