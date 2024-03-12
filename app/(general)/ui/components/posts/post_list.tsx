@@ -46,7 +46,7 @@ export default function PostList() {
     }
 
     return (
-        <>
+        <div className='flex flex-col gap-4'>
             {Array.isArray(posts) && posts.map((post) => {
         
                 return (
@@ -69,10 +69,9 @@ export default function PostList() {
                         image_alt={post.image_alt}
                         imageurl={post.image_src}
                       />
-                      <hr className='mt-0 mb-0' />
                     </motion.div>
                   );
             })}
-        </>
+        </div>
     );
 }

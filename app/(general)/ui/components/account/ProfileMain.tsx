@@ -39,7 +39,6 @@ export default function ProfileMain(user: ProfileProps) {
 
                     <div className='flex flex-row gap-3 items-center'>
 
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={user.image} className='h-[56px] rounded-md' alt={`${user.username}'s Profile Image`} />
 
                         <div className='flex flex-col'>

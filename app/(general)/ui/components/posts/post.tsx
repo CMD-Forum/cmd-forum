@@ -84,7 +84,7 @@ export function CardPost(post: PostProps) {
 
     return (
 
-        <div className="flex w-full relative group transition-all bg-transparent h-fit rounded-md px-5 py-5">
+        <div className="flex w-full relative group transition-all  bg-transparent border-1 border-border group-hover/title:!border-white h-fit rounded-md px-6 py-6">
 
             {/*<Link className='w-full flex-1 h-full absolute left-0 top-0 z-10' href={`/posts/${post.id}`}></Link>*/}
 
@@ -135,7 +135,7 @@ export function CardPost(post: PostProps) {
 
                 </div>
                 
-                <Link href={`/posts/${post.id}`} className="w-fit font-sans font-semibold text-[18px] md:text-lg group-hover:text-gray-300 transition-all facebookTheme:text-lg">{post.title}</Link>
+                <Link href={`/posts/${post.id}`} className="group/title w-fit font-sans font-semibold text-[18px] md:text-lg group-hover:text-gray-300 transition-all facebookTheme:text-lg peer">{post.title}</Link>
                 
                 {post.imageurl 
                 
@@ -166,7 +166,7 @@ export function CardPost(post: PostProps) {
                         <Dropdown headerIcon={<EllipsisVerticalIcon />} alignRight={true} accountHeading={false} headerClassName={"mt-4"}>
                             <DropdownLink text={post.author.username} icon={<img src={post.author.image} alt={post.author.username}></img>} link={`/user/${post.author.username}`}></DropdownLink>
                             <DropdownLink text={post.community.display_name} icon={<img src={post.community.image} alt={post.community.display_name}></img>} link={`/c/${post.community.name}`}></DropdownLink>
-                            <hr className='mt-2 !mb-2'/>
+                            <hr className='mt-1 !mb-1'/>
                             <DropdownShare icon={<ShareIcon />} text={text} title={title} url={url} />
                         </Dropdown>                                
                     </div>
@@ -229,7 +229,7 @@ export function FullPost(post: FullPostProps) {
                                 <div className="flex flex-row">
                                     <h4 className="w-fit flex gap-2">
                                         <Hovercard headerText={`@${post.author.username}`} headerIcon={null} headerClassName={"text-sm"}>
-                                            <div className='flex flex-row gap-4 p-4 w-full max-w-[300px]'>
+                                            <div className='flex flex-row gap-4 p-4 w-full max-w-[250px]'>
                                                 {/* @ts-ignore */}
                                                 <img src={post.author.image} className='w-6 h-6 rounded-sm' alt='Profile Image' />
                                                 <div className='flex flex-col'>

@@ -1,9 +1,7 @@
 "use client";
 
-import { PencilSquareIcon, CalendarDaysIcon } from "@heroicons/react/24/solid";
 import { useSession } from "next-auth/react";
-import ChangeAccountName from "./ChangeAccountDetails";
-import { Settings_ChangeAccountUsername, Settings_DeleteAccount } from "./settings_sections";
+import { Settings_ChangeAccountUsername, Settings_ChangeDescription, Settings_DeleteAccount } from "./settings_sections";
 
 export default function AccountSettings() {
 
@@ -12,26 +10,23 @@ export default function AccountSettings() {
     return (
         <div className='mb-4 w-full'>
 
-            <h2 className='header'>Account Details</h2>
-            <p className="text-gray-300 font-medium antialiased w-full mb-4">Change the account details for {session?.user.username}.</p>
+            <div className='rounded-md flex flex-col gap-4 w-full'>
 
-            <div className='rounded-md flex flex-col gap-4'>
-
-                <div className="p-6 border-1 border-border rounded-md">
+                <div className="p-6 border-1 border-border rounded-md w-full">
                     <div className='flex-row gap-2 rounded-md w-full bg-transparent'>
                     
-                        <div className='flex-col'>
+                        <div className='flex-col w-full'>
 
-                            <div className='flex flex-row gap-3 items-center'>
+                            <div className='flex flex-row gap-3 items-center w-full relative'>
 
                                 {/* @ts-ignore */}
-                                <img src={session?.user.image} className='h-[56px] rounded-md' alt={`${session?.user.username}'s Profile Image`} />
+                                <img src={session?.user.image} className='h-[56px] top-0 left-0 rounded-md absolute' alt={`${session?.user.username}'s Profile Image`} />
 
-                                <div className='flex flex-col'>
+                                <div className='flex flex-col w-full pl-20'>
 
                                     <h1 className='text-2xl font-sans font-bold antialiased w-full'>{session?.user.username}</h1>   
                                     {/* @ts-ignore */}
-                                    <h2 className='text-gray-300'>{session?.user.description}</h2>
+                                    <p className='text-gray-300'>{session?.user.description}</p>
 
                                 </div>
 
@@ -47,6 +42,10 @@ export default function AccountSettings() {
                 {/* */}
 
                 <Settings_ChangeAccountUsername />
+
+                {/* */}
+
+                <Settings_ChangeDescription />
 
                 {/* */}
 

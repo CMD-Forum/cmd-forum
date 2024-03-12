@@ -6,7 +6,8 @@
  */
 
 import { useSession } from "next-auth/react";
-import ChangeAccountName from "./ChangeAccountDetails";
+import { ChangeAccountDescription, ChangeAccountName, DeleteAccountModal } from "./settings_actions";
+import Switch from "../switch";
 
 export function Settings_ChangeAccountUsername() {
 
@@ -37,7 +38,40 @@ export function Settings_ChangeAccountUsername() {
 
 }
 
+export function Settings_ChangeDescription() {
+
+    const { data: session, update } = useSession();
+
+    return (
+        <div className='flex flex-col border-1 border-border rounded-md pt-6'>
+
+            <div className="px-6">
+                <h3 className='font-bold text-xl'>Update Description</h3>     
+                <p className='text-sm'>Update your profile description.</p>
+            </div>
+
+            <div className="w-full border-t-1 border-border mt-6 flex" />   
+            
+            <div className='flex flex-col bg-card md:flex-row py-3 px-6 justify-between gap-3 items-center w-full'>
+
+                <p className="text-gray-300 text-sm">To update your description, click the button.</p>
+
+                { session && 
+                    <ChangeAccountDescription userID={session.user.id} />
+                }
+
+
+
+            </div>
+
+        </div>
+    );
+
+}
+
 export function Settings_DeleteAccount() {
+
+    const { data: session, update } = useSession();
 
     return (
         <div className='flex flex-col border-1 border-border rounded-md pt-6'>
@@ -52,6 +86,10 @@ export function Settings_DeleteAccount() {
             <div className='flex flex-col bg-card md:flex-row py-3 px-6 justify-between gap-3 items-center w-full'>
 
                 <p className="text-gray-300 text-sm">If you&apos;re sure you want to, click the button.</p>
+
+                { session && 
+                    <DeleteAccountModal userID={session.user.id} username={session.user.username} />
+                }
 
             </div>
 

@@ -41,7 +41,7 @@ model Community {
   public         Boolean  @default(true)
   admin_ids      String[] @default([""])
   administrators User[]
-  sidebar_md     String   @default("# Edit your community sidebar in the admin panel.") // Originally there was a sidebar, but that got scrapped. This is now shown below the community information.
+  sidebar_md     String   @default("Edit your community description in the admin panel.") // Originally there was a sidebar, but that got scrapped. This is now shown below the community information.
   posts          Post[]
 }
 

@@ -5,7 +5,7 @@ export function UNIMPLEMENTED() {
 
   return (
 
-    <div className='flex-row gap-2 p-6 rounded-md facebookTheme:rounded-none w-full bg-transparent mt-6'>
+    <div className='flex flex-col border-b-1 border-border p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48'>
       <div className='flex-col'>
         <div className='flex flex-row gap-3 items-center'>
           <div className='flex flex-col w-full'>

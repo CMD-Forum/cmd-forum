@@ -28,7 +28,7 @@ module.exports = withTV({
       },
       borderWidth: {
         '1': '1px' 
-      }
+      },
     },
     fontFamily: {
       'sans': ['ui-sans-serif', 'system-ui'],
@@ -38,7 +38,7 @@ module.exports = withTV({
       'body': ['"Open Sans"'],
       'IBM_PLEX_MONO': ['var(--font-ibm_plex_mono)'],
       'facebook_link': ['"lucida grande",tahoma,verdana,arial,sans-serif'],
-    }
+    },
   },
   plugins: [
     require('tailwindcss-themer')({

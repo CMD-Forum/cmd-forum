@@ -12,14 +12,6 @@ export default async function UserPage({ params }: { params: { name: string } })
         }
     })
 
-    const posts = await prisma.post.findMany({
-        where: {
-          author: {
-            username: params.name
-          }
-        }
-    })
-
     if ( user ) {
 
         const user_post_count = await prisma.post.count({
@@ -30,25 +22,29 @@ export default async function UserPage({ params }: { params: { name: string } })
 
         return (
 
-            <div className="p-6 mt-6">
-                <ProfileMain 
-                    username={user.username} 
-                    image={user.image} 
-                    description={user.description} 
-                    createdAt={user.createdAt} 
-                    postCount={user_post_count} 
-                />        
+            <main className="flex min-h-screen flex-col w-full">
 
-
-                <p className="text-gray-300 font-bold antialiased w-full text-center md:text-left mt-4">{user.username}&apos;{user.username.endsWith("s") ? "" : "s"} Posts</p>   
-
-                <hr className="mt-2" />
-
-                <div className="flex flex-col">
-                    <PostListByUser username={user.username} />                             
+                <div className="error flex flex-col w-full">
+      
+                  <div className="flex flex-col border-b-1 border-border p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48">
+      
+                    <ProfileMain 
+                        username={user.username} 
+                        image={user.image} 
+                        description={user.description} 
+                        createdAt={user.createdAt} 
+                        postCount={user_post_count} 
+                    />        
+      
+                  </div>
+      
+                  <div className='flex flex-col px-6 lg:py-12 lg:px-48'>
+                    <PostListByUser username={user.username} /> 
+                  </div>
+      
                 </div>
-                
-            </div>
+      
+            </main>
 
         )
 

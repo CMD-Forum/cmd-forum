@@ -111,9 +111,9 @@ export default async function RootLayout({
 
                   <Sidebar />        
 
-                  <div className='flex flex-col justify-center max-w-[70rem] w-[70rem] lg:p-12 !pt-0 m-auto'>
+                  <div className='flex flex-col justify-center w-full !pt-0 m-auto'>
 
-                    <div className='max-w-[70rem]'>
+                    <div className=''>
 
                       {children}    
 

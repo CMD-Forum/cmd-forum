@@ -51,19 +51,30 @@ export default async function SearchResults(search: SearchResultProps) {
 
             where: {
 
-                title: {
+                OR: [
 
-                    search: formattedQuery
-                       
-                },
-                content: {
-                    search: formattedQuery
-                },
-                author: {
-                    username: {
-                        search: formattedQuery
+                    {
+                        title: {
+                            contains: formattedQuery,
+                            mode: "insensitive",
+                        },
+                    },
+                    {
+                        content: {
+                            contains: formattedQuery,
+                            mode: "insensitive",
+                        },
+                    },
+                    {
+                        author: {
+                            username: {
+                                contains: formattedQuery,
+                                mode: "insensitive",
+                            },
+                        },
                     }
-                }
+                    
+                ]
 
             },
 
@@ -79,6 +90,7 @@ export default async function SearchResults(search: SearchResultProps) {
                         createdAt: true,
                         updatedAt: true,
                         image: true,
+                        description: true,
 
                     }
 
@@ -106,7 +118,7 @@ export default async function SearchResults(search: SearchResultProps) {
 
                 {results && results.map((result) => (
                         
-                    <div className="w-full" key={result.id}>
+                    <div className="w-full px-6" key={result.id}>
                         <CardPost 
                             id={result.id}
                             title={result.title}

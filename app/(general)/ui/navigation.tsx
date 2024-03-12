@@ -34,13 +34,13 @@ export async function Navigation() {
 
                   <Dropdown alignRight={true} accountHeading={true} headerText={""} headerIcon={null}>
                     <DropdownUser />
-                    <hr className='mt-2 mb-2' />
+                    <hr className='mt-1 mb-1' />
                     <DropdownLink text={"Settings"} icon={<Cog6ToothIcon />} link={"/account/settings"} />
-                    <LogoutButton className={"hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm"}><ArrowRightEndOnRectangleIcon className='w-5 h-5' />Logout</LogoutButton>
-                    <hr className='mt-2 mb-2' />
+                    <LogoutButton className={"hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm text-gray-300 hover:text-white"}><ArrowRightEndOnRectangleIcon className='w-5 h-5' />Logout</LogoutButton>
+                    <hr className='mt-1 mb-1' />
                     <DropdownCustom className={"hover:bg-card"}>
                       <div className='flex flex-col gap-1 items-center'>
-                        <Link className='label cursor-pointer' href={"/updates/v1.1"}><MegaphoneIcon className='w-4 h-4'/>Version 1.1 is here at last!</Link>              
+                        <Link className='label cursor-pointer text-gray-300 hover:text-white' href={"/updates/v1.1"}><MegaphoneIcon className='w-4 h-4'/>Version 1.1 is here at last!</Link>              
                       </div>
                     </DropdownCustom>
                   </Dropdown>
@@ -177,8 +177,8 @@ export function Footer() {
 
         <ul className='flex gap-4 m-auto w-fit'>
 
-          <Link className='text-gray-300 hover:text-white transition-all flex items-center gap-1.5' href="/support/1">About Us</Link>
-          <Link className='text-gray-300 hover:text-white transition-all flex items-center gap-1.5' href="/support/3">Legal</Link>   
+          <Link className='text-gray-300 hover:text-white transition-all flex items-center gap-1.5' href="/about">About Us</Link>
+          <Link className='text-gray-300 hover:text-white transition-all flex items-center gap-1.5' href="/about#legal">Legal</Link>   
 
         </ul>
 

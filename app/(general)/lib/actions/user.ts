@@ -63,3 +63,117 @@ export async function ChangeAccountUsername( { userID, newUsername } : { userID:
     }
 
 }
+
+export async function Func_ChangeAccountDescription( { userID, description } : { userID: string, description: string }) {
+    
+    console.log("executing change description");
+
+    try {
+
+        
+        const user = await prisma.user.findUnique({
+            where: {
+                id: userID,
+            },
+        });
+
+        console.log("finding user");
+
+        if ( user ) {
+
+            console.log("found user");
+
+            const updatedUser = await prisma.user.update({
+                where: {
+                    id: userID,
+                },
+                data: {
+                    description: description,
+                },
+            });
+
+            console.log("updated user");
+
+            return { success: "Successfully updated description." }
+
+        }
+
+        console.log("user not found");
+        return { error: "Couldn't change description, please try again later."}
+
+    } catch ( error ) {
+
+        if ( error instanceof Prisma.PrismaClientKnownRequestError ) {
+
+            switch (error.code) {
+
+                case "P100" || "P1001" || "P1002" || "P1003" || "P1009" || "P1010" || "P1011" || "P1012" || "P1013" || "P1014" || "P1015" || "P1016" || "P1017": 
+                    return { error: "The database couldn't be reached, please try again later." }
+                case "P1008":
+                    return { error: "The change took too long to complete, please try again later." }
+                default:
+                    return { error: "Sorry, something went wrong. Please try again later."}
+
+            }
+
+
+        } else {
+
+            return { error: "Couldn't change description, please try again later."}
+
+        }
+
+    }
+
+}
+
+export async function DeleteAccount( { userID } : { userID: string }) {
+    
+    try {
+
+        const user = await prisma.user.findUnique({
+            where: {
+                id: userID,
+            },
+        });
+
+        if ( user ) {
+
+            const deletedUser = await prisma.user.delete({
+                where: {
+                    id: userID,
+                },
+            });
+
+            return { success: "Successfully deleted account." }
+
+        }
+
+        return { error: "Couldn't delete account, please try again later."}
+
+    } catch ( error ) {
+
+
+        if ( error instanceof Prisma.PrismaClientKnownRequestError ) {
+
+            switch (error.code) {
+
+                case "P100" || "P1001" || "P1002" || "P1003" || "P1009" || "P1010" || "P1011" || "P1012" || "P1013" || "P1014" || "P1015" || "P1016" || "P1017": 
+                    return { error: "The database couldn't be reached, please try again later." }
+                case "P1008":
+                    return { error: "The deletion took too long to complete, please try again later." }
+                default:
+                    return { error: "Sorry, something went wrong. Please try again later."}
+
+            }
+
+
+        } else {
+
+            return { error: "Couldn't change username, please try again later."}
+
+        }
+
+    }
+
+}
