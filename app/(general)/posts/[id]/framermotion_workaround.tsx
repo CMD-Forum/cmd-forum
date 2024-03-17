@@ -3,15 +3,7 @@
 import { FullPost } from '@/app/(general)/ui/components/posts/post'
 import { AnimatePresence, motion } from 'framer-motion';
 
-interface WhyIsThisAThingProps {
-
-    post: any;
-    submitted: any;
-    ratio: any;
-
-}
-
-export default function Framermotion_workaround(props: WhyIsThisAThingProps) {
+export default function Framermotion_workaround({ post }: { post: any }) {
 
     const variants = {
 
@@ -32,18 +24,19 @@ export default function Framermotion_workaround(props: WhyIsThisAThingProps) {
       >
 
         <FullPost 
-          id={props.post.id}
-          title={props.post.title} 
-          author={props.post.author} 
-          community={props.post.community} 
-          upvotes={props.post.upvotes} 
-          downvotes={props.post.downvotes} 
-          ratio={`${props.ratio}%`} 
-          submitted={props.submitted} 
-          subtitle={props.post.tagline} 
-          body={props.post.content}
-          imageurl={props.post.imageurl}
-          image_alt={props.post.imagealt}
+          id={post.id}
+          title={post.title} 
+          author={post.author} 
+          community={post.community} 
+          upvotes={post.upvotes} 
+          downvotes={post.downvotes} 
+          createdAt={post.createdAt} 
+          updatedAt={post.updatedAt}
+          public={post.public}
+          tagline={post.tagline} 
+          content={post.content}
+          imageurl={post.imageurl}
+          imagealt={post.imagealt}
         ></FullPost>
 
       </motion.div>

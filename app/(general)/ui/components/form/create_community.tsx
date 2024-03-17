@@ -21,6 +21,7 @@ const FormSchema = z.object({
     image_url: z
         .string()
         .url( { message: "Image must be a URL and start with `https://`" } )
+        .min(1, "Your URL must not be empty.")
 
 })
 
@@ -47,12 +48,12 @@ export default function CreateCommunityForm() {
       },
     });
 
-    const { data: session, update } = useSession()
+    const { data: session } = useSession();
 
     if ( ! session ) {
 
         return (
-            <Alert type={"notice"} title={"Hmm..."} description={"Oops, something went wrong. Try logging in again."} />
+            <Alert type={"error"} title={"Hmm..."} description={"Oops, something went wrong. Try logging in again."} />
         );
 
     } 
@@ -102,12 +103,6 @@ export default function CreateCommunityForm() {
     return (
 
         <form className="flex flex-col gap-2 bg-transparent rounded-lg !w-full" onSubmit={form.handleSubmit(OnSubmit)}>
-
-            <h2 className="header text-center sm:text-left">Create Community</h2>
-
-            <hr className='border-border mt-1 mb-1'></hr>
-
-            {/* */}
 
             {success && (
 
@@ -184,7 +179,7 @@ export default function CreateCommunityForm() {
 
             {/* */}
 
-            {error && <Alert type="warning" title="Community Creation Failed" description="Please check all details are correct." />}
+            {error && <Alert type="alert" title="Creation Failed" description="Please check all details are correct." />}
 
         </form>
 

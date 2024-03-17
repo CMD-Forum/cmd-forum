@@ -70,7 +70,7 @@ export function ChangeAccountName({ userID, btnType = "navlink-full" } : { userI
             <Modal.Custom><p className={`${success ? "flex" : "hidden"} text-center w-full md:text-left text-gray-300`}>{success}</p></Modal.Custom>
             <Modal.Custom><p className={`${error ? "flex" : "hidden"} text-center w-full md:text-left text-gray-300`}>{error}</p></Modal.Custom>
 
-            <Modal.Button type={"navlink-full"} loadingVariable={loading} className={""} onClick={handleSubmit(onSubmit)}>Change your name</Modal.Button> 
+            <Modal.Button type={"navlink-full"} loadingVariable={loading} className={""} onClick={handleSubmit(onSubmit)} spinnerColor={"black"}>Change your name</Modal.Button> 
         </Modal>
     );
 
@@ -135,7 +135,7 @@ export function ChangeAccountDescription({ userID, btnType = "navlink-full" } : 
             <Modal.Custom><p className={`${success ? "flex" : "hidden"} text-center w-full md:text-left text-gray-300`}>{success}</p></Modal.Custom>
             <Modal.Custom><p className={`${error ? "flex" : "hidden"} text-center w-full md:text-left text-gray-300`}>{error}</p></Modal.Custom>
 
-            <Modal.Button type={"navlink-full"} loadingVariable={loading} className={""} onClick={handleSubmit(onSubmit)}>Change Description</Modal.Button> 
+            <Modal.Button type={"navlink-full"} loadingVariable={loading} className={""} onClick={handleSubmit(onSubmit)} spinnerColor={"black"}>Change Description</Modal.Button> 
         </Modal>
     );
 
@@ -158,7 +158,7 @@ export function DeleteAccountModal({ userID, username, btnType = "navlink-destru
         resolver: zodResolver(UpdateUsernameSchema),
         defaultValues: {
             userID: userID,
-            username: '',
+            username: username,
             confirmUsername: '',
         },
 
@@ -168,17 +168,19 @@ export function DeleteAccountModal({ userID, username, btnType = "navlink-destru
 
     const onSubmit = ( values: z.infer<typeof DeleteAccountSchema> ) => {
 
-        setError("");
+        setError("Please Wait...");
         setSuccess("");
 
         startTransition(() => {
             setLoading(true)
             DeleteAccount({ userID: values.userID })
                 .then((data) => {
-                    // @ts-ignore
-                    setError(data?.error);
-                    // @ts-ignore
-                    setSuccess(data?.success);
+                    if ( data.error ) {
+                        setError(data?.error);
+                    }
+                    if ( data.success ) {
+                        setSuccess(data?.success);    
+                    }
                     setLoading(false);
                 })
         });
@@ -200,7 +202,7 @@ export function DeleteAccountModal({ userID, username, btnType = "navlink-destru
             <Modal.Custom><p className={`${success ? "flex" : "hidden"} text-center w-full md:text-left text-gray-300`}>{success}</p></Modal.Custom>
             <Modal.Custom><p className={`${error ? "flex" : "hidden"} text-center w-full md:text-left text-gray-300`}>{error}</p></Modal.Custom>
 
-            <Modal.Button type={"navlink-destructive"} loadingVariable={loading} className={""} onClick={handleSubmit(onSubmit)}>Delete your account</Modal.Button> 
+            <Modal.Button type={"navlink-destructive"} loadingVariable={loading} className={""} onClick={handleSubmit(onSubmit)} spinnerColor="white">Delete your account</Modal.Button> 
         </Modal>
     );
 

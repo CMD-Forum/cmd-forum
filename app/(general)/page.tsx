@@ -16,7 +16,7 @@ export default function HomePage() {
 
             </div>
 
-            <div className='flex flex-col px-6 lg:py-12 lg:px-48'>
+            <div className='flex flex-col px-6 lg:py-12 lg:px-48 mt-6 mb-6'>
               <PostList />  
             </div>
 

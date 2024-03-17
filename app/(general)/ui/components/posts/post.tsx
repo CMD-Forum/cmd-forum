@@ -2,91 +2,77 @@
 
 import Link from 'next/link';
 import { Suspense, useEffect, useState } from 'react';
-import { ChatBubbleLeftEllipsisIcon, ChevronDownIcon, ChevronUpIcon, EllipsisVerticalIcon, ShareIcon, UserIcon } from '@heroicons/react/24/solid';
+import { ArrowRightEndOnRectangleIcon, ChatBubbleLeftEllipsisIcon, ChevronDownIcon, ChevronUpIcon, Cog6ToothIcon, EllipsisVerticalIcon, MegaphoneIcon, ShareIcon, UserIcon } from '@heroicons/react/24/solid';
 import MarkdownPreview from '@uiw/react-markdown-preview';
 import { FullPostSkeleton } from '../../fallback/Post';
 import rehypeSanitize from "rehype-sanitize";
-import Dropdown, { DropdownCustom, DropdownLink, DropdownShare } from '../dropdown/dropdown';
+import Dropdown, { DropdownCustom, DropdownLink, DropdownShare, DropdownUser } from '../dropdown/dropdown';
 import BackButton, { BackButtonNormal } from './back_button';
 import Hovercard from '../dropdown/hovercard';
 import { useSession } from 'next-auth/react';
+import LogoutButton from '../signoutButton';
+import { Post } from '@/types/types';
+import { error } from 'console';
 
-interface PostProps {
+/**
+ * Horizontal card display of the given post.
+ * 
+ * @param {string} id ID of the post.
+ * @param {Date} createdAt When the post was created.
+ * @param {Date} updatedAt When the post was updated in the database.
+ * @param {string} title Title of the post.
+ * @param {string} content Main content of the post.
+ * @param {string} tagline Tagline of the post.
+ * @param {string} imageurl URL of the posts image, may be undefined or null.
+ * @param {string} imagealt Alt tag of the posts image, may be undefined or null.
+ * @param {boolean} public Whether the post is public or not.
+ * @param {string} authorId The ID of the posts author.
+ * @param {number} downvotes How many downvotes the post has.
+ * @param {number} upvotes How many upvotes the post has.
+ * @param {string} communityId The ID of the posts community.
+ * @param {PostAuthor} author The author data of the post.
+ * @param {PostCommunity} community The community data of the post.
+ * 
+ * @example
+ * <CardPost 
+ *  id={post.id}
+ *  title={post.title} 
+ *  author={post.author} 
+ *  community={post.community} 
+ *  upvotes={post.upvotes} 
+ *  downvotes={post.downvotes} 
+ *  createdAt={post.createdAt} 
+ *  updatedAt={post.updatedAt}
+ *  public={post.public}
+ *  tagline={post.tagline} 
+ *  content={post.content}
+ *  imageurl={post.imageurl}
+ *  imagealt={post.imagealt}
+ * />
+ * 
+ */
 
-    id: string;
-    title: string;
-    author: any;
-    community: any;
-    upvotes: number;
-    downvotes: number;
-    submitted: string;
-    subtitle: string;
-    imageurl?: string;
-    image_alt?: string;
-
-}
-
-interface ImageProps {
-
-    imageurl?: string | URL;
-    image_alt?: string; 
-
-}
-
-export function PostImage(image: ImageProps) {
-
-    const [imageUrl, setImageUrl] = useState<string | null>(null);
-
-    useEffect(() => {
-
-        if (image.imageurl) {
-
-            fetch(image.imageurl)
-
-                .then(response => response.blob())
-
-                .then(blob => {
-
-                    const url = URL.createObjectURL(blob);
-                    setImageUrl(url);
-
-                });
-
-        }
-
-    }, [image.imageurl]);
-
-    console.log(imageUrl)
-
-    if (imageUrl) {
-
-        return (
-
-            <div className='post-img'>
-
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={imageUrl} alt={image.image_alt} className='rounded-xl mb-2 mt-2 object-contain max-h-96 h-auto static pos-unset'></img>    
-                {/* Do not change as NextJS requires a domain **whitelist**, and as far as I'm aware there's no option to change this to a blacklist or even remove it. */}
-            
-            </div>
-
-        )
-
-    }
-
-}
-
-export function CardPost(post: PostProps) {
+export function CardPost( post: Post ) {
 
     const text = post.title;
-    const url = `https://localhost:3000/posts/${post.id}`;
+    const url = `${process.env.NEXT_PUBLIC_CURRENT_URL}posts/${post.id}`;
     const title = "CMD/>";
 
     return (
 
-        <div className="flex w-full relative group transition-all  bg-transparent border-1 border-border group-hover/title:!border-white h-fit rounded-md px-6 py-6">
+        <div className="flex flex-col sm:flex-row w-full items-center gap-4 relative group transition-all bg-card border-1 border-border group-hover/title:!border-white h-fit rounded-md px-6 py-6">
 
-            {/*<Link className='w-full flex-1 h-full absolute left-0 top-0 z-10' href={`/posts/${post.id}`}></Link>*/}
+            {post.imageurl 
+                
+                ?
+
+                    <img src={post.imageurl} alt={post.imagealt!} className="rounded-md sm:!max-w-[146px] sm:!min-w-[146px] m-auto sm:!h-[146px] sm:!w-[146px] overflow-hidden bg-cover" />
+
+                :
+
+                    <img src={"/text_post_icon.png"} alt={"This post has no image."} className="rounded-md hidden sm:flex sm:!max-w-[146px] sm:!min-w-[146px] m-auto sm:!h-[146px] sm:!w-[146px] overflow-hidden bg-cover" />
+
+            }
 
             <div className="flex w-full bg-transparent h-fit flex-col">
 
@@ -96,31 +82,29 @@ export function CardPost(post: PostProps) {
 
                         <div className='flex flex-row gap-2 items-center'>
 
-                            {/* @ts-ignore-error */}
-                            <img src={post.community.image} className='w-8 rounded-sm hidden md:flex' alt={post.community.name}></img>
                             <div className='flex flex-col'>
-                                {/* @ts-ignore-error */}
                                 <Link className="w-fit hover:underline z-20 text-white hidden md:flex" href={`/c/${post.community.name}`}>{post.community.name}</Link>   
                                 { ! post.author ?
 
-                                    <h4 className="w-fit text-gray-300 hidden md:flex gap-2 z-20"><h2 className='hover:underline flex gap-1'>[deleted] </h2> <p className='facebookTheme:text-[#808080]'>•</p> <p className='facebookTheme:text-[#808080]'>{post.submitted}</p></h4>   
+                                    <>
+                                        <h4 className="w-fit text-gray-300 hidden md:flex gap-2 z-20"><h2 className='hover:underline flex gap-1'>[deleted] </h2> <p className='facebookTheme:text-[#808080]'>•</p> <p className='facebookTheme:text-[#808080]'>{post.createdAt.toLocaleString()}</p></h4>                                       
+                                    </>
+                                    
 
                                     :
 
                                     <div className='hidden md:flex flex-row gap-2'>  
                                         <Hovercard headerText={`@${post.author.username}`} headerIcon={null} headerClassName={"text-sm"}>
                                             <div className='flex flex-row gap-4 p-4 w-full max-w-[300px]'>
-                                                {/* @ts-ignore */}
                                                 <img src={post.author.image} className='w-6 h-6 rounded-sm' alt='Profile Image'></img>
                                                 <div className='flex flex-col'>
                                                     <Link href={`/user/${post.author.username}`} className='hover:underline w-fit font-medium'>@{post.author.username}</Link>     
-                                                    {/* @ts-ignore */}
                                                     <p>{post.author.description}</p>             
                                                 </div>
                                             </div>
                                         </Hovercard>
                                         <p className='hidden sm:flex'>•</p> 
-                                        <p className='hidden sm:flex'>{post.submitted}</p>                         
+                                        <p className='hidden sm:flex' suppressHydrationWarning={true}>{post.createdAt.toLocaleString()}</p>                         
                                     </div>
                                 
 
@@ -136,50 +120,30 @@ export function CardPost(post: PostProps) {
                 </div>
                 
                 <Link href={`/posts/${post.id}`} className="group/title w-fit font-sans font-semibold text-[18px] md:text-lg group-hover:text-gray-300 transition-all facebookTheme:text-lg peer">{post.title}</Link>
-                
-                {post.imageurl 
-                
-                    ?
 
-                        <div className="relative rounded-md mt-2 mb-2 max-h-96 overflow-hidden">
-                            <div 
-                                style={{ 
-                                    backgroundImage: `url(${post.imageurl})`,
-                                    backgroundSize: 'cover',
-                                }} 
-                                className="absolute inset-0 filter blur-xl"
-                            />
-                            <img src={post.imageurl} alt={post.image_alt} className="relative m-auto max-h-96" />
-                        </div>
-
-                    :
-
-                        <span id='No Image Attached'></span>
-
-                }
-
-                <p className='text-gray-300'>{post.subtitle}</p>
+                <p className='text-gray-300'>{post.tagline}</p>
 
                 <div className='flex flex-row mt-4'>
                     <Link className='navlink !px-2 md:!px-3 mr-auto' href={`/posts/${post.id}`}><ChatBubbleLeftEllipsisIcon className='w-5 h-5' /><span className='hidden md:flex'>Comments</span></Link>
-                    <div>
-                        <Dropdown headerIcon={<EllipsisVerticalIcon />} alignRight={true} accountHeading={false} headerClassName={"mt-4"}>
-                            <DropdownLink text={post.author.username} icon={<img src={post.author.image} alt={post.author.username}></img>} link={`/user/${post.author.username}`}></DropdownLink>
-                            <DropdownLink text={post.community.display_name} icon={<img src={post.community.image} alt={post.community.display_name}></img>} link={`/c/${post.community.name}`}></DropdownLink>
-                            <hr className='mt-1 !mb-1'/>
-                            <DropdownShare icon={<ShareIcon />} text={text} title={title} url={url} />
-                        </Dropdown>                                
-                    </div>
+                    
+                    <Dropdown align={"right"} accountHeading={false} >
+                        <DropdownLink text={post.author.username} icon={<img src={post.author.image} alt={post.author.username}></img>} link={`/user/${post.author.username}`}></DropdownLink>
+                        <DropdownLink text={post.community.display_name} icon={<img src={post.community.image} alt={post.community.display_name}></img>} link={`/c/${post.community.name}`}></DropdownLink>
+                        <hr className='mt-1 !mb-1'/>
+                        <DropdownShare icon={<ShareIcon />} text={text} title={title} url={url} />
+                    </Dropdown>                        
+                    
+                    <Dropdown headerIcon={<EllipsisVerticalIcon />} align={"right"} accountHeading={false} headerText={""} headerClassName={"mt-4"}>
+                        <DropdownLink text={"Settings"} icon={<Cog6ToothIcon />} link={"/account/settings"} />
+                        <LogoutButton className={"hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm text-gray-300 hover:text-white"}><ArrowRightEndOnRectangleIcon className='w-5 h-5' />Logout</LogoutButton>
+                        <hr className='mt-1 mb-1' />
+                        <DropdownCustom className={"hover:bg-card"}>
+                            <div className='flex flex-col gap-1 items-center'>
+                            <Link className='label cursor-pointer text-gray-300 hover:text-white' href={"/updates/v1.1"}><MegaphoneIcon className='w-4 h-4'/>Version 1.1 is here at last!</Link>              
+                            </div>
+                        </DropdownCustom>
+                  </Dropdown>                            
                 </div>
-                   
-
-        	    {/*<div className='flex transition-all gap-2 mt-2 z-20 bg-card border-border border-1 rounded w-fit justify-center items-center facebookTheme:bg-white facebookTheme:border-[1px] facebookTheme:rounded-none facebookTheme:h-[26px]'>
-
-                    <button className='navlink !border-0 z-20 !rounded-none'><ChevronUpIcon className="font-medium h-4 w-4" /></button>
-                    <p className='facebookTheme:font-bold px-1 text-white'>{post.upvotes - post.downvotes}</p>
-                    <button className='navlink !border-0 z-20 !rounded-none'><ChevronDownIcon className="font-medium h-4 w-4" /></button>
-
-                </div>*/}
 
             </div>
 
@@ -189,30 +153,49 @@ export function CardPost(post: PostProps) {
 
 }
 
-interface FullPostProps {
+/**
+ * Full display of the given post.
+ * 
+ * @param {string} id ID of the post.
+ * @param {Date} createdAt When the post was created.
+ * @param {Date} updatedAt When the post was updated in the database.
+ * @param {string} title Title of the post.
+ * @param {string} content Main content of the post.
+ * @param {string} tagline Tagline of the post.
+ * @param {string} imageurl URL of the posts image, may be undefined or null.
+ * @param {string} imagealt Alt tag of the posts image, may be undefined or null.
+ * @param {boolean} public Whether the post is public or not.
+ * @param {string} authorId The ID of the posts author.
+ * @param {number} downvotes How many downvotes the post has.
+ * @param {number} upvotes How many upvotes the post has.
+ * @param {string} communityId The ID of the posts community.
+ * @param {PostAuthor} author The author data of the post.
+ * @param {PostCommunity} community The community data of the post.
+ * 
+ * @example
+ * <FullPost 
+ *  id={post.id}
+ *  title={post.title} 
+ *  author={post.author} 
+ *  community={post.community} 
+ *  upvotes={post.upvotes} 
+ *  downvotes={post.downvotes} 
+ *  createdAt={post.createdAt} 
+ *  updatedAt={post.updatedAt}
+ *  public={post.public}
+ *  tagline={post.tagline} 
+ *  content={post.content}
+ *  imageurl={post.imageurl}
+ *  imagealt={post.imagealt}
+ * />
+ * 
+ */
 
-    id: number;
-    title: string;
-    author: any;
-    community: any;
-    body: string;
-    upvotes: number;
-    downvotes: number;
-    ratio: string;
-    submitted: string;
-    subtitle: string;
-    imageurl?: string;
-    image_alt?: string;
-
-}
-
-export function FullPost(post: FullPostProps) {
+export function FullPost( post: Post ) {
 
     const rehypePlugins = [rehypeSanitize];
 
     return (
-
-        <Suspense fallback={<FullPostSkeleton />} key={post.id}>
 
             <div className="rounded-md flex w-full bg-transparent h-fit facebookTheme:rounded-none px-5 py-5">
 
@@ -230,17 +213,15 @@ export function FullPost(post: FullPostProps) {
                                     <h4 className="w-fit flex gap-2">
                                         <Hovercard headerText={`@${post.author.username}`} headerIcon={null} headerClassName={"text-sm"}>
                                             <div className='flex flex-row gap-4 p-4 w-full max-w-[250px]'>
-                                                {/* @ts-ignore */}
                                                 <img src={post.author.image} className='w-6 h-6 rounded-sm' alt='Profile Image' />
                                                 <div className='flex flex-col'>
                                                     <Link href={`/user/${post.author.username}`} className='hover:underline w-fit font-medium'>@{post.author.username}</Link>     
-                                                    {/* @ts-ignore */}
                                                     <p>{post.author.description}</p>             
                                                 </div>
                                             </div>
                                         </Hovercard>
                                         <p>•</p> 
-                                        <p>{post.submitted}</p> 
+                                        <p suppressHydrationWarning={true}>{post.createdAt.toLocaleString()}</p> 
                                     </h4>   
 
                                 </div>                                   
@@ -264,30 +245,24 @@ export function FullPost(post: FullPostProps) {
                             }} 
                             className="absolute inset-0 filter blur-xl"
                         />
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={post.imageurl} alt={post.image_alt} className="relative m-auto max-h-96" />
+                        <img src={post.imageurl} alt={post.imagealt!} className="relative m-auto max-h-96" />
                     </div>
 
                     :
 
-                    <span id='No Image Attached'></span>
+                    null
 
                     }
-                    
-                    {/*<p className='text-gray-300 facebookTheme:text-[11px] facebookTheme:text-black'>{post.subtitle}</p>*/}
 
                     <div className='markdown-body'>
 
-                        {/*<ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]} rehypePlugins={[rehypeRaw]}>{post.body}</ReactMarkdown>*/}
-                        <MarkdownPreview source={post.body} rehypePlugins={rehypePlugins} />
+                        <MarkdownPreview source={post.content} rehypePlugins={rehypePlugins} />
 
                     </div>
 
                 </div>
 
             </div>
-
-        </Suspense>
 
     )
 

@@ -17,10 +17,21 @@ export default function SettingsTabs() {
                 <button className={`navlink !w-full !px-2.5 !gap-2 ${activeTab === 4 ? "navlink-full" : ""}`} onClick={() => setActiveTab(4)}><LockClosedIcon className={"w-5 h-5"} />Security</button>
             </div>   
 
-            { activeTab === 1 ? <AccountSettings /> : null }
-            { activeTab === 2 ? <p>My Posts</p> : null }
-            { activeTab === 3 ? <p>Appearance</p> : null }
-            { activeTab === 4 ? <p>Security</p> : null }
+            <div className={`${ activeTab === 1 ? "flex flex-col w-full" : "hidden" }`}>
+                <AccountSettings />
+            </div>
+
+            <div className={`${ activeTab === 2 ? "flex flex-col w-full" : "hidden" }`}>
+                <p>My Posts</p>
+            </div>
+
+            <div className={`${ activeTab === 3 ? "flex flex-col w-full" : "hidden"}`}>
+                <p>Appearance</p>
+            </div>
+
+            <div className={`${ activeTab === 4 ? "flex flex-col w-full" : "hidden"}`}>
+                <p>Security</p>
+            </div>
 
         </div>
     );

@@ -21,9 +21,9 @@ module.exports = withTV({
         'semitransparent': 'hsla(0, 0%, 0%, 0.75)',
         'primary': 'hsl(0, 0%, 11%)',
         'background': 'hsl(240, 10%, 4%)',
-        'card': 'hsl(0, 0%, 6%)',
+        'card': '#0E0E0E',
         'card-light': 'hsl(0, 0%, 7%)',
-        'border': 'hsl(200, 5%, 11%)',
+        'border': 'hsl(60, 2%, 10%)',
         'accent-blue': 'hsl(215, 93%, 58%)',
       },
       borderWidth: {

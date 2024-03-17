@@ -139,6 +139,13 @@ export async function DeleteAccount( { userID } : { userID: string }) {
 
         if ( user ) {
 
+            const deletedPosts = await prisma.post.delete({
+                // @ts-ignore
+                where: {
+                    author: { id: userID },
+                },
+            });
+
             const deletedUser = await prisma.user.delete({
                 where: {
                     id: userID,
@@ -163,7 +170,8 @@ export async function DeleteAccount( { userID } : { userID: string }) {
                 case "P1008":
                     return { error: "The deletion took too long to complete, please try again later." }
                 default:
-                    return { error: "Sorry, something went wrong. Please try again later."}
+                    console.log(error);
+                    return { error: "Sorry, an unknown error occurred."}
 
             }
 

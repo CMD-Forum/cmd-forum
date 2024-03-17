@@ -32,7 +32,7 @@ export async function Navigation() {
               <div className={"flex flex-row gap-2"}>
                 <div className='ml-auto flex gap-4'>
 
-                  <Dropdown alignRight={true} accountHeading={true} headerText={""} headerIcon={null}>
+                  <Dropdown align={"right"} accountHeading={true} headerText={""} headerIcon={null}>
                     <DropdownUser />
                     <hr className='mt-1 mb-1' />
                     <DropdownLink text={"Settings"} icon={<Cog6ToothIcon />} link={"/account/settings"} />
@@ -55,7 +55,7 @@ export async function Navigation() {
               <div className={"flex-row gap-2 hidden md:flex"}>
                 <div className={"ml-auto flex gap-4"}>
 
-                  <Dropdown alignRight={true} headerText={"Login or Signup"} headerIcon={null} headerClassName={"!border-1 !border-border"}> 
+                  <Dropdown alignRight={true} headerText={"Login or Signup"} headerIcon={null} headerClassName={"!border-1 !border-border"} className={"!top-12"}> 
                     <DropdownLink text={"Login"} icon={<ArrowRightEndOnRectangleIcon />} link={"/login"} />
                     <DropdownLink text={"Signup"} icon={<UserPlusIcon />} link={"/signup"} />
                     <hr className='mt-2 mb-2' />

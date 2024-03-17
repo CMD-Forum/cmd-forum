@@ -1,9 +1,6 @@
-import { FullPost } from '@/app/(general)/ui/components/posts/post';
 import { prisma } from '@/app/(general)/lib/db';
 import Framermotion_workaround from './framermotion_workaround';
-import { ArrowLeftIcon, HomeIcon, MagnifyingGlassIcon } from '@heroicons/react/24/solid';
-import Link from 'next/link';
-import BackButton from '@/app/(general)/ui/components/posts/back_button';
+import { Error404 } from '../../ui/error404';
 
 export default async function PostView({ params }: { params: { id: string } }) {
 
@@ -11,7 +8,7 @@ export default async function PostView({ params }: { params: { id: string } }) {
 
     return (
 
-      <h1>Please enter a valid ID.</h1>
+      <Error404 />
 
     );
 
@@ -30,9 +27,10 @@ export default async function PostView({ params }: { params: { id: string } }) {
       },
       author: {
         select: {
-          username: true,
-          name: true,
           id: true,
+          username: true,
+          description: true,
+          profile_image: true,
         }
       }
     }
@@ -42,34 +40,17 @@ export default async function PostView({ params }: { params: { id: string } }) {
 
     return (
 
-      <div className='flex flex-col gap-2'>
-        <div className='gap-2 p-6 rounded-md w-full bg-transparent'>
-          <h1 className='text-2xl font-sans font-bold antialiased w-full'>Oops, we&apos;ve hit a wall!</h1>   
-          <h2 className="text-gray-300">The requested post couldn&apos;t be found.</h2>
-          <div className="flex md:flex-row flex-col gap-2 mt-2">
-            <BackButton title='Back' width_full={true}/> 
-            <Link className='navlink !w-full !justify-center md:!w-fit' href='/'><HomeIcon className="font-medium h-5 w-5" />Home</Link>
-            <Link className='navlink !w-full !justify-center md:!w-fit' href='/search'><MagnifyingGlassIcon className="font-medium h-5 w-5" />Search</Link>                            
-          </div>
-        </div>
-        
-      </div>
+      <Error404 />
 
     );
 
   }
 
-  const submitted = post?.createdAt.toLocaleDateString();
-  const totalVotes = post?.upvotes + post?.downvotes
-  const ratio = totalVotes > 0 ? ((post.upvotes / totalVotes) * 100).toFixed(2) : '0';
-
-  
-
   return (
 
     <div className='mt-6 p-6 lg:pb-12 lg:p-12 lg:px-48 !pt-0'>
 
-      <Framermotion_workaround post={post} submitted={submitted} ratio={ratio} />
+      <Framermotion_workaround post={post} />
 
     </div>
     

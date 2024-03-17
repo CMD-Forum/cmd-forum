@@ -38,7 +38,7 @@ export default async function UserPage({ params }: { params: { name: string } })
       
                   </div>
       
-                  <div className='flex flex-col px-6 lg:py-12 lg:px-48'>
+                  <div className='flex flex-col px-6 lg:py-12 lg:px-48 mt-6'>
                     <PostListByUser username={user.username} /> 
                   </div>
       

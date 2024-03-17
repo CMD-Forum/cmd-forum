@@ -4,6 +4,7 @@ import { CardPost } from '@/app/(general)/ui/components/posts/post';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { getAllPostsFromUsername } from '@/app/(general)/lib/data';
+import { Post } from '@/types/types';
 
 const variants = {
 
@@ -14,13 +15,14 @@ const variants = {
 
 export default function PostListByUser( { username }: { username: string } ) {
     const [loading, setIsLoading] = useState<boolean>(true);
-    const [posts, setPosts] = useState<any>([]);
+    const [posts, setPosts] = useState<Post[]>([]);
 
     useEffect(() => {
         const fetchPosts = async () => {
             setIsLoading(true);
             try {
                 const data = await getAllPostsFromUsername( username );
+                // @ts-ignore
                 setPosts(data);
                 setIsLoading(false);                
             } catch (error) {
@@ -38,16 +40,22 @@ export default function PostListByUser( { username }: { username: string } ) {
     if ( loading ) {
         return (
             <div className='flex flex-col gap-4 mt-4'>
-                <div className='flex w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'></div>
-                <div className='flex w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'></div>    
-                <div className='flex w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'></div>    
-                <div className='flex w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'></div>            
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>    
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>    
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>   
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>               
             </div>
         );
     }
 
     return (
-        <>
+        <div className='flex flex-col gap-4'>
             {Array.isArray(posts) && posts.map((post) => {
         
                 return (
@@ -59,22 +67,27 @@ export default function PostListByUser( { username }: { username: string } ) {
                         transition={{ ease: "easeInOut", duration: 0.8, type: "spring" }}
                     >
                       <CardPost 
-                        key={post.id}
+
                         id={post.id}
+                        createdAt={new Date(post.createdAt)}
+                        updatedAt={new Date(post.updatedAt)}
                         title={post.title}
-                        community={post.community}
-                        author={post.author}
-                        upvotes={post.upvotes}
+                        content={post.content}
+                        tagline={post.tagline}
+                        imageurl={post.imageurl}
+                        imagealt={post.imagealt}
+                        public={true}
+                        authorId={post.author.id}
                         downvotes={post.downvotes}
-                        submitted={new Date(post.createdAt).toLocaleDateString()}
-                        subtitle={post.tagline}
-                        image_alt={post.image_alt}
-                        imageurl={post.image_src}
+                        upvotes={post.upvotes}
+                        communityId={post.community.id}
+                        author={post.author}
+                        community={post.community}
+
                       />
-                      <hr className='!mt-0 !mb-0'></hr>
                     </motion.div>
                   );
             })}
-        </>
+        </div>
     );
 }

@@ -120,7 +120,7 @@ export function NavSideItems() {
 
                     <div className="mt-auto flex flex-col mb-2">
                         <Link 
-                            className={`navlink-sidebar ${pathname === `/user/${session.user.username}` ? "active" : null}`} 
+                            className={`navlink !w-full ${pathname === `/user/${session.user.username}` ? "active" : null}`} 
                             href={`/user/${session.user.username}`} 
                             prefetch={true}>
                             { session.user.image ? <img className="w-5 h-5 mr-1 rounded" src={session.user.image} alt={"Your profile image."} /> : <UserIcon className="w-5 h-5 mr-1" /> }

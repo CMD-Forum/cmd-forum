@@ -72,7 +72,7 @@ export default function CreatePostForm() {
     if ( ! session ) {
 
         return (
-            <ErrorMessage message="Oops, something went wrong. Try logging in again." />
+            <Alert type={"error"} title={"Error"} description="Oops, something went wrong. Try reloading the page or logging in again." />
         );
 
     } 
@@ -103,6 +103,7 @@ export default function CreatePostForm() {
         
         try {
 
+            throw new Error("error");
             console.log("[INFO] Community found");
             const post = await createPost(postData); 
             console.log("[INFO] ", post)
@@ -129,15 +130,9 @@ export default function CreatePostForm() {
 
         <form className="flex flex-col gap-2 bg-transparent rounded-lg !w-full" onSubmit={form.handleSubmit(OnSubmit)}>
 
-            <h2 className="header text-center sm:text-left">Create Post</h2>
-
-            <hr className='border-border mt-1 mb-1'></hr>
-
-            {/* */}
-
             {com_err && (
 
-                <Alert type="error" title="Post Creation Failed" description="The specified community was not found, please try again." />
+                <Alert type="error" title="Creation Failed" description="The specified community was not found, please try again." />
 
             )}
 
@@ -149,7 +144,7 @@ export default function CreatePostForm() {
 
             {create_err && (
 
-                <Alert type="error" title="Post Creation Failed" description="Sorry, your post could not be created. Please try again later." />
+                <Alert type="error" title="Creation Failed" description="Sorry, your post could not be created. Please try again later." />
 
             )}
 
@@ -234,7 +229,7 @@ export default function CreatePostForm() {
 
             {/* */}
 
-            {error && <Alert type="warning" title="Post Creation Failed" description="Please check all details are correct." />}
+            {error && <Alert type="alert" title="Post Creation Failed" description="Please check all details are correct." />}
 
         </form>
 

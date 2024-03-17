@@ -3,6 +3,7 @@
 import { CardPost } from '@/app/(general)/ui/components/posts/post';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Post } from '@/types/types';
 
 const variants = {
 
@@ -10,20 +11,6 @@ const variants = {
     visible: { opacity: 1, y: 0 },
     
 };
-
-interface Post {
-    id: string;
-    title: string;
-    community: string;
-    author: string;
-    upvotes: number;
-    downvotes: number;
-    createdAt: string;
-    tagline: string;
-    link: string;
-    image_alt?: string;
-    image_src?: string;
-}
 
 export default function PostList() {
     const [isLoading, setIsLoading] = useState(true);
@@ -42,7 +29,18 @@ export default function PostList() {
     }, []);
 
     if (isLoading) {
-        return <div className='post-loading-text'></div>;
+        return (
+            <div className='flex flex-col gap-4 mt-4'>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>    
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>    
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>            
+            </div>
+        );
     }
 
     return (
@@ -58,18 +56,26 @@ export default function PostList() {
                       transition={{ ease: "easeInOut", duration: 0.8, type: "spring" }}
                     >
                       <CardPost 
+
                         id={post.id}
+                        createdAt={new Date(post.createdAt)}
+                        updatedAt={new Date(post.updatedAt)}
                         title={post.title}
-                        community={post.community}
-                        author={post.author}
-                        upvotes={post.upvotes}
+                        content={post.content}
+                        tagline={post.tagline}
+                        imageurl={post.imageurl}
+                        imagealt={post.imagealt}
+                        public={true}
+                        authorId={post.author.id}
                         downvotes={post.downvotes}
-                        submitted={new Date(post.createdAt).toLocaleDateString()}
-                        subtitle={post.tagline}
-                        image_alt={post.image_alt}
-                        imageurl={post.image_src}
+                        upvotes={post.upvotes}
+                        communityId={post.community.id}
+                        author={post.author}
+                        community={post.community}
+ 
                       />
                     </motion.div>
+
                   );
             })}
         </div>

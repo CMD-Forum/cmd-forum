@@ -19,7 +19,8 @@ export default function Modal({ children, btnText, btnClassName, btnType = "navl
     const button = getChildrenOnDisplayName(children, "Button")
     const custom = getChildrenOnDisplayName(children, "Custom")
 
-    if (typeof window === "object") {
+
+        { isOpen === true ? document.body.style.overflow = "hidden" : document.body.style.overflow = "scroll" }
 
         return (
 
@@ -84,9 +85,6 @@ export default function Modal({ children, btnText, btnClassName, btnType = "navl
 
     }
 
-
-}
-
 // Modal.Title
 
 const Title = ({ children, className = "", ...other }: { children: React.ReactNode, className?: string }) => (
@@ -111,11 +109,11 @@ Modal.Subtitle = Subtitle;
 
 // Modal.Button
 
-const Button = ({ children, className = "", type, loadingVariable, onClick, ...other }: { children: React.ReactNode, className?: string, type: "navlink" | "navlink-full" | "navlink-destructive" | "navlink-success" | "navlink-sidebar"| "navlink-small", loadingVariable?: any, onClick?: MouseEventHandler<HTMLButtonElement> }) => (
+const Button = ({ children, className = "", type, loadingVariable, onClick, spinnerColor, ...other }: { children: React.ReactNode, className?: string, type: "navlink" | "navlink-full" | "navlink-destructive" | "navlink-success" | "navlink-sidebar"| "navlink-small", loadingVariable?: any, spinnerColor: "white" | "black", onClick?: MouseEventHandler<HTMLButtonElement> }) => (
     
     <button className={`${type} ${className} !w-full md:!w-fit justify-center transition-all`} onClick={onClick} {...other}>
         { loadingVariable === false ? children : null }
-        { loadingVariable === true ? <img src="/spinner_black.svg" alt="Loading..." className="spinner"/>  : null }
+        { loadingVariable === true ? <img src={`/spinner_${spinnerColor}.svg`} alt="Loading..." className="spinner"/>  : null }
     </button>
 
 )

@@ -126,12 +126,6 @@ export default function CreateImagePostForm() {
 
         <form className="flex flex-col gap-2 bg-transparent rounded-lg !w-full" onSubmit={form.handleSubmit(OnSubmit)}>
 
-            <h2 className="header text-center sm:text-left">Create Image Post</h2>
-
-            <hr className='border-border mt-1 mb-1'></hr>
-
-            {/* */}
-
             {com_err && (
 
                 <Alert type="error" title="Post Creation Failed" description="The specified community was not found, please try again." />
@@ -249,7 +243,7 @@ export default function CreateImagePostForm() {
 
             {/* */}
 
-            {error && <Alert type="warning" title="Post Creation Failed" description="Please check all details are correct." />}
+            {error && <Alert type="alert" title="Post Creation Failed" description="Please check all details are correct." />}
 
         </form>
 

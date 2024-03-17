@@ -8,6 +8,7 @@
 import { useSession } from "next-auth/react";
 import { ChangeAccountDescription, ChangeAccountName, DeleteAccountModal } from "./settings_actions";
 import Switch from "../switch";
+import Bottomdrawer from "../bottom_drawer";
 
 export function Settings_ChangeAccountUsername() {
 
@@ -60,7 +61,7 @@ export function Settings_ChangeDescription() {
                     <ChangeAccountDescription userID={session.user.id} />
                 }
 
-
+                <Switch onEnabled={() => console.log("enabled")} />
 
             </div>
 
@@ -90,6 +91,12 @@ export function Settings_DeleteAccount() {
                 { session && 
                     <DeleteAccountModal userID={session.user.id} username={session.user.username} />
                 }
+
+                <Bottomdrawer btnText={"Test Sheet"} btnType={"navlink"}>
+
+                    <p className="font-medium text-lg text-left max-w-full text-wrap">Options</p>
+
+                </Bottomdrawer>
 
             </div>
 
