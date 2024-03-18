@@ -5,7 +5,7 @@ const support = async () => {
 
     return (
 
-        <main className="flex min-h-screen flex-col w-full">
+        <main className="flex min-h-screen flex-col w-full mt-12">
 
             <div className="error flex flex-col w-full">
 

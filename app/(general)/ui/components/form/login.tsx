@@ -1,25 +1,16 @@
-'use client';
+"use client";
 
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod" // Form Validation
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { AlertSuccess, AlertWarning } from "../alert";
-import { useSearchParams } from 'next/navigation'
-import GoogleSignInButton from "./oauth/GoogleSignInButton";
-import MicrosoftSignInButton from "./oauth/MicrosoftSignInButton";
 import Alert from "../new_alert";
-
-const FormSchema = z.object({
-
-    email: z.string().min(1, "Email is required.").email("Your email must be in a valid format."),
-
-    password: z.string().min(1, "Password is required.")
-
-})
+import { login } from "@/app/(general)/lib/actions/login";
+import { useTransition } from "react";
+import { LoginSchema } from "@/app/(general)/lib/schemas";
+import { OAuthButtons } from "./oauth/OAuthButtons";
+import { useSearchParams } from 'next/navigation'
 
 function ErrorMessage(props: { message: string }) {
 
@@ -27,34 +18,16 @@ function ErrorMessage(props: { message: string }) {
     
 }
 
-const LoginForm = () => {
+export default function LoginForm() {
 
-    const router = useRouter();
-    const [error, setError] = useState<string | null>(null);
+    const [isPending, startTransition] = useTransition();
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | undefined>("");
+    const [success, setSuccess] = useState<string | undefined>("");
 
-    const searchParams = useSearchParams();
-    const success = searchParams.get('success')
-    var ref = searchParams.get('ref')
+    const form = useForm<z.infer<typeof LoginSchema>>({
 
-    var showSuccess = false;
-
-    if (success === "true") {
-
-        showSuccess = true;
-
-    }
-
-    if ( ! ref || ref === "") {
-
-        ref = "/"
-
-    }
-
-    const form = useForm<z.infer<typeof FormSchema>>({
-
-        resolver: zodResolver(FormSchema),
+        resolver: zodResolver(LoginSchema),
         defaultValues: {
             email: '',
             password: '',
@@ -62,47 +35,45 @@ const LoginForm = () => {
 
     });
 
-    const OnSubmit = async (values: z.infer<typeof FormSchema>) => {
 
-        setIsLoading(true);
+    const onSubmit = (values: z.infer<typeof LoginSchema>) => {
 
-        const signInData = await signIn('credentials', {
+        setError("");
+        setSuccess("");
 
-            email: values.email,
-            password: values.password,
-            redirect: false,
-
+        startTransition(() => {
+            login(values)
+                .then((data) => {
+                    setError(data?.error);
+                    // setSuccess(data?.success);
+                })
         });
-
-        if (signInData?.error) {
-            
-            setError(signInData.error);
-            setIsLoading(false);
-            
-        } else {
-
-            setError(null);
-            setIsLoading(false);
-            //@ts-ignore
-            window.location.replace(ref);
-
-        }
-
     };
+
+    const searchParams = useSearchParams();
+    const query_error = searchParams.get('error');
 
     return ( 
 
-        <form className="flex flex-col gap-2 bg-zinc-950 px-10 py-10 rounded-lg facebookTheme:bg-white max-w-3xl sm:w-[505px] ml-auto" onSubmit={form.handleSubmit(OnSubmit)}>
+        <form className="flex flex-col gap-2 bg-background rounded-lg w-[80%] md:w-[50%] max-w-xl" onSubmit={form.handleSubmit(onSubmit)}>
 
-            <h2 className="header">Login to CMD.</h2>
+            <h2 className="header !text-4xl text-center">Login to CMD</h2>
+            <p className={`text-gray-300 font-bold text-center mb-2`}>Login to your existing CMD account.</p>
 
-            <hr className="border-border facebookTheme:border-[#b3b3b3] mb-2 mt-2" /> 
+            <Link href={"/signup"} className="text-center text-sm text-gray-300 hover:underline cursor-pointer">Don&apos;t have an account?</Link>
 
             {/* */}
 
-            {showSuccess ? (
+            {query_error === "OAuthCallbackError" ? <Alert type="error" title="Authentication Failed" description="The external provider cancelled the login, please try again." /> : null }
+            {query_error === "OAuthSigninError" ? <Alert type="error" title="Authentication Failed" description="The login failed for an unknown reason, please try again." /> : null }
+            {query_error === "AdapterError" ? <Alert type="error" title="Authentication Failed" description="The database is currently experiencing issues, please try again later." /> : null }
+            {query_error === "CredentialsSignin" ? <Alert type="alert" title="Authentication Failed" description="The username or password was incorrect." /> : null }
+            {query_error === "AuthorizedCallbackError" ? <Alert type="alert" title="Authentication Failed" description="The account does not exist or has not verified their email." /> : null }
+            {query_error === "OAuthAccountNotLinked" ? <Alert type="alert" title="Authentication Failed" description="The external email is associated with an existing account." /> : null }
 
-                <Alert type='notice' title='Signup Success' description='Your account has been created, have fun!' />
+            {success ? (
+
+                <Alert type='notice' title='Signup Success' description={success} />
 
             ): (
 
@@ -110,14 +81,26 @@ const LoginForm = () => {
 
             )}
 
-            <Link href="/signup" className="w-fit hover:underline text-gray-300">Don&apos;t have an account?</Link>            
+            
+            {error ? (
+
+                <Alert type='error' title='Login Failed' description={error} />
+
+            ): (
+
+                <pre></pre>
+
+            )}
+
+    
 
             {/* */}
 
             <div className="flex gap-1 facebookTheme:text-[11px] font-medium">Email<p className="text-[#fca5a5]">*</p></div>
             <input
                 {...form.register('email')}
-                placeholder="Email"
+                disabled={isPending}
+                placeholder="johndoe@example.com"
                 className={`generic_field ${form.formState.errors.email ? "errored" : ""}`}
             />
 
@@ -134,7 +117,8 @@ const LoginForm = () => {
             <input
                 type="password"
                 {...form.register('password')}
-                placeholder="Password"
+                disabled={isPending}
+                placeholder="********"
                 className={`generic_field ${form.formState.errors.email ? "errored" : ""}`}
             />
 
@@ -147,41 +131,30 @@ const LoginForm = () => {
 
             {/* */}
 
-            <button disabled={!form.formState.isValid || isLoading} type="submit" className="navlink-full !w-full sm:!w-[60px] h-[36px] justify-center min-w-[62px]">
+            <button disabled={!form.formState.isValid || isPending} type="submit" className="navlink-full !w-full h-[36px] justify-center min-w-[62px]">
                 
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                {isLoading ? <img src="/spinner.svg" alt="Loading..." className="spinner"/>  : 'Login' }
+                {isPending ? <img src="/spinner.svg" alt="Loading..." className="spinner"/>  : 'Login' }
                 
             </button>
             {/* */}
 
             {/*<pre>Validation status: {JSON.stringify(zo.validation, null, 2)}</pre>*/}
 
-            {error && <AlertWarning title="Login Failure" text={error} />}
-
-            <hr className="border-border mb-2"></hr>
+            <div className="flex flex-row relative mt-4 mb-4">
+                <span className="w-full border-b-1 border-border"></span>
+                <p className="absolute right-[50%] bottom-0 px-2 bg-background translate-x-2/4 translate-y-2/4 text-sm text-gray-300">OR LOGIN WITH</p>
+            </div>
 
             <div className="flex flex-col gap-2">
     
-                <GoogleSignInButton>Login with Google</GoogleSignInButton>    
-                <MicrosoftSignInButton>Login with Microsoft</MicrosoftSignInButton>  
+                <OAuthButtons width_full={true} />
 
             </div>
+
+            <p className="text-center mt-4 text-sm text-gray-300">By logging in to CMD, you agree to the terms and conditions.</p>
 
         </form>
     
     );
     
 }
-
-function SuspenseForm (props:any) {
-
-    return (
-        <Suspense>
-            <LoginForm />
-        </Suspense>
-    );
-
-}
-
-export default SuspenseForm;

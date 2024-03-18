@@ -1,6 +1,6 @@
 import { BellIcon, CheckCircleIcon, ExclamationTriangleIcon, XCircleIcon } from "@heroicons/react/16/solid";
 
-export default function Alert({title = "Notice", description = "Sorry, no details were provided with this notice.", type = "notice"}) { 
+export default function Alert({title = "Notice", description = "Sorry, no details were provided with this notice.", type = "notice"}: { title: string, description: string, type: "notice" | "alert" | "success" | "error" }) { 
 
     return (
 

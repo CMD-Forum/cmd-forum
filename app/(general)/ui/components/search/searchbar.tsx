@@ -24,6 +24,7 @@ export default function SearchBar() {
 
     }
 
+    // @ts-ignore
     replace(`${pathname}?${params.toString()}`);
 
   }, 700);

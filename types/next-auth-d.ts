@@ -1,30 +1,32 @@
-import NextAuth from "next-auth"
+/**
+ * This file may not do anything, but it makes errors sometimes so I keep it updated with the `auth.ts` file.
+ */
+
+import { UserRole } from "@prisma/client"
 
 declare module "next-auth" {
 
     interface User {
 
+        id: string,
         username: string,
-        name: string,
         profile_image: string,
 
     }
 
     interface Session {
 
-        user: User & {
 
-            username: string,
-            name: string,
-            profile_image: string,
-
-        }
+        user: User & { role: UserRole },
 
         token: {
 
+            sub: string,
+            role: UserRole,
+            picture: string,
             username: string,
-            name: string,
-            profile_image: string
+            description: string,
+            usernameLastUpdated: Date | null,
 
         }
 

@@ -1,18 +1,14 @@
-import '@/app/(general)/ui/components/posts/post_full';
-import { FullPost } from '@/app/(general)/ui/components/posts/post';
 import { prisma } from '@/app/(general)/lib/db';
 import Framermotion_workaround from './framermotion_workaround';
-import { ArrowLeftIcon } from '@heroicons/react/24/solid';
-import Link from 'next/link';
-import BackButton from '@/app/(general)/ui/components/posts/back_button';
+import { Error404 } from '../../ui/error404';
 
-export default async function PostView({ params }: { params: { id: number } }) {
+export default async function PostView({ params }: { params: { id: string } }) {
 
-  if ( ! params.id || isNaN(params.id)) {
+  if ( ! params.id ) {
 
     return (
 
-      <h1>Please enter a valid number.</h1>
+      <Error404 />
 
     );
 
@@ -20,7 +16,7 @@ export default async function PostView({ params }: { params: { id: number } }) {
 
   const post = await prisma.post.findUnique({
     where: {
-      id: Number(params.id)
+      id: params.id
     },
     include: {
       community: {
@@ -31,9 +27,10 @@ export default async function PostView({ params }: { params: { id: number } }) {
       },
       author: {
         select: {
-          username: true,
-          name: true,
           id: true,
+          username: true,
+          description: true,
+          profile_image: true,
         }
       }
     }
@@ -43,26 +40,17 @@ export default async function PostView({ params }: { params: { id: number } }) {
 
     return (
 
-      <div className='flex flex-col gap-2'>
-        <h1 className='header'>Post was not found.</h1>
-        <BackButton title='Back'/>  
-      </div>
+      <Error404 />
 
     );
 
   }
 
-  const submitted = post?.createdAt.toLocaleDateString();
-  const totalVotes = post?.upvotes + post?.downvotes
-  const ratio = totalVotes > 0 ? ((post.upvotes / totalVotes) * 100).toFixed(2) : '0';
-
-  
-
   return (
 
-    <div>
+    <div className='mt-6 p-6 lg:pb-12 lg:p-12 lg:px-48 !pt-0'>
 
-      <Framermotion_workaround post={post} submitted={submitted} ratio={ratio} />
+      <Framermotion_workaround post={post} />
 
     </div>
     

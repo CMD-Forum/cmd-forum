@@ -1,3 +1,11 @@
+//                                                                                                                                   //
+// This file is the schema for Prisma.                                                                                               //
+// Run ``npx prisma migrate`` after connecting to your database.                                                                     //
+//                                                                                                                                   //
+// Note that Prisma Studio seems to mess up markdown formatting, so try to avoid using it for anything other than one line markdown. //
+// It's still fine for non-markdown stuff.                                                                                           //                                                                                     //
+//                                                                                                                                   //
+
 generator client {
   provider        = "prisma-client-js"
   output          = "../node_modules/.prisma/client"
@@ -5,28 +13,40 @@ generator client {
   previewFeatures = ["fullTextSearch"]
 }
 
+generator docs { // Thanks, prisma-docs-generator: https://github.com/pantharshit00/prisma-docs-generator
+  provider = "node node_modules/prisma-docs-generator"
+}
+
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "postgresql" // Change if using a different database, obviously.
+  url      = env("DATABASE_URL") // Change this in your ``.env``.
+}
+
+enum UserRole {
+
+  ADMIN
+  MODERATOR
+  USER
+
 }
 
 model Community {
-  id             Int      @id @default(autoincrement())
+  id             String   @id @default(cuid())
   createdAt      DateTime @default(now())
   updatedAt      DateTime @default(now()) @updatedAt
-  name           String   @unique @default("") @db.VarChar(50)
-  display_name   String   @unique @default("") @db.VarChar(50)
+  name           String   @unique @default("") @db.VarChar(50) // Name used in URL to find community
+  display_name   String   @unique @default("") @db.VarChar(50) // Name shown when
   description    String   @default("Your description here.")
-  image          String   @default("/images/favicon/favicon.svg")
+  image          String   @default("/images/favicon/favicon.svg") // Image that is shown for the community, defaults to the favicon.
   public         Boolean  @default(true)
-  admin_ids      Json     @default("[]")
+  admin_ids      String[] @default([""])
   administrators User[]
-  sidebar_md     String   @default("# Edit your community sidebar in the admin panel.")
+  sidebar_md     String   @default("Edit your community description in the admin panel.") // Originally there was a sidebar, but that got scrapped. This is now shown below the community information.
   posts          Post[]
 }
 
 model Post {
-  id          Int       @id @default(autoincrement())
+  id          String    @id @default(cuid())
   createdAt   DateTime  @default(now()) @db.Timestamptz(3)
   updatedAt   DateTime  @default(now()) @updatedAt @db.Timestamptz(3)
   title       String    @db.VarChar(255)
@@ -35,33 +55,75 @@ model Post {
   imageurl    String?
   imagealt    String?
   public      Boolean   @default(true)
-  authorId    Int
+  authorId    String
   downvotes   Int       @default(0)
   upvotes     Int       @default(0)
-  communityId Int       @default(1)
+  communityId String    @default("null")
   author      User      @relation(fields: [authorId], references: [id])
   community   Community @relation(fields: [communityId], references: [id])
 }
 
 model User {
-  id            Int         @id @default(autoincrement())
-  email         String      @unique
-  username      String      @unique
-  description   String      @db.VarChar(100) @default("This user has not set this description.")
-  password      String
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  name          String
-  profile_image String      @default("/images/favicon/favicon.svg")
-  posts         Post[]
-  admin         Community[]
-  Support       Support?    @relation(fields: [supportId], references: [authorId])
-  supportId     Int?
+  id                 String      @id @default(cuid())
+  email              String      @unique
+  emailVerified      DateTime?
+  emailLastUpdate    DateTime?
+  username           String      @unique
+  usernameLastUpdate DateTime?
+  description        String      @db.VarChar(100) @default("This user has not set their description.")
+  password           String?
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+  name               String      // Deprecated, do not use.
+  profile_image      String      @default("/images/favicon/favicon.svg") // Deprecated, do not use.
+  image              String      @default("/images/favicon/favicon.svg")
+  posts              Post[]
+  admin              Community[]
+  Support            Support?    @relation(fields: [supportId], references: [authorId])
+  supportId          String?
+  role               UserRole    @default(USER)
+  accounts           Account[]
+  sessions           Session[]
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session { // Pretty sure this isn't used in JWT sessions but it's here anyway
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
 
 model Support {
-  id        Int    @id @default(autoincrement())
-  authorId  Int    @unique
+  id        String @id @default(cuid())
+  authorId  String @unique
   author    User[]
   content   String @default("# Support Article \n Edit this article!")
   title     String @default("Article has no name")
