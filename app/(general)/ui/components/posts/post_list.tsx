@@ -1,9 +1,10 @@
 "use client";
 
 import { CardPost } from '@/app/(general)/ui/components/posts/post';
-import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Post } from '@/types/types';
+import useSWR from 'swr';
+import { XCircleIcon } from '@heroicons/react/16/solid';
+import { useRouter } from "next/navigation";
 
 const variants = {
 
@@ -13,32 +14,40 @@ const variants = {
 };
 
 export default function PostList() {
-    const [isLoading, setIsLoading] = useState(true);
-    const [posts, setPosts] = useState<Post[]>([]);
 
-    useEffect(() => {
-        const fetchPosts = async () => {
-            setIsLoading(true);
-            const res = await fetch('/api/posts/getAll');
-            const data = await res.json();
-            setPosts(data);
-            setIsLoading(false);
-        };
+    const { data: posts, error, isLoading } = useSWR('/api/posts/getAll', {
+        onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
+          if (error.status === 404) return
+          if (retryCount >= 1) return
+          setTimeout(() => revalidate({ retryCount }), 1000)
+        }
+    })
+    const router = useRouter();
 
-        fetchPosts();
-    }, []);
-
-    if (isLoading) {
+    if ( isLoading ) {
         return (
             <div className='flex flex-col gap-4 mt-4'>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>    
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>    
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>            
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>    
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>    
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>   
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>         
+            </div>
+        );
+    }
+
+    if ( error ) {
+        return (
+            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'>
+                <p className='text-center text-gray-300 font-medium antialiased w-full'>Sorry, an error occurred.</p>
+                <div className='flex gap-4 w-full items-center justify-center mt-4'>
+                    <button className='navlink' onClick={() => router.refresh()} type='button'>Reload</button>
+                </div>
             </div>
         );
     }

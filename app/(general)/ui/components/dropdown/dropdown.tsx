@@ -22,7 +22,7 @@ export default function Dropdown({ align, children, accountHeading = false, head
 
     const [open, setIsOpen] = useState<boolean>(false);
     const [showItems, setShowItems] = useState<boolean>(true);
-    const { data: session } = useSession()
+    const { data: session } = useSession();
 
     const dropdownMenuRef = useRef<HTMLDivElement>(null);
     const buttonRef = useRef<HTMLButtonElement>(null);
@@ -89,7 +89,7 @@ export default function Dropdown({ align, children, accountHeading = false, head
                                 {session && (
 
                                     <button 
-                                        className={`navlink ${headerClassName} !p-0 md:!px-3 md:!py-2 !border-0 !mt-0 hover:!bg-border flex !font-medium ${open === true ? "!bg-border" : "!bg-transparent"}`}
+                                        className={`navlink ${headerClassName ? headerClassName : ""} !p-0 md:!px-2 md:!py-2 !border-0 !mt-0 flex !font-medium !bg-transparent`}
                                         onClick={() => {
                                             if (open) {
                                               setShowItems(false);  
@@ -102,12 +102,11 @@ export default function Dropdown({ align, children, accountHeading = false, head
                                           ref={buttonRef}
                                     >
                                         {session.user.image ?
-                                            <img className={`w-6 h-6 hover:ring-2 transition-all focus:ring-2 ${open === true ? "ring-2" : ""} ring-white ring-offset-2 ring-offset-card md:!ring-0 md:!ring-offset-0 rounded-sm md:mr-1`} src={session.user.image} alt='Your account image' />
+                                            <img className={`w-7 h-7 transition-all border-1 border-border hover:brightness-75 ${open === true ? "brightness-75" : ""} rounded-md`} src={session.user.image} alt='Your Account Image' />
                                             :
-                                            <img className='w-5 h-5 rounded-sm md:mr-1' src="/images/favicon/favicon.svg" alt='Your account' />
+                                            <img className={`w-7 h-7 transition-all border-1 border-border hover:brightness-75 ${open === true ? "brightness-75" : ""} rounded-md`} src="/images/favicon/favicon.svg" alt='Your Account Image' />
                                         }
-                                
-                                        <span className="hidden md:flex">{session.user.username}</span>
+
                                     </button>
 
 
@@ -144,7 +143,7 @@ export default function Dropdown({ align, children, accountHeading = false, head
 
 
                         <motion.div 
-                            className={`bg-card ${className} shadow border-border border-1 rounded-md w-max h-max py-1 z-50 group min-w-52 ${cssAlign()} shadow-xl absolute`}
+                            className={`bg-card ${className ? className : ""} border-border border-1 rounded-md w-max h-max py-1 z-50 group min-w-52 ${cssAlign()} shadow-xl absolute`}
                             initial={{
                                 y: '4px',
                                 opacity: '0%',
@@ -262,18 +261,22 @@ export const DropdownItem = ({ text, icon }: { text: string, icon: React.ReactEl
 
 export const DropdownUser = () => {
 
-    const { data: session, update } = useSession();
+    const { data: session } = useSession();
 
     if ( session ) {
         return (
 
                 <Link 
                     href={`/user/${session.user.username}`} 
-                    className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden text-gray-300 hover:text-white"
+                    className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden"
                 >
                     {/* @ts-ignore */}
-                    <img src={session?.user.image} className="w-6 h-6 rounded-sm" alt="Your profile image"></img>
-                    <span>{session?.user.username}</span>
+                    <div className="flex flex-col max-w-48">
+                        <span className="text-white text-[15px]">{session?.user.username}</span>
+                        <div className="overflow-hidden text-ellipsis max-w-48">
+                            <span className="text-gray-300 text-[13px]">{session?.user.email}</span>      
+                        </div>                    
+                    </div>
                 </Link>
 
         );

@@ -40,3 +40,22 @@ export const UpdateDescriptionSchema = z.object({
         .max(100, "Your description can at most be 100 characters."),
 
 })
+
+// Create
+
+export const CreateCommunitySchema = z.object({
+    
+    community_name: z
+        .string()
+        .min(2, "All communitys have to be 2 characters or over.")
+        .max(20, "All communitys have a maximum of 20 characters."),
+    description: z
+        .string()
+        .min(5, "Description must be at least 5 characters.")
+        .max(500, "Description must be no more than 500 characters."),
+    image_url: z
+        .string()
+        .url( { message: "Image must be a URL and start with `https://`" } )
+        .min(1, "Your URL must not be empty.")
+
+})

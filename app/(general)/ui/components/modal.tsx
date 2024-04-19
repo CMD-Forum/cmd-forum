@@ -1,6 +1,6 @@
 "use client";
 
-import React, { MouseEventHandler, useState } from "react";
+import React, { MouseEventHandler, useEffect, useState } from "react";
 import { AnimatePresence, motion } from 'framer-motion';
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { createPortal } from 'react-dom';
@@ -8,6 +8,7 @@ import { createPortal } from 'react-dom';
 export default function Modal({ children, btnText, btnClassName, btnType = "navlink", btnDisabled }: { children: React.ReactNode, btnText: string, btnClassName?: string, btnType?: string, btnDisabled?: boolean }) {
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [isMounted, setIsMounted] = useState<boolean>(false);
 
     const getChildrenOnDisplayName = (children: any, displayName: any) =>
         React.Children.map(children, (child) =>
@@ -19,18 +20,25 @@ export default function Modal({ children, btnText, btnClassName, btnType = "navl
     const button = getChildrenOnDisplayName(children, "Button")
     const custom = getChildrenOnDisplayName(children, "Custom")
 
+    useEffect(() => {
+        setIsMounted(true)
+    }, [])
 
-        { isOpen === true ? document.body.style.overflow = "hidden" : document.body.style.overflow = "scroll" }
+    { isMounted 
+        ?
+        isOpen === true ? document.body.style.overflow = "hidden" : document.body.style.overflow = "scroll" 
+        :
+        null
+    }
 
-        return (
+    return isMounted ? (
 
             <>
                 <button className={`${btnType} ${btnClassName}`} onClick={() => setIsOpen(true)} disabled={btnDisabled}>{ btnText }</button>
                     
                 {createPortal(
                 
-                
-                    <AnimatePresence>
+                    <AnimatePresence mode="wait">
 
                         {isOpen &&
 
@@ -81,9 +89,9 @@ export default function Modal({ children, btnText, btnClassName, btnType = "navl
             </>
         
 
-        );
+    ) : null ;
 
-    }
+}
 
 // Modal.Title
 

@@ -57,7 +57,7 @@ export function NavSideItems() {
             </>
 
             <motion.div 
-                className={`w-full top-0 left-0 h-dvh overflow-scroll fixed ${expanded === true ? "z-[1000]" : "-z-50"} bg-semitransparent fixed`}
+                className={`w-full top-0 left-0 h-dvh overflow-scroll fixed ${expanded === true ? "z-[1000]" : "-z-50"} backdrop-blur-sm`}
                 animate={{
                     opacity: expanded ? "100%" : "0%",
                 }}
@@ -98,7 +98,7 @@ export function NavSideItems() {
 
                     <Link 
                         className={`navlink-sidebar ${pathname.startsWith("/posts/") || pathname === "/posts" ? "active" : null}`} 
-                        href={"/posts/"} 
+                        href={"/posts"} 
                         prefetch={true}>
                         <ChatBubbleBottomCenterTextIcon className="w-5 h-5 mr-1" />
                         Posts
@@ -187,9 +187,9 @@ export function TopbarItems() {
         <div className='hidden md:flex rounded-full p-1'>
 
             <Link className={`topbar-link ${pathname == "/" ? "active" : ""}`} href='/'>Home</Link>
-            <Link className={`topbar-link ${pathname.startsWith("/c/") || pathname == "/c" ? "active" : ""}`} href='/c/'>Community</Link>
-            <Link className={`topbar-link ${pathname.startsWith("/posts") ? "active" : ""}`} href='/posts/'>Posts</Link>       
-            <Link className={`topbar-link ${pathname.startsWith("/search") ? "active" : ""}`} href='/search/'>Search</Link>
+            <Link className={`topbar-link ${pathname.startsWith("/c/") || pathname == "/c" ? "active" : ""}`} href='/c'>Community</Link>
+            <Link className={`topbar-link ${pathname.startsWith("/posts") ? "active" : ""}`} href='/posts'>Posts</Link>       
+            <Link className={`topbar-link ${pathname.startsWith("/search") ? "active" : ""}`} href='/search'>Search</Link>
 
         </div>
 
@@ -281,7 +281,9 @@ export function CommunityInfobarItems(infobar: InfobarProps) {
 
                 <div className='flex flex-row gap-2 mt-3 mb-3'>
 
+                    {/* @ts-ignore */}
                     <Link className='navlink justify-center items-center' href={`/c/${infobar.community}/rules`}><BookOpenIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Rules</p></Link>
+                    {/* @ts-ignore */}
                     <Link className='navlink justify-center items-center' href={`/c/${infobar.community}/moderation`}><ShieldCheckIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Moderation</p></Link>    
 
                 </div>

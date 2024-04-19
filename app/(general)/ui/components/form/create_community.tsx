@@ -7,23 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod" // Form Validation
 import Alert from "../new_alert";
 import { useSession } from "next-auth/react";
 import { createCommunity, getCommunityByName } from "@/app/(general)/lib/data";
-
-const FormSchema = z.object({
-    
-    community_name: z
-        .string()
-        .min(2, "All communitys have to be 2 characters or over.")
-        .max(20, "All communitys have a maximum of 20 characters."),
-    description: z
-        .string()
-        .min(5, "Description must be at least 5 characters.")
-        .max(50, "Description must be no more than 50 characters."),
-    image_url: z
-        .string()
-        .url( { message: "Image must be a URL and start with `https://`" } )
-        .min(1, "Your URL must not be empty.")
-
-})
+import { CreateCommunitySchema } from "@/app/(general)/lib/schemas";
 
 function ErrorMessage(props: { message: string }) {
 
@@ -39,8 +23,8 @@ export default function CreateCommunityForm() {
     const [create_err, setCreate_Err] = useState<boolean | null>(null);
     const [isLoading, setIsLoading] = useState(false);
 
-    const form = useForm<z.infer<typeof FormSchema>>({
-      resolver: zodResolver(FormSchema),
+    const form = useForm<z.infer<typeof CreateCommunitySchema>>({
+      resolver: zodResolver(CreateCommunitySchema),
       defaultValues: {
         community_name: '',
         description: '',
@@ -58,7 +42,7 @@ export default function CreateCommunityForm() {
 
     } 
 
-    const OnSubmit = async (values: z.infer<typeof FormSchema>) => {
+    const OnSubmit = async (values: z.infer<typeof CreateCommunitySchema>) => {
 
       setIsLoading(true);
       setCom_Err(false);
@@ -79,6 +63,7 @@ export default function CreateCommunityForm() {
         
         try {
 
+            // @ts-ignore
             const community = await createCommunity(communityData); 
             setIsLoading(false); 
             setSuccess(true);
@@ -152,9 +137,7 @@ export default function CreateCommunityForm() {
 
             {/* */}
 
-            <div className="flex gap-1 font-medium">
-                Image
-            </div>
+            <div className="flex gap-1 font-medium">Image<p className="text-[#fca5a5]">*</p></div>
             <input
                 {...form.register('image_url')}
                 placeholder="https://www.imgur.com/testurl"

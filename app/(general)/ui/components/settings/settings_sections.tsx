@@ -8,7 +8,10 @@
 import { useSession } from "next-auth/react";
 import { ChangeAccountDescription, ChangeAccountName, DeleteAccountModal } from "./settings_actions";
 import Switch from "../switch";
-import Bottomdrawer from "../bottom_drawer";
+import dynamic from "next/dynamic";
+import { BottomdrawerBody, BottomdrawerHeader, BottomdrawerTitle } from "../bottom_drawer";
+import { ArrowTrendingUpIcon, BellIcon, ChatBubbleLeftEllipsisIcon, UserIcon } from "@heroicons/react/24/solid";
+const Bottomdrawer = dynamic(() => import("../bottom_drawer"), { ssr: false });
 
 export function Settings_ChangeAccountUsername() {
 
@@ -28,7 +31,7 @@ export function Settings_ChangeAccountUsername() {
 
                 <p className="text-gray-300 text-sm">To change your username, click the button.</p>
 
-                { session && 
+                { session?.user.id && 
                     <ChangeAccountName userID={session?.user.id} />                        
                 }
 
@@ -57,7 +60,7 @@ export function Settings_ChangeDescription() {
 
                 <p className="text-gray-300 text-sm">To update your description, click the button.</p>
 
-                { session && 
+                { session?.user.id && 
                     <ChangeAccountDescription userID={session.user.id} />
                 }
 
@@ -88,15 +91,9 @@ export function Settings_DeleteAccount() {
 
                 <p className="text-gray-300 text-sm">If you&apos;re sure you want to, click the button.</p>
 
-                { session && 
+                { session?.user.id && 
                     <DeleteAccountModal userID={session.user.id} username={session.user.username} />
                 }
-
-                <Bottomdrawer btnText={"Test Sheet"} btnType={"navlink"}>
-
-                    <p className="font-medium text-lg text-left max-w-full text-wrap">Options</p>
-
-                </Bottomdrawer>
 
             </div>
 

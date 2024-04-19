@@ -64,7 +64,7 @@ export default function CreateImagePostForm() {
       },
     });
 
-    const { data: session, update } = useSession()
+    const { data: session, update } = useSession();
 
     if ( ! session ) {
 
@@ -101,6 +101,7 @@ export default function CreateImagePostForm() {
         try {
 
             console.log("[INFO] Community found");
+            // @ts-ignore
             const post = await createPost(postData); 
             console.log("[INFO] ", post)
             setIsLoading(false); 

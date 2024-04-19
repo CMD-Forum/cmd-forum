@@ -47,4 +47,16 @@ export const apiAuthPrefix: string = "/api/auth";
 */
 
 // @ts-ignore
-export const defaultLoginRedirect: string = process.env.CURRENT_URL
+
+const nextEnviroment = process.env.NODE_ENV;
+let currentURL;
+
+if ( nextEnviroment == "development" ) {
+    currentURL = process.env.NEXT_PUBLIC_METADATA_BASE_URL_DEV
+}
+else if ( nextEnviroment == "production") {
+    currentURL = process.env.NEXT_PUBLIC_METADATA_BASE_URL_PROD
+}
+
+// @ts-ignore
+export const defaultLoginRedirect: string = currentURL;

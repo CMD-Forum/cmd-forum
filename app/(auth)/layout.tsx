@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import '@/app/(general)/globals.scss'
-import { Navigation, Sidebar } from '@/app/(general)/ui/navigation'
+import { Footer, Navigation, Sidebar } from '@/app/(general)/ui/navigation'
 import NextAuthProvider from '@/app/(general)/nextauthprovider'
 import NextTopLoader from 'nextjs-toploader'
 
@@ -100,6 +100,7 @@ export default async function RootLayout({
 
           </div>
 
+          <Footer />
 
         </body>
 

@@ -1,7 +1,9 @@
 const { withTV } = require('tailwind-variants/transformer');
+const { default: flattenColorPalette, } = require('tailwindcss/lib/util/flattenColorPalette');
 
 /** @type {import('tailwindcss').Config} */
-module.exports = withTV({
+module.exports = {
+  darkMode: 'selector',
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -19,6 +21,7 @@ module.exports = withTV({
       },
       colors: {
         'semitransparent': 'hsla(0, 0%, 0%, 0.75)',
+        'transparent': 'hsla(0, 0%, 0%, 0)',
         'primary': 'hsl(0, 0%, 11%)',
         'background': 'hsl(240, 10%, 4%)',
         'card': '#0E0E0E',
@@ -61,6 +64,21 @@ module.exports = withTV({
           }
         }
       ]
-    })
+    }),
+    addVariablesForColors,
   ],
-})
+}
+
+function addVariablesForColors({ addBase, theme }: { addBase: any, theme: any }) {
+
+  let allColors = flattenColorPalette(theme('colors'));
+
+  let newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+  );
+
+  addBase({
+    ':root': newVars,
+  });
+
+};

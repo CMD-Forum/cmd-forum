@@ -56,6 +56,7 @@ export const {
     callbacks: {
 
         async signIn({ user }) {
+            // @ts-ignore
             const existingUser = await getUserById(user.id);
 
             /*if ( ! existingUser || existingUser.emailVerified === null ) {

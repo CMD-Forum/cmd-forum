@@ -1,18 +1,14 @@
 "use client";
 
 import Link from 'next/link';
-import { Suspense, useEffect, useState } from 'react';
-import { ArrowRightEndOnRectangleIcon, ChatBubbleLeftEllipsisIcon, ChevronDownIcon, ChevronUpIcon, Cog6ToothIcon, EllipsisVerticalIcon, MegaphoneIcon, ShareIcon, UserIcon } from '@heroicons/react/24/solid';
+import { ArrowRightEndOnRectangleIcon, ChatBubbleLeftEllipsisIcon, Cog6ToothIcon, EllipsisVerticalIcon, MegaphoneIcon, ShareIcon } from '@heroicons/react/24/solid';
 import MarkdownPreview from '@uiw/react-markdown-preview';
-import { FullPostSkeleton } from '../../fallback/Post';
 import rehypeSanitize from "rehype-sanitize";
 import Dropdown, { DropdownCustom, DropdownLink, DropdownShare, DropdownUser } from '../dropdown/dropdown';
-import BackButton, { BackButtonNormal } from './back_button';
+import { BackButtonNormal } from './back_button';
 import Hovercard from '../dropdown/hovercard';
-import { useSession } from 'next-auth/react';
 import LogoutButton from '../signoutButton';
 import { Post } from '@/types/types';
-import { error } from 'console';
 
 /**
  * Horizontal card display of the given post.
@@ -126,23 +122,12 @@ export function CardPost( post: Post ) {
                 <div className='flex flex-row mt-4'>
                     <Link className='navlink !px-2 md:!px-3 mr-auto' href={`/posts/${post.id}`}><ChatBubbleLeftEllipsisIcon className='w-5 h-5' /><span className='hidden md:flex'>Comments</span></Link>
                     
-                    <Dropdown align={"right"} accountHeading={false} >
+                    <Dropdown align={"right"} accountHeading={false} headerIcon={<EllipsisVerticalIcon />} headerText={null} headerClassName={"mt-4"}>
                         <DropdownLink text={post.author.username} icon={<img src={post.author.image} alt={post.author.username}></img>} link={`/user/${post.author.username}`}></DropdownLink>
                         <DropdownLink text={post.community.display_name} icon={<img src={post.community.image} alt={post.community.display_name}></img>} link={`/c/${post.community.name}`}></DropdownLink>
                         <hr className='mt-1 !mb-1'/>
                         <DropdownShare icon={<ShareIcon />} text={text} title={title} url={url} />
-                    </Dropdown>                        
-                    
-                    <Dropdown headerIcon={<EllipsisVerticalIcon />} align={"right"} accountHeading={false} headerText={""} headerClassName={"mt-4"}>
-                        <DropdownLink text={"Settings"} icon={<Cog6ToothIcon />} link={"/account/settings"} />
-                        <LogoutButton className={"hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm text-gray-300 hover:text-white"}><ArrowRightEndOnRectangleIcon className='w-5 h-5' />Logout</LogoutButton>
-                        <hr className='mt-1 mb-1' />
-                        <DropdownCustom className={"hover:bg-card"}>
-                            <div className='flex flex-col gap-1 items-center'>
-                            <Link className='label cursor-pointer text-gray-300 hover:text-white' href={"/updates/v1.1"}><MegaphoneIcon className='w-4 h-4'/>Version 1.1 is here at last!</Link>              
-                            </div>
-                        </DropdownCustom>
-                  </Dropdown>                            
+                    </Dropdown>                                        
                 </div>
 
             </div>
@@ -203,7 +188,7 @@ export function FullPost( post: Post ) {
 
                     <div className="text-sm relative">
 
-                        <BackButtonNormal className={"absolute right-0"} />
+                        <BackButtonNormal className={"absolute right-0 !hidden md:!flex"} />
 
                         <div className='flex flex-row gap-2 items-center'>
                             <img src={post.community.image} className='w-8 h-8 rounded-sm' alt={post.community.name}></img>

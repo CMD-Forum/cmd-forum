@@ -1,6 +1,5 @@
 import { prisma } from "@/app/(general)/lib/db";
 import { CardPost } from "../posts/post";
-import { useState } from "react";
 
 interface SearchResultProps {
 
@@ -127,6 +126,7 @@ export default async function SearchResults(search: SearchResultProps) {
                             submitted={result.createdAt.toLocaleDateString()}
                             subtitle={result.tagline}
                             community={result.community}
+                            // @ts-ignore
                             author={result.author}
                         >
                         </CardPost>

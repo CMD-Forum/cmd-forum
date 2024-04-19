@@ -67,7 +67,7 @@ export default function CreatePostForm() {
       },
     });
 
-    const { data: session, update } = useSession()
+    const { data: session, update } = useSession();
 
     if ( ! session ) {
 
@@ -103,8 +103,8 @@ export default function CreatePostForm() {
         
         try {
 
-            throw new Error("error");
             console.log("[INFO] Community found");
+            // @ts-ignore
             const post = await createPost(postData); 
             console.log("[INFO] ", post)
             setIsLoading(false); 

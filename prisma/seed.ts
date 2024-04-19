@@ -34,12 +34,19 @@ async function main() {
   
   ];
 
+  const posts_support = [
+    
+    { id: "firststart", title: "Welcome to CMD/>.", tagline: "If you're setting up CMD/>, please read this.", content: "", authorId: "0" },
+  
+  ];
+
   //@ts-ignore
   const newCommunities = await Promise.all(communities.map(community => prisma.community.create({ data: community })));
   const newUsers = await Promise.all(users.map(user => prisma.user.create({ data: user })));
   const newPosts = await Promise.all(posts.map(post => prisma.post.create({ data: post })));
+  const newSupportPosts = await Promise.all(posts_support.map(post_support => prisma.support.create({ data: post_support })));
 
-  console.log(newCommunities, newUsers, newPosts);
+  console.log(newCommunities, newUsers, newPosts, newSupportPosts);
 }
 
 main()

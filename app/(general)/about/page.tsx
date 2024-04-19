@@ -1,22 +1,27 @@
+import Link from "next/link";
+
 export default function AboutPage() {
 
     return (
-        <main className="flex min-h-screen flex-col w-full p-6 mt-6">
+
+        <main className="flex min-h-screen flex-col w-full">
 
             <div className="error flex flex-col w-full">
   
-              <div className="flex flex-col">
+              <div className="flex flex-col border-b-1 border-border p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48">
   
                   <h1 className="header">About CMD/&gt;</h1>
-                  <p className="text-gray-300 font-medium antialiased w-full">The details of CMD/&gt;</p>   
   
               </div>
   
-              <hr className="border-border mb-0 mt-4" />
+              <div className='flex flex-col px-6 lg:py-12 lg:px-48 mt-6 mb-6'>
+                <p>Sorry, this page hasn't been completed yet.</p>
+                <Link href={"/"} className="hover:underline w-fit">Go Home</Link>
+              </div>
   
           </div>
   
-        </main>
+      </main>
     );
 
 }

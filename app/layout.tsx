@@ -1,12 +1,13 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter, IBM_Plex_Mono } from 'next/font/google'
-import './globals.scss'
+import './(general)/globals.scss'
 import { Navigation, Sidebar, Infobar, Bottombar, Footer } from '@/app/(general)/ui/navigation'
 import { SessionProvider } from 'next-auth/react'
 import { auth } from '@/auth'
 import NextTopLoader from 'nextjs-toploader';
-import CookieBanner from './ui/components/cookies/cookie_banners'
+import CookieBanner from './(general)/ui/components/cookies/cookie_banners'
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { SWRProvider } from '../swr-provider'
 
 const inter = Inter({ subsets: ['latin'] });
 const ibm_plex_mono = IBM_Plex_Mono({ subsets: ["latin"], weight: "400", variable: "--font-ibm_plex_mono" })
@@ -82,56 +83,59 @@ export default async function RootLayout({
 
   return (
 
-    <SessionProvider session={session}>
+    <SWRProvider>
+      <SessionProvider session={session}>
 
-        <html lang="en" className={`defaultTheme ${inter.className} ${ibm_plex_mono.variable}`}>
+          <html lang="en" className={`defaultTheme ${inter.className} ${ibm_plex_mono.variable}`} style={{ colorScheme: "dark" }}>
 
-          <SpeedInsights />
+            <SpeedInsights />
 
-          <head>
+            <head>
 
-            <link rel='shortcut icon' href='/images/favicon/favicon.ico' />
+              <link rel='shortcut icon' href='/images/favicon/favicon.ico' />
 
-          </head>
+            </head>
 
-          <body id='body' className='bg-background text-white overflow-scroll overflow-x-hidden h-vh relative'>
+            <body id='body' className='bg-background text-white overflow-scroll overflow-x-hidden h-vh relative'>
 
-            <NextTopLoader
-              color='#FFFFFF'
-              showSpinner={false}
-              height={1}
-              zIndex={999999}
-            />
+              <NextTopLoader
+                color='#FFFFFF'
+                showSpinner={false}
+                height={1}
+                zIndex={999999}
+              />
 
-            <div id='modal-root'>
+              <div id='modal-root'>
 
-              <Navigation />
+                <Navigation />
 
-                <div className='flex h-full m-auto bg-background'>
+                  <div className='flex h-full m-auto bg-background'>
 
-                  <Sidebar />        
+                    <Sidebar />        
 
-                  <div className='flex flex-col justify-center w-full !pt-0 m-auto'>
+                    <div className='flex flex-col justify-center w-full !pt-0 m-auto'>
 
-                    <div className=''>
+                      <div className=''>
 
-                      {children}    
+                        {children}    
+
+                      </div>
 
                     </div>
 
                   </div>
 
-                </div>
+                <Footer />
 
-              <Footer />
+              </div>
 
-            </div>
+            </body>
 
-          </body>
+          </html>
 
-        </html>
+      </SessionProvider>      
+    </SWRProvider>
 
-    </SessionProvider>
 
   )
 }

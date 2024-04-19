@@ -1,12 +1,14 @@
 import Link from 'next/link';
 import { FaAndroid, FaApple, FaGithub } from "react-icons/fa6";
-import React from 'react';
+import React, { Suspense } from 'react';
 import { auth } from '@/auth';
 import { BottombarItems, CommunityInfobarItems, NavSideItems, TopbarItems } from './components/nav_sideitem';
 import { inter } from './fonts';
 import Dropdown, { DropdownCustom, DropdownLink, DropdownUser } from './components/dropdown/dropdown';
-import { ArrowRightEndOnRectangleIcon, Cog6ToothIcon, MegaphoneIcon, PlusIcon, QuestionMarkCircleIcon, UserPlusIcon } from '@heroicons/react/24/solid';
+import { ArrowRightEndOnRectangleIcon, Cog6ToothIcon, MegaphoneIcon, PlusIcon, QuestionMarkCircleIcon, UserCircleIcon, UserPlusIcon } from '@heroicons/react/24/solid';
 import LogoutButton from './components/signoutButton';
+import Bottomdrawer, { BottomdrawerBody, BottomdrawerHeader, BottomdrawerTitle } from './components/bottom_drawer';
+import { BellIcon } from '@heroicons/react/24/outline';
 
 export async function Navigation() {
 
@@ -29,8 +31,11 @@ export async function Navigation() {
           
             {session ? (
 
-              <div className={"flex flex-row gap-2"}>
-                <div className='ml-auto flex gap-4'>
+              <div className={"flex flex-row gap-4 md:gap-1 items-center"}>
+
+                <Link className={"navlink-full !px-1 !py-1 !mt-0 !h-fit flex"} href={"/create"}><PlusIcon className={"w-5 h-5"}></PlusIcon></Link>              
+
+                <div className='ml-auto flex'>
 
                   <Dropdown align={"right"} accountHeading={true} headerText={""} headerIcon={null}>
                     <DropdownUser />
@@ -46,8 +51,7 @@ export async function Navigation() {
                   </Dropdown>
 
                 </div>
-
-                <Link className={"navlink-full !px-2 !hidden md:!flex"} href={"/create"}><PlusIcon className={"w-5 h-5"}></PlusIcon></Link>              
+                
               </div>
 
             ) : (
@@ -55,7 +59,7 @@ export async function Navigation() {
               <div className={"flex-row gap-2 hidden md:flex"}>
                 <div className={"ml-auto flex gap-4"}>
 
-                  <Dropdown alignRight={true} headerText={"Login or Signup"} headerIcon={null} headerClassName={"!border-1 !border-border"} className={"!top-12"}> 
+                  <Dropdown align={"right"} headerText={"Login or Signup"} headerIcon={<UserCircleIcon />} headerClassName={"!border-1 !border-border"}> 
                     <DropdownLink text={"Login"} icon={<ArrowRightEndOnRectangleIcon />} link={"/login"} />
                     <DropdownLink text={"Signup"} icon={<UserPlusIcon />} link={"/signup"} />
                     <hr className='mt-2 mb-2' />
