@@ -59,4 +59,4 @@ else if ( nextEnviroment == "production") {
 }
 
 // @ts-ignore
-export const defaultLoginRedirect: string = currentURL;
+export const defaultLoginRedirect: string = "/posts";
