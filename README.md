@@ -30,10 +30,10 @@ To setup your .env file, you'll need to change a few things.
 | Variable             | Change To                                                                | Notes                                                         |
 | -------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------- |
 | DATABASE_URL         | Your database connection string                                          | N/A                                                           |
-| AUTH_SECRET          | Random, secure string. AuthJS recommends using `openssl rand -base64 32` to generate it | Don't share with to anybody, as this is meant to be _secret_  |
+| AUTH_SECRET          | Random, secure string. AuthJS recommends using `openssl rand -base64 32` to generate it | Don't share with anybody, as this is meant to be secret.  |
 | GITHUB_CLIENT_ID     | Your GitHub Client ID (see your developer settings)                      | See your developer settings for this.                         |
 | GITHUB_CLIENT_SECRET | Your GitHub Client Secret                                                | You should have this stored, as GitHub only shows it once.    |
-| NEXT_PUBLIC_METADATA_BASE_URL_DEV | Your local development URL (most likely https://localhost:3000) | Used for the metadata |
+| NEXT_PUBLIC_METADATA_BASE_URL_DEV | Your local development URL (most likely <https://localhost:3000>) | Used for the metadata. |
 | NEXT_PUBLIC_METADATA_BASE_URL_PROD | Your production URL (where you'll deploy CMD/> to) | N/A |
 
 ### Run the development server
@@ -45,7 +45,12 @@ npm run dev
 This will start a HTTPS development server. HTTPS is required for authentication to work on Chromium browsers, however Firefox will work regardless.
 
 > [!NOTE]
-> `npm run dev` runs `next dev --experimental-https`
+> `npm run dev` runs `next dev --experimental-https --turbo`.  
+> If you don't want Turbopack and prefer Webpack, remove `--turbo` from the command.  
+> If you don't want HTTPS, remove `--experimental-https` from the command.
+
+> [!NOTE]
+> CMD/> uses Vercel Speed Insights, if you don't want this you'll have to remove ``<SpeedInsights />`` from under the HTML tag in `layout.tsx`.
 
 ## Credits
 
@@ -59,63 +64,52 @@ This will start a HTTPS development server. HTTPS is required for authentication
 
 ### Packages
 
-CMD/> uses the following packages, so check them out:
+Here is a list of all packages used:
 
-```json
-
-    Dependencies:
-
-    "@auth/prisma-adapter": "^1.3.3",
-    "@ducanh2912/next-pwa": "^10.0.2",
-    "@heroicons/react": "^2.1.1",
-    "@hookform/resolvers": "^3.3.2",
-    "@prisma/client": "^5.10.2",
-    "@uiw/react-markdown-editor": "^6.0.0",
-    "@uiw/react-markdown-preview": "^5.0.7",
-    "@vercel/speed-insights": "^1.0.10",
-    "bcrypt": "^5.1.1",
-    "bcryptjs": "^2.4.3",
-    "date-fns": "^3.3.1",
-    "framer-motion": "^10.16.16",
-    "github-markdown-css": "^5.5.0",
-    "katex": "^0.16.9",
-    "next": "^14.1.3",
-    "next-auth": "^5.0.0-beta.4",
-    "next-dev-https": "^0.13.3",
-    "nextjs-toploader": "^1.6.6",
-    "prisma-docs-generator": "^0.8.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-hook-form": "^7.49.2",
-    "react-icons": "^5.0.1",
-    "react-zorm": "^0.9.0",
-    "rehype-raw": "^7.0.0",
-    "rehype-sanitize": "^6.0.0",
-    "remark-breaks": "^4.0.0",
-    "remark-gfm": "^4.0.0",
-    "sass": "^1.69.5",
-    "tailwind-variants": "^0.2.0",
-    "use-debounce": "^10.0.0",
-    "xss": "^1.0.15",
-    "zod": "^3.22.4"
-
-    Development Dependencies:
-
-    "@types/bcrypt": "^5.0.2",
-    "@types/bcryptjs": "^2.4.6",
-    "@types/node": "^20.10.6",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "autoprefixer": "^10.0.1",
-    "eslint": "^8",
-    "eslint-config-next": "^14.1.0",
-    "postcss": "^8",
-    "prisma": "^5.10.2",
-    "stylelint-config-recommended": "^14.0.0",
-    "tailwindcss": "^3.4.0",
-    "tailwindcss-themer": "^4.0.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.3.3",
-    "webpack": "^5.89.0"
-
-```
+  -  @auth/prisma-adapter
+  -  @heroicons/react
+  -  @hookform/resolvers
+  -  @prisma/client
+  -  @uiw/react-markdown-editor
+  -  @uiw/react-markdown-preview
+  -  @vercel/speed-insights
+  -  bcrypt
+  -  bcryptjs
+  -  framer-motion
+  -  katex
+  -  next
+  -  next-auth
+  -  next-dev-https
+  -  nextjs-toploader
+  -  prisma-docs-generator
+  -  react
+  -  react-dom
+  -  react-error-boundary
+  -  react-helmet
+  -  react-hook-form
+  -  react-icons
+  -  react-zorm
+  -  sass
+  -  swr
+  -  use-debounce
+  -  xss
+  -  zod
+  -  @types/bcrypt
+  -  @types/bcryptjs
+  -  @types/mdx
+  -  @types/node
+  -  @types/react
+  -  @types/react-dom
+  -  autoprefixer
+  -  eslint
+  -  eslint-config-next
+  -  eslint-config-prettier
+  -  postcss
+  -  prettier
+  -  prisma
+  -  stylelint-config-recommended
+  -  tailwindcss
+  -  tailwindcss-themer
+  -  ts-node
+  -  typescript
+  -  webpack
