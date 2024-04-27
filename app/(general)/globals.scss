@@ -47,7 +47,8 @@ body {
   @apply font-normal;
   @apply text-sm;
   @apply text-white;
-  @apply decoration-2 transition-all;
+  @apply decoration-2; 
+  @apply transition-all;
   @apply bg-transparent;
   @apply hover:bg-border;
   @apply px-3;
@@ -65,7 +66,7 @@ body {
 
 .navlink:disabled {
 
-  @apply text-gray-300;
+  @apply text-gray-400;
   @apply hover:bg-transparent;
   @apply cursor-not-allowed;
 
@@ -328,18 +329,18 @@ body {
 // MD
 
 .wmde-markdown {
-
   @apply bg-transparent #{!important};
+}
 
+.wmde-markdown * {
+  @apply font-inter;
 }
 
 .wmde-markdown blockquote {
-
   @apply bg-transparent #{!important};
   @apply hover:text-white;
   @apply transition-all;
   @apply hover:border-white #{!important};
-
 }
 
 .wmde-markdown hr {
@@ -353,6 +354,14 @@ body {
   @apply bg-card #{!important};
   @apply border-border #{!important};
   @apply border-1 #{!important};
+}
+
+.wmde-markdown h1, h2, h3, h4, h5, h6, p, li {
+  @apply text-white #{!important};
+}
+
+.wmde-markdown img {
+  @apply rounded-md #{!important};
 }
 
 .md-editor {

@@ -25,7 +25,7 @@ export default function Search({
             <div className="flex flex-col border-b-1 border-border p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48">
 
                 <h1 className="header">Search</h1>
-                <p className="text-gray-300 font-medium antialiased w-full">Find that post you liked</p>   
+                <p className="text-gray-300 font-medium antialiased w-full">Find that post you liked.</p>   
 
             </div>
 

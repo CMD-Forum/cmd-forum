@@ -13,30 +13,25 @@ import {
     ViewColumnsIcon, 
     Bars3Icon,
     XMarkIcon,
-    UserCircleIcon,
     ArrowRightEndOnRectangleIcon,
     UserPlusIcon
 } from "@heroicons/react/20/solid";
 import Link from "next/link"
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
 import rehypeRaw from "rehype-raw";
-import { Suspense, useState } from "react";
-import NavSideItemsFallback from "../fallback/NavSideItems";
+import { useState } from "react";
 import { inter } from "../fonts";
 import { useSession } from "next-auth/react"
-import Modal from "./modal";
-import TopnavDropdown from "./dropdown/dropdown";
 
 export function NavSideItems() {
 
     const pathname = usePathname();
     const [expanded, setExpanded] = useState(false);
-    const { data: session, update } = useSession();
+    const { data: session } = useSession();
 
     const toggleDrawer = () => {
         if ( expanded === true ) {
@@ -181,14 +176,20 @@ export function BottombarItems() {
 export function TopbarItems() {
 
     const pathname = usePathname();
+    const { data: session } = useSession();
 
     return (
 
         <div className='hidden md:flex rounded-full p-1'>
 
-            <Link className={`topbar-link ${pathname == "/" ? "active" : ""}`} href='/'>Home</Link>
-            <Link className={`topbar-link ${pathname.startsWith("/c/") || pathname == "/c" ? "active" : ""}`} href='/c'>Community</Link>
-            <Link className={`topbar-link ${pathname.startsWith("/posts") ? "active" : ""}`} href='/posts'>Posts</Link>       
+            { session ? 
+                null
+            : 
+                <Link className={`topbar-link ${pathname == "/" ? "active" : ""}`} href='/'>Home</Link>
+            }
+            
+            <Link className={`topbar-link ${pathname.startsWith("/posts") ? "active" : ""}`} href='/posts'>Posts</Link>   
+            <Link className={`topbar-link ${pathname.startsWith("/c/") || pathname == "/c" ? "active" : ""}`} href='/c'>Community</Link>     
             <Link className={`topbar-link ${pathname.startsWith("/search") ? "active" : ""}`} href='/search'>Search</Link>
 
         </div>

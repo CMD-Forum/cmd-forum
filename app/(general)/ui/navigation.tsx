@@ -1,14 +1,12 @@
 import Link from 'next/link';
 import { FaAndroid, FaApple, FaGithub } from "react-icons/fa6";
-import React, { Suspense } from 'react';
+import React from 'react';
 import { auth } from '@/auth';
 import { BottombarItems, CommunityInfobarItems, NavSideItems, TopbarItems } from './components/nav_sideitem';
 import { inter } from './fonts';
 import Dropdown, { DropdownCustom, DropdownLink, DropdownUser } from './components/dropdown/dropdown';
 import { ArrowRightEndOnRectangleIcon, Cog6ToothIcon, MegaphoneIcon, PlusIcon, QuestionMarkCircleIcon, UserCircleIcon, UserPlusIcon } from '@heroicons/react/24/solid';
 import LogoutButton from './components/signoutButton';
-import Bottomdrawer, { BottomdrawerBody, BottomdrawerHeader, BottomdrawerTitle } from './components/bottom_drawer';
-import { BellIcon } from '@heroicons/react/24/outline';
 
 export async function Navigation() {
 
@@ -20,14 +18,14 @@ export async function Navigation() {
         
         <div className='flex justify-between w-full'>
 
-          <div className='flex items-center mr-auto h-full w-fit gap-10'>
+          <div className='flex items-center lg:px-40 h-full w-fit gap-10'>
           
-            <Link className={`z-50 ml-10 lg:ml-0 flex ${inter.className} font-extrabold text-3xl hover:text-gray-300 transition-all`} href="/"><p>CMD /&gt;</p></Link>  
+            <Link className={`z-50 ml-10 lg:ml-0 flex ${inter.className} font-extrabold text-3xl hover:text-gray-300 transition-all`} href={ session ? "/posts" : "/" }><p>CMD /&gt;</p></Link>  
             <TopbarItems />
 
           </div>
 
-          <div className='flex items-center justify-end ml-auto'>
+          <div className='flex items-center lg:pr-40'>
           
             {session ? (
 

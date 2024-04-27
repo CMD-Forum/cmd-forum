@@ -41,6 +41,7 @@ module.exports = {
       'body': ['"Open Sans"'],
       'IBM_PLEX_MONO': ['var(--font-ibm_plex_mono)'],
       'facebook_link': ['"lucida grande",tahoma,verdana,arial,sans-serif'],
+      'inter': ['inter', 'system-ui'],
     },
   },
   plugins: [

@@ -1,23 +1,20 @@
 import { prisma } from "@/app/(general)/lib/db";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST( req: Request ) {
+export async function GET( req: NextRequest ) {
 
     try {
 
-        if ( ! req.body ) {
-            return NextResponse.json({ message: "Request body is required." }, { status: 400 });
-        }
-
-        const body = await req.json();
-        let { page } = body;
+        const params = req.nextUrl.searchParams;
+        const page = params.get("page");
 
         if ( ! page ) {
-            return NextResponse.json({ message: "Please provide a page, 0 is first." }, { status: 400 });
+            return NextResponse.json({ message: "Page is required." }, { status: 400 });
         }
 
         const posts = await prisma.post.findMany({
 
+            // @ts-ignore
             skip: page * 10,
             take: 10,
 

@@ -3,8 +3,11 @@
 import { CardPost } from '@/app/(general)/ui/components/posts/post';
 import { motion } from 'framer-motion';
 import useSWR from 'swr';
-import { XCircleIcon } from '@heroicons/react/16/solid';
+import { ArrowLeftIcon, ArrowRightIcon, XCircleIcon } from '@heroicons/react/16/solid';
 import { useRouter } from "next/navigation";
+import { PostFetcher, fetcher } from '@/swr-provider';
+import Modal from '../modal';
+import { useEffect, useState } from 'react';
 
 const variants = {
 
@@ -15,13 +18,55 @@ const variants = {
 
 export default function PostList() {
 
-    const { data: posts, error, isLoading } = useSWR('/api/posts/getAll', {
+    const [page, setPage] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
+
+    // @ts-ignore
+    let { data: post_count, count_error, count_isLoading } = useSWR(`/api/posts/getAll/count`, {
         onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
           if (error.status === 404) return
           if (retryCount >= 1) return
           setTimeout(() => revalidate({ retryCount }), 1000)
+        },
+        fetcher,
+        revalidateIfStale: false,
+        revalidateOnFocus: false,
+        revalidateOnReconnect: false,
+        errorRetryInterval: 0,
+        shouldRetryOnError: true
+    });    
+
+    function nextPage() {
+        if (page < totalPages - 1) {
+            setPage(page + 1);
         }
-    })
+    };
+    function lastPage() {
+        if ( page > 0 ) {
+            setPage(page - 1);
+        }
+    };
+
+    useEffect(() => {
+        if (post_count) {
+            setTotalPages(post_count);
+        }
+    }, [post_count]);    
+
+    let { data: posts, error, isLoading } = useSWR(`/api/posts/getAll/?page=${page}`, {
+        onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
+          if (error.status === 404) return
+          if (retryCount >= 1) return
+          setTimeout(() => revalidate({ retryCount }), 1000)
+        },
+        PostFetcher,
+        revalidateIfStale: false,
+        revalidateOnFocus: false,
+        revalidateOnReconnect: false,
+        errorRetryInterval: 0,
+        shouldRetryOnError: true
+    });
+    
     const router = useRouter();
 
     if ( isLoading ) {
@@ -87,6 +132,10 @@ export default function PostList() {
 
                   );
             })}
+            <div className='flex gap-4'>
+                <button onClick={() => lastPage()} className='navlink !px-2' disabled={ page === 0 ? true : false }><ArrowLeftIcon className='w-5 h-5' /></button>  
+                <button onClick={() => nextPage()} className='navlink !px-2'><ArrowRightIcon className='w-5 h-5' /></button>            
+            </div>
         </div>
     );
 }
