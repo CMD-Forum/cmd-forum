@@ -13,7 +13,7 @@ export const UpdateUsernameSchema = z.object({
     username: z
         .string()
         .min(2, "Your username must be at least 2 characters.")
-        .max(15, "Your username must be no longer than 15 characters.")
+        .max(25, "Your username must be no longer than 25 characters.")
         .regex(/^[a-zA-Z0-9_-]+$/, "Your username must only contains letters, numbers, underscores and hyphens."),
 
 })

@@ -13,7 +13,12 @@ import { LoginSchema } from "./app/(general)/lib/schemas";
 import { getUserByEmail, getUserById } from "./app/(general)/lib/data";
 import bcrypt from "bcryptjs";
 import { UserRole } from "@prisma/client";
+
+// Providers
 import GitHub from "next-auth/providers/github";
+// import Resend from "next-auth/providers/resend"
+
+// Main
 
 export type ExtendedUser = DefaultSession["user"] & {
     role: UserRole;
@@ -170,5 +175,8 @@ export const {
 
           },
       }),
+      //Resend({
+        //from: "no-reply@company.com"
+      //}),
   ],
 });

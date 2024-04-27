@@ -1,13 +1,12 @@
 "use client";
 
 import Link from 'next/link';
-import { ArrowRightEndOnRectangleIcon, ChatBubbleLeftEllipsisIcon, Cog6ToothIcon, EllipsisVerticalIcon, MegaphoneIcon, ShareIcon } from '@heroicons/react/24/solid';
+import { ChatBubbleLeftEllipsisIcon, EllipsisVerticalIcon, ShareIcon } from '@heroicons/react/24/solid';
 import MarkdownPreview from '@uiw/react-markdown-preview';
 import rehypeSanitize from "rehype-sanitize";
-import Dropdown, { DropdownCustom, DropdownLink, DropdownShare, DropdownUser } from '../dropdown/dropdown';
+import Dropdown, { DropdownLink, DropdownShare } from '../dropdown/dropdown';
 import { BackButtonNormal } from './back_button';
 import Hovercard from '../dropdown/hovercard';
-import LogoutButton from '../signoutButton';
 import { Post } from '@/types/types';
 
 /**
@@ -178,7 +177,7 @@ export function CardPost( post: Post ) {
 
 export function FullPost( post: Post ) {
 
-    const rehypePlugins = [rehypeSanitize];
+    // const rehypePlugins = [rehypeSanitize];
 
     return (
 
@@ -241,7 +240,7 @@ export function FullPost( post: Post ) {
 
                     <div className='markdown-body'>
 
-                        <MarkdownPreview source={post.content} rehypePlugins={rehypePlugins} />
+                        <MarkdownPreview source={post.content} /* rehypePlugins={rehypePlugins} */ />
 
                     </div>
 
