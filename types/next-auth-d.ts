@@ -8,9 +8,10 @@ declare module "next-auth" {
 
     interface User {
 
-        id: string,
-        username: string,
-        profile_image: string,
+        // @ts-ignore
+        id: string;
+        username: string;
+        profile_image: string;
 
     }
 
@@ -21,12 +22,13 @@ declare module "next-auth" {
 
         token: {
 
-            sub: string,
-            role: UserRole,
-            picture: string,
-            username: string,
-            description: string,
-            usernameLastUpdated: Date | null,
+            id: string;
+            sub: string;
+            role: UserRole;
+            picture: string;
+            username: string;
+            description: string;
+            usernameLastUpdated: Date | null;
 
         }
 

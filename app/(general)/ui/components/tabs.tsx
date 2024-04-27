@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { button } from "../variants";
 import CreatePostForm from "@/app/(general)/ui/components/form/create_post";
 import CreateCommunityForm from "@/app/(general)/ui/components/form/create_community";
 import React from "react";

@@ -38,38 +38,42 @@ export default function Dropdown({ children, headerText, headerIcon, className, 
                         </div>
 
                     <AnimatePresence>
-                        { open &&
-                        <motion.div 
-                            className={`bg-card ${className} border-border border-1 rounded-md w-max h-max !z-50 group min-w-52 shadow-xl absolute`}
-                            initial={{
-                                y: '0px',
-                                opacity: '0%',
-                                display: 'hidden',
-                            }}
-                            animate={{
-                                y: open ? '5px' : '0px',
-                                opacity: open ? '100%' : '0%',
-                                display: open ? '' : 'hidden'
-                            }}
-                            exit={{
-                                y: '0px',
-                                opacity: '0%',
-                                display: 'hidden',
-                            }}
-                            transition={{
-                                duration: 0.12,
-                            }}
-                            onMouseEnter={() => setIsOpen(true)}
-                            onMouseLeave={() => setIsOpen(false)}
-                        >
-                            
-                            <>
-                                { children }           
-                            </>
-                            
+                        <>
+                            <div className="absolute w-full bg-card h-2" />
+                            { open &&
+                                <motion.div 
+                                    className={`bg-card ${className} border-border border-1 rounded-md w-max h-max !z-50 group min-w-52 shadow-xl absolute`}
+                                    initial={{
+                                        y: '0px',
+                                        opacity: '0%',
+                                        display: 'hidden',
+                                    }}
+                                    animate={{
+                                        y: open ? '5px' : '0px',
+                                        opacity: open ? '100%' : '0%',
+                                        display: open ? '' : 'hidden'
+                                    }}
+                                    exit={{
+                                        y: '0px',
+                                        opacity: '0%',
+                                        display: 'hidden',
+                                    }}
+                                    transition={{
+                                        duration: 0.12,
+                                    }}
+                                    onMouseEnter={() => setIsOpen(true)}
+                                    onMouseLeave={() => setIsOpen(false)}
+                                >
+                                    
+                                    <>
+                                        { children }           
+                                    </>
+                                    
 
-                        </motion.div>  
-                        }
+                                </motion.div>  
+                            }                        
+                        </>
+
                     </AnimatePresence>
 
                 </div>
