@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { ChatBubbleLeftEllipsisIcon, EllipsisVerticalIcon, ShareIcon } from '@heroicons/react/24/solid';
 import MarkdownPreview from '@uiw/react-markdown-preview';
-import rehypeSanitize from "rehype-sanitize";
 import Dropdown, { DropdownLink, DropdownShare } from '../dropdown/dropdown';
 import { BackButtonNormal } from './back_button';
 import Hovercard from '../dropdown/hovercard';

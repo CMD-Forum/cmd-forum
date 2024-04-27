@@ -19,10 +19,7 @@ import {
 import Link from "next/link"
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import remarkBreaks from "remark-breaks";
-import rehypeRaw from "rehype-raw";
+import MarkdownPreview from '@uiw/react-markdown-preview';
 import { useState } from "react";
 import { inter } from "../fonts";
 import { useSession } from "next-auth/react"
@@ -306,7 +303,7 @@ export function CommunityInfobarItems(infobar: InfobarProps) {
 
                 <div className='markdown-body'>
 
-                <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]} rehypePlugins={[rehypeRaw]}>{infobar.main}</ReactMarkdown>
+                <MarkdownPreview source={infobar.main} />
 
                 </div>
 

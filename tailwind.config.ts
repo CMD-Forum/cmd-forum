@@ -1,4 +1,3 @@
-const { withTV } = require('tailwind-variants/transformer');
 const { default: flattenColorPalette, } = require('tailwindcss/lib/util/flattenColorPalette');
 
 /** @type {import('tailwindcss').Config} */
