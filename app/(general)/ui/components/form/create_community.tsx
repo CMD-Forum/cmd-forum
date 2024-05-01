@@ -57,7 +57,7 @@ export default function CreateCommunityForm() {
             community_name: values.community_name,
             description: values.description,
             image: values.image_url,
-            admin_ids: [session.user.id]
+            admin_ids: [session.user.id, session.user.username]
   
         };
         

@@ -19,10 +19,10 @@ import {
 import Link from "next/link"
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import MarkdownPreview from '@uiw/react-markdown-preview';
 import { useState } from "react";
 import { inter } from "../fonts";
 import { useSession } from "next-auth/react"
+import { Community } from "@prisma/client";
 
 export function NavSideItems() {
 
@@ -112,7 +112,7 @@ export function NavSideItems() {
 
                     <div className="mt-auto flex flex-col mb-2">
                         <Link 
-                            className={`navlink !w-full ${pathname === `/user/${session.user.username}` ? "active" : null}`} 
+                            className={`navlink-ghost !w-full ${pathname === `/user/${session.user.username}` ? "active" : null}`} 
                             href={`/user/${session.user.username}`} 
                             prefetch={true}>
                             { session.user.image ? <img className="w-5 h-5 mr-1 rounded" src={session.user.image} alt={"Your profile image."} /> : <UserIcon className="w-5 h-5 mr-1" /> }
@@ -177,7 +177,7 @@ export function TopbarItems() {
 
     return (
 
-        <div className='hidden md:flex rounded-full p-1'>
+        <div className='hidden lg:flex rounded-full p-1'>
 
             { session ? 
                 null
@@ -195,121 +195,71 @@ export function TopbarItems() {
 
 }
 
-interface InfobarProps {
-
-    community: string;
-    community_image: string;
-    community_description: string;
-    community_dn: string; // Community Display Name
-    // @ts-ignore: Still works, notify if breaks || EDIT: 29/12/2023 -- Administrators is being reworked so this will most likely change in the near future, however it isn't a priority.
-    administrators: Array;
-    main: string;
-    createdAt: string;
-    
-}
-  
-const variants = {
-
-    hidden: { opacity: 0, y: -20 },
-    visible: { opacity: 1, y: 0 },
-    
-};
-
-export function CommunityInfobarItems(infobar: InfobarProps) {
+export function CommunityInfobarItems( { community }: { community: Community } ) {
 
     return (
 
-        <motion.div 
-            key={infobar.community}
-            variants={variants}
-            initial="hidden"
-            animate="visible"
-            transition={{ ease: "easeInOut", duration: 0.8, type: "spring" }}
-        >
+        <div>
 
-            <div className='flex-row gap-2 p-6 rounded-md w-full bg-transparent'>
+            <div className='flex-row gap-2 rounded-md w-full bg-transparent'>
                 
                 <div className='flex-col'>
 
-                <div className='flex flex-row gap-3 items-center'>
+                    <div className='flex flex-row gap-3 items-center'>
 
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={infobar.community_image} className='h-[56px] rounded' alt={`${infobar.community}'s Community Image`} />
+                        <img src={community.image} className='h-[56px] rounded' alt={`${community.display_name}'s Community Image`} />
 
-                    <div className='flex flex-col'>
+                        <div className='flex flex-col'>
 
-                    <h1 className='text-2xl font-sans font-bold antialiased w-full'>{infobar.community}</h1>   
-                    <h2 className='text-gray-300'>{infobar.community_description}</h2>
+                            <h1 className='text-2xl font-sans font-bold antialiased w-full'>{community.display_name}</h1>   
+                            <h2 className='text-gray-300'>{community.description}</h2>
+
+                        </div>
 
                     </div>
 
-                </div>
+                    <div className='flex flex-row gap-3 items-center mt-2'>
 
-                
+                        <div className='flex flex-row gap-3'>
 
-                <div className='flex flex-row gap-3 items-center mt-2'>
+                            <div className='flex flex-row gap-1'>
+                                <CalendarDaysIcon className='w-[20px]' />
+                                <p className='text-sm'>{community.createdAt.toLocaleDateString()}</p>  
+                            </div>
+                            
+                            <div className='flex flex-row gap-1'>
+                                <UserIcon className='w-[20px]' />
+                                <p className='text-sm'>---</p>
+                            </div>
 
-                    <div className='flex flex-row gap-3'>
+                            <div className='flex flex-row gap-1'>
+                                <PencilSquareIcon className='w-[20px]' />
+                                <p className='text-sm'>---</p>
+                            </div>
 
-                    <div className='flex flex-row gap-1'>
-                        <CalendarDaysIcon className='w-[20px]' />
-                        <p className='text-sm'>19/12/2023</p>  
+                            <div className='flex flex-row gap-1'>
+                                <ChatBubbleBottomCenterTextIcon className='w-[20px]' />
+                                <p className='text-sm'>---</p>
+                            </div>
+
+                        </div>
+
                     </div>
-                    
-                    <div className='flex flex-row gap-1'>
-                        <UserIcon className='w-[20px]' />
-                        <p className='text-sm'>24k</p>
+
+                    <div className='flex flex-row gap-2 mt-3 mb-3'>
+
+                        {/* @ts-ignore */}
+                        <Link className='navlink justify-center items-center' href={`/c/${community.name}/rules`}><BookOpenIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Rules</p></Link>
+                        {/* @ts-ignore */}
+                        <Link className='navlink justify-center items-center' href={`/c/${community.name}/moderation`}><ShieldCheckIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Moderation</p></Link>    
+
                     </div>
-
-                    <div className='flex flex-row gap-1'>
-                        <PencilSquareIcon className='w-[20px]' />
-                        <p className='text-sm'>152k</p>
-                    </div>
-
-                    <div className='flex flex-row gap-1'>
-                        <ChatBubbleBottomCenterTextIcon className='w-[20px]' />
-                        <p className='text-sm'>58k</p>
-                    </div>
-
-                    </div>     
-
-                    
-
-                </div>
-
-                <div className='flex flex-row gap-2 mt-3 mb-3'>
-
-                    {/* @ts-ignore */}
-                    <Link className='navlink justify-center items-center' href={`/c/${infobar.community}/rules`}><BookOpenIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Rules</p></Link>
-                    {/* @ts-ignore */}
-                    <Link className='navlink justify-center items-center' href={`/c/${infobar.community}/moderation`}><ShieldCheckIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Moderation</p></Link>    
-
-                </div>
-                
-
-                </div>
-
-                <ol>
-
-                {infobar.administrators.map((admin: string | number | boolean, index: React.Key | null | undefined) => (
-                    
-                    <li key={index} className='text-gray-300'>{admin}</li>
-
-                ))}
-
-                </ol>
-
-                <hr className=' border-zinc-900 facebookTheme:border-[#b3b3b3] mb-2'></hr>
-
-                <div className='markdown-body'>
-
-                <MarkdownPreview source={infobar.main} />
 
                 </div>
 
             </div>  
 
-        </motion.div>
+        </div>
 
     );
 

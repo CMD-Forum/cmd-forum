@@ -184,9 +184,9 @@ export function FullPost( post: Post ) {
 
                 <div className="flex w-full bg-transparent h-fit flex-col">
 
-                    <div className="text-sm relative">
+                    <div className="text-sm relative md:bg-card md:p-6 rounded-md md:border-1 md:border-border">
 
-                        <BackButtonNormal className={"absolute right-0 !hidden md:!flex"} />
+                        {/*<BackButtonNormal className={"absolute right-0 !hidden md:!flex"} />*/}
 
                         <div className='flex flex-row gap-2 items-center'>
                             <img src={post.community.image} className='w-8 h-8 rounded-sm' alt={post.community.name}></img>
@@ -206,42 +206,41 @@ export function FullPost( post: Post ) {
                                         <p>•</p> 
                                         <p suppressHydrationWarning={true}>{post.createdAt.toLocaleString()}</p> 
                                     </h4>   
-
                                 </div>                                   
-                            </div>
-                            
+                            </div>                            
                         </div>
+
+                        <h1 className="w-fit font-sans font-semibold text-lg facebookTheme:text-lg">{post.title}</h1>
                         
- 
-
                     </div>
                     
-                    <h1 className="w-fit font-sans font-semibold text-lg facebookTheme:text-lg">{post.title}</h1>
+                    <div className='md:bg-card md:border-1 md:border-border w-full h-fit md:p-6 rounded-md mt-2 md:mt-6'>
+                        {post.imageurl ?
+
+                            <div className="relative rounded-md mt-2 mb-4 max-h-96 overflow-hidden">
+                                <div 
+                                    style={{ 
+                                        backgroundImage: `url(${post.imageurl})`,
+                                        backgroundSize: 'cover',
+                                    }} 
+                                    className="absolute inset-0 filter blur-xl"
+                                />
+                                <img src={post.imageurl} alt={post.imagealt!} className="relative m-auto max-h-96" />
+                            </div>
+
+                        :
+
+                            null
+
+                        }
+
+                        <div className='markdown-body'>
+
+                            <MarkdownPreview source={post.content} /* rehypePlugins={rehypePlugins} */ />
+
+                        </div>                        
+                    </div>
                     
-                    {post.imageurl ?
-
-                    <div className="relative rounded-md mt-2 mb-2 max-h-96 overflow-hidden">
-                        <div 
-                            style={{ 
-                                backgroundImage: `url(${post.imageurl})`,
-                                backgroundSize: 'cover',
-                            }} 
-                            className="absolute inset-0 filter blur-xl"
-                        />
-                        <img src={post.imageurl} alt={post.imagealt!} className="relative m-auto max-h-96" />
-                    </div>
-
-                    :
-
-                    null
-
-                    }
-
-                    <div className='markdown-body'>
-
-                        <MarkdownPreview source={post.content} /* rehypePlugins={rehypePlugins} */ />
-
-                    </div>
 
                 </div>
 

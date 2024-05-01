@@ -1,6 +1,7 @@
 import { prisma } from '@/app/(general)/lib/db';
 import Framermotion_workaround from './framermotion_workaround';
 import { Error404 } from '../../ui/error404';
+import { FullPost } from '../../ui/components/posts/post';
 
 export default async function PostView({ params }: { params: { id: string } }) {
 
@@ -21,8 +22,11 @@ export default async function PostView({ params }: { params: { id: string } }) {
     include: {
       community: {
         select: {
+          id: true,
+          display_name: true,
           name: true,
           image: true,
+          public: true,
         }
       },
       author: {
@@ -30,7 +34,9 @@ export default async function PostView({ params }: { params: { id: string } }) {
           id: true,
           username: true,
           description: true,
-          profile_image: true,
+          image: true,
+          createdAt: true,
+          updatedAt: true,
         }
       }
     }
@@ -48,9 +54,23 @@ export default async function PostView({ params }: { params: { id: string } }) {
 
   return (
 
-    <div className='mt-6 p-6 lg:pb-12 lg:p-12 lg:px-48 !pt-0'>
+    <div className='mt-6 lg:pb-12 lg:px-44 !pt-0'>
 
-      <Framermotion_workaround post={post} />
+      <FullPost
+        id={post.id}
+        title={post.title} 
+        author={post.author} 
+        community={post.community} 
+        upvotes={post.upvotes} 
+        downvotes={post.downvotes} 
+        createdAt={post.createdAt} 
+        updatedAt={post.updatedAt}
+        public={post.public}
+        tagline={post.tagline} 
+        content={post.content}
+        imageurl={post.imageurl}
+        imagealt={post.imagealt}
+      />
 
     </div>
     

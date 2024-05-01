@@ -117,20 +117,24 @@ export default async function SearchResults(search: SearchResultProps) {
 
                 {results && results.map((result) => (
                         
-                    <div className="w-full px-6" key={result.id}>
+                    <div className="w-full px-6 lg:px-48" key={result.id}>
                         <CardPost 
                             id={result.id}
                             title={result.title}
                             upvotes={result.upvotes}
                             downvotes={result.downvotes}
-                            submitted={result.createdAt.toLocaleDateString()}
-                            subtitle={result.tagline}
+                            createdAt={result.createdAt}
+                            updatedAt={result.updatedAt}
+                            content={result.content}
+                            imageurl={result.imageurl}
+                            imagealt={result.imagealt}
+                            public={result.public}
+                            tagline={result.tagline}
                             community={result.community}
                             // @ts-ignore
                             author={result.author}
-                        >
-                        </CardPost>
-                        <hr className="!mt-0 !mb-0" />
+                        />
+                        <div className="!mt-4 !mb-4 w-full" />
                     </div>
 
                 ))}

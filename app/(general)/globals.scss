@@ -433,8 +433,67 @@ hr {
 .header {
 
   @apply text-3xl; 
-  @apply font-sans; 
+  @apply font-inter; 
+  @apply text-white;
   @apply font-bold; 
+  @apply antialiased;
+
+}
+
+.header-2 {
+
+  @apply text-2xl #{!important}; 
+  @apply font-inter #{!important};
+  @apply text-white #{!important};
+  @apply font-bold #{!important}; 
+  @apply antialiased #{!important};
+
+}
+
+.header-3 {
+
+  @apply text-xl #{!important}; 
+  @apply font-inter #{!important};
+  @apply text-white #{!important};
+  @apply font-semibold #{!important}; 
+  @apply antialiased #{!important};
+
+}
+
+.header-4 {
+
+  @apply text-lg #{!important}; 
+  @apply font-inter #{!important};
+  @apply text-white #{!important};
+  @apply font-semibold #{!important}; 
+  @apply antialiased #{!important};
+
+}
+
+.header-5 {
+
+  @apply text-lg #{!important}; 
+  @apply font-inter #{!important};
+  @apply text-white #{!important};
+  @apply font-medium #{!important}; 
+  @apply antialiased #{!important};
+
+}
+
+.header-6 {
+
+  @apply text-base #{!important}; 
+  @apply font-inter #{!important};
+  @apply text-white #{!important};
+  @apply font-medium #{!important}; 
+  @apply antialiased #{!important};
+
+}
+
+.subtitle {
+
+  @apply text-gray-300 #{!important};
+  @apply font-medium;
   @apply antialiased;
 
 }

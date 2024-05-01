@@ -30,7 +30,7 @@ Well, [\`Version 1.1\`](https://github.com/CMD-Forum/cmd-forum) is here at last!
               <div className="flex flex-col border-b-1 border-border p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48">
   
                   <h1 className="header">Updates</h1>
-                  <p className="text-gray-300 font-medium antialiased w-full">Version 1.1</p>   
+                  <p className="subtitle">Version 1.1</p>   
   
               </div>
   

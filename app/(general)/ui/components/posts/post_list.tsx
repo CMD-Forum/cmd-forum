@@ -1,24 +1,20 @@
 "use client";
 
 import { CardPost } from '@/app/(general)/ui/components/posts/post';
-import { motion } from 'framer-motion';
 import useSWR from 'swr';
 import { ArrowLeftIcon, ArrowRightIcon, XCircleIcon } from '@heroicons/react/16/solid';
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { PostFetcher, fetcher } from '@/swr-provider';
-import Modal from '../modal';
 import { useEffect, useState } from 'react';
-
-const variants = {
-
-    hidden: { opacity: 0, y: -20 },
-    visible: { opacity: 1, y: 0 },
-    
-};
+import { useSearchParams } from 'next/navigation';
 
 export default function PostList() {
 
-    const [page, setPage] = useState(0);
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const { replace } = useRouter();
+
+    const [page, setPage] = useState( Number(searchParams.get("page") || 0 ));
     const [totalPages, setTotalPages] = useState(0);
 
     // @ts-ignore
@@ -39,11 +35,15 @@ export default function PostList() {
     function nextPage() {
         if (page < totalPages - 1) {
             setPage(page + 1);
+            //@ts-ignore
+            replace(`${pathname}?page=${page}`)
         }
     };
     function lastPage() {
         if ( page > 0 ) {
             setPage(page - 1);
+            // @ts-ignore
+            replace(`${pathname}?page=${page}`)
         }
     };
 
@@ -102,15 +102,10 @@ export default function PostList() {
             {Array.isArray(posts) && posts.map((post) => {
         
                 return (
-                    <motion.div 
+                    <div 
                       key={post.id}
-                      variants={variants}
-                      initial="hidden"
-                      animate="visible"
-                      transition={{ ease: "easeInOut", duration: 0.8, type: "spring" }}
                     >
                       <CardPost 
-
                         id={post.id}
                         createdAt={new Date(post.createdAt)}
                         updatedAt={new Date(post.updatedAt)}
@@ -128,7 +123,7 @@ export default function PostList() {
                         community={post.community}
  
                       />
-                    </motion.div>
+                    </div>
 
                   );
             })}

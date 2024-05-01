@@ -43,10 +43,10 @@ export default function ProfileMain(user: ProfileProps) {
 
                         <div className='flex flex-col'>
 
-                            <h1 className='text-2xl font-sans font-bold antialiased w-full'>{user.username}</h1>   
+                            <h1 className='header'>{user.username}</h1>   
                             { user.description 
                                 ?
-                                <h2 className='text-gray-300'>{user.description}</h2>
+                                <h2 className='subtitle'>{user.description}</h2>
                                 :
                                 <div className='animate-pulse h-2 w-full bg-border' />
                             }

@@ -23,12 +23,12 @@ export interface PostAuthor {
     /**
      * When the authors account was created.
      */
-    createdAt: string;
+    createdAt: Date;
 
     /**
      * When the authors account was last updated in the database.
      */
-    updatedAt: string;
+    updatedAt: Date;
 
     /**
      * The authors profile image source.

@@ -36,6 +36,22 @@ To setup your .env file, you'll need to change a few things.
 | NEXT_PUBLIC_METADATA_BASE_URL_DEV | Your local development URL (most likely <https://localhost:3000>) | Used for the metadata. |
 | NEXT_PUBLIC_METADATA_BASE_URL_PROD | Your production URL (where you'll deploy CMD/> to) | N/A |
 
+### Setup your database
+
+> [!IMPORTANT]
+> You should have a database already setup, however if you don't then do that before proceeding. You will need your database connection string (see `DATABASE_URL`), which
+> should include all required information, such as the URL, username and password.
+
+To fully setup your database, run the following commands in order:
+  - `npx prisma db push`
+  - `npx prisma generate`
+
+If all goes well, your database should have all required tables and fields. Prisma should give an error if something goes wrong, however it shouldn't.
+
+> [!NOTE]
+> To check that the database is working properly, try making an account and creating a community and a post. Check them to make sure they appear and all information is there.
+> You can also run the seed file to fill the database with placeholder information.
+
 ### Run the development server
 
 ```bash

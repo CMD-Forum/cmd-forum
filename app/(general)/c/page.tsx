@@ -1,3 +1,5 @@
+import { CommunityList } from "../ui/components/community/community_list";
+
 export default function CommunityPage() {
 
     return (
@@ -8,6 +10,11 @@ export default function CommunityPage() {
                 <p className="text-gray-300 font-medium antialiased w-full">Find a community for any topic.</p>   
 
             </div>      
+
+            <div className='flex flex-col px-6 lg:py-12 lg:px-48 mt-6 mb-6'>
+              <CommunityList />  
+            </div>
+
         </div>
 
     );

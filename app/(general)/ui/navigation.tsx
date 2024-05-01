@@ -122,7 +122,7 @@ interface InfobarProps {
 
 
 
-export function Infobar(infobar: InfobarProps) {
+/*export function Infobar(infobar: InfobarProps) {
 
   return (
 
@@ -138,7 +138,7 @@ export function Infobar(infobar: InfobarProps) {
 
   );
 
-}
+}*/
 
 export function Footer() {
 

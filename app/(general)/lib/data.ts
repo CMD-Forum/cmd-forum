@@ -127,6 +127,36 @@ export async function getAllPostsFromUsername( username: string ) {
             author: {
                 select: {
                     username: true,
+                    description: true,
+                    name: true,
+                    createdAt: true,
+                    updatedAt: true,
+                    image: true,
+                }
+            }
+        }
+    })
+
+    return posts;
+
+}
+
+export async function getAllPostsFromCommunityID( id: string ) {
+    
+    const posts = await prisma.post.findMany({
+        where: {
+            community: {
+                id: {
+                    equals: id
+                }
+            }
+        },
+        include: {
+            community: true,
+            author: {
+                select: {
+                    username: true,
+                    description: true,
                     name: true,
                     createdAt: true,
                     updatedAt: true,
@@ -142,10 +172,6 @@ export async function getAllPostsFromUsername( username: string ) {
 
 // createCommunity
 
-/**
- * 
- */
-
 export async function createCommunity( { community_name, description, admin_ids }: { community_name: string, description: string, admin_ids: string[] } ) {
 
     const post = await prisma.community.create({
@@ -153,9 +179,57 @@ export async function createCommunity( { community_name, description, admin_ids 
             name: community_name.toLowerCase(),
             display_name: community_name,
             description: description,
+            admin_ids: admin_ids
         }
     });
 
     return post;
+
+}
+
+// getCommunityAdminIDs
+
+/**
+ * Returns the IDs of all admins of the specified community.
+ * @param string communityId
+ * @returns 
+ */
+
+export async function getCommunityAdminIDs( { communityId }: { communityId: string }) {
+
+    const admins = await prisma.community.findUnique({
+        where: {
+            id: communityId,
+        },
+        select: {
+            admin_ids: true,
+        }
+    });
+
+    if (admins) {
+        console.log("Admins:", admins.admin_ids);    
+        return admins.admin_ids
+    } else {
+        console.log("No Admins");
+    }
+
+}
+
+// getAllCommunitys
+
+/**
+ * Returns all communitys.
+ * @returns 
+ */
+
+export async function getAllCommunitys() {
+
+    const communitys = await prisma.community.findMany();
+
+    if (communitys) {   
+        return communitys
+    } else {
+        console.log("No Communitys");
+    }
 
 }

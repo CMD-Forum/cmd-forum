@@ -1,6 +1,7 @@
-import { Infobar } from "@/app/(general)/ui/navigation";
 import { prisma } from "@/app/(general)/lib/db";
 import { notFound } from 'next/navigation';
+import { PostListByCommunity } from "../../ui/components/posts/post_list_custom";
+import { CommunityInfobarItems } from "../../ui/components/nav_sideitem";
 
 export default async function CommunityPage({ params }: { params: { community: string } }) {
 
@@ -8,7 +9,7 @@ export default async function CommunityPage({ params }: { params: { community: s
 
     where: {
 
-        name: params.community.toLowerCase()
+        name: params.community.toLowerCase(),
 
     }
 
@@ -22,9 +23,20 @@ export default async function CommunityPage({ params }: { params: { community: s
 
   return (
 
-    <main className="mt-12">
+    <main className="flex min-h-fit flex-col w-full">
 
-        <Infobar community={dbCommunity?.name} community_dn={dbCommunity.display_name} administrators={dbCommunity?.admin_ids} main={dbCommunity.sidebar_md} createdAt={dbCommunity?.createdAt.toLocaleDateString()} community_image={dbCommunity?.image} community_description={dbCommunity.description} /> 
+      <div className="error flex flex-col w-full">
+
+
+
+      </div>
+
+      <div className='flex flex-col px-6 lg:py-12 lg:px-48 mb-6 pt-12'>
+        <CommunityInfobarItems 
+          community={dbCommunity} 
+        />               
+        <PostListByCommunity communityID={dbCommunity.id} />
+      </div>
 
     </main>
 

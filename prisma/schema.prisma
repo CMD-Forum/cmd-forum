@@ -39,8 +39,7 @@ model Community {
   description    String   @default("Your description here.")
   image          String   @default("/images/favicon/favicon.svg") // Image that is shown for the community, defaults to the favicon.
   public         Boolean  @default(true)
-  admin_ids      String[] @default([""])
-  administrators User[]
+  admin_ids      String[] @default([])
   sidebar_md     String   @default("Edit your community description in the admin panel.") // Originally there was a sidebar, but that got scrapped. This is now shown below the community information.
   posts          Post[]
 }
@@ -78,7 +77,6 @@ model User {
   profile_image      String      @default("/images/favicon/favicon.svg") // Deprecated, do not use.
   image              String      @default("/images/favicon/favicon.svg")
   posts              Post[]
-  admin              Community[]
   Support            Support?    @relation(fields: [supportId], references: [authorId])
   supportId          String?
   role               UserRole    @default(USER)

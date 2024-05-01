@@ -89,7 +89,7 @@ export default function Dropdown({ align, children, accountHeading = false, head
                                 {session && (
 
                                     <button 
-                                        className={`navlink ${headerClassName ? headerClassName : ""} !p-0 md:!px-2 md:!py-2 !border-0 !mt-0 flex !font-medium !bg-transparent`}
+                                        className={`navlink ${headerClassName ? headerClassName : ""} !p-0 lg:!px-2 lg:!py-2 !border-0 !mt-0 flex !font-medium !bg-transparent`}
                                         onClick={() => {
                                             if (open) {
                                               setShowItems(false);  

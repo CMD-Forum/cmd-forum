@@ -31,6 +31,10 @@ module.exports = {
       borderWidth: {
         '1': '1px' 
       },
+      transitionProperty: {
+        'height': 'height',
+        'max-height': 'max-height',
+      }
     },
     fontFamily: {
       'sans': ['ui-sans-serif', 'system-ui'],
