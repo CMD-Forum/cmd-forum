@@ -34,6 +34,8 @@ interface NextAuthUserWithStringId extends ExtendedUser {
     id: string;
 }
 
+export const inDevEnvironment = !!process && process.env.NODE_ENV === 'development';
+
 export const {
   handlers: { GET, POST },
   auth,
@@ -134,8 +136,8 @@ export const {
     },
     providers: [
       GitHub({
-        clientId: process.env.GITHUB_CLIENT_ID,
-        clientSecret: process.env.GITHUB_CLIENT_SECRET,
+        clientId: inDevEnvironment === true ? process.env.GITHUB_CLIENT_ID : process.env.GITHUB_CLIENT_ID_PROD,
+        clientSecret: inDevEnvironment === true ? process.env.GITHUB_CLIENT_SECRET : process.env.GITHUB_CLIENT_SECRET_PROD,
         profile(profile) {
             return {
                 id: profile.id.toString(),
