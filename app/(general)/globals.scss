@@ -88,10 +88,7 @@ body {
   @apply text-black;
   @apply hover:bg-neutral-300;
   @apply focus:bg-neutral-300;
-  @apply border-border;
-  @apply border-1;
-  //@apply focus:ring-2;
-  //@apply ring-white;
+  @apply border-0;
 
 }
 

@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { createPortal } from 'react-dom';
 
-export default function Modal({ children, btnText, btnClassName, btnType = "navlink", btnDisabled }: { children: React.ReactNode, btnText: string, btnClassName?: string, btnType?: string, btnDisabled?: boolean }) {
+export default function Modal({ children, btnText, btnClassName, btnType = "navlink", btnDisabled, closeBtn, closeBtnType }: { children: React.ReactNode, btnText: string, btnClassName?: string, btnType?: string, btnDisabled?: boolean, closeBtn?: boolean, closeBtnType?: "navlink" | "navlink-full" | "navlink-destructive" | "navlink-success" | "navlink-sidebar"| "navlink-small" }) {
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [isMounted, setIsMounted] = useState<boolean>(false);
@@ -75,6 +75,7 @@ export default function Modal({ children, btnText, btnClassName, btnType = "navl
 
                                     <div className="flex flex-col md:!flex-row gap-2 bg-card px-6 py-3 justify-end border-t-1 border-border">
                                         {button}    
+                                        { closeBtn ? <button className={`${closeBtnType ? closeBtnType : "navlink-full"} !w-full md:!w-fit justify-center transition-all`} onClick={() => setIsOpen(false)}>Cancel</button> : null }
                                     </div>
                                     
                                     
@@ -97,7 +98,7 @@ export default function Modal({ children, btnText, btnClassName, btnType = "navl
 
 const Title = ({ children, className = "", ...other }: { children: React.ReactNode, className?: string }) => (
     
-    <h2 className={`font-medium text-lg text-center md:text-left max-w-full text-wrap ${className}`} {...other}>{ children }</h2>
+    <h2 className={`header-3 !text-center md:!text-left max-w-full text-wrap ${className}`} {...other}>{ children }</h2>
 
 )
 
@@ -108,7 +109,7 @@ Modal.Title = Title;
 
 const Subtitle = ({ children, className = "", ...other }: { children: React.ReactNode, className?: string }) => (
     
-    <p className={`pb-4 text-gray-300 text-center md:text-left ${className}`} {...other}>{ children }</p>
+    <p className={`pb-4 subtitle text-center md:text-left ${className}`} {...other}>{ children }</p>
 
 )
 

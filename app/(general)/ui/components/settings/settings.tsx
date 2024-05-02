@@ -24,9 +24,9 @@ export default function AccountSettings() {
 
                                 <div className='flex flex-col w-full pl-20'>
 
-                                    <h1 className='text-2xl font-sans font-bold antialiased w-full'>{session?.user.username}</h1>   
+                                    <h1 className='header-2'>{session?.user.username}</h1>   
                                     {/* @ts-ignore */}
-                                    <p className='text-gray-300'>{session?.user.description}</p>
+                                    <p className='subtitle'>{session?.user.description}</p>
 
                                 </div>
 

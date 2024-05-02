@@ -11,6 +11,7 @@ import Switch from "../switch";
 import dynamic from "next/dynamic";
 import { BottomdrawerBody, BottomdrawerHeader, BottomdrawerTitle } from "../bottom_drawer";
 import { ArrowTrendingUpIcon, BellIcon, ChatBubbleLeftEllipsisIcon, UserIcon } from "@heroicons/react/24/solid";
+import Modal from "../modal";
 const Bottomdrawer = dynamic(() => import("../bottom_drawer"), { ssr: false });
 
 export function Settings_ChangeAccountUsername() {
@@ -22,17 +23,21 @@ export function Settings_ChangeAccountUsername() {
 
             <div className="px-6">
                 <h3 className='font-bold text-xl'>Account Username</h3>     
-                <p className='text-sm'>Change your account username.</p>
+                <p className='subtitle'>Change your account username.</p>
             </div>
 
             <div className="w-full border-t-1 border-border mt-6 flex" />   
             
             <div className='flex flex-col bg-card md:flex-row py-3 px-6 justify-between gap-3 items-center w-full'>
 
-                <p className="text-gray-300 text-sm">To change your username, click the button.</p>
+                <p className="subtitle hidden md:flex">To change your username, click the button.</p>
 
                 { session?.user.id && 
-                    <ChangeAccountName userID={session?.user.id} />                        
+                    <Modal btnText={"Update Username"} btnType={"navlink-full"} closeBtn={true} closeBtnType={"navlink-full"}>
+                        <Modal.Title>Sorry, this option is unavailable.</Modal.Title>
+                        <Modal.Subtitle>You cannot change your username at this moment, please try again later.</Modal.Subtitle>
+                    </Modal>
+                    // <ChangeAccountName userID={session?.user.id} /> // Uncomment when restrictions are added.                       
                 }
 
             </div>
@@ -51,20 +56,24 @@ export function Settings_ChangeDescription() {
 
             <div className="px-6">
                 <h3 className='font-bold text-xl'>Update Description</h3>     
-                <p className='text-sm'>Update your profile description.</p>
+                <p className='subtitle'>Update your profile description.</p>
             </div>
 
             <div className="w-full border-t-1 border-border mt-6 flex" />   
             
             <div className='flex flex-col bg-card md:flex-row py-3 px-6 justify-between gap-3 items-center w-full'>
 
-                <p className="text-gray-300 text-sm">To update your description, click the button.</p>
+                <p className="subtitle hidden md:flex">To update your description, click the button.</p>
 
                 { session?.user.id && 
-                    <ChangeAccountDescription userID={session.user.id} />
+                    <Modal btnText={"Update Description"} btnType={"navlink-full"} closeBtn={true} closeBtnType={"navlink-full"}>
+                        <Modal.Title>Sorry, this option is unavailable.</Modal.Title>
+                        <Modal.Subtitle>You cannot change your description at this moment, please try again later.</Modal.Subtitle>
+                    </Modal>
+                    // <ChangeAccountDescription userID={session.user.id} /> // Uncomment when restrictions are added and this actually works.  
                 }
 
-                <Switch onEnabled={() => console.log("enabled")} />
+                {/* <Switch onEnabled={() => console.log("enabled")} /> */}
 
             </div>
 
@@ -82,17 +91,21 @@ export function Settings_DeleteAccount() {
 
             <div className="px-6">
                 <h3 className='font-bold text-xl'>Delete Account</h3>     
-                <p className='text-sm'>Delete your account. Do this only if you&apos;re sure.</p>
+                <p className='subtitle'>Delete your account. Do this only if you&apos;re sure.</p>
             </div>
 
             <div className="w-full border-t-1 border-border mt-6 flex" />   
             
             <div className='flex flex-col bg-card md:flex-row py-3 px-6 justify-between gap-3 items-center w-full'>
 
-                <p className="text-gray-300 text-sm">If you&apos;re sure you want to, click the button.</p>
+                <p className="subtitle hidden md:flex">If you&apos;re sure you want to, click the button.</p>
 
                 { session?.user.id && 
-                    <DeleteAccountModal userID={session.user.id} username={session.user.username} />
+                    <Modal btnText={"Delete Account"} btnType={"navlink-destructive"} closeBtn={true} closeBtnType={"navlink-full"}>
+                        <Modal.Title>Sorry, this option is unavailable.</Modal.Title>
+                        <Modal.Subtitle>You cannot manually delete your account at this moment. Please contact us if you absolutely need your account deleted.</Modal.Subtitle>
+                    </Modal>
+                    // <DeleteAccountModal userID={session.user.id} username={session.user.username} /> // Uncomment when restrictions are added and this actually works.  
                 }
 
             </div>
