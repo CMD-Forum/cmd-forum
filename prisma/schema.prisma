@@ -13,13 +13,13 @@ generator client {
   previewFeatures = ["fullTextSearch"]
 }
 
-generator docs { // Thanks, prisma-docs-generator: https://github.com/pantharshit00/prisma-docs-generator
+generator docs { /// Thanks, prisma-docs-generator: https://github.com/pantharshit00/prisma-docs-generator
   provider = "node node_modules/prisma-docs-generator"
 }
 
 datasource db {
-  provider = "postgresql" // Change if using a different database, obviously.
-  url      = env("DATABASE_URL") // Change this in your ``.env``.
+  provider = "postgresql" /// Change if using a different database, obviously.
+  url      = env("DATABASE_URL") /// Change this in your ``.env``.
 }
 
 enum UserRole {
@@ -31,61 +31,61 @@ enum UserRole {
 }
 
 model Community {
-  id             String   @id @default(cuid())
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @default(now()) @updatedAt
-  name           String   @unique @default("") @db.VarChar(50) // Name used in URL to find community
-  display_name   String   @unique @default("") @db.VarChar(50) // Name shown when
-  description    String   @default("Your description here.")
-  image          String   @default("/images/favicon/favicon.svg") // Image that is shown for the community, defaults to the favicon.
-  public         Boolean  @default(true)
-  admin_ids      String[] @default([])
-  sidebar_md     String   @default("Edit your community description in the admin panel.") // Originally there was a sidebar, but that got scrapped. This is now shown below the community information.
-  posts          Post[]
+  id             String   @id @default(cuid()) /// The CUID of the community.
+  createdAt      DateTime @default(now()) /// When the community was created.
+  updatedAt      DateTime @default(now()) @updatedAt /// When the community database entry was last updated.
+  name           String   @unique @default("") @db.VarChar(50) /// Name used in URL to find community, always lower case to prevent issues.
+  display_name   String   @unique @default("") @db.VarChar(50) /// Name shown anywhere other than the URL, can contain upper case letters since it is not used for identification.
+  description    String   @default("This community doesn&apos;t have a description.") /// Description of the community.
+  image          String   @default("/images/favicon/favicon.svg") /// Image that is shown for the community, defaults to the favicon.
+  public         Boolean  @default(true) /// If false, this community cannot be accessed and will not be shown. Currently unimplemented.
+  admin_ids      String[] @default([]) /// User CUIDS of the community administrator(s).
+  sidebar_md     String   @default("") /// Deprecated, do not use.
+  posts          Post[]   // Relation to all posts in this community.
 }
 
 model Post {
-  id          String    @id @default(cuid())
-  createdAt   DateTime  @default(now()) @db.Timestamptz(3)
-  updatedAt   DateTime  @default(now()) @updatedAt @db.Timestamptz(3)
-  title       String    @db.VarChar(255)
-  content     String
-  tagline     String
-  imageurl    String?
-  imagealt    String?
-  public      Boolean   @default(true)
-  authorId    String
-  downvotes   Int       @default(0)
-  upvotes     Int       @default(0)
-  communityId String    @default("null")
+  id          String    @id @default(cuid()) /// The CUID of the post.
+  createdAt   DateTime  @default(now()) @db.Timestamptz(3) /// When the post was created.
+  updatedAt   DateTime  @default(now()) @updatedAt @db.Timestamptz(3) /// When the post database entry was last updated.
+  title       String    @db.VarChar(255) /// The title of the post.
+  content     String    /// The main content of the post.
+  tagline     String    /// The tagline of the post. This is a small snippet of the post.
+  imageurl    String?   /// If the post is an image post, this is the images URL.
+  imagealt    String?   /// If the post is an image post, this is the images accessibility tag.
+  public      Boolean   @default(true) /// If false, this post cannot be accessed and will not be shown. Currently unimplemented.
+  authorId    String    /// The CUID of the posts author.
+  downvotes   Int       @default(0) /// How many downvotes the post has.
+  upvotes     Int       @default(0) /// How many upvotes the post has.
+  communityId String    @default("null") /// The CUID of the posts community.
   author      User      @relation(fields: [authorId], references: [id])
   community   Community @relation(fields: [communityId], references: [id])
 }
 
 model User {
-  id                 String      @id @default(cuid())
-  email              String      @unique
-  emailVerified      DateTime?
-  emailLastUpdate    DateTime?
-  username           String      @unique
-  usernameLastUpdate DateTime?
-  description        String      @db.VarChar(100) @default("This user has not set their description.")
-  password           String?
-  createdAt          DateTime    @default(now())
-  updatedAt          DateTime    @updatedAt
-  name               String      // Deprecated, do not use.
-  profile_image      String      @default("/images/favicon/favicon.svg") // Deprecated, do not use.
-  image              String      @default("/images/favicon/favicon.svg")
+  id                 String      @id @default(cuid()) /// The CUID of the user.
+  email              String      @unique /// The user's email.
+  emailVerified      DateTime?   /// When the user verified their email, currently unimplemented.
+  emailLastUpdate    DateTime?   /// When the user last updated their email.
+  username           String      @unique /// The user's username.
+  usernameLastUpdate DateTime?   /// When the user last updated their username.
+  description        String      @db.VarChar(250) @default("This user has not set their description.") /// The users description, displayed on their profile and when a user hovers over their username.
+  password           String?     /// The users password, should be hashed.
+  createdAt          DateTime    @default(now()) /// When the user was created.
+  updatedAt          DateTime    @updatedAt /// When the user database entry was last updated.
+  name               String      /// Deprecated, do not use.
+  profile_image      String      @default("/images/favicon/favicon.svg") /// Deprecated, do not use.
+  image              String      @default("/images/favicon/favicon.svg") /// The profile image of the user.
   posts              Post[]
   Support            Support?    @relation(fields: [supportId], references: [authorId])
   supportId          String?
-  role               UserRole    @default(USER)
+  role               UserRole    @default(USER) /// If the user is a normal user or a site administrator (not to be confused with a community administrator).
   accounts           Account[]
   sessions           Session[]
 }
 
 model Account {
-  id                 String  @id @default(cuid())
+  id                 String  @id @default(cuid()) /// The CUID of the account.
   userId             String
   type               String
   provider           String
@@ -103,7 +103,7 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
-model Session { // Pretty sure this isn't used in JWT sessions but it's here anyway
+model Session { /// Pretty sure this isn't used in JWT sessions but it's here anyway
   id           String   @id @default(cuid())
   sessionToken String   @unique
   userId       String
