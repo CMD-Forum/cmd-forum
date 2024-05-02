@@ -102,9 +102,9 @@ export default function Dropdown({ align, children, accountHeading = false, head
                                           ref={buttonRef}
                                     >
                                         {session.user.image ?
-                                            <img className={`w-7 h-7 transition-all border-1 border-border hover:brightness-75 ${open === true ? "brightness-75" : ""} rounded-md`} src={session.user.image} alt='Your Account Image' />
+                                            <img className={`w-[30px] h-[30px] transition-all border-1 border-border hover:brightness-75 ${open === true ? "brightness-75" : ""} rounded-md`} src={session.user.image} alt='Your Account Image' />
                                             :
-                                            <img className={`w-7 h-7 transition-all border-1 border-border hover:brightness-75 ${open === true ? "brightness-75" : ""} rounded-md`} src="/images/favicon/favicon.svg" alt='Your Account Image' />
+                                            <img className={`w-[30px] h-[30px] transition-all border-1 border-border hover:brightness-75 ${open === true ? "brightness-75" : ""} rounded-md`} src="/images/favicon/favicon.svg" alt='Your Account Image' />
                                         }
 
                                     </button>

@@ -29,7 +29,7 @@ export async function Navigation() {
           
             {session ? (
 
-              <div className={"flex flex-row gap-4 md:gap-1 items-center"}>
+              <div className={"flex flex-row gap-2 items-center"}>
 
                 <Link className={"navlink-full !px-1 !py-1 !mt-0 !h-fit flex"} href={"/create"}><PlusIcon className={"w-5 h-5"}></PlusIcon></Link>              
 
