@@ -192,13 +192,13 @@ export const DropdownLink = <T extends string>({ text, icon, link }: { text: str
         <Link 
             // @ts-ignore
             href={ link } 
-            className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden text-gray-300 hover:text-white"
+            className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden text-gray-300 hover:text-white subtitle"
         >
 
             { icon ? (
 
                 React.cloneElement(icon, {
-                    className: "w-5 h-5",
+                    className: "!w-5 !h-5 !rounded",
                 })
 
             ) : (

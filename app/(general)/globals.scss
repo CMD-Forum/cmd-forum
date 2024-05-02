@@ -338,6 +338,7 @@ body {
   @apply hover:text-white;
   @apply transition-all;
   @apply hover:border-white #{!important};
+  @extend .subtitle;
 }
 
 .wmde-markdown hr {
@@ -353,8 +354,32 @@ body {
   @apply border-1 #{!important};
 }
 
-.wmde-markdown h1, h2, h3, h4, h5, h6, p, li {
-  @apply text-white #{!important};
+.wmde-markdown h1 {
+  @extend .header;
+}
+
+.wmde-markdown h2 {
+  @extend .header-2;
+}
+
+.wmde-markdown h3 {
+  @extend .header-3;
+}
+
+.wmde-markdown h4 {
+  @extend .header-4;
+}
+
+.wmde-markdown h5 {
+  @extend .header-5;
+}
+
+.wmde-markdown h6 {
+  @extend .header-6;
+}
+
+.wmde-markdown p, li, blockquote {
+  @extend .subtitle;
 }
 
 .wmde-markdown img {
@@ -429,11 +454,11 @@ hr {
 
 .header {
 
-  @apply text-3xl; 
-  @apply font-inter; 
-  @apply text-white;
-  @apply font-bold; 
-  @apply antialiased;
+  @apply text-3xl #{!important}; 
+  @apply font-inter #{!important}; 
+  @apply text-white #{!important};
+  @apply font-bold #{!important}; 
+  @apply antialiased #{!important};
 
 }
 
@@ -490,8 +515,8 @@ hr {
 .subtitle {
 
   @apply text-gray-300 #{!important};
-  @apply font-medium;
-  @apply antialiased;
+  @apply font-medium #{!important};
+  @apply antialiased #{!important};
 
 }
 

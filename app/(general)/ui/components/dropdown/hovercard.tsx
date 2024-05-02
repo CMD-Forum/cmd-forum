@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
 
 export default function Dropdown({ children, headerText, headerIcon, className, headerClassName }: { children: React.ReactNode, headerText?: string | React.ReactNode, headerIcon: React.ReactNode, className?: string, headerClassName?: string }) {
@@ -14,7 +14,7 @@ export default function Dropdown({ children, headerText, headerIcon, className, 
 
                 <div className="relative w-fit" onMouseLeave={() => setIsOpen(false)}>
 
-                        <div className='ml-auto flex gap-4'>
+                        <div className='ml-auto flex gap-4 subtitle'>
 
                             <button 
                                 className={`${headerClassName} ${headerIcon ? "!px-2" : "!border-0 "} hover:underline`}

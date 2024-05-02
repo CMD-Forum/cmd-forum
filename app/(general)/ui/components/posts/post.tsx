@@ -77,11 +77,15 @@ export function CardPost( post: Post ) {
                         <div className='flex flex-row gap-2 items-center'>
 
                             <div className='flex flex-col'>
-                                <Link className="w-fit hover:underline z-20 text-white hidden md:flex" href={`/c/${post.community.name}`}>{post.community.name}</Link>   
+                                <Link className="subtitle hover:underline" href={`/c/${post.community.name}`}>{post.community.name}</Link>   
                                 { ! post.author ?
 
                                     <>
-                                        <h4 className="w-fit text-gray-300 hidden md:flex gap-2 z-20"><h2 className='hover:underline flex gap-1'>[deleted] </h2> <p className='facebookTheme:text-[#808080]'>•</p> <p className='facebookTheme:text-[#808080]'>{post.createdAt.toLocaleString()}</p></h4>                                       
+                                        <div>
+                                            <h2 className='hover:underline flex gap-1 subtitle'>[deleted]</h2> 
+                                            <p className='subtitle'>•</p> 
+                                            <p className='subtitle'>{post.createdAt.toLocaleString()}</p>
+                                        </div>                                       
                                     </>
                                     
 
@@ -92,13 +96,13 @@ export function CardPost( post: Post ) {
                                             <div className='flex flex-row gap-4 p-4 w-full max-w-[300px]'>
                                                 <img src={post.author.image} className='w-6 h-6 rounded-sm' alt='Profile Image'></img>
                                                 <div className='flex flex-col'>
-                                                    <Link href={`/user/${post.author.username}`} className='hover:underline w-fit font-medium'>@{post.author.username}</Link>     
-                                                    <p>{post.author.description}</p>             
+                                                    <Link href={`/user/${post.author.username}`} className='hover:underline w-fit subtitle'>@{post.author.username}</Link>     
+                                                    <p className='subtitle'>{post.author.description}</p>             
                                                 </div>
                                             </div>
                                         </Hovercard>
-                                        <p className='hidden sm:flex'>•</p> 
-                                        <p className='hidden sm:flex' suppressHydrationWarning={true}>{post.createdAt.toLocaleString()}</p>                         
+                                        <p className='hidden sm:flex subtitle'>•</p> 
+                                        <p className='hidden sm:flex subtitle'>{post.createdAt.toLocaleString()}</p>                         
                                     </div>
                                 
 
@@ -115,7 +119,7 @@ export function CardPost( post: Post ) {
                 
                 <Link href={`/posts/${post.id}`} className="group/title w-fit font-sans font-semibold text-[18px] md:text-lg group-hover:text-gray-300 transition-all facebookTheme:text-lg peer">{post.title}</Link>
 
-                <p className='text-gray-300'>{post.tagline}</p>
+                <p className='subtitle'>{post.tagline}</p>
 
                 <div className='flex flex-row mt-4'>
                     <Link className='navlink !px-2 md:!px-3 mr-auto' href={`/posts/${post.id}`}><ChatBubbleLeftEllipsisIcon className='w-5 h-5' /><span className='hidden md:flex'>Comments</span></Link>
@@ -189,28 +193,28 @@ export function FullPost( post: Post ) {
                         {/*<BackButtonNormal className={"absolute right-0 !hidden md:!flex"} />*/}
 
                         <div className='flex flex-row gap-2 items-center'>
-                            <img src={post.community.image} className='w-8 h-8 rounded-sm' alt={post.community.name}></img>
-                            <div className='flex flex-col'>
-                                <Link className="w-fit hover:underline" href={`/c/${post.community.name}`}>{post.community.name}</Link>    
+                            <img src={post.community.image} className='w-8 h-8 rounded' alt={post.community.name}></img>
+                            <div className='flex flex-col justify-center'>
+                                <Link className="w-fit hover:underline subtitle" href={`/c/${post.community.name}`}>{post.community.name}</Link>    
                                 <div className="flex flex-row">
                                     <h4 className="w-fit flex gap-2">
                                         <Hovercard headerText={`@${post.author.username}`} headerIcon={null} headerClassName={"text-sm"}>
                                             <div className='flex flex-row gap-4 p-4 w-full max-w-[250px]'>
                                                 <img src={post.author.image} className='w-6 h-6 rounded-sm' alt='Profile Image' />
                                                 <div className='flex flex-col'>
-                                                    <Link href={`/user/${post.author.username}`} className='hover:underline w-fit font-medium'>@{post.author.username}</Link>     
-                                                    <p>{post.author.description}</p>             
+                                                    <Link href={`/user/${post.author.username}`} className='hover:underline w-fit subtitle'>@{post.author.username}</Link>     
+                                                    <p className='subtitle'>{post.author.description}</p>             
                                                 </div>
                                             </div>
                                         </Hovercard>
-                                        <p>•</p> 
-                                        <p suppressHydrationWarning={true}>{post.createdAt.toLocaleString()}</p> 
+                                        <p className='subtitle'>•</p> 
+                                        <p className='subtitle'>{post.createdAt.toLocaleString()}</p> 
                                     </h4>   
                                 </div>                                   
                             </div>                            
                         </div>
 
-                        <h1 className="w-fit font-sans font-semibold text-lg facebookTheme:text-lg">{post.title}</h1>
+                        <h1 className="header-3">{post.title}</h1>
                         
                     </div>
                     
