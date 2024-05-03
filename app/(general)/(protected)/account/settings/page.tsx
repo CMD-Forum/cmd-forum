@@ -1,5 +1,5 @@
 import SettingsTabs from "@/app/(general)/ui/components/account/SettingsTabs";
-import { ExclamationTriangleIcon } from "@heroicons/react/16/solid";
+import Banner from "@/app/(general)/ui/components/banner";
 
 export default async function SettingsPage() {
 
@@ -7,7 +7,7 @@ export default async function SettingsPage() {
 
         <>
 
-            <div className="flex flex-row w-full bg-border items-center justify-center p-2 subtitle fixed gap-2 z-[999]"><ExclamationTriangleIcon className="w-5 h-5"/> Settings are currently unimplemented.</div>
+            <Banner message={"Settings are currently unimplemented."} fixedAtTop={false} />
 
             <div className="flex flex-col border-b-1 border-border p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48">
 
