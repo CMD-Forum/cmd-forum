@@ -65,7 +65,9 @@ export default function Modal({ children, btnText, btnClassName, btnType = "navl
 
                                     <div className="p-6">
 
-                                        {title}    
+                                        {title} 
+
+                                        <div className="mb-2" />   
                                         
                                         {subtitle}
 
