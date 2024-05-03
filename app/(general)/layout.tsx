@@ -11,19 +11,13 @@ const metadataBaseUrl = process.env.NODE_ENV === 'production'
   ? process.env.NEXT_PUBLIC_METADATA_BASE_URL_PROD 
   : process.env.NEXT_PUBLIC_METADATA_BASE_URL_DEV;
 
-if (!metadataBaseUrl) {
-
-  throw new Error('Metadata base URL is not defined');
-
-}
-
 const APP_NAME = "CMD/>";
 const APP_DEFAULT_TITLE = "CMD/>";
 const APP_TITLE_TEMPLATE = "%s - CMD/>";
 const APP_DESCRIPTION = "CMD/> Forum Site";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(metadataBaseUrl),
+  metadataBase: metadataBaseUrl ? new URL(metadataBaseUrl) : new URL("https://cmd-forum.vercel.app/"),
   applicationName: APP_NAME,
   title: {
     default: APP_DEFAULT_TITLE,
