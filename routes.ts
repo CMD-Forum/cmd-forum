@@ -11,6 +11,7 @@ import { env } from "process";
 export const privateRoutes: string[] = [
     "/account",
     "/account/settings",
+    "/account/:path",
     "/create",
     "/create/:path"
 ]
