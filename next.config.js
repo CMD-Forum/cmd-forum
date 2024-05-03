@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 
-module.exports = {
-    
-};
+const nextConfig = {
+    pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
+}
+
+module.exports = nextConfig;

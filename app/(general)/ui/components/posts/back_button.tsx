@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 interface BackButtonProps {
     title: string;
+    width_full?: boolean;
 }
 
 export function BackButtonFull(props: BackButtonProps) {
@@ -30,9 +31,23 @@ export default function BackButton(props: BackButtonProps) {
 
     return (
 
-        <button onClick={router.back} className="navlink">
+        <button onClick={router.back} className={`navlink ${props.width_full === true ? "!w-full !justify-center" : ""}`}>
             <ArrowLeftIcon className="size-5" />
             {props.title}
+        </button> 
+
+    );
+
+}
+
+export function BackButtonNormal({ className }: { className?: string }) {
+
+    const router = useRouter();
+
+    return (
+
+        <button onClick={router.back} className={`navlink !justify-center !px-2 ${className}`}>
+            <ArrowLeftIcon className="size-5" />
         </button> 
 
     );

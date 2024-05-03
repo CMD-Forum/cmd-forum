@@ -1,49 +1,131 @@
 
 <h1 align="center">CMD Forum</h1>
-<h3 align="center">Forum site built in React</h3>
 
-<hr />
 
 ![CMD Forum](/public/main_bgcmd.png)
 
-<div align="center"><img src="https://img.shields.io/badge/status-alpha_development-green"></img> <img src="https://img.shields.io/badge/latest_release-1.0.0-blue"></img></div>
+<div align="center"><img src="https://img.shields.io/badge/status-alpha_development-green" alt="Development Status: Alpha"></img> <img src="https://img.shields.io/badge/latest_release-1.1.0-blue" alt="Latest Release: 1.1.0"></img></div>
 
-<hr />
+<h3 align="center">Forum site built in React</h3>
 
-## Browser Support
-
-Below is a table of different browsers and the features they support.
-Safari has not been tested.
-
-| Feature        | Firefox            | Edge                | Chrome              |
-| -------------- | ------------------ | ------------------- | ------------------- |
-| Authentication | :white_check_mark: | :white_check_mark:* | :white_check_mark:* |
-
-\* `HTTPS` is required for this to function.
+---
 
 ## Getting Started
 
-**Setup the `.env` file:**
+### Create a GitHub OAuth App
+
+> [!WARNING]
+> This step is required for authentication with GitHub to work.
+
+1. Go to your GitHub settings.
+2. Scroll down and go to `Developer Settings > OAuth Apps`.
+3. Click the button to create a new OAuth app.
+4. Fill in most fields to your liking, but make sure to put `https://{your_url}/api/auth/callback/github` for `Authorization Callback URL`, wth `{your_url}` being the domain you're hosting CMD/> on.
+5. Proceed to setting up your `.env` file, where we'll use the `Client ID` & `Client Secret`.
+
+### Setup the `.env` file
 
 To setup your .env file, you'll need to change a few things.
 
-| Variable(s)    | Change To                                       | Notes                                                |
-| -------------- | ----------------------------------------------- | ---------------------------------------------------- |
-| `DATABASE_URL` | Your database connection string.                | *See below if using a Vercel Database*               |
-| `POSTGRES_[X]` | The variables Vercel provides, if using Vercel. | Vercel should provide these in your storage settings |
-| `NEXTAUTH_URL` | Your domain that you'll be using.               | Set to `https://localhost:3000` if running locally   |
-| `NEXTAUTH_SECRET` | Random, secure string. NextAuth recommends using `openssl rand -base64 32` | Do not share to anybody, as this is meant to be _secret_ |
+| Variable             | Change To                                                                | Notes                                                         |
+| -------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------- |
+| DATABASE_URL         | Your database connection string                                          | N/A                                                           |
+| AUTH_SECRET          | Random, secure string. AuthJS recommends using `openssl rand -base64 32` to generate it | Don't share with anybody, as this is meant to be secret.  |
+| GITHUB_CLIENT_ID     | Your GitHub Client ID (see your developer settings)                      | See your developer settings for this.                         |
+| GITHUB_CLIENT_SECRET | Your GitHub Client Secret                                                | You should have this stored, as GitHub only shows it once.    |
+| NEXT_PUBLIC_METADATA_BASE_URL_DEV | Your local development URL (most likely <https://localhost:3000>) | Used for the metadata. |
+| NEXT_PUBLIC_METADATA_BASE_URL_PROD | Your production URL (where you'll deploy CMD/> to) | N/A |
 
-**Run the `development` server:**
+### Setup your database
+
+> [!IMPORTANT]
+> You should have a database already setup, however if you don't then do that before proceeding. You will need your database connection string (see `DATABASE_URL`), which
+> should include all required information, such as the URL, username and password.
+
+To fully setup your database, run the following commands in order:
+  - `npx prisma db push`
+  - `npx prisma generate`
+
+If all goes well, your database should have all required tables and fields. Prisma should give an error if something goes wrong, however it shouldn't.
+
+> [!NOTE]
+> To check that the database is working properly, try making an account and creating a community and a post. Check them to make sure they appear and all information is there.
+> You can also run the seed file to fill the database with placeholder information.
+
+### Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-This will start a `HTTPS` development server. `HTTPS` is required for authentication to work on Chromium browsers, however Firefox will work regardless.
+This will start a HTTPS development server. HTTPS is required for authentication to work on Chromium browsers, however Firefox will work regardless.
+
+> [!NOTE]
+> `npm run dev` runs `next dev --experimental-https --turbo`.  
+> If you don't want Turbopack and prefer Webpack, remove `--turbo` from the command.  
+> If you don't want HTTPS, remove `--experimental-https` from the command.
+
+> [!NOTE]
+> CMD/> uses Vercel Speed Insights, if you don't want this you'll have to remove ``<SpeedInsights />`` from under the HTML tag in `layout.tsx`.
+
+## Credits
+
+### Inspiration
+
+- [Reddit](https://old.reddit.com)
+- Lemmy
+  - [Photon](https://github.com/Xyphyn/photon) especially for a lot of inspiration with the UI.
+  - Base Lemmy UI as well.
+- [Discuit](https://www.discuit.net)
+
+### Packages
+
+Here is a list of all packages used:
+
+  -  @auth/prisma-adapter
+  -  @heroicons/react
+  -  @hookform/resolvers
+  -  @prisma/client
+  -  @uiw/react-markdown-editor
+  -  @uiw/react-markdown-preview
+  -  @vercel/speed-insights
+  -  bcrypt
+  -  bcryptjs
+  -  framer-motion
+  -  katex
+  -  next
+  -  next-auth
+  -  next-dev-https
+  -  nextjs-toploader
+  -  prisma-docs-generator
+  -  react
+  -  react-dom
+  -  react-error-boundary
+  -  react-helmet
+  -  react-hook-form
+  -  react-icons
+  -  react-zorm
+  -  sass
+  -  swr
+  -  use-debounce
+  -  xss
+  -  zod
+  -  @types/bcrypt
+  -  @types/bcryptjs
+  -  @types/mdx
+  -  @types/node
+  -  @types/react
+  -  @types/react-dom
+  -  autoprefixer
+  -  eslint
+  -  eslint-config-next
+  -  eslint-config-prettier
+  -  postcss
+  -  prettier
+  -  prisma
+  -  stylelint-config-recommended
+  -  tailwindcss
+  -  tailwindcss-themer
+  -  ts-node
+  -  typescript
+  -  webpack

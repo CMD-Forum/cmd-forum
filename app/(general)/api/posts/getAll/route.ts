@@ -1,11 +1,23 @@
 import { prisma } from "@/app/(general)/lib/db";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET( req: Request ) {
+export async function GET( req: NextRequest ) {
 
     try {
 
+        const params = req.nextUrl.searchParams;
+        const page = params.get("page");
+
+        if ( ! page ) {
+            return NextResponse.json({ message: "Page is required." }, { status: 400 });
+        }
+
         const posts = await prisma.post.findMany({
+
+            // @ts-ignore
+            skip: page * 10,
+            take: 10,
+
             include: {
 
                 author: {
@@ -13,10 +25,11 @@ export async function GET( req: Request ) {
                     select: {
 
                         id: true,
-                        name: true,
                         username: true,
                         createdAt: true,
-                        updatedAt: true
+                        updatedAt: true,
+                        image: true,
+                        description: true,
 
                     }
 
@@ -28,6 +41,7 @@ export async function GET( req: Request ) {
 
                         id: true,
                         name: true,
+                        display_name: true,
                         image: true,
                         public: true
 

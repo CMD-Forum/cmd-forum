@@ -1,17 +1,11 @@
 import LoginForm from "@/app/(general)/ui/components/form/login";
 
-const page = () => {
+export default function LoginPage() {
 
     return ( 
 
-        <div>
-
-            <LoginForm />    
-
-        </div>
+        <LoginForm />    
 
     );
     
 }
-
-export default page;

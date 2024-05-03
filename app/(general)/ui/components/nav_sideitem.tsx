@@ -1,42 +1,149 @@
 "use client";
 
-import { BookOpenIcon, CalendarDaysIcon, ChatBubbleBottomCenterTextIcon, Cog6ToothIcon, HomeIcon, MagnifyingGlassIcon, PencilSquareIcon, ShieldCheckIcon, UserIcon, ViewColumnsIcon } from "@heroicons/react/20/solid";
+import { 
+    BookOpenIcon, 
+    CalendarDaysIcon, 
+    ChatBubbleBottomCenterTextIcon, 
+    Cog6ToothIcon, 
+    HomeIcon, 
+    MagnifyingGlassIcon, 
+    PencilSquareIcon, 
+    ShieldCheckIcon, 
+    UserIcon, 
+    ViewColumnsIcon, 
+    Bars3Icon,
+    XMarkIcon,
+    ArrowRightEndOnRectangleIcon,
+    UserPlusIcon
+} from "@heroicons/react/20/solid";
 import Link from "next/link"
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import remarkBreaks from "remark-breaks";
-import rehypeRaw from "rehype-raw";
-import { Suspense } from "react";
-import NavSideItemsFallback from "../fallback/NavSideItems";
+import { useState } from "react";
+import { inter } from "../fonts";
+import { useSession } from "next-auth/react"
+import { Community } from "@prisma/client";
 
 export function NavSideItems() {
 
     const pathname = usePathname();
+    const [expanded, setExpanded] = useState(false);
+    const { data: session } = useSession();
+
+    const toggleDrawer = () => {
+        if ( expanded === true ) {
+            setExpanded(false);
+            document.body.style.overflow = "scroll";
+        } else if ( expanded === false ) {
+            setExpanded(true);
+            document.body.style.overflow = "hidden";
+        }
+    }
 
     return (
 
-        <AnimatePresence>
-            
-            <div className='flex-col gap-2 facebookTheme:gap-0 facebookTheme:sm:pl-6 px-3 py-3 facebookTheme:px-0 max-w-[300px] bg-card sticky facebookTheme:bg-white border-zinc-950 border-l-[1px] facebookTheme:border-[#b3b3b3] facebookTheme:border-l-0 facebookTheme:border-r-[1px] hidden sm:flex md:hidden lg:!w-[400px]'>
-                
-                <Suspense fallback={<NavSideItemsFallback />}>
+        <AnimatePresence initial={false} key={"sidebar_topanimatepresence"}>
 
-                    <div className="flex-col sticky top-[115px] gap-2 px-2 !first:pt-0 !last:pb-0">
+            <>
+                <button className={`navlink-sidebar fixed top-[9px] z-[100] ml-2 lg:hidden !w-fit !border-[1px] !border-border`} onClick={() => toggleDrawer()}><Bars3Icon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /></button>
+            </>
 
-                        <Link className={`navlink-sidebar ${pathname == "/" ? "active" : ""}`} href='/' prefetch={true}><HomeIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /><p className='hidden lg:flex'>Homepage</p></Link>
-                        <Link className={`navlink-sidebar ${pathname == "/c" ? "active" : ""}`} href='/c' prefetch={true}><ViewColumnsIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /><p className='hidden lg:flex'>Community</p></Link>
-                        <Link className={`navlink-sidebar ${pathname == "/account" ? "active" : ""}`} href='/account' prefetch={true}><UserIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /><p className='hidden lg:flex'>Account</p></Link>
-                        <hr className='border-zinc-900 mt-1 mb-1 facebookTheme:border-[#b3b3b3] facebookTheme:hidden'></hr>
-                        <Link className={`navlink-sidebar ${pathname == "/search" ? "active" : ""}`} href='/search' prefetch={true}><MagnifyingGlassIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /><p className='hidden lg:flex'>Search</p></Link>
-                        <Link className={`navlink-sidebar ${pathname == "/account/settings" ? "active" : ""}`} href='/account/settings' prefetch={true}><Cog6ToothIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /><p className='hidden lg:flex'>Settings</p></Link>                    
+            <motion.div 
+                className={`w-full top-0 left-0 h-dvh overflow-scroll fixed ${expanded === true ? "z-[1000]" : "-z-50"} backdrop-blur-sm`}
+                animate={{
+                    opacity: expanded ? "100%" : "0%",
+                }}
+                key={"sidebar_firstmotiondiv"}
+            >
+                <motion.div 
+                    className="bg-card fixed top-0 z-40 w-[300px] px-4 py-2 h-full flex flex-col overflow-scroll gap-1"
+                    animate={{
+                        x: expanded ? "0px" : "-300px",
+                    }}
+                    exit={{
+                        x: expanded ? "0px" : "-300px",
+                    }}
+                    transition={{ type: "tween" }}   
+                    key={"sidebar_secondmotiondiv"}  
+                >
                 
+                    <div className="w-full h-fit flex flex-row-reverse mt-1 mb-4">
+                        <button className={`navlink-sidebar  z-[100] !mb-0 !mt-0 !w-fit !border-[1px] !border-border`} onClick={() => toggleDrawer()}><XMarkIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /></button>
+                        <h1 className={`${inter.className} font-extrabold text-3xl mr-auto flex items-center hover:text-gray-300 transition-all cursor-pointer`}>CMD/&gt;</h1>
                     </div>
 
-                </Suspense>
+                    <Link 
+                        className={`navlink-sidebar ${pathname === "/" ? "active" : null}`} 
+                        href={"/"} 
+                        prefetch={true}>
+                        <HomeIcon className="w-5 h-5 mr-1" />
+                        Home
+                    </Link>
 
-            </div> 
+                    <Link 
+                        className={`navlink-sidebar ${pathname.startsWith("/c/") || pathname === "/c" ? "active" : null}`} 
+                        href={"/c"} 
+                        prefetch={true}>
+                        <ViewColumnsIcon className="w-5 h-5 mr-1" />
+                        Community
+                    </Link>
+
+                    <Link 
+                        className={`navlink-sidebar ${pathname.startsWith("/posts/") || pathname === "/posts" ? "active" : null}`} 
+                        href={"/posts"} 
+                        prefetch={true}>
+                        <ChatBubbleBottomCenterTextIcon className="w-5 h-5 mr-1" />
+                        Posts
+                    </Link>
+
+                    <Link 
+                        className={`navlink-sidebar ${pathname === "/search" ? "active" : null}`} 
+                        href={"/search"} 
+                        prefetch={true}>
+                        <MagnifyingGlassIcon className="w-5 h-5 mr-1" />
+                        Search
+                    </Link>
+
+                    <hr />
+
+                    { session 
+
+                    ?
+
+                    <div className="mt-auto flex flex-col mb-2">
+                        <Link 
+                            className={`navlink-ghost !w-full ${pathname === `/user/${session.user.username}` ? "active" : null}`} 
+                            href={`/user/${session.user.username}`} 
+                            prefetch={true}>
+                            { session.user.image ? <img className="w-5 h-5 mr-1 rounded" src={session.user.image} alt={"Your profile image."} /> : <UserIcon className="w-5 h-5 mr-1" /> }
+                            {session.user.username}
+                        </Link>
+                    </div>
+                    
+                    :
+
+                    <div className="mt-auto gap-1 flex flex-col mb-2">
+                        <Link 
+                            className={`navlink-sidebar ${pathname === "/login" ? "active" : null}`} 
+                            href={"/login"} 
+                            prefetch={true}>
+                            <ArrowRightEndOnRectangleIcon className="w-5 h-5 mr-1" />
+                            Login
+                        </Link>      
+
+                        <Link 
+                            className={`navlink-sidebar ${pathname === "/signup" ? "active" : null}`} 
+                            href={"/signup"} 
+                            prefetch={true}>
+                            <UserPlusIcon className="w-5 h-5 mr-1" />
+                            Signup
+                        </Link>              
+                    </div>
+                    
+                    }
+
+                </motion.div>                
+            </motion.div>
 
         </AnimatePresence> 
 
@@ -66,16 +173,21 @@ export function BottombarItems() {
 export function TopbarItems() {
 
     const pathname = usePathname();
+    const { data: session } = useSession();
 
     return (
 
-        <div className='gap-6 hidden md:flex'>
+        <div className='hidden lg:flex rounded-full p-1'>
 
-            <Link className={`topbar-link ${pathname == "/" ? "active" : ""}`} href='/'>HOME</Link>
-            <Link className={`topbar-link ${pathname.startsWith("/c/") || pathname == "/c" ? "active" : ""}`} href='/c/'>COMMUNITY</Link>
-            <Link className={`topbar-link ${pathname.startsWith("/posts") ? "active" : ""}`} href='/posts/'>POSTS</Link>
-            <Link className={`topbar-link ${pathname.startsWith("/support") ? "active" : ""}`} href='/support/'>SUPPORT</Link>            
-            <Link className={`topbar-link ${pathname.startsWith("/search") ? "active" : ""}`} href='/search/'>SEARCH</Link>
+            { session ? 
+                null
+            : 
+                <Link className={`topbar-link ${pathname == "/" ? "active" : ""}`} href='/'>Home</Link>
+            }
+            
+            <Link className={`topbar-link ${pathname.startsWith("/posts") ? "active" : ""}`} href='/posts'>Posts</Link>   
+            <Link className={`topbar-link ${pathname.startsWith("/c/") || pathname == "/c" ? "active" : ""}`} href='/c'>Community</Link>     
+            <Link className={`topbar-link ${pathname.startsWith("/search") ? "active" : ""}`} href='/search'>Search</Link>
 
         </div>
 
@@ -83,119 +195,71 @@ export function TopbarItems() {
 
 }
 
-interface InfobarProps {
-
-    community: string;
-    community_image: string;
-    community_description: string;
-    community_dn: string; // Community Display Name
-    // @ts-ignore: Still works, notify if breaks || EDIT: 29/12/2023 -- Administrators is being reworked so this will most likely change in the near future, however it isn't a priority.
-    administrators: Array;
-    main: string;
-    createdAt: string;
-    
-}
-  
-const variants = {
-
-    hidden: { opacity: 0, y: -20 },
-    visible: { opacity: 1, y: 0 },
-    
-};
-
-export function CommunityInfobarItems(infobar: InfobarProps) {
+export function CommunityInfobarItems( { community }: { community: Community } ) {
 
     return (
 
-        <motion.div 
-            key={infobar.community}
-            variants={variants}
-            initial="hidden"
-            animate="visible"
-            transition={{ ease: "easeInOut", duration: 0.8, type: "spring" }}
-        >
+        <div>
 
-            <div className='flex-row gap-2 p-8 rounded-md facebookTheme:rounded-none w-full bg-card border-[1px] border-border facebookTheme:bg-white'>
+            <div className='flex-row gap-2 rounded-md w-full bg-transparent'>
                 
-                <div className='flex-col'>
+                <div className='flex-col bg-card p-6 border-1 border-border rounded-md'>
 
-                <div className='flex flex-row gap-3 items-center'>
+                    <div className='flex flex-row gap-3 items-center'>
 
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={infobar.community_image} className='h-[56px] rounded' alt={`${infobar.community}'s Community Image`} />
+                        <img src={community.image} className='h-[56px] rounded' alt={`${community.display_name}'s Community Image`} />
 
-                    <div className='flex flex-col'>
+                        <div className='flex flex-col'>
 
-                    <h1 className='text-2xl font-sans font-bold antialiased w-full'>{infobar.community}</h1>   
-                    <h2 className='text-gray-300'>{infobar.community_description}</h2>
+                            <h1 className='header-2'>{community.display_name}</h1>   
+                            <h2 className='subtitle'>{community.description}</h2>
+
+                        </div>
 
                     </div>
 
-                </div>
+                    <div className='flex flex-row gap-3 items-center mt-2'>
 
-                
+                        <div className='flex flex-row gap-3'>
 
-                <div className='flex flex-row gap-3 items-center mt-2'>
+                            <div className='flex flex-row gap-1'>
+                                <CalendarDaysIcon className='w-[20px]' />
+                                <p className='text-sm'>{community.createdAt.toLocaleDateString()}</p>  
+                            </div>
+                            
+                            <div className='flex flex-row gap-1'>
+                                <UserIcon className='w-[20px]' />
+                                <p className='text-sm'>---</p>
+                            </div>
 
-                    <div className='flex flex-row gap-3'>
+                            <div className='flex flex-row gap-1'>
+                                <PencilSquareIcon className='w-[20px]' />
+                                <p className='text-sm'>---</p>
+                            </div>
 
-                    <div className='flex flex-row gap-1'>
-                        <CalendarDaysIcon className='w-[20px]' />
-                        <p className='text-sm'>19/12/2023</p>  
+                            <div className='flex flex-row gap-1'>
+                                <ChatBubbleBottomCenterTextIcon className='w-[20px]' />
+                                <p className='text-sm'>---</p>
+                            </div>
+
+                        </div>
+
                     </div>
-                    
-                    <div className='flex flex-row gap-1'>
-                        <UserIcon className='w-[20px]' />
-                        <p className='text-sm'>24k</p>
+
+                    <div className='flex flex-row gap-2 mt-3 mb-3'>
+
+                        {/* @ts-ignore */}
+                        <Link className='navlink justify-center items-center' href={`/c/${community.name}/rules`}><BookOpenIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Rules</p></Link>
+                        {/* @ts-ignore */}
+                        <Link className='navlink justify-center items-center' href={`/c/${community.name}/moderation`}><ShieldCheckIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Moderation</p></Link>    
+
                     </div>
-
-                    <div className='flex flex-row gap-1'>
-                        <PencilSquareIcon className='w-[20px]' />
-                        <p className='text-sm'>152k</p>
-                    </div>
-
-                    <div className='flex flex-row gap-1'>
-                        <ChatBubbleBottomCenterTextIcon className='w-[20px]' />
-                        <p className='text-sm'>58k</p>
-                    </div>
-
-                    </div>     
-
-                    
-
-                </div>
-
-                <div className='flex flex-row gap-2 mt-3 mb-3'>
-
-                    <Link className='navlink justify-center items-center' href={`/c/${infobar.community}/rules`}><BookOpenIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Rules</p></Link>
-                    <Link className='navlink justify-center items-center' href={`/c/${infobar.community}/moderation`}><ShieldCheckIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Moderation</p></Link>    
-
-                </div>
-                
-
-                </div>
-
-                <ol>
-
-                {infobar.administrators.map((admin: string | number | boolean, index: React.Key | null | undefined) => (
-                    
-                    <li key={index} className='text-gray-300'>{admin}</li>
-
-                ))}
-
-                </ol>
-
-                <hr className=' border-zinc-900 facebookTheme:border-[#b3b3b3] mb-2'></hr>
-
-                <div className='markdown-body'>
-
-                <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]} rehypePlugins={[rehypeRaw]}>{infobar.main}</ReactMarkdown>
 
                 </div>
 
             </div>  
 
-        </motion.div>
+        </div>
 
     );
 

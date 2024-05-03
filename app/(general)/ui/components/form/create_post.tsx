@@ -1,33 +1,27 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod" // Form Validation
-import { Tooltip } from 'react-tooltip'
-import { AlertFailure, AlertSuccess, AlertWarning } from "../alert";
-import { InformationCircleIcon } from "@heroicons/react/24/solid";
-import Link from "next/link";
-import Image from "next/image";
-import { prisma } from "@/app/(general)/lib/db";
+import Alert from "../new_alert";
 import { useSession } from "next-auth/react";
+import { createPost, getCommunityByName } from "@/app/(general)/lib/data";
+import { FaGithub, FaMarkdown } from "react-icons/fa6";
+import Link from "next/link";
+import MarkdownEditor from '@uiw/react-markdown-editor';
 
 const FormSchema = z.object({
 
     title: z
         .string()
         .min(5, "Title must have at least 5 characters.")
-        .max(30, "Title must be under 30 characters."),
-
-    content: z
-        .string()
-        .min(10, "Content must be at least 10 characters.")
-        .max(10000, "Content has a maximum limit of 10000 characters."),
+        .max(75, "Title must be under 75 characters."),
 
     tagline: z
         .string()
         .min(5, "Tagline must be at least 5 characters.")
-        .max(20, "Tagline must be at most 20 characters."),
+        .max(40, "Tagline must be at most 40 characters."),
     
     community: z
         .string()
@@ -37,11 +31,15 @@ const FormSchema = z.object({
         .string()
         .url( { message: "Image must be a URL and start with `https://`" } )
         .optional()
-        .or(z.literal(null)),
+        .or(z.literal(null))
+        .or(z.literal("")),
     image_alt: z
         .string()
         .min(5, "Image Alt Tag must be at least 5 characters.")
         .max(75, "Image Alt Tag must be no more than 30 characters.")
+        .optional()
+        .or(z.literal(null))
+        .or(z.literal("")),
 })
 
 function ErrorMessage(props: { message: string }) {
@@ -50,37 +48,6 @@ function ErrorMessage(props: { message: string }) {
     
 }
 
-function createPost(postData: any) {
-    
-    return new Promise((resolve, reject) => {
-
-      const xhr = new XMLHttpRequest();
-      xhr.open('POST', '/api/posts');
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.onload = () => {
-
-        if (xhr.status === 201) {
-
-          resolve(JSON.parse(xhr.responseText));
-
-        } else {
-
-          reject(new Error('Error occurred while creating post, please check your request for errors.'));
-        }
-
-      };
-
-      xhr.onerror = () => {
-
-        reject(new Error('Error occurred while creating post, please check your request for errors.'));
-
-      };
-
-      xhr.send(JSON.stringify(postData));
-    });
-
-}  
-
 export default function CreatePostForm() {
 
     const [error, setError] = useState<string | null>(null);
@@ -88,31 +55,37 @@ export default function CreatePostForm() {
     const [com_err, setCom_Err] = useState<false | true | null>(null);
     const [create_err, setCreate_Err] = useState<false | true | null>(null);
     const [isLoading, setIsLoading] = useState(false);
-  
+    const [content, setContent]= useState("");
+
     const form = useForm<z.infer<typeof FormSchema>>({
       resolver: zodResolver(FormSchema),
       defaultValues: {
         community: '',
         title: '',
-        content: '',
         tagline: '',
         image_url: '',
       },
     });
-  
+
+    const { data: session, update } = useSession();
+
+    if ( ! session ) {
+
+        return (
+            <Alert type={"error"} title={"Error"} description="Oops, something went wrong. Try reloading the page or logging in again." />
+        );
+
+    } 
+
     const OnSubmit = async (values: z.infer<typeof FormSchema>) => {
   
+      console.log("[INFO] Form submitted");
+
       setIsLoading(true);
       setCom_Err(false);
       setSuccess(false);
   
-      const session = useSession();
-  
-      const post_community = await prisma.community.findUnique({
-        where: {
-          name: values.community
-        }
-      })
+      const post_community = await getCommunityByName(values.community)
   
       if (post_community) {
   
@@ -120,31 +93,31 @@ export default function CreatePostForm() {
   
           title: values.title,
           communityId: post_community.id,
-          content: values.content,
+          content: content,
           tagline: values.tagline,
-          imageurl: values.image_url,
-          imagealt: values.image_alt,
-          authorId: session.data?.user.id,
+          imageurl: null,
+          imagealt: null,
+          authorId: session.user.id,
   
         };
         
-        createPost(postData)
-  
-            .then(data => {
-  
-                setSuccess(true);
-                setIsLoading(false);
-  
-            })
-  
-            .catch(error => {
-  
-                setCreate_Err(true);
-                setIsLoading(false);
-  
-            });
-  
-      } else if ( ! post_community || post_community === null || post_community === "" || post_community >= 0 ) {
+        try {
+
+            console.log("[INFO] Community found");
+            // @ts-ignore
+            const post = await createPost(postData); 
+            console.log("[INFO] ", post)
+            setIsLoading(false); 
+            setSuccess(true);
+             
+        } catch ( error ) {
+            console.log("[ERROR]: Post creation failed at onSubmit");
+            setCom_Err(true);
+            setIsLoading(false);
+        }
+        
+
+      } else {
   
         setCom_Err(true);           
         setIsLoading(false);
@@ -155,33 +128,27 @@ export default function CreatePostForm() {
   
     return (
 
-        <form className="flex flex-col gap-2 bg-[#131313] facebookTheme:bg-white px-10 py-10 rounded-lg max-w-3xl" onSubmit={form.handleSubmit(OnSubmit)}>
-
-            <h2 className="text-xl font-semibold facebookTheme:font-bold facebookTheme:text-[15px]">Create Post</h2>
-
-            <hr className='border-zinc-900 mt-1 mb-1 facebookTheme:border-[#b3b3b3] facebookTheme:mt-0'></hr>
-
-            {/* */}
+        <form className="flex flex-col gap-2 bg-transparent rounded-lg !w-full" onSubmit={form.handleSubmit(OnSubmit)}>
 
             {com_err && (
 
-                <AlertFailure title="Post Creation Failed" text="The specified community was not found, please try again." />
+                <Alert type="error" title="Creation Failed" description="The specified community was not found, please try again." />
 
             )}
 
             {success && (
 
-                <AlertSuccess title="Post Created" text="Your post was created successfully." />
+                <Alert type="success" title="Post Created" description="Your post was created successfully." />
 
             )}
 
             {create_err && (
 
-                <AlertFailure title="Post Creation Failed" text="Sorry, your post could not be created. Please try again later." />
+                <Alert type="error" title="Creation Failed" description="Sorry, your post could not be created. Please try again later." />
 
             )}
 
-            <div className="flex gap-1 facebookTheme:text-[11px] font-medium">Community<p className="text-[#fca5a5]">*</p></div>
+            <div className="flex gap-1 font-medium">Community<p className="text-[#fca5a5]">*</p></div>
             <input
                 {...form.register('community')}
                 placeholder="general"
@@ -197,7 +164,7 @@ export default function CreatePostForm() {
 
             {/* */}
 
-            <div className="flex gap-1 facebookTheme:text-[11px] font-medium">Title<p className="text-[#fca5a5]">*</p></div>
+            <div className="flex gap-1 font-medium">Title<p className="text-[#fca5a5]">*</p></div>
             <input
                 {...form.register('title')}
                 placeholder="Look at my amazing code!"
@@ -213,23 +180,28 @@ export default function CreatePostForm() {
 
             {/* */}
 
-            <div className="flex gap-1 facebookTheme:text-[11px] font-medium">Content<p className="text-[#fca5a5]">*</p></div>
-            <textarea
-                {...form.register('content')}
-                placeholder="Here's my amazing code, please tell me how to improve!"
-                className={`generic_field pt-[6px] pb-[6px] !min-h-[200px] ${form.formState.errors.content ? "errored" : ""}`}
+            <div className="flex gap-1 font-medium">Content<p className="text-[#fca5a5]">*</p></div>
+            <MarkdownEditor
+                value={content}
+                onChange={setContent}
+                enablePreview={true}
+                enableScroll={true}
             />
 
-            {form.formState.errors.content && (
-
-                // @ts-expect-error
-                <ErrorMessage message={form.formState.errors.content.message} />
-
-            )}
+            <div className="flex gap-2 flex-col md:flex-row w-full">
+                <Link href={"https://github.github.com/gfm/"} className="flex gap-2 hover:bg-border rounded p-2 transition-all items-center justify-center w-full md:w-fit">
+                    <FaMarkdown className="h-5 w-7 text-gray-300 hover:text-white transition-all" />
+                    <p className="text-sm text-gray-300 group-hover:text-white transition-all">Supports Markdown</p>    
+                </Link>
+                <Link href={"https://uiwjs.github.io/react-markdown-editor/"} className="flex gap-1 hover:bg-border rounded p-2 items-center justify-center transition-all w-full md:w-fit">
+                    <FaGithub className="h-5 w-7 text-gray-300 hover:text-white transition-all group-hover:text-white" />
+                    <p className="text-sm text-gray-300 group-hover:text-white transition-all">React Markdown Editor</p>    
+                </Link>
+            </div>
 
             {/* */}
 
-            <div className="flex gap-1 facebookTheme:text-[11px] font-medium">
+            <div className="flex gap-1 font-medium">
                 Tagline
                 <p className="text-[#fca5a5]">*</p>
             </div>
@@ -248,44 +220,6 @@ export default function CreatePostForm() {
 
             {/* */}
 
-            <div className="flex gap-1 facebookTheme:text-[11px] font-medium">
-                Image
-                <p className="text-[#fca5a5]">*</p>
-            </div>
-            <input
-                {...form.register('image_url')}
-                placeholder="https://www.imgur.com/testurl"
-                className={`generic_field ${form.formState.errors.image_url ? "errored" : ""}`}
-            />
-
-            {form.formState.errors.image_url && (
-
-                // @ts-expect-error
-                <ErrorMessage message={form.formState.errors.image_url.message} />
-
-            )}
-
-            {/* */}
-
-
-            <div className="flex gap-1 facebookTheme:text-[11px] font-medium">
-                Image Accessibility Tag
-            </div>
-            <input
-                {...form.register('image_alt')}
-                placeholder="Code that appears to be React in an IDE."
-                className={`generic_field ${form.formState.errors.image_url ? "errored" : ""}`}
-            />
-
-            {form.formState.errors.image_alt && (
-
-                // @ts-expect-error
-                <ErrorMessage message={form.formState.errors.image_alt.message} />
-
-            )}
-
-            {/* */}
-
             <button type="submit" className="navlink-full !w-full sm:!w-fit justify-center min-w-[62px]">
                 
                 {/* eslint-disable-next-line @next/next/no-img-element*/}
@@ -295,9 +229,7 @@ export default function CreatePostForm() {
 
             {/* */}
 
-            {/*<pre>Validation status: {JSON.stringify(zo.validation, null, 2)}</pre>*/}
-
-            {error && <AlertWarning title="Login failed" text="Please check all details are correct." />}
+            {error && <Alert type="alert" title="Post Creation Failed" description="Please check all details are correct." />}
 
         </form>
 

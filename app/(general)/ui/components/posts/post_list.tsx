@@ -1,77 +1,126 @@
 "use client";
 
 import { CardPost } from '@/app/(general)/ui/components/posts/post';
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-
-const variants = {
-
-    hidden: { opacity: 0, y: -20 },
-    visible: { opacity: 1, y: 0 },
-    
-};
-
-interface Post {
-    id: number;
-    title: string;
-    community: string;
-    author: string;
-    upvotes: number;
-    downvotes: number;
-    createdAt: string;
-    tagline: string;
-    link: string;
-    image_alt?: string;
-    image_src?: string;
-}
+import useSWR from 'swr';
+import { ArrowLeftIcon, ArrowRightIcon, XCircleIcon } from '@heroicons/react/16/solid';
+import { usePathname, useRouter } from "next/navigation";
+import { PostFetcher, fetcher } from '@/swr-provider';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 export default function PostList() {
-    const [isLoading, setIsLoading] = useState(true);
-    const [posts, setPosts] = useState<Post[]>([]);
 
-    useEffect(() => {
-        const fetchPosts = async () => {
-            setIsLoading(true);
-            const res = await fetch('/api/posts/getAll');
-            const data = await res.json();
-            setPosts(data);
-            setIsLoading(false);
-        };
+    //const searchParams = useSearchParams();
+    //const pathname = usePathname();
+    //const { replace } = useRouter();
 
-        fetchPosts();
-    }, []);
+    const [page, setPage] = useState( /*Number(searchParams.get("page") || 0 )*/ 0);
+    const [totalPages, setTotalPages] = useState(0);
 
-    if (isLoading) {
-        return <div className='post-loading-text'></div>;
+    // @ts-ignore
+    /*let { data: post_count, count_error, count_isLoading } = useSWR(`/api/posts/getAll/count`, {
+        onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
+          if (error.status === 404) return
+          if (retryCount >= 1) return
+          setTimeout(() => revalidate({ retryCount }), 1000)
+        },
+        fetcher,
+        revalidateIfStale: false,
+        revalidateOnFocus: false,
+        revalidateOnReconnect: false,
+        errorRetryInterval: 0,
+        shouldRetryOnError: true
+    });*/    
+
+    function nextPage() {
+        //if (page < post_count - 1) {
+            setPage(page + 1);
+        //}
+    };
+    function lastPage() {
+        if ( page > 0 ) {
+            setPage(page - 1);
+        }
+    };    
+
+    let { data: posts, error, isLoading } = useSWR(`/api/posts/getAll/?page=${page}`, {
+        onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
+          if (error.status === 404) return
+          if (retryCount >= 1) return
+          setTimeout(() => revalidate({ retryCount }), 1000)
+        },
+        PostFetcher,
+        revalidateIfStale: false,
+        revalidateOnFocus: false,
+        revalidateOnReconnect: false,
+        errorRetryInterval: 0,
+        shouldRetryOnError: true
+    });
+    
+    const router = useRouter();
+
+    if ( isLoading ) {
+        return (
+            <div className='flex flex-col gap-4 mt-4'>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>    
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>    
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>   
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>         
+            </div>
+        );
+    }
+
+    if ( error ) {
+        return (
+            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'>
+                <p className='text-center text-gray-300 font-medium antialiased w-full'>Sorry, an error occurred.</p>
+                <div className='flex gap-4 w-full items-center justify-center mt-4'>
+                    <button className='navlink' onClick={() => router.refresh()} type='button'>Reload</button>
+                </div>
+            </div>
+        );
     }
 
     return (
-        <>
+        <div className='flex flex-col gap-4'>
             {Array.isArray(posts) && posts.map((post) => {
         
                 return (
-                    <motion.div 
+                    <div 
                       key={post.id}
-                      variants={variants}
-                      initial="hidden"
-                      animate="visible"
-                      transition={{ ease: "easeInOut", duration: 0.8, type: "spring" }}
                     >
                       <CardPost 
                         id={post.id}
+                        createdAt={new Date(post.createdAt)}
+                        updatedAt={new Date(post.updatedAt)}
                         title={post.title}
-                        community={post.community}
-                        author={post.author}
-                        upvotes={post.upvotes}
+                        content={post.content}
+                        tagline={post.tagline}
+                        imageurl={post.imageurl}
+                        imagealt={post.imagealt}
+                        public={true}
+                        authorId={post.author.id}
                         downvotes={post.downvotes}
-                        submitted={new Date(post.createdAt).toLocaleDateString()}
-                        subtitle={post.tagline}
-                        image_alt={post.image_alt}
-                        imageurl={post.image_src}
+                        upvotes={post.upvotes}
+                        communityId={post.community.id}
+                        author={post.author}
+                        community={post.community}
+ 
                       />
-                    </motion.div>
+                    </div>
+
                   );
             })}
-        </>
+            <div className='flex gap-4'>
+                <button onClick={() => lastPage()} className='navlink !px-2' disabled={ page === 0 ? true : false }><ArrowLeftIcon className='w-5 h-5' /></button>  
+                <button onClick={() => nextPage()} className='navlink !px-2'><ArrowRightIcon className='w-5 h-5' /></button>            
+            </div>
+        </div>
     );
 }

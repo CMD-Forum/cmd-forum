@@ -1,6 +1,5 @@
 import { prisma } from "@/app/(general)/lib/db";
 import { CardPost } from "../posts/post";
-import { useState } from "react";
 
 interface SearchResultProps {
 
@@ -52,6 +51,13 @@ export default async function SearchResults(search: SearchResultProps) {
             where: {
 
                 OR: [
+
+                    {
+                        title: {
+                            contains: formattedQuery,
+                            mode: "insensitive",
+                        },
+                    },
                     {
                         content: {
                             contains: formattedQuery,
@@ -60,34 +66,13 @@ export default async function SearchResults(search: SearchResultProps) {
                     },
                     {
                         author: {
-                            
-                            name: {
-
+                            username: {
                                 contains: formattedQuery,
                                 mode: "insensitive",
-
                             },
-
                         },
-                    },
-                    {
-                        title: {
-
-                            contains: formattedQuery,
-                            mode: "insensitive"
-
-                        }
-                    },
-                    {
-
-                        tagline: {
-
-                            contains: formattedQuery,
-                            mode: "insensitive"
-
-                        }
-
                     }
+                    
                 ]
 
             },
@@ -102,7 +87,9 @@ export default async function SearchResults(search: SearchResultProps) {
                         name: true,
                         username: true,
                         createdAt: true,
-                        updatedAt: true
+                        updatedAt: true,
+                        image: true,
+                        description: true,
 
                     }
 
@@ -114,6 +101,7 @@ export default async function SearchResults(search: SearchResultProps) {
 
                         id: true,
                         name: true,
+                        display_name: true,
                         image: true,
                         public: true
 
@@ -129,21 +117,24 @@ export default async function SearchResults(search: SearchResultProps) {
 
                 {results && results.map((result) => (
                         
-                    <div className="mb-4" key={result.id}>
+                    <div className="w-full px-6 lg:px-48" key={result.id}>
                         <CardPost 
                             id={result.id}
                             title={result.title}
                             upvotes={result.upvotes}
                             downvotes={result.downvotes}
-                            submitted={result.createdAt.toLocaleDateString()}
-                            subtitle={result.tagline}
-                            // @ts-ignore
+                            createdAt={result.createdAt}
+                            updatedAt={result.updatedAt}
+                            content={result.content}
+                            imageurl={result.imageurl}
+                            imagealt={result.imagealt}
+                            public={result.public}
+                            tagline={result.tagline}
                             community={result.community}
                             // @ts-ignore
                             author={result.author}
-                        
-                        >
-                        </CardPost>
+                        />
+                        <div className="!mt-4 !mb-4 w-full" />
                     </div>
 
                 ))}

@@ -3,6 +3,10 @@ import { NextResponse } from 'next/server';
 
 export async function GET( req: Request ) {
 
+    function timeout(delay: number) {
+        return new Promise( res => setTimeout(res, delay) );
+    }
+
     try {
 
         const support = await prisma.support.findMany({
@@ -16,6 +20,8 @@ export async function GET( req: Request ) {
                 }
             }
         });        
+
+        await timeout(5000);
               
         return NextResponse.json(support, { status: 200 })
 

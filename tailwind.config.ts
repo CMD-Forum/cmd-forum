@@ -1,6 +1,8 @@
-import type { Config } from 'tailwindcss'
+const { default: flattenColorPalette, } = require('tailwindcss/lib/util/flattenColorPalette');
 
-const config: Config = {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  darkMode: 'selector',
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -17,15 +19,22 @@ const config: Config = {
         'facebook_bs': '0 1px 0 rgba(0, 0, 0, .1)',
       },
       colors: {
-        'semitransparent': 'rgba(0, 0, 0, 0.5)',
-        'accent_blue': '#1a9fff',
-        'primary': '#1c1c1c',
-        'background': '#0f0f0f',
-        'card': '#0F0F0F',
-        'card-light': '#131313',
-        'border': '#1b1d1e',
-        'notification': '#ff453a',
+        'semitransparent': 'hsla(0, 0%, 0%, 0.75)',
+        'transparent': 'hsla(0, 0%, 0%, 0)',
+        'primary': 'hsl(0, 0%, 11%)',
+        'background': 'hsl(240, 10%, 4%)',
+        'card': '#0E0E0E',
+        'card-light': 'hsl(0, 0%, 7%)',
+        'border': 'hsl(60, 2%, 10%)',
+        'accent-blue': 'hsl(215, 93%, 58%)',
       },
+      borderWidth: {
+        '1': '1px' 
+      },
+      transitionProperty: {
+        'height': 'height',
+        'max-height': 'max-height',
+      }
     },
     fontFamily: {
       'sans': ['ui-sans-serif', 'system-ui'],
@@ -33,8 +42,10 @@ const config: Config = {
       'mono': ['ui-monospace', 'SFMono-Regular'],
       'display': ['Oswald'],
       'body': ['"Open Sans"'],
+      'IBM_PLEX_MONO': ['var(--font-ibm_plex_mono)'],
       'facebook_link': ['"lucida grande",tahoma,verdana,arial,sans-serif'],
-    }
+      'inter': ['inter', 'system-ui'],
+    },
   },
   plugins: [
     require('tailwindcss-themer')({
@@ -57,7 +68,21 @@ const config: Config = {
           }
         }
       ]
-    })
+    }),
+    addVariablesForColors,
   ],
 }
-export default config
+
+function addVariablesForColors({ addBase, theme }: { addBase: any, theme: any }) {
+
+  let allColors = flattenColorPalette(theme('colors'));
+
+  let newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+  );
+
+  addBase({
+    ':root': newVars,
+  });
+
+};

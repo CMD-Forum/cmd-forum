@@ -1,8 +1,9 @@
-import type { Metadata, Viewport } from 'next'
+import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import '@/app/(general)/globals.scss'
-import { Navigation, Sidebar, Infobar, Bottombar } from '@/app/(general)/ui/navigation'
+import { Footer, Navigation, Sidebar } from '@/app/(general)/ui/navigation'
 import NextAuthProvider from '@/app/(general)/nextauthprovider'
+import NextTopLoader from 'nextjs-toploader'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -13,7 +14,7 @@ const metadataBaseUrl = process.env.NODE_ENV === 'production'
 
 const APP_NAME = "CMD/>";
 const APP_DEFAULT_TITLE = "CMD/>";
-const APP_TITLE_TEMPLATE = "%s - CMD/>";
+const APP_TITLE_TEMPLATE = "CMD/>";
 const APP_DESCRIPTION = "CMD/> Forum Site";
 
 export const metadata: Metadata = {
@@ -24,7 +25,6 @@ export const metadata: Metadata = {
     template: APP_TITLE_TEMPLATE,
   },
   description: APP_DESCRIPTION,
-  manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -53,10 +53,6 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport: Viewport = {
-  themeColor: "#09090b",
-};
-
 export default async function RootLayout({
 
   children,
@@ -71,7 +67,7 @@ export default async function RootLayout({
 
     <NextAuthProvider>
 
-      <html lang="en" className={`defaultTheme facebookTheme:font-facebook_link ${inter.className}`}>
+      <html lang="en" className={`defaultTheme ${inter.className}`}>
 
         <head>
 
@@ -79,18 +75,25 @@ export default async function RootLayout({
 
         </head>
 
-        <body className=' facebookTheme:bg-white text-white facebookTheme:text-black overflow-scroll overflow-x-hidden h-full relative'>
+        <body className='text-white overflow-scroll overflow-x-hidden h-full relative'>
 
-          <div className='bg-zinc-950 w-full'>
-            <Navigation />  
-          </div>
+          <NextTopLoader
+              color='#FFFFFF'
+              showSpinner={false}
+              height={1}
+              zIndex={999999}
+          />
+
+          <Navigation />  
+          <Sidebar />
           
-          <div className='flex justify-center m-auto bg-[url("/images/uploaded/code.png")] scale-[1.1] h-full facebookTheme:bg-white items-center min-h-dvh w-full p-6 lg:p-12'>
+          <div className='flex justify-center m-auto bg-background h-full items-center min-h-dvh w-full p-6'>
 
               {children}    
 
           </div>
 
+          <Footer />
 
         </body>
 

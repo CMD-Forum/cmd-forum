@@ -34,72 +34,52 @@ body {
 
 } /*/
 
+@layer utilities {
+
+  .word-break-all {
+    word-break: break-all;
+  }
+
+}
+
 .navlink {
 
   @apply font-normal;
   @apply text-sm;
   @apply text-white;
-  @apply decoration-2 transition-all;
-  @apply bg-card;
-  @apply hover:bg-zinc-800;
+  @apply decoration-2; 
+  @apply transition-all;
+  @apply bg-transparent;
+  @apply hover:bg-border;
   @apply px-3;
   @apply py-2;
   @apply border-[1px];
   @apply border-border;
-  @apply rounded;
+  @apply rounded-md;
   @apply flex;
   @apply gap-1.5;
   @apply items-center;
   @apply w-fit;
-
-  // facebookTheme
-
-  @apply facebookTheme:text-white;
-  
-  @apply facebookTheme:rounded-none;
-
-  @apply facebookTheme:border-[#999];
-  @apply facebookTheme:border-[1px];
-  @apply facebookTheme:border-b-[#888];
-  @apply facebookTheme:shadow-facebook_bs;
-
-  @apply facebookTheme:font-bold;
-  @apply facebookTheme:text-[11px];
-
-  @apply facebookTheme:pt-[2px];
-  @apply facebookTheme:pb-[2px];
-  @apply facebookTheme:pl-[6px];
-  @apply facebookTheme:pr-[6px];
-
-  @apply facebookTheme:min-w-0;
-  @apply facebookTheme:min-h-0;
-
-  @apply facebookTheme:text-black #{!important};
-  @apply facebookTheme:no-underline #{!important};
-
-
-  
-  @apply facebookTheme:bg-[url(/themes/facebook/btn_back.png)];
-
-  @apply facebookTheme:focus:border-[#000];
-  @apply facebookTheme:transition-none;
-
-  @apply facebookTheme:focus:bg-ddd #{!important};
+  @apply outline-none;
 
 }
 
-.topnavlink p {
-    
-  @apply hidden;
-  @apply md:flex;
+.navlink:disabled {
+
+  @apply text-gray-400;
+  @apply hover:bg-transparent;
+  @apply cursor-not-allowed;
 
 }
 
-/*/ .navlink:focus {
+.navlink-ghost {
 
-  box-shadow: 0 0 0 .25rem $accent-blue;
+  @extend .navlink;
+  @apply bg-transparent;
+  @apply hover:bg-border;
+  @apply border-0;
 
-} /*/
+}
 
 .navlink-full {
 
@@ -107,40 +87,24 @@ body {
   @apply bg-white;
   @apply text-black;
   @apply hover:bg-neutral-300;
-  @apply border-white;
-  @apply defaultTheme:border-0;
+  @apply focus:bg-neutral-300;
+  @apply border-0;
 
-  // facebookTheme
+}
 
-  @apply facebookTheme:bg-[url(/themes/facebook/btn_back.png)];
-  
-  @apply facebookTheme:rounded-none;
+.navlink-full.icon {
 
-  @apply facebookTheme:border-[#999];
-  @apply facebookTheme:border-[1px];
-  @apply facebookTheme:border-b-[#888];
-  @apply facebookTheme:shadow-facebook_bs;
-
-  @apply facebookTheme:font-bold;
-  @apply facebookTheme:text-[11px];
-
-  @apply facebookTheme:pt-[2px];
-  @apply facebookTheme:pb-[2px];
-  @apply facebookTheme:pl-[6px];
-  @apply facebookTheme:pr-[6px];
-
-  @apply facebookTheme:min-w-0;
-  @apply facebookTheme:min-h-0;
-
-  @apply facebookTheme:focus:bg-ddd #{!important};
+  @apply p-2;
 
 }
 
 .navlink-full:disabled {
 
   @apply bg-neutral-500;
+  @apply hover:bg-neutral-500;
   @apply hover:cursor-not-allowed;
   @apply border-neutral-500;
+  @apply text-black;
 
 }
 
@@ -154,25 +118,20 @@ body {
 .navlink-destructive {
 
   @extend .navlink;
-  @apply text-red-500 #{!important};
-  @apply hover:text-white #{!important};
-  @apply focus:text-white #{!important};
-  @apply hover:bg-red-700;
-  @apply hover:border-red-500;
-  @apply focus:bg-red-700;
-  @apply focus:border-red-500;
+  @apply bg-red-700;
+  @apply hover:bg-red-600;
+  @apply focus:bg-red-600;
+  @apply border-0;
   @apply transition-all;
-  @apply text-white;
-  @apply border-[1px];
-  @apply border-zinc-800;
+  @apply text-white #{!important};
 
 }
 
 .navlink-success {
 
   @extend .navlink-full;
-  @apply bg-[#5c7e10];
-  @apply hover:bg-[#7ea64b];
+  @apply bg-green-600;
+  @apply hover:bg-green-700;
   @apply text-white;
 
 }
@@ -180,73 +139,53 @@ body {
 .navlink-sidebar {
 
   @extend .navlink;
-  @apply h-8;
+  @apply h-fit;
   @apply w-full;
   @apply bg-transparent;
   @apply border-0;
-  @apply w-fit; 
-  @apply lg:w-full;
-  @apply mt-2;
-  @apply mb-2;
+  @apply w-full;
+  @apply p-2.5;
 
-  // facebookTheme
-
-  @apply facebookTheme:bg-white #{!important};
-  @apply facebookTheme:hover:bg-[#eff2f7];
-  @apply facebookTheme:text-black;
-  @apply facebookTheme:rounded-none;
-  @apply facebookTheme:text-[11px];
-  @apply facebookTheme:text-[#333];
-  @apply facebookTheme:leading-[13px];
-  @apply facebookTheme:pl-[8px];
-  @apply facebookTheme:pr-[8px];
-  @apply facebookTheme:pt-[3px];
-  @apply facebookTheme:pb-[4px];
-  @apply facebookTheme:h-[21px];
-  @apply facebookTheme:transition-none;
-  @apply facebookTheme:min-h-0;
-  @apply facebookTheme:border-b-[1px];
-  @apply facebookTheme:border-white;
-  @apply facebookTheme:font-facebook_link;
-
-}
-
-a {
-  @apply facebookTheme:text-[#3b5998];
-  @apply facebookTheme:hover:underline;
-  @apply facebookTheme:font-bold;
-  @apply facebookTheme:text-[11px];
 }
 
 .navlink-sidebar.active {
 
-  @apply bg-zinc-800;
-
-  // facebookTheme
-
-  @apply facebookTheme:bg-[#d8dfea];
-  @apply facebookTheme:text-black;
-  @apply facebookTheme:font-bold;
+  @apply bg-border;
 
 }
 
 .topbar-link {
 
-  @apply text-[15px];
-  @apply font-semibold;
-  @apply text-gray-300;
-  @apply hover:text-gray-200;
+  @apply text-sm;
+  @apply hover:text-white #{!important};
   @apply transition-all;
   @apply hidden;
   @apply lg:flex;
   @apply relative;
+  @apply px-3;
+  @apply py-2;
+  @apply rounded-md;
+  @extend .subtitle;
 
 }
 
 .topbar-link.active {
 
-  @apply text-white;
+  @apply text-white #{!important};
+  @apply bg-border;
 
+}
+
+.topbar-link.active::after {
+  content: "";
+  width: 100%;
+  height: 2px;
+  background-color: white;
+  position: absolute;
+  bottom: -11px;
+  left: 0;
+  border-radius: 6px;
+  transition: all;
 }
 
 .dropdown-menu {
@@ -280,36 +219,29 @@ a {
 
 .generic_field {
 
-  @apply defaultTheme:bg-[#0c0c0c];
-  @apply defaultTheme:text-white;
-  @apply defaultTheme:rounded-md;
-  @apply defaultTheme:h-9;
-  @apply defaultTheme:px-2;
-  @apply defaultTheme:outline-none;
-  @apply border-[1px];
-  @apply border-border;
-  @apply focus:border-white #{!important};
-  @apply defaultTheme:transition-all;
-  @apply duration-200 #{!important};
-
-  // facebookTheme
-
-  @apply facebookTheme:border-[#1d2a5b];
-  @apply facebookTheme:m-0;
-  @apply facebookTheme:pb-[4px];
-  @apply facebookTheme:border-[1px];
-  @apply facebookTheme:border-[#bdc7d8];
-  @apply facebookTheme:text-[11px];
-  @apply facebookTheme:p-[3px];
-  @apply facebookTheme:rounded-none;
-  @apply facebookTheme:text-[#333];
+  @apply bg-transparent;
+  @apply rounded-md;
+  @apply h-9;
+  @apply px-2;
+  @apply outline-none;
+  @apply ring-border;
+  @apply ring-2;
+  @apply focus:ring-2;
+  @apply focus:ring-white #{!important};
+  @apply transition-all;
+  @extend .subtitle;
 
 }
 
 .generic_field.errored {
 
-  @apply defaultTheme:border-red-700;
+  @apply ring-red-500;
 
+}
+
+.generic_field:disabled {
+  @apply text-gray-300;
+  @apply cursor-not-allowed;
 }
 
 .bottombar-link {
@@ -327,10 +259,6 @@ a {
   @apply overflow-hidden;
   @apply font-bold;
   @apply text-zinc-400;
-
-  // facebookTheme
-
-  @apply facebookTheme:text-white;
 
 }
 
@@ -357,81 +285,152 @@ a {
 
 .spinner {
 
-  @apply h-full;
-  animation-name: spin;
-  animation-duration: 500ms;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-  @apply text-black;
-  color: black !important;
+  @apply animate-spin;
 
 }
 
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
+.label {
+  @apply rounded-full;
+  @apply w-fit;
+  @apply border-border;
+  @apply transition-all;
+  @apply border-1;
+  @apply bg-card;
+  @apply h-fit;
+  @apply text-xs;
+  @apply px-2.5;
+  @apply py-0.5;
+  @apply flex;
+  @apply gap-1;
+
+  &.success {
+    @apply text-green-400;
+    @apply bg-green-500/20;
+    @apply border-green-500/30;
   }
-  to {
-    transform: rotate(360deg);
+
+  &.failure {
+    @apply text-red-400;
+    @apply bg-red-500/20;
+    @apply border-red-500/30;
   }
+
+  &.gray {
+    @apply text-white;
+    @apply bg-neutral-500/20;
+    @apply border-neutral-500/30;
+  }
+
 }
 
 // MD
 
 .wmde-markdown {
-
   @apply bg-transparent #{!important};
+}
 
+.wmde-markdown * {
+  @apply font-inter;
 }
 
 .wmde-markdown blockquote {
-
   @apply bg-transparent #{!important};
   @apply hover:text-white;
   @apply transition-all;
   @apply hover:border-white #{!important};
-
+  @extend .subtitle;
 }
 
-/*.infobar-markdown {
-
-  all: revert;
-  @apply *:whitespace-pre-wrap; 
-  @apply whitespace-pre-wrap;
-
+.wmde-markdown hr {
+  @apply border-border #{!important};
+  @apply border-0 #{!important};
+  @apply border-t-[1px] #{!important};
+  @apply h-[1px] #{!important};
 }
 
-.infobar-markdown hr {
-
-  @apply border-b-[1px];
-  @apply border-zinc-900;
-  @apply mb-2;
-
+.wmde-markdown-var {
+  @apply bg-card #{!important};
+  @apply border-border #{!important};
+  @apply border-1 #{!important};
 }
 
-.infobar-markdown h1 {
-
-  @apply font-[600];
-  @apply text-[1.5em];
-  line-height: 1.25;
-  @apply mt-[24px];
-  @apply border-b-[1px];
-  @apply border-zinc-900;
-  @apply pb-[0.3em];
-
+.wmde-markdown h1 {
+  @extend .header;
 }
 
-.infobar-markdown h2 {
+.wmde-markdown h2 {
+  @extend .header-2;
+}
 
-  @apply font-[600];
-  @apply text-[1.5em];
-  line-height: 1.25;
-  @apply mt-[24px];
-  @apply border-b-[1px];
-  @apply border-zinc-900;
-  @apply pb-[0.3em];
+.wmde-markdown h3 {
+  @extend .header-3;
+}
 
-} */
+.wmde-markdown h4 {
+  @extend .header-4;
+}
+
+.wmde-markdown h5 {
+  @extend .header-5;
+}
+
+.wmde-markdown h6 {
+  @extend .header-6;
+}
+
+.wmde-markdown p, li, {
+  @extend .subtitle;
+}
+
+.wmde-markdown img {
+  @apply rounded-md #{!important};
+}
+
+.markdown-alert-title {
+  @extend .subtitle;
+}
+
+.md-editor {
+  @apply rounded-md #{!important};
+  @apply z-0;
+}
+
+.md-editor-toolbar-warp {
+  @apply border-b-border #{!important};
+  @apply p-1.5 #{!important};
+  @apply z-[999] #{!important};
+}
+
+.md-editor-toolbar-warp > .md-editor-toolbar > button {
+  @apply text-gray-300 #{!important};
+  @apply hover:text-white #{!important};
+  @apply border-1 #{!important};
+  @apply border-border #{!important};
+  @apply hover:bg-border #{!important};
+  @apply w-8 #{!important};
+  @apply h-8 #{!important};
+  @apply p-1.5 #{!important};
+  @apply rounded #{!important};
+}
+
+.md-editor-toolbar-warp > .md-editor-toolbar > button.active {
+  @apply text-white #{!important};
+  @apply bg-border #{!important};
+}
+
+.md-editor-preview {
+  @apply bg-transparent #{!important};
+}
+
+// hr
+
+hr {
+
+  @apply border-border;
+  @apply mt-1;
+  @apply mb-1;
+  
+}
 
 .markdown-body {
 
@@ -453,21 +452,75 @@ a {
 
   @apply text-lg;
 
-  // facebookTheme
-
-  @apply facebookTheme:font-bold;
-  @apply facebookTheme:text-facebook_blue;
-
 }
 
 // Text
 
 .header {
 
-  @apply text-3xl; 
-  @apply font-sans; 
-  @apply font-bold; 
-  @apply antialiased;
+  @apply text-3xl #{!important}; 
+  @apply font-inter #{!important}; 
+  @apply text-white #{!important};
+  @apply font-bold #{!important}; 
+  @apply antialiased #{!important};
+
+}
+
+.header-2 {
+
+  @apply text-2xl #{!important}; 
+  @apply font-inter #{!important};
+  @apply text-white #{!important};
+  @apply font-bold #{!important}; 
+  @apply antialiased #{!important};
+
+}
+
+.header-3 {
+
+  @apply text-xl #{!important}; 
+  @apply font-inter #{!important};
+  @apply text-white #{!important};
+  @apply font-semibold #{!important}; 
+  @apply antialiased #{!important};
+
+}
+
+.header-4 {
+
+  @apply text-lg #{!important}; 
+  @apply font-inter #{!important};
+  @apply text-white #{!important};
+  @apply font-semibold #{!important}; 
+  @apply antialiased #{!important};
+
+}
+
+.header-5 {
+
+  @apply text-lg #{!important}; 
+  @apply font-inter #{!important};
+  @apply text-white #{!important};
+  @apply font-medium #{!important}; 
+  @apply antialiased #{!important};
+
+}
+
+.header-6 {
+
+  @apply text-base #{!important}; 
+  @apply font-inter #{!important};
+  @apply text-white #{!important};
+  @apply font-medium #{!important}; 
+  @apply antialiased #{!important};
+
+}
+
+.subtitle {
+
+  @apply text-gray-300 #{!important};
+  @apply font-medium #{!important};
+  @apply antialiased #{!important};
 
 }
 

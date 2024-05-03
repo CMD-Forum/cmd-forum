@@ -1,5 +1,8 @@
+import { ArrowTrendingUpIcon, BoltIcon, ChartBarIcon, MagnifyingGlassIcon, PlusIcon } from '@heroicons/react/24/solid';
+import Dropdown, { DropdownLink } from '../ui/components/dropdown/dropdown';
 import SearchBar from '../ui/components/search/searchbar';
 import SearchResults from '../ui/components/search/searchresults';
+import Link from 'next/link';
 
 export default function Search({
     searchParams,
@@ -17,24 +20,44 @@ export default function Search({
 
     return (
 
-        <div className='w-full m-auto flex-row gap-2 px-5 py-5 rounded-md facebookTheme:rounded-none bg-[#131313] facebookTheme:bg-white'>
+      <div className="error flex flex-col w-full">
 
-            <div className="flex flex-col">
+            <div className="flex flex-col border-b-1 border-border p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48">
 
                 <h1 className="header">Search</h1>
-                <p className="text-gray-300 font-bold antialiased w-full">Search the database for content you want.</p>   
+                <p className="subtitle">Find that post you liked.</p>   
 
             </div>
 
-            <hr className='border-b-[1px] border-zinc-900 facebookTheme:border-[#b3b3b3] mt-2 mb-3.5' />
+            <div className='px-6 flex flex-col md:flex-row gap-2 max-w-[70rem] xl:w-[70rem] xl:m-auto mt-6 xl:mt-6'>
+                <SearchBar />   
+                <div className='flex flex-row gap-2'>
+                    <Dropdown headerText={"Sort"} align={"left"} headerClassName={"!border-1 !border-border"} accountHeading={false} headerIcon={<ChartBarIcon />}>
+                        <DropdownLink text='Relevance' link={"/"} icon={<MagnifyingGlassIcon />} />
+                        <DropdownLink text='Hot' link={"/"} icon={<BoltIcon />} />
+                        <DropdownLink text='Rising' link={"/"} icon={<ArrowTrendingUpIcon />} />
+                    </Dropdown>
+                    <Link className={"navlink-full"} href={"/create"}><PlusIcon className={"w-5 h-5"} />Create</Link>                    
+                </div>             
+            </div>
 
-            <SearchBar />   
+            <hr className='border-border facebookTheme:border-[#b3b3b3] mb-6 mt-6' />
 
-            <hr className='border-b-[1px] border-zinc-900 facebookTheme:border-[#b3b3b3] mt-2 mb-3.5' />
+            <div className='flex flex-col gap-4'>
+                {query ?
+                
+                    <>
+                        <SearchResults query={query} currentPage={currentPage} type={"post"} />                     
+                    </>
 
-            <SearchResults query={query} currentPage={currentPage} type={type}/>
+                :
+                    <h1 className="subtitle w-fit m-auto mb-6">Either you&apos;ve reached the end, or you haven&apos;t searched yet.</h1>
+                }
+            </div>
 
         </div>
+
+        
 
     )
 

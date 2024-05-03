@@ -1,56 +1,78 @@
 import Link from 'next/link';
-import { PlusIcon } from '@heroicons/react/24/solid'
 import { FaAndroid, FaApple, FaGithub } from "react-icons/fa6";
-import '@/app/(general)/ui/components/dropdown'
 import React from 'react';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '../lib/auth';
-import { prisma } from '@/app/(general)/lib/db';
-import { Acc_Dropdown, NoAccount_Dropdown } from './components/dropdowns/account_dropdown';
+import { auth } from '@/auth';
 import { BottombarItems, CommunityInfobarItems, NavSideItems, TopbarItems } from './components/nav_sideitem';
 import { inter } from './fonts';
+import Dropdown, { DropdownCustom, DropdownLink, DropdownUser } from './components/dropdown/dropdown';
+import { ArrowRightEndOnRectangleIcon, Cog6ToothIcon, MegaphoneIcon, PlusIcon, QuestionMarkCircleIcon, UserCircleIcon, UserPlusIcon } from '@heroicons/react/24/solid';
+import LogoutButton from './components/signoutButton';
 
 export async function Navigation() {
 
-  var session = await getServerSession(authOptions)
-
-  if (session && session.user && session.user.username) {
-
-    const p_user = await prisma.user.findUnique({
-
-        where: { username: session.user.username },
-
-    });
-
-  } else {
-
-    session = null
-
-  }
+  const session = await auth();
 
   return (
 
-      <div className='sticky top-0 z-50 facebookTheme:lg:w-[980px] facebookTheme:w-full h-[60px] items-center bg-transparent backdrop-blur-md px-6 md:px-16 flex transition-all facebookTheme:bg-facebook_blue'>
+      <div className='sticky top-0 z-40 h-[60px] items-center bg-card backdrop-blur px-8 flex transition-all border-b-1 border-border'>
         
-        <div className=' md:ml-32 md:mr-32 flex gap-32'>
+        <div className='flex justify-between w-full'>
 
-          <div className='flex items-center mr-auto h-full w-fit gap-12'>
+          <div className='flex items-center lg:px-40 h-full w-fit gap-10'>
           
-            <Link className={`z-50 flex ${inter.className} font-extrabold text-3xl hover:text-accent_blue transition-all`} href="/"><p>CMD /&gt;</p></Link>  
+            <Link className={`z-50 ml-10 lg:ml-0 flex ${inter.className} font-extrabold text-3xl hover:text-gray-300 transition-all`} href={ session ? "/posts" : "/" }><p>CMD /&gt;</p></Link>  
             <TopbarItems />
 
           </div>
 
-          <div className='flex items-center justify-end ml-auto'>
+          <div className='flex items-center lg:pr-40'>
           
-            {session?.user ? (
+            {session ? (
 
-              null
-              
+              <div className={"flex flex-row gap-2 items-center"}>
+
+                <Link className={"navlink-full !px-1 !py-1 !mt-0 !h-fit flex"} href={"/create"}><PlusIcon className={"w-5 h-5"}></PlusIcon></Link>              
+
+                <div className='ml-auto flex'>
+
+                  <Dropdown align={"right"} accountHeading={true} headerText={""} headerIcon={null}>
+                    <DropdownUser />
+                    <hr className='mt-1 mb-1' />
+                    <DropdownLink text={"Settings"} icon={<Cog6ToothIcon />} link={"/account/settings"} />
+                    <LogoutButton className={"hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm subtitle hover:!text-white"}><ArrowRightEndOnRectangleIcon className='w-5 h-5' />Logout</LogoutButton>
+                    <hr className='mt-1 mb-1' />
+                    <DropdownCustom className={"hover:bg-card"}>
+                      <div className='flex flex-col gap-1 items-center w-full'>
+                        <Link className='label cursor-pointer subtitle hover:!text-white' href={"https://github.com/CMD-Forum/cmd-forum"}><MegaphoneIcon className='w-4 h-4'/>New Update - Alpha 1.1</Link>              
+                      </div>
+                    </DropdownCustom>
+                  </Dropdown>
+
+                </div>
+                
+              </div>
 
             ) : (
 
-              null
+              <div className={"flex-row gap-2 hidden md:flex"}>
+                <div className={"ml-auto flex gap-4"}>
+
+                  <Dropdown align={"right"} headerText={"Login or Signup"} headerIcon={<UserCircleIcon />} headerClassName={"!border-1 !border-border"}> 
+                    <DropdownLink text={"Login"} icon={<ArrowRightEndOnRectangleIcon />} link={"/login"} />
+                    <DropdownLink text={"Signup"} icon={<UserPlusIcon />} link={"/signup"} />
+                    <hr className='mt-2 mb-2' />
+                    <DropdownLink text={"About CMD/>"} icon={<QuestionMarkCircleIcon />} link={"/about"} />                    
+                    <hr className='mt-2 mb-2' />
+                    <DropdownCustom className={"hover:bg-card"}>
+                      <div className='flex flex-col gap-1 items-center'>
+                        <Link className='label cursor-pointer' href={"/updates/v1.1"}><MegaphoneIcon className='w-4 h-4'/>Version 1.1 is here at last!</Link>              
+                      </div>
+                    </DropdownCustom>
+                  </Dropdown>
+
+                </div>
+
+              </div>
 
             )}
 
@@ -100,7 +122,7 @@ interface InfobarProps {
 
 
 
-export function Infobar(infobar: InfobarProps) {
+/*export function Infobar(infobar: InfobarProps) {
 
   return (
 
@@ -116,7 +138,7 @@ export function Infobar(infobar: InfobarProps) {
 
   );
 
-}
+}*/
 
 export function Footer() {
 
@@ -124,13 +146,13 @@ export function Footer() {
 
   return (
 
-    <div className='w-full mt-auto p-10 bg-card z-50'>
+    <div className='w-full mt-auto p-10 bg-card z-50 border-t-1 border-b-1 border-border'>
 
       <div className='m-auto w-fit'>
 
-        <hr className=' border-border facebookTheme:border-[#b3b3b3] mb-4' />
+        <hr className='mb-4' />
 
-        <div className='flex gap-6 px-4'>
+        <div className='flex gap-2 lg:gap-6 px-4 flex-col lg:flex-row'>
 
           <Link className={`flex ${inter.className} font-extrabold text-4xl w-fit`} href="/"><p>CMD /&gt;</p></Link>  
 
@@ -143,9 +165,9 @@ export function Footer() {
 
         </div>
 
-        <hr className=' border-border facebookTheme:border-[#b3b3b3] mt-4 mb-4' />
+        <hr className='mt-4 mb-4' />
 
-        <ul className='flex gap-4 m-auto w-fit mb-2'>
+        <ul className='flex flex-col sm:flex-row gap-4 m-auto w-fit mb-2 items-center'>
           
           <Link className='text-gray-300 hover:text-white transition-all flex items-center gap-1.5' href="https://github.com/CMD-Forum/cmd-forum"><FaGithub className="size-4" />Github</Link>
           <Link className='text-gray-300 hover:text-white transition-all flex items-center gap-1.5' href="#"><FaAndroid className="size-4" />Android</Link>
@@ -153,10 +175,12 @@ export function Footer() {
           
         </ul>  
 
+        <hr className='mt-4 mb-4 sm:hidden' />
+
         <ul className='flex gap-4 m-auto w-fit'>
 
-          <Link className='text-gray-300 hover:text-white transition-all flex items-center gap-1.5' href="/support/1">About Us</Link>
-          <Link className='text-gray-300 hover:text-white transition-all flex items-center gap-1.5' href="/support/3">Legal</Link>   
+          <Link className='text-gray-300 hover:text-white transition-all flex items-center gap-1.5' href="/about">About Us</Link>
+          <Link className='text-gray-300 hover:text-white transition-all flex items-center gap-1.5' href="/about#legal">Legal</Link>   
 
         </ul>
 

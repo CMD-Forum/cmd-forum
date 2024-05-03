@@ -1,18 +1,15 @@
-import '@/app/(general)/ui/components/posts/post_full';
-import { FullPost } from '@/app/(general)/ui/components/posts/post';
 import { prisma } from '@/app/(general)/lib/db';
 import Framermotion_workaround from './framermotion_workaround';
-import { ArrowLeftIcon } from '@heroicons/react/24/solid';
-import Link from 'next/link';
-import BackButton from '@/app/(general)/ui/components/posts/back_button';
+import { Error404 } from '../../ui/error404';
+import { FullPost } from '../../ui/components/posts/post';
 
-export default async function PostView({ params }: { params: { id: number } }) {
+export default async function PostView({ params }: { params: { id: string } }) {
 
-  if ( ! params.id || isNaN(params.id)) {
+  if ( ! params.id ) {
 
     return (
 
-      <h1>Please enter a valid number.</h1>
+      <Error404 />
 
     );
 
@@ -20,20 +17,26 @@ export default async function PostView({ params }: { params: { id: number } }) {
 
   const post = await prisma.post.findUnique({
     where: {
-      id: Number(params.id)
+      id: params.id
     },
     include: {
       community: {
         select: {
+          id: true,
+          display_name: true,
           name: true,
           image: true,
+          public: true,
         }
       },
       author: {
         select: {
-          username: true,
-          name: true,
           id: true,
+          username: true,
+          description: true,
+          image: true,
+          createdAt: true,
+          updatedAt: true,
         }
       }
     }
@@ -43,26 +46,31 @@ export default async function PostView({ params }: { params: { id: number } }) {
 
     return (
 
-      <div className='flex flex-col gap-2'>
-        <h1 className='header'>Post was not found.</h1>
-        <BackButton title='Back'/>  
-      </div>
+      <Error404 />
 
     );
 
   }
 
-  const submitted = post?.createdAt.toLocaleDateString();
-  const totalVotes = post?.upvotes + post?.downvotes
-  const ratio = totalVotes > 0 ? ((post.upvotes / totalVotes) * 100).toFixed(2) : '0';
-
-  
-
   return (
 
-    <div>
+    <div className='mt-6 lg:pb-12 lg:px-44 !pt-0'>
 
-      <Framermotion_workaround post={post} submitted={submitted} ratio={ratio} />
+      <FullPost
+        id={post.id}
+        title={post.title} 
+        author={post.author} 
+        community={post.community} 
+        upvotes={post.upvotes} 
+        downvotes={post.downvotes} 
+        createdAt={post.createdAt} 
+        updatedAt={post.updatedAt}
+        public={post.public}
+        tagline={post.tagline} 
+        content={post.content}
+        imageurl={post.imageurl}
+        imagealt={post.imagealt}
+      />
 
     </div>
     

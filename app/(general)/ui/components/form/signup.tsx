@@ -1,20 +1,15 @@
 'use client';
 
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 import Link from "next/link";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod" // Form Validation
-import { useZorm } from "react-zorm"; // Form Building
-import { inter } from "../../fonts";
-import GoogleSignInButton from "./oauth/GoogleSignInButton";
-import MicrosoftSignInButton from "./oauth/MicrosoftSignInButton";
-import { POST } from "@/app/(general)/api/account/createAccount/route";
-import { useRouter } from "next/navigation";
-import { AlertFailure, AlertSuccess, AlertWarning } from "@/app/(general)/ui/components/alert"
+import { zodResolver } from "@hookform/resolvers/zod"
 import Alert from "../new_alert";
+import { signup } from "@/app/(general)/lib/actions/signup";
+import { OAuthButtons } from "./oauth/OAuthButtons";
 
-const FormSchema = z.
+export const SignupSchema = z.
 
     object({
 
@@ -26,13 +21,14 @@ const FormSchema = z.
                 message: "Your username must be at least 2 characters."
 
             })
-            .max(20, {
+            .max(25, {
 
-                message: "Your username must be no longer than 20 characters."
+                message: "Your username must be no longer than 25 characters."
 
-            }),
+            })
+            .regex(/^[a-zA-Z0-9_-]+$/, "Your username must only contains letters, numbers, underscores and hyphens."),
 
-        name: z
+        /*name: z
         
             .string()
             .min(2, {
@@ -40,11 +36,11 @@ const FormSchema = z.
                 message: "Your name must be at least 2 characters."
 
             })
-            .max(20, {
+            .max(15, {
                 
-                message: "Your name must not be longer than 20 characters."
+                message: "Your name must not be longer than 15 characters."
                 
-            }),
+            }),*/
 
         email: z
         
@@ -77,188 +73,184 @@ function ErrorMessage(props: { message: string }) {
     
 }
 
-const SignupForm = () => {
+export default function SignupForm () {
 
-    const [error, setError] = useState(null);
+    const [isPending, startTransition] = useTransition();
 
+    const [error, setError] = useState<string | undefined>("");
+    const [success, setSuccess] = useState<string | undefined>("");
     const [isLoading, setIsLoading] = useState(false);
 
-    const router = useRouter();
+    const form = useForm<z.infer<typeof SignupSchema>>({
 
-    const zo = useZorm("signup", FormSchema, {
-
-        onValidSubmit: async (e) => {
-
-            e.preventDefault();
-
-            setIsLoading(true);
-
-            const response = await fetch('/api/account/createAccount', {
-
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json' 
-                },
-                body: JSON.stringify(e.data)
-                
-            })
-
-            if (response.ok) {
-
-                router.push('/login?success=true');
-                setIsLoading(false);
-
-            } else if (response.status === 409) {
-
-                setError(null);
-                setIsLoading(false);
-
-            }    
-
-        }
-
-        
+        resolver: zodResolver(SignupSchema),
+        defaultValues: {
+            username: '',
+            // name: '',
+            email: '',
+            password: '',
+            confirmpassword: '',
+        },
 
     });
-    
-    const disabled = zo.validation?.success === false;
+
+
+    const onSubmit = (values: z.infer<typeof SignupSchema>) => {
+
+        setError("");
+        setSuccess("");
+
+        startTransition(() => {
+            signup(values)
+                .then((data) => {
+                    setError(data.error);
+                    setSuccess(data.success);
+                })
+        });
+    };
 
     return ( 
 
-        <form ref={zo.ref} className="flex flex-col gap-2 bg-zinc-950 px-10 py-10 rounded-lg facebookTheme:bg-white max-w-3xl sm:w-[505px] ml-auto">
+        <form className="flex flex-col gap-2 bg-background rounded-lg w-[80%] md:w-[50%] max-w-xl" onSubmit={form.handleSubmit(onSubmit)}>
 
-            <h2 className="header">Signup for CMD.</h2>
+            <h2 className="header !text-4xl text-center">Signup for CMD.</h2>
+            <p className={`text-gray-300 font-bold text-center mb-2`}>Signup for an account with CMD/&gt;.</p>
 
-            <hr className="border-border facebookTheme:border-[#b3b3b3] mb-2 mt-2" /> 
+            <Link href={"/login"} className="text-center text-sm text-gray-300 hover:underline cursor-pointer">Already have an account?</Link>
 
             {/* */}
 
-            {/* @ts-ignore-error */}
-            {error && <Alert type='alert' title='Signup Failed' description='Try again later, our systems may be down.' />}
+            {success ? (
 
-            <Link href="/login" className="w-fit hover:underline text-gray-300">Have an account?</Link>
+                <Alert type='notice' title='Signup Success' description={success} />
 
-            <p className="dark:text-gray-300 text-sm p-0 m-0 facebookTheme:hidden" suppressHydrationWarning>
-                
-                Your username is unique, your name is not. 
+            ): (
 
-                <div className="flex flex-row" suppressHydrationWarning>
-                    It will appear like&nbsp;
-                    <code className="flex gap-1 bg-zinc-800 px-2 w-fit rounded" suppressHydrationWarning>
-                        <span className={`text-white ${inter.className}`} suppressHydrationWarning>name</span> 
-                        <span className={`text-gray-500 ${inter.className}`} suppressHydrationWarning>@username</span>
-                    </code>
-                </div> 
-                
-            </p>
+                <pre></pre>
+
+            )}
 
             
+            {error ? (
 
-            <div className="flex gap-1 facebookTheme:text-[11px]">Name<p className="text-[#fca5a5]">*</p></div>
+                <Alert type='error' title='Login Failed' description={error} />
+
+            ): (
+
+                <pre></pre>
+
+            )}         
+
+            {/* */}
+
+            <div className="flex gap-1 facebookTheme:text-[11px] font-medium">Username<p className="text-[#fca5a5]">*</p></div>
             <input
-                type="text"
-                name={zo.fields.name()}
+                {...form.register('username')}
+                disabled={isPending}
+                placeholder="john_doe"
+                className={`generic_field ${form.formState.errors.username ? "errored" : ""}`}
+            />
+
+            {form.formState.errors.username && (
+
+                // @ts-expect-error
+                <ErrorMessage message={form.formState.errors.username.message} />
+
+            )}
+
+            {/* */}
+
+            {/*<div className="flex gap-1 facebookTheme:text-[11px] font-medium">Name<p className="text-[#fca5a5]">*</p></div>
+            <input
+                {...form.register('name')}
+                disabled={isPending}
                 placeholder="John Doe"
-                className={`generic_field ${zo.errors.name("errored")}`}
+                className={`generic_field ${form.formState.errors.name ? "errored" : ""}`}
             />
 
-            {zo.errors.name((e) => (
+            {form.formState.errors.name && (
 
-                <ErrorMessage message={e.message} />
+                // @ts-expect-error
+                <ErrorMessage message={form.formState.errors.name.message} />
 
-            ))}
+            )}
 
+            */}
             {/* */}
 
-            <div className="flex gap-1 facebookTheme:text-[11px]">Username<p className="text-[#fca5a5]">*</p></div>
+            <div className="flex gap-1 facebookTheme:text-[11px] font-medium">Email<p className="text-[#fca5a5]">*</p></div>
             <input
-                type="text"
-                name={zo.fields.username()}
-                placeholder="johndoe"
-                className={`generic_field ${zo.errors.username("errored")}`}
-            />
-
-            {zo.errors.username((e) => (
-
-                <ErrorMessage message={e.message} />
-
-            ))}
-
-            {/* */}
-
-            <div className="flex gap-1 facebookTheme:text-[11px]">Email Address<p className="text-[#fca5a5]">*</p></div>
-            <input
-                type="email"
-                name={zo.fields.email()}
+                {...form.register('email')}
+                disabled={isPending}
                 placeholder="johndoe@example.com"
-                className={`generic_field ${zo.errors.email("errored")}`}
+                className={`generic_field ${form.formState.errors.email ? "errored" : ""}`}
             />
 
-            {zo.errors.email((e) => (
+            {form.formState.errors.email && (
 
-                <ErrorMessage message={e.message} />
+                // @ts-expect-error
+                <ErrorMessage message={form.formState.errors.email.message} />
 
-            ))}
+            )}
 
             {/* */}
 
             <div className="flex gap-1 facebookTheme:text-[11px] font-medium">Password<p className="text-[#fca5a5]">*</p></div>
             <input
                 type="password"
-                name={zo.fields.password()}
-                placeholder="Password"
-                className={`generic_field ${zo.errors.password("errored")}`}
+                {...form.register('password')}
+                disabled={isPending}
+                placeholder="********"
+                className={`generic_field ${form.formState.errors.email ? "errored" : ""}`}
             />
 
-            {zo.errors.password((e) => (
+            {form.formState.errors.password && (
 
-                <ErrorMessage message={e.message} />
+                // @ts-expect-error
+                <ErrorMessage message={form.formState.errors.password.message} />
 
-            ))}
+            )}
 
             {/* */}
 
             <div className="flex gap-1 facebookTheme:text-[11px] font-medium">Confirm Password<p className="text-[#fca5a5]">*</p></div>
             <input
                 type="password"
-                name={zo.fields.confirmpassword()}
-                placeholder="Confirm Password"
-                className={`generic_field ${zo.errors.confirmpassword("errored")}`}
+                {...form.register('confirmpassword')}
+                disabled={isPending}
+                placeholder="********"
+                className={`generic_field ${form.formState.errors.confirmpassword ? "errored" : ""}`}
             />
 
-            {zo.errors.confirmpassword((e) => (
+            {form.formState.errors.confirmpassword && (
 
-                <ErrorMessage message={e.message} />
+                // @ts-expect-error
+                <ErrorMessage message={form.formState.errors.confirmpassword.message} />
 
-            ))}
+            )}
 
             {/* */}
 
-            <button disabled={disabled || isLoading} type="submit" className="navlink-full !w-full sm:!w-fit justify-center min-w-[62px]">
-
+            <button disabled={!form.formState.isValid || isPending} type="submit" className="navlink-full !w-full h-[36px] justify-center">
+                
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                {isLoading ? <img src="/spinner.svg" alt="Loading..." className="spinner"/>  : 'Signup' }
-            
+                {isPending ? <img src="/spinner.svg" alt="Loading..." className="spinner"/>  : 'Signup' }
+                
             </button>
 
-            <hr className="border-border mb-2"></hr>
+            <div className="flex flex-row relative mt-4 mb-4">
+                <span className="w-full border-b-1 border-border"></span>
+                <p className="absolute right-[50%] bottom-0 px-2 bg-background translate-x-2/4 translate-y-2/4 text-sm text-gray-300">OR SIGNUP WITH</p>
+            </div>
 
             <div className="flex flex-col gap-2">
-                
-                <GoogleSignInButton>Login with Google</GoogleSignInButton>    
-                <MicrosoftSignInButton>Login with Microsoft</MicrosoftSignInButton>  
+
+                <OAuthButtons width_full={true} />
 
             </div>
-            
-
-            {/* */}
-
-            {/*<pre>Validation status: {JSON.stringify(zo.validation, null, 2)}</pre>*/}
 
         </form>
     
     );
     
 }
-
-export default SignupForm;

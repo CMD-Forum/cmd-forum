@@ -1,6 +1,5 @@
 import { prisma } from '@/app/(general)/lib/db';
 import { NextResponse } from 'next/server';
-import xss from 'xss';
 
 export async function POST( req: Request ) {
 
@@ -32,6 +31,10 @@ export async function POST( req: Request ) {
             }
             
         });        
+
+        if ( ! community ) {
+            return NextResponse.json({ message: "Community not found."}, { status: 404 })
+        }
               
         return NextResponse.json(community, { status: 200 })
 
