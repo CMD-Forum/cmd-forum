@@ -65,7 +65,7 @@ export async function Navigation() {
                     <hr className='mt-2 mb-2' />
                     <DropdownCustom className={"hover:bg-card"}>
                       <div className='flex flex-col gap-1 items-center'>
-                        <Link className='label cursor-pointer' href={"/updates/v1.1"}><MegaphoneIcon className='w-4 h-4'/>Version 1.1 is here at last!</Link>              
+                        <Link className='label cursor-pointer subtitle hover:!text-white' href={"https://github.com/CMD-Forum/cmd-forum"}><MegaphoneIcon className='w-4 h-4'/>New Update - Alpha 1.1</Link>              
                       </div>
                     </DropdownCustom>
                   </Dropdown>
