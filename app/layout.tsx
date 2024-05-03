@@ -24,7 +24,7 @@ if (!metadataBaseUrl) {
 
 const APP_NAME = "CMD/>";
 const APP_DEFAULT_TITLE = "CMD/>";
-const APP_TITLE_TEMPLATE = "%s - CMD/>";
+const APP_TITLE_TEMPLATE = "CMD/>";
 const APP_DESCRIPTION = "CMD/> Forum Site";
 
 export const metadata: Metadata = {
@@ -113,7 +113,7 @@ export default async function RootLayout({
 
                     <div className='flex flex-col justify-center w-full !pt-0 m-auto'>
 
-                      <div className=''>
+                      <div>
 
                         {children}    
 
