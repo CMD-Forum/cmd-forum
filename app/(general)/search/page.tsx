@@ -51,7 +51,7 @@ export default function Search({
                     </>
 
                 :
-                    <h1 className="text-gray-300 font-medium antialiased w-fit m-auto mb-6">Search for results to show</h1>
+                    <h1 className="subtitle w-fit m-auto mb-6">Either you&apos;ve reached the end, or you haven&apos;t searched yet.</h1>
                 }
             </div>
 

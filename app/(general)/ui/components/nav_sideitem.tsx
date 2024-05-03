@@ -203,7 +203,7 @@ export function CommunityInfobarItems( { community }: { community: Community } )
 
             <div className='flex-row gap-2 rounded-md w-full bg-transparent'>
                 
-                <div className='flex-col'>
+                <div className='flex-col bg-card p-6 border-1 border-border rounded-md'>
 
                     <div className='flex flex-row gap-3 items-center'>
 
@@ -211,8 +211,8 @@ export function CommunityInfobarItems( { community }: { community: Community } )
 
                         <div className='flex flex-col'>
 
-                            <h1 className='text-2xl font-sans font-bold antialiased w-full'>{community.display_name}</h1>   
-                            <h2 className='text-gray-300'>{community.description}</h2>
+                            <h1 className='header-2'>{community.display_name}</h1>   
+                            <h2 className='subtitle'>{community.description}</h2>
 
                         </div>
 

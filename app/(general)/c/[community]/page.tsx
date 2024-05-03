@@ -35,6 +35,7 @@ export default async function CommunityPage({ params }: { params: { community: s
         <CommunityInfobarItems 
           community={dbCommunity} 
         />               
+        <div className="mb-4" />
         <PostListByCommunity communityID={dbCommunity.id} />
       </div>
 

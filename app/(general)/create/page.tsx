@@ -9,7 +9,7 @@ export default function CreatePage() {
             <div className="flex flex-col border-b-1 border-border p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48">
 
                 <h1 className="header">Create</h1>
-                <p className="subtitle">Popular posts recently</p>   
+                <p className="subtitle">Submit a post or create a community, the choice is yours.</p>   
 
             </div>
             

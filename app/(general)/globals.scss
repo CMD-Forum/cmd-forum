@@ -156,9 +156,8 @@ body {
 
 .topbar-link {
 
-  @apply text-[14px];
-  @apply text-gray-400;
-  @apply hover:text-white;
+  @apply text-sm;
+  @apply hover:text-white #{!important};
   @apply transition-all;
   @apply hidden;
   @apply lg:flex;
@@ -166,12 +165,13 @@ body {
   @apply px-3;
   @apply py-2;
   @apply rounded-md;
+  @extend .subtitle;
 
 }
 
 .topbar-link.active {
 
-  @apply text-white;
+  @apply text-white #{!important};
   @apply bg-border;
 
 }
@@ -220,7 +220,6 @@ body {
 .generic_field {
 
   @apply bg-transparent;
-  @apply text-white;
   @apply rounded-md;
   @apply h-9;
   @apply px-2;
@@ -230,6 +229,7 @@ body {
   @apply focus:ring-2;
   @apply focus:ring-white #{!important};
   @apply transition-all;
+  @extend .subtitle;
 
 }
 
@@ -378,12 +378,16 @@ body {
   @extend .header-6;
 }
 
-.wmde-markdown p, li, blockquote {
+.wmde-markdown p, li, {
   @extend .subtitle;
 }
 
 .wmde-markdown img {
   @apply rounded-md #{!important};
+}
+
+.markdown-alert-title {
+  @extend .subtitle;
 }
 
 .md-editor {

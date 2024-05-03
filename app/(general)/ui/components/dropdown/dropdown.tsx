@@ -192,7 +192,7 @@ export const DropdownLink = <T extends string>({ text, icon, link }: { text: str
         <Link 
             // @ts-ignore
             href={ link } 
-            className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden text-gray-300 hover:text-white subtitle"
+            className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden hover:!text-white subtitle"
         >
 
             { icon ? (
@@ -268,13 +268,13 @@ export const DropdownUser = () => {
 
                 <Link 
                     href={`/user/${session.user.username}`} 
-                    className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden"
+                    className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden hover:!text-white"
                 >
                     {/* @ts-ignore */}
                     <div className="flex flex-col max-w-48">
-                        <span className="text-white text-[15px]">{session?.user.username}</span>
+                        <span className="text-[15px] subtitle text-white">{session?.user.username}</span>
                         <div className="overflow-hidden text-ellipsis max-w-48">
-                            <span className="text-gray-300 text-[13px]">{session?.user.email}</span>      
+                            <span className="text-[13px] subtitle">{session?.user.email}</span>      
                         </div>                    
                     </div>
                 </Link>

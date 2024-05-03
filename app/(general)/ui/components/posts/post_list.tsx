@@ -10,15 +10,15 @@ import { useSearchParams } from 'next/navigation';
 
 export default function PostList() {
 
-    const searchParams = useSearchParams();
-    const pathname = usePathname();
-    const { replace } = useRouter();
+    //const searchParams = useSearchParams();
+    //const pathname = usePathname();
+    //const { replace } = useRouter();
 
-    const [page, setPage] = useState( Number(searchParams.get("page") || 0 ));
+    const [page, setPage] = useState( /*Number(searchParams.get("page") || 0 )*/ 0);
     const [totalPages, setTotalPages] = useState(0);
 
     // @ts-ignore
-    let { data: post_count, count_error, count_isLoading } = useSWR(`/api/posts/getAll/count`, {
+    /*let { data: post_count, count_error, count_isLoading } = useSWR(`/api/posts/getAll/count`, {
         onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
           if (error.status === 404) return
           if (retryCount >= 1) return
@@ -30,28 +30,18 @@ export default function PostList() {
         revalidateOnReconnect: false,
         errorRetryInterval: 0,
         shouldRetryOnError: true
-    });    
+    });*/    
 
     function nextPage() {
-        if (page < totalPages - 1) {
+        //if (page < post_count - 1) {
             setPage(page + 1);
-            //@ts-ignore
-            replace(`${pathname}?page=${page}`)
-        }
+        //}
     };
     function lastPage() {
         if ( page > 0 ) {
             setPage(page - 1);
-            // @ts-ignore
-            replace(`${pathname}?page=${page}`)
         }
-    };
-
-    useEffect(() => {
-        if (post_count) {
-            setTotalPages(post_count);
-        }
-    }, [post_count]);    
+    };    
 
     let { data: posts, error, isLoading } = useSWR(`/api/posts/getAll/?page=${page}`, {
         onErrorRetry: (error, key, config, revalidate, { retryCount }) => {

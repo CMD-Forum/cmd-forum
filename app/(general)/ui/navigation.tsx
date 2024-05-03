@@ -39,11 +39,11 @@ export async function Navigation() {
                     <DropdownUser />
                     <hr className='mt-1 mb-1' />
                     <DropdownLink text={"Settings"} icon={<Cog6ToothIcon />} link={"/account/settings"} />
-                    <LogoutButton className={"hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm text-gray-300 hover:text-white"}><ArrowRightEndOnRectangleIcon className='w-5 h-5' />Logout</LogoutButton>
+                    <LogoutButton className={"hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm subtitle hover:!text-white"}><ArrowRightEndOnRectangleIcon className='w-5 h-5' />Logout</LogoutButton>
                     <hr className='mt-1 mb-1' />
                     <DropdownCustom className={"hover:bg-card"}>
-                      <div className='flex flex-col gap-1 items-center'>
-                        <Link className='label cursor-pointer text-gray-300 hover:text-white' href={"/updates/v1.1"}><MegaphoneIcon className='w-4 h-4'/>Version 1.1 is here at last!</Link>              
+                      <div className='flex flex-col gap-1 items-center w-full'>
+                        <Link className='label cursor-pointer subtitle hover:!text-white' href={"/updates/v1.1"}><MegaphoneIcon className='w-4 h-4'/>What&apos;s New - Alpha 1.1</Link>              
                       </div>
                     </DropdownCustom>
                   </Dropdown>
