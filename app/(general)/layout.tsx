@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.scss'
-import { Navigation, Sidebar, Infobar, Bottombar, Footer } from '@/app/(general)/ui/navigation'
+import { Navigation, Sidebar, Bottombar, Footer } from '@/app/(general)/ui/navigation'
 import NextAuthProvider from './nextauthprovider'
 
 const inter = Inter({ subsets: ['latin'] })
