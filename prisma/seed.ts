@@ -26,11 +26,12 @@ async function main() {
 
   const posts = [
     
-    { communityId: "1", title: "Look at my code!", content: "**_Here's my code!_**", tagline: "Made some code today.", public: true, authorId: "1", imageurl: "/images/uploaded/code.png", imagealt: "My Code!", createdAt: new Date("1/1/24") },
-    { communityId: "1", title: "The Cliffs of Moher", content: "# The Cliffs of Moher \n Here is the cliffs of moher! \n ## The Cliffs History \n Loreum Ipsum...", tagline: "Post Tagline 2", public: true, authorId: "2", imageurl: "https://images.unsplash.com/photo-1530538095376-a4936b35b5f0?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", imagealt: "The Cliffs of Moher", createdAt: new Date("30/11/23") },
+    { communityId: "1", title: "Look at my code!", content: "**_Here's my code!_**", tagline: "Made some code today.", public: true, authorId: "1", imageurl: "/images/uploaded/code.png", imagealt: "My Code!", createdAt: new Date("January 1, 2024 03:24:00") },
+    { communityId: "1", title: "The Cliffs of Moher", content: "# The Cliffs of Moher \n Here is the cliffs of moher! \n ## The Cliffs History \n Loreum Ipsum...", tagline: "Post Tagline 2", public: true, authorId: "2", imageurl: "https://images.unsplash.com/photo-1530538095376-a4936b35b5f0?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", imagealt: "The Cliffs of Moher", createdAt: new Date("December 30, 2023 13:30:23") },
     { communityId: "3", title: "So, what did you think of last nights episode?", content: "I think it was great, how about you?", tagline: "It was great, I'd say.", public: true, authorId: "2", imageurl: null, imagealt: null, createdAt: new Date("5/11/23") },
-    { communityId: "2", title: "Feature suggestion", content: "What if we implement this feature, using the code above?", tagline: "My new feature request.", public: true, authorId: "3", imageurl: "/images/uploaded/code.png", imagealt: "The code in question.", createdAt: new Date("1/12/23") },
-    { communityId: "5", title: "I think \"Snakes on a Plane\" was just okay.", content: "# Hah, just kidding. \n It's actually great.", tagline: "Look inside.", public: true, authorId: "4", imageurl: null, imagealt: null, createdAt: new Date("21/12/23") },
+    { communityId: "2", title: "Feature suggestion", content: "What if we implement this feature, using the code above?", tagline: "My new feature request.", public: true, authorId: "3", imageurl: "/images/uploaded/code.png", imagealt: "The code in question.", createdAt: new Date("December 1, 2023 06:54:44") },
+    { communityId: "4", title: "I think \"Snakes on a Plane\" was just okay.", content: "# Hah, just kidding. \n It's actually great.", tagline: "Look inside.", public: true, authorId: "4", imageurl: null, imagealt: null, createdAt: new Date("December 23, 2023 12:32:43") },
+    { communityId: "1", title: "This post is really old.", content: "This is just to test dates.", tagline: "For testing, of course.", public: true, authorId: "1", imageurl: null, imagealt: null, createdAt: new Date("December 17, 1995 03:24:00") },
   
   ];
 
