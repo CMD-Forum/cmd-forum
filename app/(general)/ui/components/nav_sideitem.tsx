@@ -56,7 +56,7 @@ export function NavSideItems() {
                 key={"sidebar_firstmotiondiv"}
             >
                 <motion.div 
-                    className="bg-card fixed top-0 z-40 w-[300px] px-4 py-2 h-full flex flex-col overflow-scroll gap-1"
+                    className="bg-card-light fixed top-0 z-40 w-[300px] px-4 py-2 h-full flex flex-col overflow-scroll gap-1"
                     animate={{
                         x: expanded ? "0px" : "-300px",
                     }}
@@ -68,7 +68,7 @@ export function NavSideItems() {
                 >
                 
                     <div className="w-full h-fit flex flex-row-reverse mt-1 mb-4">
-                        <button className={`navlink-sidebar  z-[100] !mb-0 !mt-0 !w-fit !border-[1px] !border-border`} onClick={() => toggleDrawer()}><XMarkIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /></button>
+                        <button className={`navlink-sidebar z-[100] !mb-0 !mt-0 !w-fit !border-[1px] !border-border`} onClick={() => toggleDrawer()}><XMarkIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /></button>
                         <h1 className={`${inter.className} font-extrabold text-3xl mr-auto flex items-center hover:text-gray-300 transition-all cursor-pointer`}>CMD/&gt;</h1>
                     </div>
 
@@ -204,6 +204,76 @@ export function CommunityInfobarItems( { community }: { community: Community } )
             <div className='flex-row gap-2 rounded-md w-full bg-transparent'>
                 
                 <div className='flex-col bg-card p-6 border-1 border-border rounded-md'>
+
+                    <div className='flex flex-row gap-3 items-center'>
+
+                        <img src={community.image} className='h-[56px] rounded' alt={`${community.display_name}'s Community Image`} />
+
+                        <div className='flex flex-col'>
+
+                            <h1 className='header-2'>{community.display_name}</h1>   
+                            <h2 className='subtitle'>{community.description}</h2>
+
+                        </div>
+
+                    </div>
+
+                    <div className='flex flex-row gap-3 items-center mt-2'>
+
+                        <div className='flex flex-row gap-3'>
+
+                            <div className='flex flex-row gap-1'>
+                                <CalendarDaysIcon className='w-[20px]' />
+                                <p className='text-sm'>{community.createdAt.toLocaleDateString()}</p>  
+                            </div>
+                            
+                            <div className='flex flex-row gap-1'>
+                                <UserIcon className='w-[20px]' />
+                                <p className='text-sm'>---</p>
+                            </div>
+
+                            <div className='flex flex-row gap-1'>
+                                <PencilSquareIcon className='w-[20px]' />
+                                <p className='text-sm'>---</p>
+                            </div>
+
+                            <div className='flex flex-row gap-1'>
+                                <ChatBubbleBottomCenterTextIcon className='w-[20px]' />
+                                <p className='text-sm'>---</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div className='flex flex-row gap-2 mt-3 mb-3'>
+
+                        {/* @ts-ignore */}
+                        <Link className='navlink justify-center items-center' href={`/c/${community.name}/rules`}><BookOpenIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Rules</p></Link>
+                        {/* @ts-ignore */}
+                        <Link className='navlink justify-center items-center' href={`/c/${community.name}/moderation`}><ShieldCheckIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Moderation</p></Link>    
+
+                    </div>
+
+                </div>
+
+            </div>  
+
+        </div>
+
+    );
+
+}
+
+export function CommunityInfobarItemsFull( { community }: { community: Community } ) {
+
+    return (
+
+        <div>
+
+            <div className='flex-row gap-2 rounded-md w-full bg-transparent'>
+                
+                <div className='flex-col bg-card p-6 border-0 border-border lg:px-48'>
 
                     <div className='flex flex-row gap-3 items-center'>
 

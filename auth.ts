@@ -37,7 +37,7 @@ interface NextAuthUserWithStringId extends ExtendedUser {
 export const inDevEnvironment = !!process && process.env.NODE_ENV === 'development';
 
 export const {
-  handlers: { GET, POST },
+  handlers,
   auth,
   signIn,
   signOut,

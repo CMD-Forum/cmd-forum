@@ -1,50 +1,43 @@
-import { prisma } from '../../../lib/db';
+import { prisma } from '@/app/(general)/lib/db';
 import { NextResponse } from 'next/server';
-import xss from 'xss';
 
 export async function POST( req: Request ) {
 
     try {
 
         if ( ! req.body) {
-
             return NextResponse.json({ message: "Request body is required." }, { status: 400 });
-
         }
 
-        console.log("req.body = " + req.body);
         const body = await req.json();
+        let { communityName } = body;
 
-        let { communityId } = body;
-
-        if ( ! communityId ) {
-
-            return NextResponse.json({ message: "CommunityId is required." }, { status: 400 })
-
+        if ( ! communityName ) {
+            return NextResponse.json({ message: "CommunityName is required." }, { status: 400 })
         }
 
         const community = await prisma.community.findUnique({
-
             where: {
-
-                id: communityId
-
+                name: communityName
             }
-            
         });        
+
+        if ( ! community ) {
+            return NextResponse.json({ message: "Community not found."}, { status: 404 })
+        }
+
+        if ( community.public === false ) {
+            return NextResponse.json({ message: "Community is private."}, { status: 401 })
+        }
               
         return NextResponse.json(community, { status: 200 })
 
     } catch (error) {
-
         console.error(error);
         return NextResponse.json({ message: "Error occurred while fetching community."}, { status: 500 })
-
     }
 }
 
 export async function GET() {
-
     return NextResponse.json({ message: "Use POST to get a single community here, or use GET at the /api/community/getAll endpoint." }, {status: 400})
-
 }

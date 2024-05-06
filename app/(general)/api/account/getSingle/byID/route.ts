@@ -14,23 +14,18 @@ export async function POST(req: Request) {
 
         const { userId } = body;
 
+        /*if ( userId !== String ) {
+            return NextResponse.json({ message: "UserID must be a string."})
+        }*/
+
         const UserDetails = await prisma.user.findUnique({
             where: {
                 id: userId,
             },
-            select: {
-                email: false,
-                password: false,
-                supportId: false,
-                // Make sure passwords aren't publicly accessible.
-                id: true,
-                username: true,
-                name: true,
-                description: true,
-                profile_image: true,
-                createdAt: true,
-                updatedAt: true
-            },
+            omit: {
+                password: true,
+                email: true,
+            }
         });
 
         if ( UserDetails ) {

@@ -18,15 +18,14 @@ function ErrorMessage(props: { message: string }) {
 export default function CreateCommunityForm() {
 
     const [error, setError] = useState<string | null>(null);
+    const [errorTitle, setErrorTitle] = useState<string | null>(null);
     const [success, setSuccess] = useState<boolean | null>(null);
-    const [com_err, setCom_Err] = useState<boolean | null>(null);
-    const [create_err, setCreate_Err] = useState<boolean | null>(null);
     const [isLoading, setIsLoading] = useState(false);
 
     const form = useForm<z.infer<typeof CreateCommunitySchema>>({
       resolver: zodResolver(CreateCommunitySchema),
       defaultValues: {
-        community_name: '',
+        name: '',
         description: '',
         image_url: '',
       },
@@ -45,16 +44,16 @@ export default function CreateCommunityForm() {
     const OnSubmit = async (values: z.infer<typeof CreateCommunitySchema>) => {
 
       setIsLoading(true);
-      setCom_Err(false);
+      setError(null);
       setSuccess(false);
   
-      const existingCommunity = await getCommunityByName(values.community_name)
+      const existingCommunity = await getCommunityByName(values.name);
   
       if ( ! existingCommunity ) {
   
         const communityData = {
 
-            community_name: values.community_name,
+            display_name: values.name,
             description: values.description,
             image: values.image_url,
             admin_ids: [session.user.id]
@@ -70,16 +69,19 @@ export default function CreateCommunityForm() {
              
         } catch ( error ) {
 
-            setCom_Err(true);
             setIsLoading(false);
+            setErrorTitle("Oops, an error occurred.");
+            // @ts-ignore
+            setError(error);
 
         }
         
 
       } else {
-  
-        setCom_Err(true);           
+        
         setIsLoading(false);
+        setErrorTitle("Community Unavailable");
+        setError("Looks like that name has been taken.");
   
       }
   
@@ -90,32 +92,25 @@ export default function CreateCommunityForm() {
         <form className="flex flex-col gap-2 bg-transparent rounded-lg !w-full" onSubmit={form.handleSubmit(OnSubmit)}>
 
             {success && (
-
-                <Alert type="success" title="Community Created" description="Your community was created successfully." />
-
+                <Alert type="success" title="Community Created" description="Your community was successfully created." />
             )}
 
-            {create_err && (
-
-                <Alert type="error" title="Community Creation Failed" description="Sorry, your community could not be created. Please try again later." />
-
-            )}
-
-            {com_err && (
-                <Alert type="error" title="Community Creation Failed" description="Sorry, a community with that name already exists." />
+            {error && (
+                // @ts-ignore
+                <Alert type="error" title={errorTitle} description={error} />
             )}
 
             <div className="flex gap-1 font-medium">Community Name<p className="text-[#fca5a5]">*</p></div>
             <input
-                {...form.register('community_name')}
+                {...form.register('name')}
                 placeholder="general"
-                className={`generic_field ${form.formState.errors.community_name ? "errored" : ""}`}
+                className={`generic_field ${form.formState.errors.name ? "errored" : ""}`}
             />
 
-            {form.formState.errors.community_name && (
+            {form.formState.errors.name && (
 
                 // @ts-expect-error
-                <ErrorMessage message={form.formState.errors.community_name.message} />
+                <ErrorMessage message={form.formState.errors.name.message} />
 
             )}
 
@@ -156,13 +151,9 @@ export default function CreateCommunityForm() {
             <button type="submit" className="navlink-full !w-full sm:!w-fit justify-center min-w-[62px]">
                 
                 {/* eslint-disable-next-line @next/next/no-img-element*/}
-                {isLoading ? <img src="/spinner.svg" alt="Submitting..." className="spinner"/>  : 'Create Community' }
+                {isLoading && <img src="/spinner_black.svg" alt="Submitting..." className="spinner"/> } Create Community 
                 
             </button>
-
-            {/* */}
-
-            {error && <Alert type="alert" title="Creation Failed" description="Please check all details are correct." />}
 
         </form>
 

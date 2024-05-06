@@ -10,7 +10,7 @@ generator client {
   provider        = "prisma-client-js"
   output          = "../node_modules/.prisma/client"
   seed            = "node prisma/seed.js"
-  previewFeatures = ["fullTextSearch"]
+  previewFeatures = ["fullTextSearch", "omitApi"]
 }
 
 generator docs { /// Thanks, prisma-docs-generator: https://github.com/pantharshit00/prisma-docs-generator
@@ -67,7 +67,7 @@ model Post {
   downvotes   Int       @default(0) /// How many downvotes the post has.
   upvotes     Int       @default(0) /// How many upvotes the post has.
   communityId String    @default("null") /// The CUID of the posts community.
-  author      User      @relation(fields: [authorId], references: [id])
+  author      User      @relation(fields: [authorId], references: [id])    
   community   Community @relation(fields: [communityId], references: [id])
 }
 
@@ -85,7 +85,8 @@ model User {
   name               String      /// Deprecated, do not use.
   profile_image      String      @default("/images/favicon/favicon.svg") /// Deprecated, do not use.
   image              String      @default("/images/favicon/favicon.svg") /// The profile image of the user.
-  posts              Post[]
+  posts              Post[]     
+  savedPosts         String[]    @default([])
   Support            Support?    @relation(fields: [supportId], references: [authorId])
   supportId          String?
   role               UserRole    @default(USER) /// If the user is a normal user or a site administrator (not to be confused with a community administrator).

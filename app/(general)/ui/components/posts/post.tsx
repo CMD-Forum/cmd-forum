@@ -7,6 +7,7 @@ import Dropdown, { DropdownLink, DropdownShare } from '../dropdown/dropdown';
 import { BackButtonNormal } from './back_button';
 import Hovercard from '../dropdown/hovercard';
 import { Post } from '@/types/types';
+import { BookmarkIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/16/solid';
 
 /**
  * Horizontal card display of the given post.
@@ -54,7 +55,7 @@ export function CardPost( post: Post ) {
 
     return (
 
-        <div className="flex flex-col sm:flex-row w-full items-center gap-4 relative group transition-all bg-card border-1 border-border group-hover/title:!border-white h-fit rounded-md px-6 py-6">
+        <div className="flex flex-col sm:flex-row w-full items-center gap-4 relative group transition-all bg-card border-0 border-border group-hover/title:!border-white h-fit rounded-md px-6 py-6">
 
             {post.imageurl 
                 
@@ -121,10 +122,21 @@ export function CardPost( post: Post ) {
 
                 <p className='subtitle'>{post.tagline}</p>
 
-                <div className='flex flex-row mt-4'>
-                    <Link className='navlink !px-2 md:!px-3 mr-auto' href={`/posts/${post.id}`}><ChatBubbleLeftEllipsisIcon className='w-5 h-5' /><span className='hidden md:flex'>Comments</span></Link>
+                <div className='flex flex-row mt-4 justify-between'>
+                    <div className='flex flex-row gap-2'>
+                        <button className='navlink !px-2 mr-auto'><ChevronUpIcon className='w-5 h-5' /></button>
+                        <button className='navlink !px-2 mr-auto'><ChevronDownIcon className='w-5 h-5' /></button>
+                        {/*<Link className='navlink-emphasis !px-2 md:!px-3 mr-auto' href={`/posts/${post.id}`}><ChatBubbleLeftEllipsisIcon className='w-5 h-5' /><span className='hidden md:flex'>Comments</span></Link>*/}                        
+                        <button className='navlink !px-2 md:!px-3 mr-auto'><BookmarkIcon className='w-5 h-5' /><span className='hidden md:flex'>Save</span></button>
+                    </div>
                     
-                    <Dropdown align={"right"} accountHeading={false} headerIcon={<EllipsisVerticalIcon />} headerText={null} headerClassName={"mt-4"}>
+                    <Dropdown 
+                        align={"right"} 
+                        accountHeading={false} 
+                        headerIcon={<EllipsisVerticalIcon />} 
+                        headerText={null} 
+                        headerClassName={"mt-4 navlink-emphasis"}
+                    >
                         <DropdownLink text={post.author.username} icon={<img src={post.author.image} alt={post.author.username}></img>} link={`/user/${post.author.username}`}></DropdownLink>
                         <DropdownLink text={post.community.display_name} icon={<img src={post.community.image} alt={post.community.display_name}></img>} link={`/c/${post.community.name}`}></DropdownLink>
                         <hr className='mt-1 !mb-1'/>

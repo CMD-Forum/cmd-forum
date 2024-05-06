@@ -5,9 +5,11 @@ export async function GET( req: Request ) {
 
     try {
 
-        const communitys = await prisma.community.findMany();        
+        // const communitys = await prisma.community.findMany();        
               
-        return NextResponse.json(communitys, { status: 200 })
+        // return NextResponse.json(communitys, { status: 200 })
+
+        return NextResponse.json({ message: "Requesting all communitys is currently unavailable." }, { status: 500 })
 
     } catch (error) {
 

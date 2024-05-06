@@ -11,14 +11,13 @@ export async function POST( req: Request ) {
 
         }
 
-        console.log("req.body = " + req.body);
         const body = await req.json();
 
-        let { communityId } = body;
+        let { communityID } = body;
 
-        if ( ! communityId ) {
+        if ( ! communityID ) {
 
-            return NextResponse.json({ message: "CommunityId is required." }, { status: 400 })
+            return NextResponse.json({ message: "CommunityID is required." }, { status: 400 })
 
         }
 
@@ -26,7 +25,7 @@ export async function POST( req: Request ) {
 
             where: {
 
-                id: communityId
+                id: communityID
 
             }
             

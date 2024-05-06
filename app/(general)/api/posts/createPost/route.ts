@@ -49,9 +49,7 @@ export async function POST(req: Request, res: Response) {
         }
 
         const post = await prisma.post.create({
-
             data,
-
         });
 
         return NextResponse.json(post, { status: 201 });

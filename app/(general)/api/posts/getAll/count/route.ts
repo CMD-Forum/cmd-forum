@@ -5,9 +5,9 @@ export async function GET( req: NextRequest ) {
 
     try {;
 
-        const post_count = await prisma.post.count();     
+        const postCount = await prisma.post.count();     
               
-        return NextResponse.json(post_count, { status: 200 })
+        return NextResponse.json(postCount, { status: 200 })
 
     } catch (error) {
 

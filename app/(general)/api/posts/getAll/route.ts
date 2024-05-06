@@ -41,6 +41,7 @@ export async function GET( req: NextRequest ) {
 
                         id: true,
                         name: true,
+                        // eslint-disable-next-line camelcase
                         display_name: true,
                         image: true,
                         public: true

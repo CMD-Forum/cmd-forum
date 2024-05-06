@@ -149,6 +149,7 @@ export function Footer() {
             <li className='header-3'>Command</li>
             <Link href={"/"} className='hover:underline w-fit subtitle text-sm'>Home</Link>
             <Link href={"/posts"} className='hover:underline w-fit subtitle text-sm'>Posts</Link>
+            <Link href={"/c"} className='hover:underline w-fit subtitle text-sm'>Community</Link>
             <Link href={"/search"} className='hover:underline w-fit subtitle text-sm'>Search</Link>
           </ul>
         </div>

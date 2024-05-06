@@ -78,8 +78,6 @@ export default function CreatePostForm() {
     } 
 
     const OnSubmit = async (values: z.infer<typeof FormSchema>) => {
-  
-      console.log("[INFO] Form submitted");
 
       setIsLoading(true);
       setCom_Err(false);
