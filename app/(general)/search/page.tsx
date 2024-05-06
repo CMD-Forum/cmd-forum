@@ -22,7 +22,7 @@ export default function Search({
 
       <div className="error flex flex-col w-full">
 
-            <div className="flex flex-col border-b-1 border-border p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48">
+            <div className="flex flex-col border-0 border-border p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48 bg-card">
 
                 <h1 className="header">Search</h1>
                 <p className="subtitle">Find that post you liked.</p>   
@@ -41,7 +41,7 @@ export default function Search({
                 </div>             
             </div>
 
-            <hr className='border-border facebookTheme:border-[#b3b3b3] mb-6 mt-6' />
+            <div className='mb-6 mt-6' />
 
             <div className='flex flex-col gap-4'>
                 {query ?

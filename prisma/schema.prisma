@@ -30,6 +30,15 @@ enum UserRole {
 
 }
 
+enum TwoFactorMethod {
+
+  EMAIL_LINK
+  EMAIL_CODE
+  PHONE
+  NONE
+
+}
+
 model Community {
   id             String   @id @default(cuid()) /// The CUID of the community.
   createdAt      DateTime @default(now()) /// When the community was created.
@@ -82,6 +91,7 @@ model User {
   role               UserRole    @default(USER) /// If the user is a normal user or a site administrator (not to be confused with a community administrator).
   accounts           Account[]
   sessions           Session[]
+  settings           UserSettings[]
 }
 
 model Account {
@@ -126,4 +136,16 @@ model Support {
   content   String @default("# Support Article \n Edit this article!")
   title     String @default("Article has no name")
   tagline   String @default("Article has no tagline")
+}
+
+model UserSettings {
+  userID                  String @id
+
+  defaultHomeRedirect     String          @default("/") /// Where the user is redirected when they click a link home (e.g the CMD/> text in the navigation or footer).
+  postsPublic             Boolean         @default(true) /// Whether the user's posts are public. Defaults to true.
+  accountPublic           Boolean         @default(true) /// Whether the user's account is public. Defaults to true.
+  twoFactorAuthentication Boolean         @default(false) /// Whether the user has 2FA enabled. Defaults to false, doesn't do anything currently.
+  twoFactorMethod         TwoFactorMethod @default(NONE) /// What type of 2FA the user has enabled. Defaults to NONE, doesn't do anything currently.
+
+  user                    User[]
 }

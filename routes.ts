@@ -32,6 +32,17 @@ export const authRoutes: string[] = [
 
 /**
 
+* Array of routes that should not be accessible to logged in users.
+* @type {string[]}
+
+*/
+
+export const publicOnlyRoutes: string[] = [
+    "/",
+]
+
+/**
+
 * Route that should always be accessible.
 * "/api/auth" is provided.
 * @type {string}

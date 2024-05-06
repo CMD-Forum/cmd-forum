@@ -26,7 +26,7 @@ export default function AccountSettings() {
 
                                     <h1 className='header-2'>{session?.user.username}</h1>   
                                     {/* @ts-ignore */}
-                                    <p className='subtitle'>{session?.user.description}</p>
+                                    <p className='subtitle text-sm'>{session?.user.description}</p>
 
                                 </div>
 

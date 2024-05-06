@@ -23,14 +23,14 @@ export function Settings_ChangeAccountUsername() {
 
             <div className="px-6">
                 <h3 className='font-bold text-xl'>Account Username</h3>     
-                <p className='subtitle'>Change your account username.</p>
+                <p className='subtitle text-sm'>Change your account username.</p>
             </div>
 
             <div className="w-full border-t-1 border-border mt-6 flex" />   
             
             <div className='flex flex-col bg-card md:flex-row py-3 px-6 justify-between gap-3 items-center w-full'>
 
-                <p className="subtitle hidden md:flex">To change your username, click the button.</p>
+                <p className="subtitle hidden md:flex text-sm">To change your username, click the button.</p>
 
                 { session?.user.id && 
                     <Modal btnText={"Update Username"} btnType={"navlink-full"} closeBtn={true} closeBtnType={"navlink-full"}>
@@ -56,14 +56,14 @@ export function Settings_ChangeDescription() {
 
             <div className="px-6">
                 <h3 className='font-bold text-xl'>Update Description</h3>     
-                <p className='subtitle'>Update your profile description.</p>
+                <p className='subtitle text-sm'>Update your profile description.</p>
             </div>
 
             <div className="w-full border-t-1 border-border mt-6 flex" />   
             
             <div className='flex flex-col bg-card md:flex-row py-3 px-6 justify-between gap-3 items-center w-full'>
 
-                <p className="subtitle hidden md:flex">To update your description, click the button.</p>
+                <p className="subtitle hidden md:flex text-sm">To update your description, click the button.</p>
 
                 { session?.user.id && 
                     <Modal btnText={"Update Description"} btnType={"navlink-full"} closeBtn={true} closeBtnType={"navlink-full"}>
@@ -91,14 +91,14 @@ export function Settings_DeleteAccount() {
 
             <div className="px-6">
                 <h3 className='font-bold text-xl'>Delete Account</h3>     
-                <p className='subtitle'>Delete your account. Do this only if you&apos;re sure.</p>
+                <p className='subtitle text-sm'>Delete your account. Do this only if you&apos;re sure.</p>
             </div>
 
             <div className="w-full border-t-1 border-border mt-6 flex" />   
             
             <div className='flex flex-col bg-card md:flex-row py-3 px-6 justify-between gap-3 items-center w-full'>
 
-                <p className="subtitle hidden md:flex">If you&apos;re sure you want to, click the button.</p>
+                <p className="subtitle hidden md:flex text-sm">If you&apos;re sure you want to, click the button.</p>
 
                 { session?.user.id && 
                     <Modal btnText={"Delete Account"} btnType={"navlink-destructive"} closeBtn={true} closeBtnType={"navlink-full"}>

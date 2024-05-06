@@ -21,7 +21,7 @@ export default async function ModerationPage({ params }: { params: { community: 
 
                 <div className="error flex flex-col w-full">
 
-                    <div className="flex flex-col border-b-1 border-border p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48">
+                    <div className="flex flex-col border-0 border-border p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48 bg-card">
 
                         <h1 className="header">Moderation</h1>
                         <p className={`subtitle sm:hidden`}>You are viewing the moderation page of <br /> c/{ params.community }.</p>

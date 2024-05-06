@@ -67,7 +67,7 @@ export default function Modal({ children, btnText, btnClassName, btnType = "navl
 
                                         {title} 
 
-                                        <div className="mb-2" />   
+                                        <div className="mb-1" />   
                                         
                                         {subtitle}
 
@@ -111,7 +111,7 @@ Modal.Title = Title;
 
 const Subtitle = ({ children, className = "", ...other }: { children: React.ReactNode, className?: string }) => (
     
-    <p className={`pb-4 subtitle text-center md:text-left ${className}`} {...other}>{ children }</p>
+    <p className={`pb-4 subtitle text-center md:text-left text-sm ${className}`} {...other}>{ children }</p>
 
 )
 

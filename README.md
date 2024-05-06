@@ -44,7 +44,7 @@ To setup your .env file, you'll need to change a few things.
 
 To fully setup your database, run the following commands in order:
   - `npx prisma db push`
-  - `npx prisma generate`
+  - `npx prisma generate` (stop the NextJS server before running this if already started)
 
 If all goes well, your database should have all required tables and fields. Prisma should give an error if something goes wrong, however it shouldn't.
 
