@@ -53,7 +53,7 @@ export default function CreateCommunityForm() {
   
         const communityData = {
 
-            display_name: values.name,
+            name: values.name,
             description: values.description,
             image: values.image_url,
             admin_ids: [session.user.id]
@@ -135,7 +135,7 @@ export default function CreateCommunityForm() {
             <div className="flex gap-1 font-medium">Image<p className="text-[#fca5a5]">*</p></div>
             <input
                 {...form.register('image_url')}
-                placeholder="https://www.imgur.com/testurl"
+                placeholder="https://domainimagesaretemporary.org/images/070524"
                 className={`generic_field ${form.formState.errors.image_url ? "errored" : ""}`}
             />
 

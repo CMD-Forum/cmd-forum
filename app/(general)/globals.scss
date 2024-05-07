@@ -53,7 +53,7 @@ body {
   @apply hover:bg-border;
   @apply px-3;
   @apply py-2;
-  @apply border-2;
+  @apply border-1;
   @apply border-border;
   @apply rounded-md;
   @apply flex;
@@ -534,6 +534,7 @@ hr {
   @apply text-gray-300 #{!important};
   @apply font-medium #{!important};
   @apply antialiased #{!important};
+  @apply text-sm #{!important};  
 
 }
 

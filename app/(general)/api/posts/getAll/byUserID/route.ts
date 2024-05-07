@@ -7,10 +7,10 @@ export async function POST( req: Request ) {
 
         const body = await req.json();
 
-        let { page } = body;
+        let { userID, page } = body;
 
-        if ( ! page ) {
-            return NextResponse.json({ message: "Page is required." }, { status: 400 });
+        if ( ! userID ) {
+            return NextResponse.json({ message: "UserID is required." }, { status: 400 });
         }
 
         const posts = await prisma.post.findMany({
@@ -18,6 +18,12 @@ export async function POST( req: Request ) {
             // @ts-ignore
             skip: page * 10,
             take: 10,
+
+            where: {
+                author: {
+                    id: userID,
+                },
+            },
 
             include: {
 

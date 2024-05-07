@@ -13,10 +13,10 @@ export async function CommunityAdministrators({ communityId }: { communityId: st
 
         if (Array.isArray(community.admin_ids) && community.admin_ids.length <= 0) {
             return (
-                <div className="p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48">
+                <div className="p-2 pt-12 lg:pb-12 lg:p-12 lg:px-48">
                     <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'>
-                        <p className='md:!header-2 header-3'>We couldn&apos;t find any administrators.</p>
-                        <p className='text-center !text-white font-medium antialiased w-full'>This shouldn&apos;t happen, try reloading the page.</p>
+                        <p className='md:!header-2 header-4 !text-center'>We couldn&apos;t find any administrators.</p>
+                        <p className='subtitle !text-center'>This shouldn&apos;t happen, try reloading the page.</p>
                     </div>            
                 </div>
             );

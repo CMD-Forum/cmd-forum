@@ -135,7 +135,7 @@ export function CardPost( post: Post ) {
                         accountHeading={false} 
                         headerIcon={<EllipsisVerticalIcon />} 
                         headerText={null} 
-                        headerClassName={"mt-4 navlink-emphasis"}
+                        headerClassName={"mt-4"}
                     >
                         <DropdownLink text={post.author.username} icon={<img src={post.author.image} alt={post.author.username}></img>} link={`/user/${post.author.username}`}></DropdownLink>
                         <DropdownLink text={post.community.display_name} icon={<img src={post.community.image} alt={post.community.display_name}></img>} link={`/c/${post.community.name}`}></DropdownLink>

@@ -10,16 +10,16 @@ export async function POST( req: NextRequest ) {
         }
 
         const body = await req.json();
-        let { username } = body;
+        let { communityName } = body;
 
-        if ( ! username ) {
-            return NextResponse.json({ message: "Username is required." }, { status: 400 })
+        if ( ! communityName ) {
+            return NextResponse.json({ message: "CommunityName is required." }, { status: 400 })
         }
 
         const postCount = await prisma.post.count({
             where: {
-                author: {
-                    username: username,
+                community: {
+                    name: communityName,
                 },
             },
         });     
