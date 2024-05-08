@@ -10,7 +10,6 @@ export async function POST( req: Request ) {
         let { communityID, page } = body;
 
         if ( ! communityID ) {
-            console.log("com id err") 
             return NextResponse.json({ message: "CommunityID is required." }, { status: 400 });
         }
 
@@ -49,7 +48,6 @@ export async function POST( req: Request ) {
 
                         id: true,
                         name: true,
-                        // eslint-disable-next-line camelcase
                         display_name: true,
                         image: true,
                         public: true
@@ -65,7 +63,7 @@ export async function POST( req: Request ) {
     } catch (error) {
 
         console.error(error);
-        return NextResponse.json({ message: "Error occurred while fetching posts."}, { status: 500 })
+        return NextResponse.json({ message: "Error occurred while fetching posts. Make sure you have included all fields correctly."}, { status: 500 })
 
     }
 }

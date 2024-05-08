@@ -40,7 +40,7 @@ export async function POST( req: Request ) {
     } catch (error) {
 
         console.error(error);
-        return NextResponse.json({ message: "Error occurred while fetching community."}, { status: 500 })
+        return NextResponse.json({ message: "Error occurred while fetching post."}, { status: 500 })
 
     }
 }

@@ -13,7 +13,8 @@ export const privateRoutes: string[] = [
     "/account/settings",
     "/account/:path",
     "/create",
-    "/create/:path"
+    "/create/:path",
+    "/posts/saved"
 ]
 
 /**

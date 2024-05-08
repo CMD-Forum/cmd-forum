@@ -166,12 +166,12 @@ export interface Post {
     /**
      * The number of downvotes the post has.
      */
-    downvotes: number;
+    //downvotes: number;
 
     /**
      * The number of upvotes the post has.
      */
-    upvotes: number;
+    //upvotes: number;
 
     /**
      * The ID of the posts community, used for relations in the database.

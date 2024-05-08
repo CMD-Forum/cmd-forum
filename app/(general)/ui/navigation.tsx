@@ -7,6 +7,7 @@ import { inter } from './fonts';
 import Dropdown, { DropdownCustom, DropdownLink, DropdownUser } from './components/dropdown/dropdown';
 import { ArrowRightEndOnRectangleIcon, Cog6ToothIcon, MegaphoneIcon, PlusIcon, QuestionMarkCircleIcon, UserCircleIcon, UserPlusIcon } from '@heroicons/react/24/solid';
 import LogoutButton from './components/signoutButton';
+import { BookmarkIcon } from '@heroicons/react/16/solid';
 
 export async function Navigation() {
 
@@ -37,6 +38,8 @@ export async function Navigation() {
 
                   <Dropdown align={"right"} accountHeading={true} headerText={""} headerIcon={null}>
                     <DropdownUser />
+                    <hr className='mt-1 mb-1' />
+                    <DropdownLink text={"Saved Posts"} icon={<BookmarkIcon />} link={"/posts/saved"} />
                     <hr className='mt-1 mb-1' />
                     <DropdownLink text={"Settings"} icon={<Cog6ToothIcon />} link={"/account/settings"} />
                     <LogoutButton className={"hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm subtitle hover:!text-white"}><ArrowRightEndOnRectangleIcon className='w-5 h-5' />Logout</LogoutButton>

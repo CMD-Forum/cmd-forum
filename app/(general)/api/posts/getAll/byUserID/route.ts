@@ -6,7 +6,6 @@ export async function POST( req: Request ) {
     try {
 
         const body = await req.json();
-
         let { userID, page } = body;
 
         if ( ! userID ) {
@@ -15,7 +14,6 @@ export async function POST( req: Request ) {
 
         const posts = await prisma.post.findMany({
 
-            // @ts-ignore
             skip: page * 10,
             take: 10,
 
@@ -26,11 +24,8 @@ export async function POST( req: Request ) {
             },
 
             include: {
-
                 author: {
-
                     select: {
-
                         id: true,
                         username: true,
                         createdAt: true,
@@ -41,20 +36,14 @@ export async function POST( req: Request ) {
                     }
 
                 },
-
                 community: {
-
                     select: {
-
                         id: true,
                         name: true,
-                        // eslint-disable-next-line camelcase
                         display_name: true,
                         image: true,
                         public: true
-
                     }
-
                 }
             }
         });        

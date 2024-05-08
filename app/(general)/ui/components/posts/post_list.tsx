@@ -2,6 +2,7 @@
 
 import { CardPost } from '@/app/(general)/ui/components/posts/post';
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/16/solid';
+import { Post } from '@prisma/client';
 import { useEffect, useState } from 'react';
 
 export default function PostList() {
@@ -11,7 +12,7 @@ export default function PostList() {
     const [totalPages, setTotalPages] = useState(1);
     const [pageForwardAllowed, setPageForwardAllowed] = useState<boolean>(true);
 
-    const [posts, setPosts] = useState(null);
+    const [posts, setPosts] = useState<Post>();
     const [isLoading, setIsLoading] = useState(false);
 
     function nextPage() {
@@ -67,6 +68,7 @@ export default function PostList() {
         }, [page, totalPosts]);    
 
     } catch ( error ) {
+
         return (
             <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'>
                 <p className='text-center text-gray-300 font-medium antialiased w-full'>Sorry, an error occurred.</p>
@@ -94,9 +96,11 @@ export default function PostList() {
         );
     };
 
+    
+
     return (
         <div className='flex flex-col gap-4'>
-            {/* @ts-ignore */}
+
             {Array.isArray(posts) && posts.map((post) => {
         
                 return (
@@ -114,8 +118,6 @@ export default function PostList() {
                         imagealt={post.imagealt}
                         public={true}
                         authorId={post.author.id}
-                        downvotes={post.downvotes}
-                        upvotes={post.upvotes}
                         communityId={post.community.id}
                         author={post.author}
                         community={post.community}

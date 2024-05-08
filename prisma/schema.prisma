@@ -64,8 +64,8 @@ model Post {
   imagealt    String?   /// If the post is an image post, this is the images accessibility tag.
   public      Boolean   @default(true) /// If false, this post cannot be accessed and will not be shown. Currently unimplemented.
   authorId    String    /// The CUID of the posts author.
-  downvotes   Int       @default(0) /// How many downvotes the post has.
-  upvotes     Int       @default(0) /// How many upvotes the post has.
+  upvotes     Upvotes[]
+  downvotes   Downvotes[]
   communityId String    @default("null") /// The CUID of the posts community.
   author      User      @relation(fields: [authorId], references: [id])    
   community   Community @relation(fields: [communityId], references: [id])
@@ -87,6 +87,8 @@ model User {
   image              String      @default("/images/favicon/favicon.svg") /// The profile image of the user.
   posts              Post[]     
   savedPosts         String[]    @default([])
+  upvotes            Upvotes[]
+  downvotes          Downvotes[]
   Support            Support?    @relation(fields: [supportId], references: [authorId])
   supportId          String?
   role               UserRole    @default(USER) /// If the user is a normal user or a site administrator (not to be confused with a community administrator).
@@ -149,4 +151,22 @@ model UserSettings {
   twoFactorMethod         TwoFactorMethod @default(NONE) /// What type of 2FA the user has enabled. Defaults to NONE, doesn't do anything currently.
 
   user                    User[]
+}
+
+model Upvotes {
+  userID   String
+  postID   String
+  User     User   @relation(fields: [userID], references: [id])
+  Post     Post   @relation(fields: [postID], references: [id])
+
+  @@id(name: "upvoteID", [postID, userID])
+}
+
+model Downvotes {
+  userID   String
+  postID   String
+  User     User   @relation(fields: [userID], references: [id])
+  Post     Post   @relation(fields: [postID], references: [id])
+
+  @@id(name: "downvoteID", [postID, userID])
 }

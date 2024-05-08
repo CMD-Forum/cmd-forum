@@ -1,13 +1,14 @@
 "use client";
 
 import Link from 'next/link';
-import { ChatBubbleLeftEllipsisIcon, EllipsisVerticalIcon, ShareIcon } from '@heroicons/react/24/solid';
+import { EllipsisVerticalIcon, ShareIcon } from '@heroicons/react/24/solid';
 import MarkdownPreview from '@uiw/react-markdown-preview';
 import Dropdown, { DropdownLink, DropdownShare } from '../dropdown/dropdown';
-import { BackButtonNormal } from './back_button';
 import Hovercard from '../dropdown/hovercard';
 import { Post } from '@/types/types';
-import { BookmarkIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/16/solid';
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/16/solid';
+import { SavePostButton } from '../button';
+import { useSession } from 'next-auth/react';
 
 /**
  * Horizontal card display of the given post.
@@ -52,6 +53,8 @@ export function CardPost( post: Post ) {
     const text = post.title;
     const url = `${process.env.NEXT_PUBLIC_CURRENT_URL}posts/${post.id}`;
     const title = "CMD/>";
+
+    const { data: session } = useSession();
 
     return (
 
@@ -123,12 +126,15 @@ export function CardPost( post: Post ) {
                 <p className='subtitle'>{post.tagline}</p>
 
                 <div className='flex flex-row mt-4 justify-between'>
-                    <div className='flex flex-row gap-2'>
-                        <button className='navlink !px-2 mr-auto'><ChevronUpIcon className='w-5 h-5' /></button>
-                        <button className='navlink !px-2 mr-auto'><ChevronDownIcon className='w-5 h-5' /></button>
-                        {/*<Link className='navlink-emphasis !px-2 md:!px-3 mr-auto' href={`/posts/${post.id}`}><ChatBubbleLeftEllipsisIcon className='w-5 h-5' /><span className='hidden md:flex'>Comments</span></Link>*/}                        
-                        <button className='navlink !px-2 md:!px-3 mr-auto'><BookmarkIcon className='w-5 h-5' /><span className='hidden md:flex'>Save</span></button>
-                    </div>
+                    { session &&
+                        <div className='flex flex-row gap-2'>
+                            <button className='navlink !px-2 mr-auto'><ChevronUpIcon className='w-5 h-5' /></button>
+                            <button className='navlink !px-2 mr-auto'><ChevronDownIcon className='w-5 h-5' /></button>
+                            {/*<Link className='navlink-emphasis !px-2 md:!px-3 mr-auto' href={`/posts/${post.id}`}><ChatBubbleLeftEllipsisIcon className='w-5 h-5' /><span className='hidden md:flex'>Comments</span></Link>*/}                        
+                            {/* @ts-ignore */}
+                            <SavePostButton btnText={"Save"} userID={session.user.id} postID={post.id} />
+                        </div>
+                    }
                     
                     <Dropdown 
                         align={"right"} 

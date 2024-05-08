@@ -76,7 +76,7 @@ export default function PostListByUser( { username }: { username: string } ) {
             })
             .then((data) => {
                 setTotalPosts(data);
-                setTotalPages(totalPosts / 10)
+                setTotalPages(Math.ceil(data / 10));
                 setIsLoading(false);
             });  
 
@@ -155,8 +155,8 @@ export default function PostListByUser( { username }: { username: string } ) {
 export function PostListByCommunity( { communityID }: { communityID: string } ) {
 
     const [page, setPage] = useState(0);
-    const [totalPosts, setTotalPosts] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
+    const [totalPosts, setTotalPosts] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
     const [pageForwardAllowed, setPageForwardAllowed] = useState<boolean>(true);
 
     const [posts, setPosts] = useState<Post>();
@@ -216,7 +216,7 @@ export function PostListByCommunity( { communityID }: { communityID: string } ) 
             })
             .then((data) => {
                 setTotalPosts(data);
-                setTotalPages(totalPosts / 10)
+                setTotalPages(Math.ceil(data / 10));
                 setIsLoading(false);
             });  
 
@@ -251,7 +251,174 @@ export function PostListByCommunity( { communityID }: { communityID: string } ) 
     };
 
     if ( ! posts ) {
-        return <p>hi</p>
+        return (
+            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'>
+                <p className='text-center text-gray-300 font-medium antialiased w-full'>Looks like there&apos;s no posts here.</p>
+                <div className='flex gap-4 w-full items-center justify-center mt-4'>
+                    <button className='navlink' onClick={() => router.push("/")} type='button'>Home</button>
+                </div>
+            </div>   
+        );
+    }
+
+    return (
+        <div className='flex flex-col gap-4'>
+
+            {Array.isArray(posts) && posts.map((post) => {
+        
+                return (
+                    <div 
+                      key={post.id}
+                    >
+                      <CardPost 
+                        id={post.id}
+                        createdAt={new Date(post.createdAt)}
+                        updatedAt={new Date(post.updatedAt)}
+                        title={post.title}
+                        content={post.content}
+                        tagline={post.tagline}
+                        imageurl={post.imageurl}
+                        imagealt={post.imagealt}
+                        public={true}
+                        authorId={post.author.id}
+                        downvotes={post.downvotes}
+                        upvotes={post.upvotes}
+                        communityId={post.community.id}
+                        author={post.author}
+                        community={post.community}
+                      />
+                    </div>
+
+                  );
+            })}
+
+            <div className='flex gap-4'>
+                <button onClick={() => lastPage()} className='navlink !px-2' disabled={ page === 0 ? true : false }><ArrowLeftIcon className='w-5 h-5' /></button>  
+                <button onClick={() => nextPage()} className='navlink !px-2' disabled={ pageForwardAllowed === false ? true : false }><ArrowRightIcon className='w-5 h-5' /></button>            
+            </div>
+
+        </div>
+    );
+
+}
+
+// SavedBy UserID
+
+export function SavedPostListByUserID( { userID }: { userID: string } ) {
+
+    const [page, setPage] = useState(0);
+    const [totalPosts, setTotalPosts] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [pageForwardAllowed, setPageForwardAllowed] = useState<boolean>(true);
+    const [error, setError] = useState(null);
+
+    const [posts, setPosts] = useState<Post>();
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    function nextPage() {
+        setPageForwardAllowed(false);
+        if (page < totalPages - 1) {
+            setPage(page + 1);
+            setPageForwardAllowed(true);
+        }
+    };
+    function lastPage() {
+        if ( page > 0 ) {
+            setPage(page - 1);
+            setPageForwardAllowed(true);
+        }
+    };    
+
+    const router = useRouter();
+ 
+        useEffect(() => {
+
+            //console.log("started loading");
+
+            setIsLoading(true),
+            fetch("/api/posts/getAllSaved/byUserID", {
+                method: 'POST',
+                headers:{
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ 
+                    "userID": `${userID}`,
+                    "page": `${page}`, 
+                })
+            })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                setPosts(data);
+            })
+            .catch((error) => {
+                setError(error);
+            });
+            //console.log("finished res.json, set posts");
+
+        }, [page, userID]);   
+        
+    useEffect(() => {
+        fetch("/api/posts/getAllSaved/count/byUserID", {
+            method: 'POST',
+            headers:{
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "userID": `${userID}`,
+            }),
+        })
+        .then((res) => {
+            return res.json();
+        })
+        .then((data) => {
+            setTotalPosts(data);
+            setTotalPages(Math.ceil(data / 10));
+            setIsLoading(false);
+        })
+        .catch((error) => {
+            setError(error);
+        });  
+    }, [userID]); 
+
+    if ( error ) {
+        return (
+            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'>
+                <p className='text-center text-gray-300 font-medium antialiased w-full'>Sorry, an error occurred.</p>
+                <div className='flex gap-4 w-full items-center justify-center mt-4'>
+                    <button className='navlink' onClick={() => router.refresh()} type='button'>Reload</button>
+                </div>
+            </div>   
+        );
+    }
+
+    if ( isLoading ) {
+        return (
+            <div className='flex flex-col gap-4 mt-4'>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>    
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>    
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>   
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
+                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>         
+            </div>
+        );
+    };
+
+    if ( ! posts ) {
+        return (
+            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'>
+                <p className='text-center text-gray-300 font-medium antialiased w-full'>Looks like there&apos;s no posts here.</p>
+                <div className='flex gap-4 w-full items-center justify-center mt-4'>
+                    <button className='navlink' onClick={() => router.push("/")} type='button'>Home</button>
+                </div>
+            </div>  
+        );
     }
 
     return (
