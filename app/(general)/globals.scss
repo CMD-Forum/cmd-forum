@@ -513,9 +513,9 @@ hr {
 
   @apply text-lg #{!important}; 
   @apply font-inter #{!important};
-  @apply text-white #{!important};
-  @apply font-medium #{!important}; 
-  @apply antialiased #{!important};
+  @apply text-gray-300; 
+  @apply font-bold; 
+  @apply antialiased;
 
 }
 

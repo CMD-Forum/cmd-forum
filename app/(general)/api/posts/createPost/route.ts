@@ -24,8 +24,6 @@ export async function POST(req: Request, res: Response) {
             content: sanitizedContent,
             tagline: sanitizedTagline,
             public: true, // default value
-            downvotes: 0, // default value
-            upvotes: 0, // default value
             imageurl: sanitizedImageurl,
             imagealt: sanitizedImagealt,
 

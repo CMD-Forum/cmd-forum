@@ -84,28 +84,24 @@ export const {
                 session.user.id = token.sub;    
             }
 
-            if (session.user && token.role ) {
-                session.user.role = token.role as UserRole;
-            }
+            if (session.user && token.role )
+            session.user.role = token.role as UserRole;
+            
 
-            if (session.user && token.picture) {
-                session.user.profile_image = token.picture;
-            }
+            if (session.user && token.picture) 
+            session.user.profile_image = token.picture;
 
-            if (session.user && token.username) {
-                // @ts-ignore
-                session.user.username = token.username;
-            }
+            if (session.user && token.username)
+            // @ts-ignore
+            session.user.username = token.username;
 
-            if (session.user && token.description) { 
-                // @ts-ignore
-                session.user.description = token.description;
-            }
+            if (session.user && token.description)
+            // @ts-ignore
+            session.user.description = token.description;
 
-            if (session.user && token.usernameLastUpdated) { 
-                // @ts-ignore
-                session.user.usernameLastUpdated = token.usernameLastUpdated;
-            }
+            if (session.user && token.usernameLastUpdated) 
+            // @ts-ignore
+            session.user.usernameLastUpdated = token.usernameLastUpdated;
             
             return session;
         },
@@ -115,18 +111,16 @@ export const {
             if (user) token.user = user
             if (profile) token.profile = profile
 
-            if ( ! token.sub) {
-                return token;
-            }
+            if ( ! token.sub )
+            return token;
 
             const existingUser = await getUserById(token.sub);
 
-            if ( ! existingUser ) {
-                return token;
-            }
+            if ( ! existingUser )
+            return token;
 
             token.role = existingUser.role;
-            token.picture = existingUser.image;
+            token.image = existingUser.image;
             token.username = existingUser.username;
             token.description = existingUser.description;
             token.usernameLastUpdated = existingUser.usernameLastUpdate;

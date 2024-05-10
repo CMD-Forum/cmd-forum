@@ -2,6 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import Modal from "../modal";
+import { ChangeAccountDescription, ChangeAccountName } from "./settings_actions";
 
 // Account ////////////////////
 
@@ -24,11 +25,11 @@ export function Settings_ChangeAccountUsername() {
                 <p className="subtitle hidden md:flex text-sm"></p>
 
                 { session?.user.id && 
-                    <Modal btnText={"Update Username"} btnType={"navlink-full"} closeBtn={true} closeBtnType={"navlink-full"}>
+                    /*<Modal closeBtn={true} openBtn={true} openBtnComponent={<button className={"navlink-full"}>Change Username</button>}>
                         <Modal.Title>Sorry, this option is unavailable.</Modal.Title>
                         <Modal.Subtitle>You cannot change your username at this moment, please try again later.</Modal.Subtitle>
-                    </Modal>
-                    // <ChangeAccountName userID={session?.user.id} /> // Uncomment when restrictions are added.                       
+                    </Modal>*/
+                    <ChangeAccountName userID={session?.user.id} /> // Uncomment when restrictions are added.                       
                 }
 
             </div>
@@ -57,11 +58,11 @@ export function Settings_ChangeDescription() {
                 <p className="subtitle hidden md:flex text-sm"></p>
 
                 { session?.user.id && 
-                    <Modal btnText={"Update Description"} btnType={"navlink-full"} closeBtn={true} closeBtnType={"navlink-full"}>
+                    /*<Modal closeBtn={true} openBtn={true} openBtnComponent={<button className={"navlink-full"}>Change Description</button>}>
                         <Modal.Title>Sorry, this option is unavailable.</Modal.Title>
                         <Modal.Subtitle>You cannot change your description at this moment, please try again later.</Modal.Subtitle>
-                    </Modal>
-                    // <ChangeAccountDescription userID={session.user.id} /> // Uncomment when restrictions are added and this actually works.  
+                    </Modal>*/
+                    <ChangeAccountDescription userID={session.user.id} /> // Uncomment when restrictions are added and this actually works.  
                 }
 
                 {/* <Switch onEnabled={() => console.log("enabled")} /> */}
@@ -92,7 +93,7 @@ export function Settings_DeleteAccount() {
                 <p className="subtitle hidden md:flex text-sm">If you&apos;re sure you want to, click the button.</p>
 
                 { session?.user.id && 
-                    <Modal btnText={"Delete Account"} btnType={"navlink-destructive"} closeBtn={true} closeBtnType={"navlink-full"}>
+                    <Modal closeBtn={true} openBtn={true} openBtnComponent={<button className={"navlink-full"}>Delete Button</button>}>
                         <Modal.Title>Sorry, this option is unavailable.</Modal.Title>
                         <Modal.Subtitle>You cannot manually delete your account at this moment. Please contact us if you absolutely need your account deleted.</Modal.Subtitle>
                     </Modal>
@@ -127,7 +128,7 @@ export function Settings_Setup2FA() {
                 <p className="subtitle hidden md:flex text-sm"></p>
 
                 { session?.user.id && 
-                    <Modal btnText={"Setup 2FA"} btnType={"navlink-full"} closeBtn={true} closeBtnType={"navlink-full"}>
+                    <Modal closeBtn={true} openBtn={true} openBtnComponent={<button className={"navlink-full"}>Setup 2FA</button>}>
                         <Modal.Title>Sorry, this option is unavailable.</Modal.Title>
                         <Modal.Subtitle>You cannot setup Two-Factor Authentication at this moment.</Modal.Subtitle>
                     </Modal>

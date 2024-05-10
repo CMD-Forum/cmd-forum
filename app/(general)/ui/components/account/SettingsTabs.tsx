@@ -3,6 +3,7 @@
 import { useState } from "react";
 import AccountSettings, { SecuritySettings } from "../settings/settings";
 import { ChatBubbleBottomCenterTextIcon, KeyIcon, LockClosedIcon, PaintBrushIcon, UserIcon, ViewColumnsIcon } from "@heroicons/react/24/solid";
+import Alert from "../new_alert";
 
 export default function SettingsTabs() {
 
@@ -18,6 +19,8 @@ export default function SettingsTabs() {
             </div>   
 
             <div className={`${ activeTab === 1 ? "flex flex-col w-full" : "hidden" }`}>
+                <Alert type={"notice"} title="Settings are currently unavailable." description="Sorry, settings haven't been implemented yet." />
+                <div className="mb-4" />
                 <AccountSettings />
             </div>
 

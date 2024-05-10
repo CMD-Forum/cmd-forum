@@ -1,3 +1,4 @@
+import Alert from "../components/new_alert";
 import ComIDBtn from "./test";
 
 export default function DeveloperPage() {
@@ -12,7 +13,7 @@ export default function DeveloperPage() {
             </div>
 
             <div className="flex flex-col px-6 lg:py-12 lg:px-48 mt-6 mb-6">
-                <h2 className="text-gray-300 font-bold antialiased w-full">Buttons</h2>              
+                <h2 className="header-5 w-full">Buttons</h2>              
 
                 <div className="flex flex-col gap-2 mt-4">
                     <button className={"navlink"}>normal</button>
@@ -21,14 +22,23 @@ export default function DeveloperPage() {
                     <button className={"navlink-destructive"}>destructive</button>
                 </div>   
 
-                <h2 className="text-gray-300 font-bold antialiased w-full mt-4">Inputs</h2>
+                <h2 className="header-5 mt-4 w-full">Inputs</h2>
 
                 <div className="flex flex-col gap-2 mt-4">       
                     <input className="generic_field" placeholder="This is an input."></input> 
                     <input className="generic_field errored" placeholder="This is an errored input."></input> 
                 </div>
 
-                <h2 className="text-gray-300 font-bold antialiased w-full mt-4">Debug</h2> 
+                
+
+                <div className="flex flex-col gap-2 mt-4">
+                    <Alert type={"notice"} title="Notice" description="Description" />
+                    <Alert type={"alert"} title="Alert" description="Description" />
+                    <Alert type={"error"} title="Error" description="Description" />
+                    <Alert type={"success"} title="Success" description="Description" />
+                </div>
+
+                <h2 className="header-5 mt-4 w-full">Debug</h2> 
 
                 <div className="flex flex-col gap-2 mt-4">       
                     <ComIDBtn />  

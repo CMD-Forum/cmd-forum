@@ -3,8 +3,8 @@
 import { CardPost } from '@/app/(general)/ui/components/posts/post';
 import { useState, useEffect } from 'react';
 import { Post } from '@/types/types';
-import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/16/solid';
-import { useRouter } from 'next/navigation';
+import { ArrowLeftIcon, ArrowPathIcon, ArrowRightIcon } from '@heroicons/react/16/solid';
+import { usePathname, useRouter } from 'next/navigation';
 
 /**
  * PostListByUser
@@ -130,8 +130,6 @@ export default function PostListByUser( { username }: { username: string } ) {
                         imagealt={post.imagealt}
                         public={true}
                         authorId={post.author.id}
-                        downvotes={post.downvotes}
-                        upvotes={post.upvotes}
                         communityId={post.community.id}
                         author={post.author}
                         community={post.community}
@@ -281,8 +279,6 @@ export function PostListByCommunity( { communityID }: { communityID: string } ) 
                         imagealt={post.imagealt}
                         public={true}
                         authorId={post.author.id}
-                        downvotes={post.downvotes}
-                        upvotes={post.upvotes}
                         communityId={post.community.id}
                         author={post.author}
                         community={post.community}
@@ -331,33 +327,33 @@ export function SavedPostListByUserID( { userID }: { userID: string } ) {
 
     const router = useRouter();
  
-        useEffect(() => {
+    useEffect(() => {
 
-            //console.log("started loading");
+        //console.log("started loading");
 
-            setIsLoading(true),
-            fetch("/api/posts/getAllSaved/byUserID", {
-                method: 'POST',
-                headers:{
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ 
-                    "userID": `${userID}`,
-                    "page": `${page}`, 
-                })
+        setIsLoading(true),
+        fetch("/api/posts/getAllSaved/byUserID", {
+            method: 'POST',
+            headers:{
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ 
+                "userID": `${userID}`,
+                "page": `${page}`, 
             })
-            .then((res) => {
-                return res.json();
-            })
-            .then((data) => {
-                setPosts(data);
-            })
-            .catch((error) => {
-                setError(error);
-            });
-            //console.log("finished res.json, set posts");
+        })
+        .then((res) => {
+            return res.json();
+        })
+        .then((data) => {
+            setPosts(data);
+        })
+        .catch((error) => {
+            setError(error);
+        });
+        //console.log("finished res.json, set posts");
 
-        }, [page, userID]);   
+    }, [page, userID]);   
         
     useEffect(() => {
         fetch("/api/posts/getAllSaved/count/byUserID", {
@@ -415,7 +411,7 @@ export function SavedPostListByUserID( { userID }: { userID: string } ) {
             <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'>
                 <p className='text-center text-gray-300 font-medium antialiased w-full'>Looks like there&apos;s no posts here.</p>
                 <div className='flex gap-4 w-full items-center justify-center mt-4'>
-                    <button className='navlink' onClick={() => router.push("/")} type='button'>Home</button>
+                    <button className='navlink' onClick={() => router.refresh()} type='button'>Home</button>
                 </div>
             </div>  
         );
@@ -441,8 +437,6 @@ export function SavedPostListByUserID( { userID }: { userID: string } ) {
                         imagealt={post.imagealt}
                         public={true}
                         authorId={post.author.id}
-                        downvotes={post.downvotes}
-                        upvotes={post.upvotes}
                         communityId={post.community.id}
                         author={post.author}
                         community={post.community}

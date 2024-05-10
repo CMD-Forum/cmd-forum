@@ -6,7 +6,6 @@ import { SessionProvider } from 'next-auth/react'
 import { auth } from '@/auth'
 import NextTopLoader from 'nextjs-toploader';
 import { SpeedInsights } from "@vercel/speed-insights/next"
-import { SWRProvider } from '../swr-provider'
 
 const inter = Inter({ subsets: ['latin'] });
 const ibm_plex_mono = IBM_Plex_Mono({ subsets: ["latin"], weight: "400", variable: "--font-ibm_plex_mono" })
@@ -75,8 +74,7 @@ export default async function RootLayout({
 
   return (
 
-    <SWRProvider>
-      <SessionProvider session={session}>
+    <SessionProvider session={session}>
 
           <html lang="en" className={`defaultTheme ${inter.className} ${ibm_plex_mono.variable}`} style={{ colorScheme: "dark" }}>
 
@@ -125,9 +123,7 @@ export default async function RootLayout({
 
           </html>
 
-      </SessionProvider>      
-    </SWRProvider>
-
+      </SessionProvider>
 
   )
 }

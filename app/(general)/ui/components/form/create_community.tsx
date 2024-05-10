@@ -149,10 +149,7 @@ export default function CreateCommunityForm() {
             {/* */}
 
             <button type="submit" className="navlink-full !w-full sm:!w-fit justify-center min-w-[62px]">
-                
-                {/* eslint-disable-next-line @next/next/no-img-element*/}
                 {isLoading && <img src="/spinner_black.svg" alt="Submitting..." className="spinner"/> } Create Community 
-                
             </button>
 
         </form>

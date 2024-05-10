@@ -24,27 +24,19 @@ export default auth((req) => {
     const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
     if ( isApiAuthRoute ) {
-
         return NextResponse.next();
-
     }
 
     if ( isAuthRoute ) {
-
         if ( isLoggedIn ) {
-
             return Response.redirect(new URL(defaultLoginRedirect, nextUrl));
-
         }
 
         return NextResponse.next();
-
     }
 
     if ( ! isLoggedIn && isPrivateRoute ) {
-
         return Response.redirect(new URL("/login", nextUrl));
-
     }
 
     if ( isLoggedIn && isPublicOnlyRoute ) {
@@ -56,7 +48,5 @@ export default auth((req) => {
 })
 
 export const config = {
-
     matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
-
 }

@@ -69,7 +69,7 @@ export const SignupSchema = z.
 
 function ErrorMessage(props: { message: string }) {
 
-    return <p className="dark:text-red-300 text-sm facebookTheme:text-[11px]">{props.message}</p>;
+    return <p className="dark:text-red-300 subtitle">{props.message}</p>;
     
 }
 
@@ -143,7 +143,7 @@ export default function SignupForm () {
 
             {/* */}
 
-            <div className="flex gap-1 facebookTheme:text-[11px] font-medium">Username<p className="text-[#fca5a5]">*</p></div>
+            <div className="flex gap-1 subtitle">Username<p className="text-[#fca5a5]">*</p></div>
             <input
                 {...form.register('username')}
                 disabled={isPending}
@@ -178,7 +178,7 @@ export default function SignupForm () {
             */}
             {/* */}
 
-            <div className="flex gap-1 facebookTheme:text-[11px] font-medium">Email<p className="text-[#fca5a5]">*</p></div>
+            <div className="flex gap-1 subtitle">Email<p className="text-[#fca5a5]">*</p></div>
             <input
                 {...form.register('email')}
                 disabled={isPending}
@@ -195,7 +195,7 @@ export default function SignupForm () {
 
             {/* */}
 
-            <div className="flex gap-1 facebookTheme:text-[11px] font-medium">Password<p className="text-[#fca5a5]">*</p></div>
+            <div className="flex gap-1 subtitle">Password<p className="text-[#fca5a5]">*</p></div>
             <input
                 type="password"
                 {...form.register('password')}
@@ -213,7 +213,7 @@ export default function SignupForm () {
 
             {/* */}
 
-            <div className="flex gap-1 facebookTheme:text-[11px] font-medium">Confirm Password<p className="text-[#fca5a5]">*</p></div>
+            <div className="flex gap-1 subtitle">Confirm Password<p className="text-[#fca5a5]">*</p></div>
             <input
                 type="password"
                 {...form.register('confirmpassword')}
@@ -240,7 +240,7 @@ export default function SignupForm () {
 
             <div className="flex flex-row relative mt-4 mb-4">
                 <span className="w-full border-b-1 border-border"></span>
-                <p className="absolute right-[50%] bottom-0 px-2 bg-background translate-x-2/4 translate-y-2/4 text-sm text-gray-300">OR SIGNUP WITH</p>
+                <p className="absolute right-[50%] bottom-0 px-2 bg-background translate-x-2/4 translate-y-2/4 subtitle">OR SIGNUP WITH</p>
             </div>
 
             <div className="flex flex-col gap-2">

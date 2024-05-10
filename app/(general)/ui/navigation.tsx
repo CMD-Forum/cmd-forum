@@ -46,7 +46,7 @@ export async function Navigation() {
                     <hr className='mt-1 mb-1' />
                     <DropdownCustom className={"hover:bg-card"}>
                       <div className='flex flex-col gap-1 items-center w-full'>
-                        <Link className='label cursor-pointer subtitle hover:!text-white' href={"https://github.com/CMD-Forum/cmd-forum"}><MegaphoneIcon className='w-4 h-4'/>New Update - Alpha 1.1</Link>              
+                        <Link className='label cursor-pointer hover:!text-white !text-xs' href={"https://github.com/CMD-Forum/cmd-forum"}><MegaphoneIcon className='w-4 h-4'/>New Update - Alpha 1.2</Link>              
                       </div>
                     </DropdownCustom>
                   </Dropdown>
@@ -68,7 +68,7 @@ export async function Navigation() {
                     <hr className='mt-2 mb-2' />
                     <DropdownCustom className={"hover:bg-card"}>
                       <div className='flex flex-col gap-1 items-center'>
-                        <Link className='label cursor-pointer subtitle hover:!text-white' href={"https://github.com/CMD-Forum/cmd-forum"}><MegaphoneIcon className='w-4 h-4'/>New Update - Alpha 1.1</Link>              
+                        <Link className='label cursor-pointer hover:!text-white !text-xs' href={"https://github.com/CMD-Forum/cmd-forum"}><MegaphoneIcon className='w-4 h-4'/>New Update - Alpha 1.2</Link>              
                       </div>
                     </DropdownCustom>
                   </Dropdown>

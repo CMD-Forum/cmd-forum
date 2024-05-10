@@ -213,12 +213,12 @@ export const DropdownLink = <T extends string>({ text, icon, link }: { text: str
 
 }
 
-export const DropdownButton = ({ text, icon, onClick }: { text: string, icon: React.ReactElement, onClick: MouseEventHandler<HTMLButtonElement> }) => {
+export const DropdownButton = ({ text, icon, onClick, destructive }: { text: string, icon: React.ReactElement, onClick: MouseEventHandler<HTMLButtonElement>, destructive?: boolean }) => {
 
     return (
         <button 
             onClick={onClick}
-            className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden text-gray-300 hover:text-white"
+            className={`hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden text-gray-300 hover:text-white ${destructive ? "hover:!text-red-400" : ""}`}
         >
 
             {React.cloneElement(icon, {
@@ -272,9 +272,9 @@ export const DropdownUser = () => {
                 >
                     {/* @ts-ignore */}
                     <div className="flex flex-col max-w-48">
-                        <span className="text-[15px] subtitle text-white">{session?.user.username}</span>
+                        <span className="subtitle text-white !text-[15px]">{session?.user.username}</span>
                         <div className="overflow-hidden text-ellipsis max-w-48">
-                            <span className="text-[13px] subtitle">{session?.user.email}</span>      
+                            <span className="subtitle !text-[13px]">{session?.user.email}</span>      
                         </div>                    
                     </div>
                 </Link>

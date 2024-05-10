@@ -7,8 +7,6 @@ export default async function SettingsPage() {
 
         <>
 
-            <Banner message={"Settings are currently unimplemented."} fixedAtTop={false} />
-
             <div className="flex flex-col border-0 border-border p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48 bg-card">
 
                 <h1 className="header">Settings</h1>

@@ -3,10 +3,10 @@
 import Link from 'next/link';
 import { EllipsisVerticalIcon, ShareIcon } from '@heroicons/react/24/solid';
 import MarkdownPreview from '@uiw/react-markdown-preview';
-import Dropdown, { DropdownLink, DropdownShare } from '../dropdown/dropdown';
+import Dropdown, { DropdownButton, DropdownLink, DropdownShare } from '../dropdown/dropdown';
 import Hovercard from '../dropdown/hovercard';
 import { Post } from '@/types/types';
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/16/solid';
+import { ArchiveBoxXMarkIcon, ChatBubbleBottomCenterIcon, ChatBubbleLeftEllipsisIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/16/solid';
 import { SavePostButton } from '../button';
 import { useSession } from 'next-auth/react';
 
@@ -147,6 +147,22 @@ export function CardPost( post: Post ) {
                         <DropdownLink text={post.community.display_name} icon={<img src={post.community.image} alt={post.community.display_name}></img>} link={`/c/${post.community.name}`}></DropdownLink>
                         <hr className='mt-1 !mb-1'/>
                         <DropdownShare icon={<ShareIcon />} text={text} title={title} url={url} />
+                        { session 
+                        ?
+                            <>
+                                { session.user.id === post.authorId 
+                                ?
+                                <>
+                                    <hr className='mt-1 !mb-1'/>
+                                    <DropdownButton icon={<ArchiveBoxXMarkIcon />} text={"Delete"} onClick={() => console.log("delete post")} destructive={true} />                                 
+                                </>
+                                :
+                                null
+                                }                           
+                            </>
+                        :
+                            null
+                        }
                     </Dropdown>                                        
                 </div>
 
@@ -200,13 +216,15 @@ export function FullPost( post: Post ) {
 
     // const rehypePlugins = [rehypeSanitize];
 
+    const { data: session } = useSession();
+
     return (
 
             <div className="rounded-md flex w-full bg-transparent h-fit facebookTheme:rounded-none px-5 py-5">
 
                 <div className="flex w-full bg-transparent h-fit flex-col">
 
-                    <div className="text-sm relative md:bg-card md:p-6 rounded-md md:border-1 md:border-border">
+                    <div className="text-sm relative md:bg-card md:p-6 rounded-md">
 
                         {/*<BackButtonNormal className={"absolute right-0 !hidden md:!flex"} />*/}
 
@@ -236,7 +254,7 @@ export function FullPost( post: Post ) {
                         
                     </div>
                     
-                    <div className='md:bg-card md:border-1 md:border-border w-full h-fit md:p-6 rounded-md mt-2 md:mt-6'>
+                    <div className='md:bg-card w-full h-fit md:p-6 rounded-md mt-2 md:mt-6'>
                         {post.imageurl ?
 
                             <div className="relative rounded-md mt-2 mb-4 max-h-96 overflow-hidden">
@@ -262,7 +280,14 @@ export function FullPost( post: Post ) {
 
                         </div>                        
                     </div>
-                    
+
+                    { session?.user && 
+                        <div className='flex flex-row gap-2 md:bg-card w-full h-fit md:p-6 rounded-md mt-2 md:mt-6'>
+                            <button className='navlink' disabled onClick={() => { throw new Error("Feature Unimplemented") }}><ChatBubbleLeftEllipsisIcon className="w-5 h-5" />Submit Comment</button>
+                            {/* @ts-ignore */}
+                            <SavePostButton userID={session.user.id} postID={post.id} />
+                        </div>                    
+                    }
 
                 </div>
 

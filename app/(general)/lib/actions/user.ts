@@ -64,7 +64,7 @@ export async function ChangeAccountUsername( { userID, newUsername } : { userID:
 
 }
 
-export async function Func_ChangeAccountDescription( { userID, description } : { userID: string, description: string }) {
+export async function ChangeAccountDescription( { userID, description } : { userID: string, description: string }) {
     
     console.log("executing change description");
 

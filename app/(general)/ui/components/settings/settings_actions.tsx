@@ -1,8 +1,8 @@
 "use client";
 
-import { startTransition, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 import Modal from "../modal";
-import { ChangeAccountUsername, DeleteAccount, Func_ChangeAccountDescription } from "@/app/(general)/lib/actions/user";
+import { ChangeAccountUsername, DeleteAccount, ChangeAccountDescription as FuncChangeAccountDescription } from "@/app/(general)/lib/actions/user";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,7 +16,7 @@ import { useRouter } from "next/navigation";
  * @param btnType The type of the button, can also take any `className`.
  */
 
-export function ChangeAccountName({ userID, btnType = "navlink-full" } : { userID: string, btnType?: string }) {
+export function ChangeAccountName({ userID } : { userID: string }) {
 
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
@@ -44,6 +44,7 @@ export function ChangeAccountName({ userID, btnType = "navlink-full" } : { userI
         startTransition(() => {
             setLoading(true)
             ChangeAccountUsername({ userID: values.userID, newUsername: values.username })
+                // @ts-ignore
                 .then((data) => {
                     // @ts-ignore
                     setError(data?.error);
@@ -57,16 +58,16 @@ export function ChangeAccountName({ userID, btnType = "navlink-full" } : { userI
     };
 
     return (
-        <Modal btnText={"Change Username"} btnType={btnType}>
+        <Modal closeBtn={true} openBtn={true} openBtnComponent={<button className={"navlink-full"}>Change Username</button>}>
             <Modal.Title>Change Your Username</Modal.Title>
             <Modal.Subtitle>If you want to change your username, you can do it below.</Modal.Subtitle>
 
             <Modal.Custom>
                 <input className={"generic_field w-full mb-2 hidden"} disabled={true} placeholder={userID}></input>
-                <input className={"generic_field w-full mb-4"} {...register('username')} placeholder={"New Username"}></input>
+                <input className={"generic_field w-full mb-2"} {...register('username')} placeholder={"New Username"}></input>
             </Modal.Custom>
 
-            <Modal.Custom>{errors.username && <p className={`text-center w-full md:text-left text-gray-300`}>{errors.username.message}</p>}</Modal.Custom>
+            <Modal.Custom>{errors.username && <p className={`text-center md:!text-left subtitle`}>{errors.username.message}</p>}</Modal.Custom>
             <Modal.Custom><p className={`${success ? "flex" : "hidden"} text-center w-full md:text-left text-gray-300`}>{success}</p></Modal.Custom>
             <Modal.Custom><p className={`${error ? "flex" : "hidden"} text-center w-full md:text-left text-gray-300`}>{error}</p></Modal.Custom>
 
@@ -82,7 +83,7 @@ export function ChangeAccountName({ userID, btnType = "navlink-full" } : { userI
  * @param btnType The type of the button, can also take any `className`.
  */
 
-export function ChangeAccountDescription({ userID, btnType = "navlink-full" } : { userID: string, btnType?: string }) {
+export function ChangeAccountDescription({ userID } : { userID: string }) {
 
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
@@ -90,7 +91,7 @@ export function ChangeAccountDescription({ userID, btnType = "navlink-full" } : 
 
     const UpdateDescriptionForm = useForm<z.infer<typeof UpdateDescriptionSchema>>({
 
-        resolver: zodResolver(UpdateUsernameSchema),
+        resolver: zodResolver(UpdateDescriptionSchema),
         defaultValues: {
             userID: userID,
             description: '',
@@ -100,43 +101,50 @@ export function ChangeAccountDescription({ userID, btnType = "navlink-full" } : 
 
     const { handleSubmit, register, formState: { errors } } = UpdateDescriptionForm;
 
-    const onSubmit = ( values: z.infer<typeof UpdateDescriptionSchema> ) => {
+    const router = useRouter();
 
-        console.log("submitted");
+    const onSubmit = ( values: z.infer<typeof UpdateDescriptionSchema> ) => {
 
         setError("");
         setSuccess("");
 
         startTransition(() => {
             setLoading(true)
-            Func_ChangeAccountDescription({ userID: values.userID, description: values.description })
+            FuncChangeAccountDescription({ userID: values.userID, description: values.description })
+                // @ts-ignore
                 .then((data) => {
                     // @ts-ignore
                     setError(data?.error);
                     // @ts-ignore
                     setSuccess(data?.success);
                     setLoading(false);
+                    router.refresh();
                 })
         });
 
     };
 
     return (
-        <Modal btnText={"Change Description"} btnType={btnType}>
+        <Modal 
+            closeBtn={true} 
+            openBtn={true} 
+            openBtnComponent={<button className={"navlink-full"}>Change Description</button>}
+        >
             <Modal.Title>Change Your Description</Modal.Title>
             <Modal.Subtitle>If you want to change your description, you can do it below.</Modal.Subtitle>
 
             <Modal.Custom>
-                <input className={"generic_field w-full mb-2 hidden"} {...register('userID')} disabled={true} placeholder={userID}></input>
-                <input className={"generic_field w-full mb-4"} {...register('description')} placeholder={"New Description"}></input>
+                <input className={"generic_field w-full mb-2 hidden"} {...UpdateDescriptionForm.register('userID')} disabled={true} placeholder={userID}></input>
+                <input className={"generic_field w-full mb-4"} {...UpdateDescriptionForm.register('description')} placeholder={"New Description"}></input>
             </Modal.Custom>
 
-            <Modal.Custom>{errors.description && <p className={`text-center w-full md:text-left text-gray-300`}>{errors.description.message}</p>}</Modal.Custom>
+            <Modal.Custom>{UpdateDescriptionForm.formState.errors.description && <p className={`text-center w-full md:text-left text-gray-300`}>{UpdateDescriptionForm.formState.errors.description.message}</p>}</Modal.Custom>
             <Modal.Custom><p className={`${success ? "flex" : "hidden"} text-center w-full md:text-left text-gray-300`}>{success}</p></Modal.Custom>
             <Modal.Custom><p className={`${error ? "flex" : "hidden"} text-center w-full md:text-left text-gray-300`}>{error}</p></Modal.Custom>
 
-            <Modal.Button type={"navlink-full"} loadingVariable={loading} className={""} onClick={handleSubmit(onSubmit)} spinnerColor={"black"}>Change Description</Modal.Button> 
-        </Modal>
+            <Modal.Button type="navlink-full" loadingVariable={loading} spinnerColor="black" onClick={handleSubmit(onSubmit)}>Change Description</Modal.Button> 
+        </Modal>            
+
     );
 
 }
@@ -188,7 +196,7 @@ export function DeleteAccountModal({ userID, username, btnType = "navlink-destru
     };
 
     return (
-        <Modal btnText={"Delete Account"} btnType={btnType}>
+        <Modal closeBtn={true} openBtn={true} openBtnComponent={<button className={"navlink-destructive"}>Delete Account</button>}>
             <Modal.Title>Delete Your Account</Modal.Title>
             <Modal.Subtitle>If you want to delete your account, you can do it below. Type <code className={`bg-black px-2 py-1 rounded border-1 border-border text-sm ${inter.className}`}>{username}</code> below to confirm your decision.</Modal.Subtitle>
 

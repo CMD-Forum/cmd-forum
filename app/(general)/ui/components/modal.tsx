@@ -5,7 +5,29 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { createPortal } from 'react-dom';
 
-export default function Modal({ children, btnText, btnClassName, btnType = "navlink", btnDisabled, closeBtn, closeBtnType }: { children: React.ReactNode, btnText: string, btnClassName?: string, btnType?: string, btnDisabled?: boolean, closeBtn?: boolean, closeBtnType?: "navlink" | "navlink-full" | "navlink-destructive" | "navlink-success" | "navlink-sidebar"| "navlink-small" }) {
+interface ModalProps {
+    children: React.ReactNode,
+    btnText: string, 
+    btnClassName: string, 
+    btnType: string, 
+    btnDisabled: boolean, 
+    closeBtn?: boolean, 
+    closeBtnComponent: React.ReactNode,    
+}
+
+export default function Modal({ 
+    children,
+    openBtn,
+    openBtnComponent,
+    closeBtn, 
+    closeBtnComponent,
+}: { 
+    children: React.ReactNode, 
+    openBtn?: boolean, 
+    openBtnComponent?: React.ReactElement,
+    closeBtn?: boolean, 
+    closeBtnComponent?: React.ReactElement,
+}) {
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [isMounted, setIsMounted] = useState<boolean>(false);
@@ -34,7 +56,21 @@ export default function Modal({ children, btnText, btnClassName, btnType = "navl
     return isMounted ? (
 
             <>
-                <button className={`${btnType} ${btnClassName}`} onClick={() => setIsOpen(true)} disabled={btnDisabled}>{ btnText }</button>
+                { openBtnComponent && openBtn === true 
+                    ? 
+                        React.cloneElement(openBtnComponent, {
+                            onClick: () => setIsOpen(true)
+                        })
+                    : 
+                        null 
+                }
+
+                { ! openBtnComponent && openBtn === true 
+                    ?
+                        <button onClick={() => setIsOpen(true)} className="navlink-full justify-center">Open</button>
+                    :
+                        null
+                }
                     
                 {createPortal(
                 
@@ -76,8 +112,25 @@ export default function Modal({ children, btnText, btnClassName, btnType = "navl
                                     </div>
 
                                     <div className="flex flex-col md:!flex-row gap-2 bg-card px-6 py-3 justify-end border-t-1 border-border">
-                                        {button}    
-                                        { closeBtn ? <button className={`${closeBtnType ? closeBtnType : "navlink-full"} !w-full md:!w-fit justify-center transition-all`} onClick={() => setIsOpen(false)}>Cancel</button> : null }
+
+                                        {button} 
+
+                                        { closeBtnComponent && closeBtn === true 
+                                            ? 
+                                            React.cloneElement(closeBtnComponent, {
+                                                onClick: () => setIsOpen(false)
+                                            })
+                                            : 
+                                            null 
+                                        }
+
+                                        { ! closeBtnComponent && closeBtn === true 
+                                            ?
+                                            <button onClick={() => setIsOpen(false)} className="navlink-full justify-center !w-full md:!w-fit">Cancel</button>
+                                            :
+                                            null
+                                        }
+                                        
                                     </div>
                                     
                                     
