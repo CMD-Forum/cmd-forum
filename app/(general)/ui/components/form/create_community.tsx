@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod" // Form Validation
-import Alert from "../new_alert";
+import Alert, { AlertTitle } from "../new_alert";
 import { useSession } from "next-auth/react";
 import { createCommunity, getCommunityByName } from "@/app/(general)/lib/data";
 import { CreateCommunitySchema } from "@/app/(general)/lib/schemas";
@@ -36,7 +36,9 @@ export default function CreateCommunityForm() {
     if ( ! session ) {
 
         return (
-            <Alert type={"error"} title={"Hmm..."} description={"Oops, something went wrong. Try logging in again."} />
+            <Alert type={"error"}>
+                <AlertTitle>Sorry, this page couldn&apos;t be displayed.</AlertTitle>
+            </Alert>
         );
 
     } 
@@ -92,7 +94,9 @@ export default function CreateCommunityForm() {
         <form className="flex flex-col gap-2 bg-transparent rounded-lg !w-full" onSubmit={form.handleSubmit(OnSubmit)}>
 
             {success && (
-                <Alert type="success" title="Community Created" description="Your community was successfully created." />
+                <Alert type="success">
+                    <AlertTitle>Community was successfully created.</AlertTitle>
+                </Alert>
             )}
 
             {error && (

@@ -8,8 +8,8 @@ export default function Alert({ type = "notice", children }: { type: "notice" | 
             child.type.displayName === displayName ? child : null
     );
 
-    const title = getChildrenOnDisplayName(children, "Title");
-    const subtitle = getChildrenOnDisplayName(children, "Subtitle");
+    const title = getChildrenOnDisplayName(children, "AlertTitle");
+    const subtitle = getChildrenOnDisplayName(children, "AlertSubtitle");
 
     return (
 
@@ -54,16 +54,10 @@ export default function Alert({ type = "notice", children }: { type: "notice" | 
 
 }
 
-const Title = ({ children, className = "", ...other }: { children: React.ReactNode, className?: string }) => (
+export const AlertTitle = ({ children, className = "", ...other }: { children: React.ReactNode, className?: string }) => (
     <p className={`text-white font-bold text-sm ${className ? className : null}`} {...other}>{ children }</p>   
 )
 
-Title.displayName = "Title";
-Alert.Title = Title;
-
-const Subtitle = ({ children, className = "", ...other }: { children: React.ReactNode, className?: string }) => (
+export const AlertSubtitle = ({ children, className = "", ...other }: { children: React.ReactNode, className?: string }) => (
     <p className={`subtitle ml-8 ${className ? className : null}`} {...other}>{ children }</p>   
 )
-
-Subtitle.displayName = "Subtitle";
-Alert.Subtitle = Subtitle;

@@ -3,7 +3,7 @@
 import { ArchiveBoxXMarkIcon, ArrowRightEndOnRectangleIcon, BookmarkIcon, Cog6ToothIcon, EllipsisVerticalIcon, MegaphoneIcon, ShareIcon } from "@heroicons/react/16/solid";
 import Dropdown, { DropdownButton, DropdownCustom, DropdownLink, DropdownShare, DropdownUser } from "../components/dropdown/dropdown";
 import LargeDropdown from "../components/large_dropdown";
-import Alert from "../components/new_alert";
+import Alert, { AlertSubtitle, AlertTitle } from "../components/new_alert";
 import ComIDBtn from "./test";
 import LogoutButton from "../components/signoutButton";
 import Link from "next/link";
@@ -62,25 +62,25 @@ export default function DeveloperPage() {
 
                         <h2 className="header-5 w-full mb-4">Notice</h2>
                         <Alert type={"notice"}>
-                            <Alert.Title>Notice</Alert.Title>
-                            <Alert.Subtitle>Please be respectful.</Alert.Subtitle>
+                            <AlertTitle>Notice</AlertTitle>
+                            <AlertSubtitle>Please be respectful.</AlertSubtitle>
                         </Alert>
 
                         <h2 className="header-5 w-full mb-4 mt-4">Alert</h2>
                         <Alert type={"alert"}>
-                            <Alert.Title>Moderator Warning</Alert.Title>
-                            <Alert.Subtitle>You have been warned for violating community rules.</Alert.Subtitle>
+                            <AlertTitle>Moderator Warning</AlertTitle>
+                            <AlertSubtitle>You have been warned for violating community rules.</AlertSubtitle>
                         </Alert>
 
                         <h2 className="header-5 w-full mb-4 mt-4">Error</h2>
                         <Alert type={"error"}>
-                            <Alert.Title>You have been banned from this community.</Alert.Title>
-                            <Alert.Subtitle>Reason: Violation of Rule 1 (Don&apos;t spam). Please contact the moderators if you wish to appeal.</Alert.Subtitle>
+                            <AlertTitle>You have been banned from this community.</AlertTitle>
+                            <AlertSubtitle>Reason: Violation of Rule 1 (Don&apos;t spam). Please contact the moderators if you wish to appeal.</AlertSubtitle>
                         </Alert>
 
                         <h2 className="header-5 w-full mb-4 mt-4">Title Only</h2>
                         <Alert type={"error"}>
-                            <Alert.Title>Sorry, the settings failed to apply.</Alert.Title>
+                            <AlertTitle>Sorry, the settings failed to apply.</AlertTitle>
                         </Alert>
 
                     </LargeDropdown>                    
