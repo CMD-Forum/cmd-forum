@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod" // Form Validation
-import Alert from "../new_alert";
+import Alert, { AlertSubtitle, AlertTitle } from "../new_alert";
 import { useSession } from "next-auth/react";
 import { createPost, getCommunityByName } from "@/app/(general)/lib/data";
 
@@ -128,21 +128,28 @@ export default function CreateImagePostForm() {
         <form className="flex flex-col gap-2 bg-transparent rounded-lg !w-full" onSubmit={form.handleSubmit(OnSubmit)}>
 
             {com_err && (
-
-                <Alert type="error" title="Post Creation Failed" description="The specified community was not found, please try again." />
-
+                <Alert type="error">
+                    <AlertTitle>The specified community was not found.</AlertTitle>
+                </Alert>
             )}
 
             {success && (
-
-                <Alert type="success" title="Post Created" description="Your post was created successfully." />
-
+                <Alert type="success">
+                    <AlertTitle>Your post was successfully created.</AlertTitle>
+                </Alert>
             )}
 
             {create_err && (
+                <Alert type="error">
+                    <AlertTitle>Your post could not be created, please try again later.</AlertTitle>
+                </Alert>
+            )}
 
-                <Alert type="error" title="Post Creation Failed" description="Sorry, your post could not be created. Please try again later." />
-
+            {error && (
+                <Alert type="error">
+                    <AlertTitle>Sorry, something went wrong.</AlertTitle>
+                    <AlertSubtitle>Please try again later.</AlertSubtitle>
+                </Alert>
             )}
 
             <div className="flex gap-1 font-medium">Community<p className="text-[#fca5a5]">*</p></div>
@@ -241,10 +248,6 @@ export default function CreateImagePostForm() {
                 {isLoading ? <img src="/spinner.svg" alt="Submitting..." className="spinner"/>  : 'Submit Post' }
                 
             </button>
-
-            {/* */}
-
-            {error && <Alert type="alert" title="Post Creation Failed" description="Please check all details are correct." />}
 
         </form>
 
