@@ -1,5 +1,4 @@
 import { prisma } from '@/app/(general)/lib/db';
-import Framermotion_workaround from './framermotion_workaround';
 import { Error404 } from '../../ui/error404';
 import { FullPost } from '../../ui/components/posts/post';
 
@@ -61,8 +60,6 @@ export default async function PostView({ params }: { params: { id: string } }) {
         title={post.title} 
         author={post.author} 
         community={post.community} 
-        upvotes={post.upvotes} 
-        downvotes={post.downvotes} 
         createdAt={post.createdAt} 
         updatedAt={post.updatedAt}
         public={post.public}

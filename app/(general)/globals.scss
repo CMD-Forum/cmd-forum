@@ -42,6 +42,16 @@ body {
 
 }
 
+// Accessibility
+
+a {
+  @apply outline-none #{!important};
+  @apply focus-visible:outline-2 #{!important};
+  @apply focus-visible:outline-white #{!important};
+}
+
+// Main
+
 .navlink {
 
   @apply font-normal;
@@ -61,6 +71,8 @@ body {
   @apply items-center;
   @apply w-fit;
   @apply outline-none;
+  @apply focus-visible:outline-white;
+  @apply focus-visible:outline-2;
 
 }
 
@@ -138,6 +150,14 @@ body {
   @apply transition-all;
   @apply text-white #{!important};
 
+}
+
+.navlink-destructive:disabled {
+  @apply bg-red-800;
+  @apply hover:bg-red-800;
+  @apply hover:cursor-not-allowed;
+  @apply border-red-800;
+  @apply text-white;
 }
 
 .navlink-success {

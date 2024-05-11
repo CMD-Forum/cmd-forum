@@ -19,7 +19,9 @@ export default function SettingsTabs() {
             </div>   
 
             <div className={`${ activeTab === 1 ? "flex flex-col w-full" : "hidden" }`}>
-                <Alert type={"notice"} title="Settings are currently unavailable." description="Sorry, settings haven't been implemented yet." />
+                <Alert type={"notice"}>
+                    <Alert.Title>Settings are currently unavailable.</Alert.Title>
+                </Alert>
                 <div className="mb-4" />
                 <AccountSettings />
             </div>

@@ -1,5 +1,4 @@
 import SettingsTabs from "@/app/(general)/ui/components/account/SettingsTabs";
-import Banner from "@/app/(general)/ui/components/banner";
 
 export default async function SettingsPage() {
 

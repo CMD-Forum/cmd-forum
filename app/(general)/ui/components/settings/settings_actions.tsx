@@ -140,7 +140,7 @@ export function ChangeAccountDescription({ userID } : { userID: string }) {
 
             <Modal.Custom>{UpdateDescriptionForm.formState.errors.description && <p className={`text-center w-full md:text-left text-gray-300`}>{UpdateDescriptionForm.formState.errors.description.message}</p>}</Modal.Custom>
             <Modal.Custom><p className={`${success ? "flex" : "hidden"} text-center w-full md:text-left text-gray-300`}>{success}</p></Modal.Custom>
-            <Modal.Custom><p className={`${error ? "flex" : "hidden"} text-center w-full md:text-left text-gray-300`}>{error}</p></Modal.Custom>
+            <Modal.Custom><p className={`${error ? "flex" : "hidden"} text-center w-full md:text-left subtitle`}>{error}</p></Modal.Custom>
 
             <Modal.Button type="navlink-full" loadingVariable={loading} spinnerColor="black" onClick={handleSubmit(onSubmit)}>Change Description</Modal.Button> 
         </Modal>            

@@ -3,7 +3,7 @@
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/16/solid";
 import React, { useState } from "react";
 
-export default function LargeDropdown( { children, title, description }: { children: React.ReactNode, title: string, description: string } ) {
+export default function LargeDropdown( { children, title, description }: { children: React.ReactNode, title: string, description?: string } ) {
 
     const [ expanded, setExpanded ] = useState<boolean>();
 
@@ -23,7 +23,7 @@ export default function LargeDropdown( { children, title, description }: { child
             
             <div className='flex flex-col bg-card md:flex-row py-3 px-6 justify-between gap-3 items-center w-full'>
 
-                <button className="navlink !px-2" onClick={() => setExpanded(!expanded)}>{ expanded ? <ChevronUpIcon className="w-5 h-5" /> : <ChevronDownIcon className="w-5 h-5" /> }</button>                 
+                <button className="navlink !px-2 !w-full !justify-center lg:!w-fit" onClick={() => setExpanded(!expanded)}>{ expanded ? <ChevronUpIcon className="w-5 h-5" /> : <ChevronDownIcon className="w-5 h-5" /> }</button>                 
 
             </div>
 

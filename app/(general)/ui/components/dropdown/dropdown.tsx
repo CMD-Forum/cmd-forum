@@ -102,9 +102,9 @@ export default function Dropdown({ align, children, accountHeading = false, head
                                           ref={buttonRef}
                                     >
                                         {session.user.image ?
-                                            <img className={`w-[30px] h-[30px] transition-all border-1 border-border hover:brightness-75 ${open === true ? "brightness-75" : ""} rounded-md`} src={session.user.image} alt='Your Account Image' />
+                                            <img className={`w-[36px] h-[36px] transition-all border-1 border-border hover:brightness-75 ${open === true ? "brightness-75" : ""} rounded-md`} src={session.user.image} alt='Your Account Image' />
                                             :
-                                            <img className={`w-[30px] h-[30px] transition-all border-1 border-border hover:brightness-75 ${open === true ? "brightness-75" : ""} rounded-md`} src="/images/favicon/favicon.svg" alt='Your Account Image' />
+                                            <img className={`w-[36px] h-[36px] transition-all border-1 border-border hover:brightness-75 ${open === true ? "brightness-75" : ""} rounded-md`} src="/images/favicon/favicon.svg" alt='Your Account Image' />
                                         }
 
                                     </button>
@@ -121,7 +121,7 @@ export default function Dropdown({ align, children, accountHeading = false, head
                         <>
 
                             <button 
-                                className={`navlink ${headerClassName} ${headerIcon && !headerText ? "!px-2" : "!border-0 "} ${open ? "!bg-border" : ""} !mt-0 flex !font-medium`}
+                                className={`navlink ${headerClassName} ${headerIcon && !headerText ? "!px-2" : ""} ${open ? "!bg-border" : ""} !mt-0 flex !font-medium`}
                                 onClick={() => setIsOpen(!open)}
                             >
                             { headerIcon ?
@@ -290,7 +290,7 @@ export const DropdownShare = ({ title, text, url, icon }: { title: string, text:
 
             <button 
                 className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden text-gray-300 hover:text-white"
-                onClick={() => navigator.share({ title: title, text: text, url: url })}
+                onClick={async () => await navigator.share({ title: title, text: text, url: url })}
             >
 
                 {React.cloneElement(icon, {

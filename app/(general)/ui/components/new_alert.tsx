@@ -1,6 +1,15 @@
 import { BellIcon, CheckCircleIcon, ExclamationTriangleIcon, XCircleIcon } from "@heroicons/react/16/solid";
+import React from "react";
 
-export default function Alert({title = "Notice", description = "Sorry, no details were provided with this notice.", type = "notice"}: { title: string, description: string, type: "notice" | "alert" | "success" | "error" }) { 
+export default function Alert({ type = "notice", children }: { type: "notice" | "alert" | "success" | "error", children: React.ReactNode }) { 
+
+    const getChildrenOnDisplayName = (children: any, displayName: any) =>
+        React.Children.map(children, (child) =>
+            child.type.displayName === displayName ? child : null
+    );
+
+    const title = getChildrenOnDisplayName(children, "Title");
+    const subtitle = getChildrenOnDisplayName(children, "Subtitle");
 
     return (
 
@@ -35,11 +44,26 @@ export default function Alert({title = "Notice", description = "Sorry, no detail
                     null
                 }
 
-                <p className="text-white font-bold text-sm">{ title }</p>              
+                { title ? title : subtitle }              
             </div>
-            <p className="text-white font-normal text-sm ml-8 subtitle leading-4">{ description }</p>     
+            { title ? subtitle : null }      
+             
         </div>
 
     );
 
 }
+
+const Title = ({ children, className = "", ...other }: { children: React.ReactNode, className?: string }) => (
+    <p className={`text-white font-bold text-sm ${className ? className : null}`} {...other}>{ children }</p>   
+)
+
+Title.displayName = "Title";
+Alert.Title = Title;
+
+const Subtitle = ({ children, className = "", ...other }: { children: React.ReactNode, className?: string }) => (
+    <p className={`subtitle ml-8 ${className ? className : null}`} {...other}>{ children }</p>   
+)
+
+Subtitle.displayName = "Subtitle";
+Alert.Subtitle = Subtitle;

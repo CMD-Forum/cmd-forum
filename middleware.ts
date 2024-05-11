@@ -40,8 +40,15 @@ export default auth((req) => {
     }
 
     if ( isLoggedIn && isPublicOnlyRoute ) {
-        return Response.redirect(new URL("/posts", nextUrl))
+        return Response.redirect(new URL("/posts", nextUrl));
     }
+
+    /*if ( nextUrl.pathname === "/ui/dev" ) { // Broken, will fix later - 11/05/24.
+        if ( req.auth ) 
+        if ( req.auth?.user.role !== "ADMIN" ) {
+            return Response.redirect(new URL("/404", nextUrl));
+        };
+    }; */
 
     return NextResponse.next();
 
