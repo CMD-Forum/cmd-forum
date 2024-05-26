@@ -5,7 +5,7 @@ import Link from "next/link";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod" // Form Validation
-import Alert from "../new_alert";
+import Alert, { AlertSubtitle, AlertTitle } from "../new_alert";
 import { login } from "@/app/(general)/lib/actions/login";
 import { useTransition } from "react";
 import { LoginSchema } from "@/app/(general)/lib/schemas";
@@ -13,34 +13,26 @@ import { OAuthButtons } from "./oauth/OAuthButtons";
 import { useSearchParams } from 'next/navigation'
 
 function ErrorMessage(props: { message: string }) {
-
     return <p className="dark:text-red-300 text-sm">{props.message}</p>;
-    
 }
 
 export default function LoginForm() {
 
     const [isPending, startTransition] = useTransition();
-
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
 
     const form = useForm<z.infer<typeof LoginSchema>>({
-
         resolver: zodResolver(LoginSchema),
         defaultValues: {
             email: '',
             password: '',
         },
-
     });
 
-
     const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-
         setError("");
         setSuccess("");
-
         startTransition(() => {
             login(values)
                 .then((data) => {
@@ -64,32 +56,27 @@ export default function LoginForm() {
 
             {/* */}
 
-            {query_error === "OAuthCallbackError" ? <Alert type="error" title="Authentication Failed" description="The external provider cancelled the login, please try again." /> : null }
-            {query_error === "OAuthSigninError" ? <Alert type="error" title="Authentication Failed" description="The login failed for an unknown reason, please try again." /> : null }
-            {query_error === "AdapterError" ? <Alert type="error" title="Authentication Failed" description="The database is currently experiencing issues, please try again later." /> : null }
-            {query_error === "CredentialsSignin" ? <Alert type="alert" title="Authentication Failed" description="The username or password was incorrect." /> : null }
-            {query_error === "AuthorizedCallbackError" ? <Alert type="alert" title="Authentication Failed" description="The account does not exist or has not verified their email." /> : null }
-            {query_error === "OAuthAccountNotLinked" ? <Alert type="alert" title="Authentication Failed" description="The external email is associated with an existing account." /> : null }
+            {query_error === "OAuthCallbackError" ? <Alert type="error"><AlertTitle>Authentication Failed</AlertTitle><AlertSubtitle>The external provider cancelled the login, please try again.</AlertSubtitle></Alert> : null }
+            {query_error === "OAuthSigninError" ? <Alert type="error"><AlertTitle>Authentication Failed</AlertTitle><AlertSubtitle>The login failed for an unknown reason, please try again.</AlertSubtitle></Alert> : null }
+            {query_error === "AdapterError" ? <Alert type="error"><AlertTitle>Authentication Failed</AlertTitle><AlertSubtitle>The database is currently experiencing issues, please try again later.</AlertSubtitle></Alert> : null }
+            {query_error === "CredentialsSignin" ? <Alert type="error"><AlertTitle>Authentication Failed</AlertTitle><AlertSubtitle>The username or password is incorrect.</AlertSubtitle></Alert> : null }
+            {query_error === "AuthorizedCallbackError" ? <Alert type="error"><AlertTitle>Authentication Failed</AlertTitle><AlertSubtitle>The account does not exist or has not verified their email.</AlertSubtitle></Alert> : null }
+            {query_error === "OAuthAccountNotLinked" ? <Alert type="error"><AlertTitle>Authentication Failed</AlertTitle><AlertSubtitle>The email of your OAuth provider account is already associated with an account that exists on Command.</AlertSubtitle></Alert> : null }
 
             {success ? (
-
-                <Alert type='notice' title='Signup Success' description={success} />
-
+                <Alert type='notice'>
+                    <AlertTitle>{success}</AlertTitle>
+                </Alert>
             ): (
-
                 <pre></pre>
-
             )}
 
-            
             {error ? (
-
-                <Alert type='error' title='Login Failed' description={error} />
-
+                <Alert type='error'>
+                    <AlertTitle>{error}</AlertTitle>
+                </Alert>
             ): (
-
                 <pre></pre>
-
             )}
 
     
@@ -105,10 +92,8 @@ export default function LoginForm() {
             />
 
             {form.formState.errors.email && (
-
-                // @ts-expect-error
+                // @ts-ignore
                 <ErrorMessage message={form.formState.errors.email.message} />
-
             )}
 
             {/* */}
@@ -123,18 +108,14 @@ export default function LoginForm() {
             />
 
             {form.formState.errors.password && (
-
-                // @ts-expect-error
+                // @ts-ignore
                 <ErrorMessage message={form.formState.errors.password.message} />
-
             )}
 
             {/* */}
 
-            <button disabled={!form.formState.isValid || isPending} type="submit" className="navlink-full !w-full h-[36px] justify-center min-w-[62px]">
-                
+            <button disabled={!form.formState.isValid || isPending} type="submit" className="navlink-full !w-full h-[36px] justify-center min-w-[62px]">     
                 {isPending ? <img src="/spinner.svg" alt="Loading..." className="spinner"/>  : 'Login' }
-                
             </button>
             {/* */}
 
@@ -146,9 +127,7 @@ export default function LoginForm() {
             </div>
 
             <div className="flex flex-col gap-2">
-    
                 <OAuthButtons width_full={true} />
-
             </div>
 
             <p className="text-center mt-4 text-sm text-gray-300">By logging in to CMD, you agree to the terms and conditions.</p>

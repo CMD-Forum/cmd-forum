@@ -11,6 +11,7 @@ generator client {
   output          = "../node_modules/.prisma/client"
   seed            = "node prisma/seed.js"
   previewFeatures = ["fullTextSearch", "omitApi"]
+  binaryTargets   = ["native", "rhel-openssl-1.0.x"]
 }
 
 generator docs { /// Thanks, prisma-docs-generator: https://github.com/pantharshit00/prisma-docs-generator

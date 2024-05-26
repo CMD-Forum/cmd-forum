@@ -234,10 +234,8 @@ export default function CreateImagePostForm() {
             />
 
             {form.formState.errors.image_alt && (
-
                 // @ts-expect-error
                 <ErrorMessage message={form.formState.errors.image_alt.message} />
-
             )}
 
             {/* */}
@@ -245,7 +243,8 @@ export default function CreateImagePostForm() {
             <button type="submit" className="navlink-full !w-full sm:!w-fit justify-center min-w-[62px]">
                 
                 {/* eslint-disable-next-line @next/next/no-img-element*/}
-                {isLoading ? <img src="/spinner.svg" alt="Submitting..." className="spinner"/>  : 'Submit Post' }
+                {isLoading ? <img src="/spinner.svg" alt="Submitting..." className="spinner"/>  : null }
+                Submit Post
                 
             </button>
 

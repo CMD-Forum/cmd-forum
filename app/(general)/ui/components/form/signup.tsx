@@ -5,16 +5,13 @@ import Link from "next/link";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
-import Alert from "../new_alert";
+import Alert, { AlertSubtitle, AlertTitle } from "../new_alert";
 import { signup } from "@/app/(general)/lib/actions/signup";
 import { OAuthButtons } from "./oauth/OAuthButtons";
 
 export const SignupSchema = z.
-
     object({
-
         username: z
-
             .string()
             .min(2, {
 
@@ -27,62 +24,35 @@ export const SignupSchema = z.
 
             })
             .regex(/^[a-zA-Z0-9_-]+$/, "Your username must only contains letters, numbers, underscores and hyphens."),
-
-        /*name: z
-        
-            .string()
-            .min(2, {
-
-                message: "Your name must be at least 2 characters."
-
-            })
-            .max(15, {
-                
-                message: "Your name must not be longer than 15 characters."
-                
-            }),*/
-
-        email: z
-        
+        email: z      
             .string()
             .min(1, "Email is required.")
             .email("Your email must be in a valid format."),
-
         password: z
-        
             .string()
             .min(1, "Password is required.")
             .min(8, "Password must have 8 characters"),
-
         confirmpassword: z
-        
             .string()
             .min(1, "Please confirm your password.")
-
     })
     .refine((data) => data.password === data.confirmpassword, {
-
         path: ['confirmpassword'],
         message: "Passwords do not match."
-
-    })
+    });
 
 function ErrorMessage(props: { message: string }) {
-
     return <p className="dark:text-red-300 subtitle">{props.message}</p>;
-    
 }
 
 export default function SignupForm () {
 
     const [isPending, startTransition] = useTransition();
-
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isLoading, setIsLoading] = useState(false);
 
     const form = useForm<z.infer<typeof SignupSchema>>({
-
         resolver: zodResolver(SignupSchema),
         defaultValues: {
             username: '',
@@ -91,20 +61,18 @@ export default function SignupForm () {
             password: '',
             confirmpassword: '',
         },
-
     });
 
-
     const onSubmit = (values: z.infer<typeof SignupSchema>) => {
-
+        setIsLoading(true);
         setError("");
         setSuccess("");
-
         startTransition(() => {
             signup(values)
                 .then((data) => {
                     setError(data.error);
                     setSuccess(data.success);
+                    setIsLoading(false);
                 })
         });
     };
@@ -121,24 +89,20 @@ export default function SignupForm () {
             {/* */}
 
             {success ? (
-
-                <Alert type='notice' title='Signup Success' description={success} />
-
+                <Alert type="success">
+                    <AlertTitle>{success}</AlertTitle>
+                </Alert>
             ): (
-
                 <pre></pre>
-
             )}
 
             
             {error ? (
-
-                <Alert type='error' title='Login Failed' description={error} />
-
+                <Alert type="error">
+                    <AlertTitle>{error}</AlertTitle>
+                </Alert>
             ): (
-
                 <pre></pre>
-
             )}         
 
             {/* */}
@@ -152,10 +116,8 @@ export default function SignupForm () {
             />
 
             {form.formState.errors.username && (
-
                 // @ts-expect-error
                 <ErrorMessage message={form.formState.errors.username.message} />
-
             )}
 
             {/* */}
@@ -187,10 +149,8 @@ export default function SignupForm () {
             />
 
             {form.formState.errors.email && (
-
-                // @ts-expect-error
+                // @ts-ignore
                 <ErrorMessage message={form.formState.errors.email.message} />
-
             )}
 
             {/* */}
@@ -205,10 +165,8 @@ export default function SignupForm () {
             />
 
             {form.formState.errors.password && (
-
-                // @ts-expect-error
+                // @ts-ignore
                 <ErrorMessage message={form.formState.errors.password.message} />
-
             )}
 
             {/* */}
@@ -223,19 +181,14 @@ export default function SignupForm () {
             />
 
             {form.formState.errors.confirmpassword && (
-
-                // @ts-expect-error
+                // @ts-ignore
                 <ErrorMessage message={form.formState.errors.confirmpassword.message} />
-
             )}
 
             {/* */}
 
             <button disabled={!form.formState.isValid || isPending} type="submit" className="navlink-full !w-full h-[36px] justify-center">
-                
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 {isPending ? <img src="/spinner.svg" alt="Loading..." className="spinner"/>  : 'Signup' }
-                
             </button>
 
             <div className="flex flex-row relative mt-4 mb-4">
@@ -244,9 +197,7 @@ export default function SignupForm () {
             </div>
 
             <div className="flex flex-col gap-2">
-
                 <OAuthButtons width_full={true} />
-
             </div>
 
         </form>

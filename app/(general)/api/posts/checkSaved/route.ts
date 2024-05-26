@@ -16,6 +16,7 @@ export async function POST( req: Request ) {
         })
 
         if ( user ) {
+            // @ts-ignore
             const postAlreadySaved = user.savedPosts.map(post => post.trim()).includes(postID.trim());
 
             if ( postAlreadySaved ) {

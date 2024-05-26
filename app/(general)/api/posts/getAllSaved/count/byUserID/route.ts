@@ -18,7 +18,7 @@ export async function POST( req: Request ) {
         })
 
         if ( savedPostArray ) {
-            const savedPostCount = await Promise.all(savedPostArray.savedPosts.map(async (postID) => {
+            const savedPostCount = await Promise.all(savedPostArray.savedPosts.map(async (postID: string) => {
                 return prisma.post.count({
                     where: {
                         id: postID,

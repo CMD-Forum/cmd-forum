@@ -3,11 +3,14 @@
 import { BookmarkIcon as BookmarkIconOutline } from "@heroicons/react/24/outline";
 import { BookmarkIcon } from "@heroicons/react/16/solid";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
 export function SavePostButton({ userID, postID }: { userID: string, postID: string }) {
 
     const [saved, setSaved] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true); 
+
+    const { data: session } = useSession();
 
     useEffect(() => {
         setIsLoading(true); 

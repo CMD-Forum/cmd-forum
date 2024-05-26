@@ -121,8 +121,6 @@ export default async function SearchResults(search: SearchResultProps) {
                         <CardPost 
                             id={result.id}
                             title={result.title}
-                            upvotes={result.upvotes}
-                            downvotes={result.downvotes}
                             createdAt={result.createdAt}
                             updatedAt={result.updatedAt}
                             content={result.content}
@@ -131,7 +129,6 @@ export default async function SearchResults(search: SearchResultProps) {
                             public={result.public}
                             tagline={result.tagline}
                             community={result.community}
-                            // @ts-ignore
                             author={result.author}
                         />
                         <div className="!mt-4 !mb-4 w-full" />

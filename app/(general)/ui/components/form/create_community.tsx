@@ -144,16 +144,15 @@ export default function CreateCommunityForm() {
             />
 
             {form.formState.errors.image_url && (
-
-                // @ts-expect-error
+                // @ts-ignore
                 <ErrorMessage message={form.formState.errors.image_url.message} />
-
             )}
 
             {/* */}
 
             <button type="submit" className="navlink-full !w-full sm:!w-fit justify-center min-w-[62px]">
-                {isLoading && <img src="/spinner_black.svg" alt="Submitting..." className="spinner"/> } Create Community 
+                {isLoading && <img src="/spinner_black.svg" alt="Submitting..." className="spinner"/> } 
+                Create Community 
             </button>
 
         </form>

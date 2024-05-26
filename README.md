@@ -10,7 +10,7 @@
 
 ---
 
-## Getting Started
+## Getting Started w/ Local Installation
 
 ### Create a GitHub OAuth App
 
@@ -67,6 +67,93 @@ This will start a HTTPS development server. HTTPS is required for authentication
 
 > [!NOTE]
 > CMD/> uses Vercel Speed Insights, if you don't want this you'll have to remove ``<SpeedInsights />`` from under the HTML tag in `layout.tsx`.
+
+## Getting Started w/ Docker
+
+### Create a GitHub OAuth App
+
+> [!WARNING]
+> This step is required for authentication with GitHub to work.
+
+1. Go to your GitHub settings.
+2. Scroll down and go to `Developer Settings > OAuth Apps`.
+3. Click the button to create a new OAuth app.
+4. Fill in most fields to your liking, but make sure to put `https://{your_url}/api/auth/callback/github` for `Authorization Callback URL`, wth `{your_url}` being the domain you're hosting CMD/> on.
+5. Proceed to setting up your `.env` file, where we'll use the `Client ID` & `Client Secret`.
+
+### Setup the `.env` file
+
+To setup your .env file, you'll need to change a few things.
+
+| Variable             | Change To                                                                | Notes                                                         |
+| -------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------- |
+| DATABASE_URL         | Your database connection string                                          | N/A                                                           |
+| AUTH_SECRET          | Random, secure string. AuthJS recommends using `openssl rand -base64 32` to generate it | Don't share with anybody, as this is meant to be secret.  |
+| AUTH_TRUST_HOST      | `false` if using HTTPS, `true` if using HTTP                             | Required for AuthJS to work over HTTP Connections. Not recommended to use due to security. |
+| GITHUB_CLIENT_ID     | Your GitHub Client ID (see your developer settings)                      | See your developer settings for this.                         |
+| GITHUB_CLIENT_SECRET | Your GitHub Client Secret                                                | You should have this stored, as GitHub only shows it once.    |
+| NEXT_PUBLIC_METADATA_BASE_URL_DEV | Your local development URL (most likely <https://localhost:3000>) | Used for the metadata. |
+| NEXT_PUBLIC_METADATA_BASE_URL_PROD | Your production URL (where you'll deploy CMD/> to) | N/A |
+
+### Setup your database
+
+> [!IMPORTANT]
+> You should have a database already setup, however if you don't then do that before proceeding. You will need your database connection string (see `DATABASE_URL`), which
+> should include all required information, such as the URL, username and password.
+
+To fully setup your database, run the following commands in order:
+  - `npx prisma db push`
+  - `npx prisma generate` (stop the NextJS server before running this if already started)
+
+If all goes well, your database should have all required tables and fields. Prisma should give an error if something goes wrong, however it shouldn't.
+
+> [!NOTE]
+> To check that the database is working properly, try making an account and creating a community and a post. Check them to make sure they appear and all information is there.
+> You can also run the seed file to fill the database with placeholder information.
+
+### Setup the Docker Container
+
+There are two ways to setup a Docker Container, either by a command or by Docker Compose.
+
+#### Command Line
+
+The command below will start a Docker Container using a `.env` file in the same directory. Make sure this file is present, or the container will fail to start. If you want to change the port it is accessible on, change the first `3000` after `-p` to your desired port.
+
+```bash
+docker create --env-file .env -p 3000:3000 cmd-forum-docker:latest
+```
+
+#### Docker Compose
+
+First, make a folder and create a file named `docker-compose.yml` inside. Make sure you have file extensions enabled, and it isn't saved as `docker-compose.yml.txt`.
+
+Here is an example of what you should put in it:
+
+```yaml
+name: "cmd-forum"
+services:
+  cmd_forum:
+    container_name: cmd-forum
+    image: cmd-forum-docker:latest
+    env_file:
+      - .env # Load .env, change if required.
+    ports:
+      - 3002:3000 # Change the first 3000 if you want a different port.
+  db: # Optional, but here as an example of how to setup a database.
+    container_name: db
+    image: postgres
+    environment: # If using this database, change to desired values.
+      POSTGRES_USERNAME: postgres 
+      POSTGRES_PASSWORD: postgres
+      TZ: Continent/City # Change to your Timezone (Format is Continent/City).
+    ports:
+      - 5432:5432 # Change the first 5432 if you want a different port.
+    volumes:
+      - ./db:/var/lib/postgresql/data 
+    restart: unless-stopped 
+```
+
+When you're finished with the file, make sure you have your `.env` file in the same directory. Open a terminal in the same directory and run `docker compose up`. This will start a database and CMD. Make sure your `.env` has the correct database value.
 
 ## Credits
 

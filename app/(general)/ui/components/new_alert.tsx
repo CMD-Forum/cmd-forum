@@ -3,14 +3,6 @@ import React from "react";
 
 export default function Alert({ type = "notice", children }: { type: "notice" | "alert" | "success" | "error", children: React.ReactNode }) { 
 
-    const getChildrenOnDisplayName = (children: any, displayName: any) =>
-        React.Children.map(children, (child) =>
-            child.type.displayName === displayName ? child : null
-    );
-
-    const title = getChildrenOnDisplayName(children, "AlertTitle");
-    const subtitle = getChildrenOnDisplayName(children, "AlertSubtitle");
-
     return (
 
         <div className={`w-full border-border border-[1px] border-l-[8px] transition-all ${type === "notice" ? 'border-l-white' : ''} ${type === "alert" ? 'border-l-[#fb923c]' : '' } ${type === "success" ? 'border-l-[#4ade80]' : '' } ${type === "error" ? 'border-l-[#ef4444]' : '' } rounded px-3 py-3`}>
@@ -44,9 +36,8 @@ export default function Alert({ type = "notice", children }: { type: "notice" | 
                     null
                 }
 
-                { title ? title : subtitle }              
-            </div>
-            { title ? subtitle : null }      
+                { children }           
+            </div>  
              
         </div>
 
