@@ -4,7 +4,13 @@
 
 ![CMD Forum](/public/main_bgcmd.png)
 
-<div align="center"><img src="https://img.shields.io/badge/status-alpha_development-green" alt="Development Status: Alpha"></img> <img src="https://img.shields.io/badge/latest_release-1.1.0-blue" alt="Latest Release: 1.1.0"></img></div>
+<!--[GitHub Created At](https://img.shields.io/github/created-at/CMD-Forum/cmd-forum?style=flat-square&logo=github&color=blue)-->
+![GitHub package.json version](https://img.shields.io/github/package-json/v/cmd-forum/CMD-Forum?style=flat-square)
+![Vercel](https://vercelbadge.vercel.app/api/CMD-Forum/cmd-forum?style=flat-square&logo=vercel)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/w/CMD-Forum/cmd-forum?style=flat-square&logo=github)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/t/CMD-Forum/cmd-forum?style=flat-square&logo=github)
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/CMD-Forum/cmd-forum/total?style=flat-square&logo=github)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/CMD-Forum/cmd-forum)
 
 <h3 align="center">Forum site built in React</h3>
 
