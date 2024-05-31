@@ -9,6 +9,7 @@ import { Post } from '@/types/types';
 import { ArchiveBoxXMarkIcon, ChatBubbleBottomCenterIcon, ChatBubbleLeftEllipsisIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/16/solid';
 import { SavePostButton } from '../button';
 import { useSession } from 'next-auth/react';
+import rehypeSanitize from 'rehype-sanitize';
 
 /**
  * Horizontal card display of the given post.
@@ -276,7 +277,7 @@ export function FullPost( post: Post ) {
 
                         <div className='markdown-body'>
 
-                            <MarkdownPreview source={post.content} /* rehypePlugins={rehypePlugins} */ />
+                            <MarkdownPreview source={post.content} rehypePlugins={[rehypeSanitize]} />
 
                         </div>                        
                     </div>

@@ -44,6 +44,7 @@
     "react-hook-form": "^7.51.3",
     "react-icons": "^5.0.1",
     "react-zorm": "^0.9.0",
+    "rehype-sanitize": "^6.0.0",
     "sass": "^1.69.5",
     "swr": "^2.2.5",
     "use-debounce": "^10.0.0",

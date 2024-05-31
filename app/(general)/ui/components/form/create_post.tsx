@@ -10,6 +10,7 @@ import { createPost, getCommunityByName } from "@/app/(general)/lib/data";
 import { FaGithub, FaMarkdown } from "react-icons/fa6";
 import Link from "next/link";
 import MarkdownEditor from '@uiw/react-markdown-editor';
+import rehypeSanitize from "rehype-sanitize";
 
 const FormSchema = z.object({
 
@@ -193,6 +194,7 @@ export default function CreatePostForm() {
                 onChange={setContent}
                 enablePreview={true}
                 enableScroll={true}
+                previewProps={{ rehypePlugins: [rehypeSanitize] }} 
             />
 
             <div className="flex gap-2 flex-col md:flex-row w-full">
