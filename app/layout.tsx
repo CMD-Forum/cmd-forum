@@ -1,11 +1,13 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter, IBM_Plex_Mono } from 'next/font/google'
 import './(general)/globals.scss'
-import { Navigation, Sidebar, Footer } from '@/app/(general)/ui/navigation'
+import { Navigation, Footer } from '@/app/(general)/ui/navigation'
 import { SessionProvider } from 'next-auth/react'
 import { auth } from '@/auth'
 import NextTopLoader from 'nextjs-toploader';
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import Sidebar from './(general)/ui/components/navigation/sidebar'
+import Banner from './(general)/ui/components/banner'
 
 const inter = Inter({ subsets: ['latin'] });
 const ibm_plex_mono = IBM_Plex_Mono({ subsets: ["latin"], weight: "400", variable: "--font-ibm_plex_mono" })
@@ -76,7 +78,7 @@ export default async function RootLayout({
 
     <SessionProvider session={session}>
 
-          <html lang="en" className={`defaultTheme ${inter.className} ${ibm_plex_mono.variable}`} style={{ colorScheme: "dark" }}>
+          <html lang="en" className={`defaultTheme bg-background ${inter.className} ${ibm_plex_mono.variable}`} style={{ colorScheme: "dark" }}>
 
             <SpeedInsights />
 
@@ -97,20 +99,25 @@ export default async function RootLayout({
 
               <div id='modal-root'>
 
-                <Navigation />
+                <div className='hidden md:flex'>
+                  <Banner 
+                    message={"This is a development version of Command - things may be unfinished or broken."} 
+                    fixedAtTop={false} 
+                    learnMoreEnabled={true}
+                    learnMoreLink={"/ui/dev/development_message"}
+                  />                  
+                </div>
 
-                  <div className='flex h-full m-auto bg-background'>
+                {/*<Navigation />*/}
 
-                    <Sidebar />        
+                  <div className='flex h-full bg-background'>
 
-                    <div className='flex flex-col justify-center w-full !pt-0 m-auto'>
+                    <Sidebar />     
 
+                    <div className='flex flex-col w-full !pt-0'>
                       <div>
-
                         {children}    
-
                       </div>
-
                     </div>
 
                   </div>

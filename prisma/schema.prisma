@@ -50,6 +50,7 @@ model Community {
   image          String   @default("/images/favicon/favicon.svg") /// Image that is shown for the community, defaults to the favicon.
   public         Boolean  @default(true) /// If false, this community cannot be accessed and will not be shown. Currently unimplemented.
   admin_ids      String[] @default([]) /// User CUIDS of the community administrator(s).
+  memberships        CommunityMembership[]
   sidebar_md     String   @default("") /// Deprecated, do not use.
   posts          Post[]   // Relation to all posts in this community.
 }
@@ -88,6 +89,7 @@ model User {
   image              String      @default("/images/favicon/favicon.svg") /// The profile image of the user.
   posts              Post[]     
   savedPosts         String[]    @default([])
+  memberships        CommunityMembership[]
   upvotes            Upvotes[]
   downvotes          Downvotes[]
   Support            Support?    @relation(fields: [supportId], references: [authorId])
@@ -170,4 +172,13 @@ model Downvotes {
   Post     Post   @relation(fields: [postID], references: [id])
 
   @@id(name: "downvoteID", [postID, userID])
+}
+
+model CommunityMembership {
+  userId             String
+  user               User        @relation(fields: [userId], references: [id])
+  communityId        String
+  community          Community   @relation(fields: [communityId], references: [id])
+
+  @@id([userId, communityId])
 }

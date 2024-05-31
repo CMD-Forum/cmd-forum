@@ -25,7 +25,7 @@ export default async function CommunityPage({ params }: { params: { community: s
 
     <main className="flex min-h-fit flex-col w-full">
 
-      <div className="error flex flex-col w-full">
+      <div className="error flex flex-col w-full mt-14 md:mt-0">
 
         <CommunityInfobarItemsFull 
           community={dbCommunity} 

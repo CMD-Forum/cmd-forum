@@ -26,7 +26,7 @@ export default async function UserPage({ params }: { params: { name: string } })
 
                 <div className="error flex flex-col w-full">
       
-                  <div className="flex flex-col border-0 border-border p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48 bg-card">
+                  <div className="flex flex-col border-0 border-border p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48 bg-card mt-8 md:mt-0">
       
                     <ProfileMain 
                         username={user.username} 

@@ -174,7 +174,7 @@ export async function getAllPostsFromCommunityID( id: string ) {
 
 export async function createCommunity( { name, description, admin_ids }: { name: string, description: string, admin_ids: string[] } ) {
 
-    const post = await prisma.community.create({
+    const community = await prisma.community.create({
         data: {
             name: name.toLowerCase(),
             display_name: name,
@@ -183,7 +183,7 @@ export async function createCommunity( { name, description, admin_ids }: { name:
         }
     });
 
-    return post;
+    return community;
 
 }
 
@@ -227,9 +227,68 @@ export async function getAllCommunitys() {
     const communitys = await prisma.community.findMany();
 
     if (communitys) {   
-        return communitys
+        return communitys;
     } else {
         console.log("No Communitys");
+    }
+
+}
+
+// updateUserMembership
+
+export async function getAllUserMembershipRecords({ userID }: { userID: string }) {
+    try {
+        const userMemberships = await prisma.user.findUnique({
+            where: {
+                id: userID,
+            },
+            select: {
+                memberships: {
+                    select: {
+                        community: true,
+                    }
+                },
+            }
+        });     
+        return userMemberships;          
+    } catch ( error ) {
+        console.error(error);
+    }
+}
+
+export async function createUserMembershipRecord({ userID, communityID }: { userID: string, communityID: string }) {
+
+    try {
+        const updatedAuthor = await prisma.user.update({
+            where: {
+                id: userID,
+            },
+            data: {
+                memberships: {
+                    create: {
+                        communityId: communityID,
+                    },
+                },                    
+            },
+        });     
+        return updatedAuthor;          
+    } catch ( error ) {
+        console.error(error);
+    }
+
+}
+
+// Testing Purposes
+
+export async function getJamsterJavaCommunityMemberOf() {
+    
+    const user = await prisma.user.findUnique({ where: { username: "JamsterJava" }, include: { memberships: true } })
+
+    if ( user ) {
+        console.log(user);
+        return user;
+    } else {
+        console.log("JamsterJava hasn't joined any communities.")
     }
 
 }

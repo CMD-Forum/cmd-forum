@@ -4,7 +4,7 @@ import { ArchiveBoxXMarkIcon, ArrowRightEndOnRectangleIcon, BookmarkIcon, Cog6To
 import Dropdown, { DropdownButton, DropdownCustom, DropdownLink, DropdownShare, DropdownUser } from "../components/dropdown/dropdown";
 import LargeDropdown from "../components/large_dropdown";
 import Alert, { AlertSubtitle, AlertTitle } from "../components/new_alert";
-import ComIDBtn from "./test";
+import ComIDBtn, { ComMemBtn } from "./test";
 import LogoutButton from "../components/signoutButton";
 import Link from "next/link";
 import Modal from "../components/modal";
@@ -16,11 +16,10 @@ export default function DeveloperPage() {
     return (
 
         <div className="">
-            <div className="flex flex-col border-b-1 border-border p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48">
-
-                <h1 className="header">Developer Page</h1>
-
-            </div>
+                <div className="flex flex-col border-0 border-border p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48 bg-card mt-8 md:mt-0">
+                    <h1 className="header">Design Page</h1>
+                    <p className={`subtitle sm:hidden`}>List of all UI items in Command.</p>
+                </div>
 
             <div className="flex flex-col px-6 lg:py-12 lg:px-48 mt-6 mb-6">
                     
@@ -189,7 +188,8 @@ export default function DeveloperPage() {
                 <h2 className="header-5 mt-4 w-full">Debug</h2> 
 
                 <div className="flex flex-col gap-2 mt-4">       
-                    <ComIDBtn />  
+                    <ComIDBtn /> 
+                    <ComMemBtn /> 
                 </div>  
 
             </div>     

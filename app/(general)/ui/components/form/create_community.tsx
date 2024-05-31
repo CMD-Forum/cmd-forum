@@ -6,13 +6,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod" // Form Validation
 import Alert, { AlertTitle } from "../new_alert";
 import { useSession } from "next-auth/react";
-import { createCommunity, getCommunityByName } from "@/app/(general)/lib/data";
+import { createCommunity, createUserMembershipRecord, getCommunityByName } from "@/app/(general)/lib/data";
 import { CreateCommunitySchema } from "@/app/(general)/lib/schemas";
 
 function ErrorMessage(props: { message: string }) {
-
     return <p className="dark:text-red-300 text-sm">{props.message}</p>;
-    
 }
 
 export default function CreateCommunityForm() {
@@ -34,13 +32,11 @@ export default function CreateCommunityForm() {
     const { data: session } = useSession();
 
     if ( ! session ) {
-
         return (
             <Alert type={"error"}>
                 <AlertTitle>Sorry, this page couldn&apos;t be displayed.</AlertTitle>
             </Alert>
         );
-
     } 
 
     const OnSubmit = async (values: z.infer<typeof CreateCommunitySchema>) => {
@@ -54,39 +50,34 @@ export default function CreateCommunityForm() {
       if ( ! existingCommunity ) {
   
         const communityData = {
-
             name: values.name,
             description: values.description,
             image: values.image_url,
-            admin_ids: [session.user.id]
-  
+            admin_ids: session.user.id ? [session.user.id] : [""]
         };
         
         try {
-
-            // @ts-ignore
             const community = await createCommunity(communityData); 
+            console.log(community.id);
+            try {
+                if ( session.user.id ) {
+                    const newMembershipRecord = await createUserMembershipRecord({ userID: session.user.id, communityID: community.id });    
+                } else {
+                    setError("Sorry, we're having issues getting your account information. Try logging out and in again.")
+                }
+            } catch ( error ) {
+                console.error(error);
+            }
             setIsLoading(false); 
             setSuccess(true);
-             
         } catch ( error ) {
-
             setIsLoading(false);
-            setErrorTitle("Oops, an error occurred.");
-            // @ts-ignore
-            setError(error);
-
+            setError("Something went wrong, please try again later.");
         }
-        
-
       } else {
-        
         setIsLoading(false);
-        setErrorTitle("Community Unavailable");
         setError("Looks like that name has been taken.");
-  
       }
-  
     };
   
     return (
@@ -101,7 +92,9 @@ export default function CreateCommunityForm() {
 
             {error && (
                 // @ts-ignore
-                <Alert type="error" title={errorTitle} description={error} />
+                <Alert type="error">
+                    <AlertTitle>{error}</AlertTitle>
+                </Alert>
             )}
 
             <div className="flex gap-1 font-medium">Community Name<p className="text-[#fca5a5]">*</p></div>

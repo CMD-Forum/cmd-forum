@@ -53,7 +53,7 @@ export default async function PostView({ params }: { params: { id: string } }) {
 
   return (
 
-    <div className='mt-6 lg:pb-12 lg:px-44 !pt-0'>
+    <div className='mt-14 lg:pb-12 lg:px-44 !pt-0 md:mt-6'>
 
       <FullPost
         id={post.id}

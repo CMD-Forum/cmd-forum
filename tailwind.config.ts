@@ -15,9 +15,6 @@ module.exports = {
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         'facebook-grey-btn': 'url(https://web.archive.org/web/20110414215758im_/http://static.ak.fbcdn.net/rsrc.php/v1/zD/r/B4K_BWwP7P5.png)'
       },
-      boxShadow: {
-        'facebook_bs': '0 1px 0 rgba(0, 0, 0, .1)',
-      },
       colors: {
         'semitransparent': 'hsla(0, 0%, 0%, 0.75)',
         'transparent': 'hsla(0, 0%, 0%, 0)',
@@ -26,6 +23,7 @@ module.exports = {
         'card': '#0E0E0E',
         'card-light': 'hsl(0, 0%, 7%)',
         'border': 'hsl(60, 2%, 10%)',
+        'border-light': 'hsl(60, 2%, 19%)',
         'accent-blue': 'hsl(215, 93%, 58%)',
       },
       borderWidth: {

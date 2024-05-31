@@ -61,19 +61,26 @@ a {
   @apply transition-all;
   @apply bg-transparent;
   @apply hover:bg-border;
+  @apply focus:bg-border;  
   @apply px-3;
   @apply py-2;
   @apply border-1;
   @apply border-border;
+  @apply hover:border-border-light;
+  @apply focus:border-border-light;
   @apply rounded-md;
   @apply flex;
   @apply gap-1.5;
   @apply items-center;
   @apply w-fit;
   @apply outline-none;
-  @apply focus-visible:outline-white;
-  @apply focus-visible:outline-2;
+  @apply focus-visible:border-1;
+  @apply focus-visible:border-border-light;
+  @apply focus-visible:bg-border;
+}
 
+.navlink.raised {
+  @apply shadow-lg;
 }
 
 .navlink-emphasis {
@@ -87,6 +94,8 @@ a {
   @apply hover:text-white;
   @apply focus:text-white;
   @apply border-2;
+  @apply outline-0;
+  @apply focus-visible:outline-0;
 }
 
 .navlink:disabled {
@@ -94,6 +103,7 @@ a {
   @apply text-gray-400;
   @apply hover:bg-transparent;
   @apply cursor-not-allowed;
+  @apply border-border #{!important};
 
 }
 
@@ -125,10 +135,10 @@ a {
 
 .navlink-full:disabled {
 
-  @apply bg-neutral-500;
-  @apply hover:bg-neutral-500;
+  @apply bg-neutral-400;
+  @apply hover:bg-neutral-400;
   @apply hover:cursor-not-allowed;
-  @apply border-neutral-500;
+  @apply border-neutral-400;
   @apply text-black;
 
 }
@@ -178,13 +188,39 @@ a {
   @apply border-0;
   @apply w-full;
   @apply p-2.5;
+  @extend .subtitle;
+  @apply hover:text-white #{!important};
+  @apply hover:border-0;
+  @apply focus:border-0;
+  @apply border-transparent;
+  @apply relative;
 
 }
 
 .navlink-sidebar.active {
 
   @apply bg-border;
+  @apply text-white #{!important};
+  @apply border-1 #{!important};
+  @apply border-border-light #{!important};
 
+}
+
+.navlink-sidebar.after-active {
+  @apply text-white #{!important};  
+  @apply ring-0 #{!important};
+  @apply bg-border #{!important};
+}
+
+.navlink-sidebar.after-active::after {
+  content: "";
+  width: 2px;
+  height: 20px;
+  background-color: white;
+  position: absolute;
+  left: -4px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
 }
 
 .topbar-link {
@@ -257,10 +293,10 @@ a {
   @apply h-9;
   @apply px-2;
   @apply outline-none;
-  @apply ring-border;
-  @apply ring-2;
-  @apply focus:ring-2;
-  @apply focus:ring-white #{!important};
+  @apply border-1;
+  @apply border-border;
+  @apply focus:border-border-light;
+  @apply focus:border-1;
   @apply transition-all;
   @extend .subtitle;
 
@@ -425,7 +461,6 @@ a {
 
 .md-editor {
   @apply rounded-md #{!important};
-  @apply z-0;
 }
 
 .md-editor-toolbar-warp {
@@ -453,6 +488,18 @@ a {
 
 .md-editor-preview {
   @apply bg-transparent #{!important};
+}
+
+.cm-editor {
+  @apply bg-transparent;
+}
+
+.cm-gutters {
+  @apply bg-transparent #{!important};
+}
+
+.cm-activeLine {
+  @apply bg-border-light #{!important};
 }
 
 // hr
