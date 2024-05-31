@@ -10,7 +10,7 @@ generator client {
   provider        = "prisma-client-js"
   output          = "../node_modules/.prisma/client"
   seed            = "node prisma/seed.js"
-  previewFeatures = ["fullTextSearch", "omitApi"]
+  previewFeatures = ["fullTextSearch", "omitApi", "tracing"]
   binaryTargets   = ["native", "rhel-openssl-1.0.x"]
 }
 
