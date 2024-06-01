@@ -41,7 +41,6 @@ async function main() {
   
   ];
 
-  //@ts-ignore
   const newCommunities = await Promise.all(communities.map(community => prisma.community.create({ data: community })));
   const newUsers = await Promise.all(users.map(user => prisma.user.create({ data: user })));
   const newPosts = await Promise.all(posts.map(post => prisma.post.create({ data: post })));

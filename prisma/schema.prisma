@@ -86,7 +86,7 @@ model User {
   updatedAt          DateTime    @updatedAt /// When the user database entry was last updated.
   name               String      /// Deprecated, do not use.
   profile_image      String      @default("/images/favicon/favicon.svg") /// Deprecated, do not use.
-  image              String      @default("/images/favicon/favicon.svg") /// The profile image of the user.
+  image              String?     /// The profile image of the user.
   posts              Post[]     
   savedPosts         String[]    @default([])
   memberships        CommunityMembership[]
