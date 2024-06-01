@@ -1,3 +1,4 @@
+import { ChevronDownIcon } from "@heroicons/react/16/solid";
 import Dropdown, { DropdownLink } from "../../components/dropdown/dropdown";
 
 export default function ThemeTestingPage() {
@@ -14,7 +15,7 @@ export default function ThemeTestingPage() {
                 <div className='flex flex-col px-6 lg:py-12 lg:px-48 mt-6 mb-6'>
                     <div className="flex flex-col gap-2">
                         <p className="font-medium text-sm !text-black">Dropdown</p>    
-                        <Dropdown headerText={"Dropdown"} headerClassName={"!border-1 !border-border"} accountHeading={false} headerIcon={null}>
+                        <Dropdown trigger={<button className="navlink">Dropdown<ChevronDownIcon className="w-4 h-4" /></button>}>
                             <DropdownLink text='Item a' link={"/"} icon={null} />
                             <DropdownLink text='Item b' link={"/"} icon={null} />
                         </Dropdown>
