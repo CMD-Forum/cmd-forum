@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { Post } from '@/types/types';
 import { ArrowLeftIcon, ArrowPathIcon, ArrowRightIcon } from '@heroicons/react/16/solid';
 import { usePathname, useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 /**
  * PostListByUser
@@ -109,6 +110,17 @@ export default function PostListByUser( { username }: { username: string } ) {
             </div>
         );
     };
+
+    if ( totalPages <= 0 ) { // Tried `if ( ! posts )` but that didn't work for some reason.
+        return (
+            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'>
+                <p className='text-center text-gray-300 font-medium antialiased w-full'>Looks like there&apos;s no posts here.</p>
+                <div className='flex gap-4 w-full items-center justify-center mt-4'>
+                    <Link className='navlink' href={"/"}>Home</Link>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className='flex flex-col gap-4'>
@@ -248,14 +260,14 @@ export function PostListByCommunity( { communityID }: { communityID: string } ) 
         );
     };
 
-    if ( ! posts ) {
+    if ( totalPages <= 0 ) { // Tried `if ( ! posts )` but that didn't work for some reason.
         return (
             <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'>
                 <p className='text-center text-gray-300 font-medium antialiased w-full'>Looks like there&apos;s no posts here.</p>
                 <div className='flex gap-4 w-full items-center justify-center mt-4'>
-                    <button className='navlink' onClick={() => router.push("/")} type='button'>Home</button>
+                    <Link className='navlink' href={"/"}>Home</Link>
                 </div>
-            </div>   
+            </div>  
         );
     }
 
@@ -406,12 +418,12 @@ export function SavedPostListByUserID( { userID }: { userID: string } ) {
         );
     };
 
-    if ( ! posts ) {
+    if ( totalPages <= 0 ) { // Tried `if ( ! posts )` but that didn't work for some reason.
         return (
             <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'>
                 <p className='text-center text-gray-300 font-medium antialiased w-full'>Looks like there&apos;s no posts here.</p>
                 <div className='flex gap-4 w-full items-center justify-center mt-4'>
-                    <button className='navlink' onClick={() => router.refresh()} type='button'>Home</button>
+                    <Link className='navlink' href={"/"}>Home</Link>
                 </div>
             </div>  
         );

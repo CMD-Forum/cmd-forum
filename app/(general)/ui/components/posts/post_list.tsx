@@ -3,6 +3,7 @@
 import { CardPost } from '@/app/(general)/ui/components/posts/post';
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/16/solid';
 import { Post } from '@prisma/client';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export default function PostList() {
@@ -95,6 +96,17 @@ export default function PostList() {
             </div>
         );
     };
+
+    if ( totalPosts <= 0 ) { // Tried `if ( ! posts )` but that didn't work for some reason.
+        return (
+            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'>
+                <p className='text-center text-gray-300 font-medium antialiased w-full'>Looks like there&apos;s no posts here.</p>
+                <div className='flex gap-4 w-full items-center justify-center mt-4'>
+                    <Link className='navlink' href={"/"}>Home</Link>
+                </div>
+            </div>  
+        );
+    }
 
     return (
         <div className='flex flex-col gap-4'>
