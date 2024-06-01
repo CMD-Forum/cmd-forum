@@ -11,6 +11,7 @@ import { useTransition } from "react";
 import { LoginSchema } from "@/app/(general)/lib/schemas";
 import { OAuthButtons } from "./oauth/OAuthButtons";
 import { useSearchParams } from 'next/navigation'
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/16/solid";
 
 function ErrorMessage(props: { message: string }) {
     return <p className="dark:text-red-300 text-sm">{props.message}</p>;
@@ -21,6 +22,7 @@ export default function LoginForm() {
     const [isPending, startTransition] = useTransition();
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
+    const [showPassword, setShowPassword] = useState<boolean>(false);
 
     const form = useForm<z.infer<typeof LoginSchema>>({
         resolver: zodResolver(LoginSchema),
@@ -87,7 +89,6 @@ export default function LoginForm() {
             <input
                 {...form.register('email')}
                 disabled={isPending}
-                placeholder="johndoe@example.com"
                 className={`generic_field ${form.formState.errors.email ? "errored" : ""}`}
             />
 
@@ -99,13 +100,15 @@ export default function LoginForm() {
             {/* */}
 
             <div className="flex gap-1 facebookTheme:text-[11px] font-medium">Password<p className="text-[#fca5a5]">*</p></div>
-            <input
-                type="password"
-                {...form.register('password')}
-                disabled={isPending}
-                placeholder="********"
-                className={`generic_field ${form.formState.errors.email ? "errored" : ""}`}
-            />
+            <div className="relative">
+                <input
+                    type={showPassword ? "text" : "password"}
+                    {...form.register('password')}
+                    disabled={isPending}
+                    className={`generic_field ${form.formState.errors.email ? "errored" : ""} w-full`}
+                />
+                <button onClick={() => setShowPassword(!showPassword)} type={"button"} className="absolute right-1 top-[3px] border-1 border-border hover:border-border-light hover:bg-border focus:border-border-light focus:bg-border rounded-md transition-all px-1 py-1 outline-none" aria-label={"Show the Password Field"}>{ showPassword ? <EyeSlashIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" /> }</button>              
+            </div>
 
             {form.formState.errors.password && (
                 // @ts-ignore

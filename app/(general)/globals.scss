@@ -286,7 +286,8 @@ a {
   @apply border-1;
   @apply border-border;
   @apply focus:border-border-light;
-  @apply focus:border-1;
+  @apply ring-border-light;
+  @apply focus:ring-2;
   @apply transition-all;
   @extend .subtitle;
 

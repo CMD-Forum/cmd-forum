@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import Alert, { AlertSubtitle, AlertTitle } from "../new_alert";
 import { signup } from "@/app/(general)/lib/actions/signup";
 import { OAuthButtons } from "./oauth/OAuthButtons";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/16/solid";
 
 export const SignupSchema = z.
     object({
@@ -51,6 +52,9 @@ export default function SignupForm () {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isLoading, setIsLoading] = useState(false);
+
+    const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
 
     const form = useForm<z.infer<typeof SignupSchema>>({
         resolver: zodResolver(SignupSchema),
@@ -111,7 +115,6 @@ export default function SignupForm () {
             <input
                 {...form.register('username')}
                 disabled={isPending}
-                placeholder="john_doe"
                 className={`generic_field ${form.formState.errors.username ? "errored" : ""}`}
             />
 
@@ -144,7 +147,6 @@ export default function SignupForm () {
             <input
                 {...form.register('email')}
                 disabled={isPending}
-                placeholder="johndoe@example.com"
                 className={`generic_field ${form.formState.errors.email ? "errored" : ""}`}
             />
 
@@ -156,13 +158,15 @@ export default function SignupForm () {
             {/* */}
 
             <div className="flex gap-1 subtitle">Password<p className="text-[#fca5a5]">*</p></div>
-            <input
-                type="password"
-                {...form.register('password')}
-                disabled={isPending}
-                placeholder="********"
-                className={`generic_field ${form.formState.errors.email ? "errored" : ""}`}
-            />
+            <div className="relative">
+                <input
+                    type={showPassword ? "text" : "password"}
+                    {...form.register('password')}
+                    disabled={isPending}
+                    className={`generic_field ${form.formState.errors.email ? "errored" : ""} w-full`}
+                />
+                <button onClick={() => setShowPassword(!showPassword)} type={"button"} className="absolute right-1 top-[3px] border-1 border-border hover:border-border-light hover:bg-border focus:border-border-light focus:bg-border rounded-md transition-all px-1 py-1 outline-none" aria-label={"Show the Password Field"}>{ showPassword ? <EyeSlashIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" /> }</button>              
+            </div>
 
             {form.formState.errors.password && (
                 // @ts-ignore
@@ -172,13 +176,15 @@ export default function SignupForm () {
             {/* */}
 
             <div className="flex gap-1 subtitle">Confirm Password<p className="text-[#fca5a5]">*</p></div>
-            <input
-                type="password"
-                {...form.register('confirmpassword')}
-                disabled={isPending}
-                placeholder="********"
-                className={`generic_field ${form.formState.errors.confirmpassword ? "errored" : ""}`}
-            />
+            <div className="relative">
+                <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    {...form.register('confirmpassword')}
+                    disabled={isPending}
+                    className={`generic_field ${form.formState.errors.email ? "errored" : ""} w-full`}
+                />
+                <button onClick={() => setShowConfirmPassword(!showConfirmPassword)} type={"button"} className="absolute right-1 top-[3px] border-1 border-border hover:border-border-light hover:bg-border focus:border-border-light focus:bg-border rounded-md transition-all px-1 py-1 outline-none" aria-label={"Show the Confirm Password Field"}>{ showConfirmPassword ? <EyeSlashIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" /> }</button>              
+            </div>
 
             {form.formState.errors.confirmpassword && (
                 // @ts-ignore
