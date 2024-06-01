@@ -36,6 +36,7 @@ export async function Navigation() {
 
                 <div className='ml-auto flex'>
 
+                  {/* // Since this won't be used again, it's just easier to comment it out.
                   <Dropdown accountHeading={true} headerText={""} headerIcon={null}>
                     <DropdownUser />
                     <hr className='mt-1 mb-1' />
@@ -49,7 +50,7 @@ export async function Navigation() {
                         <Link className='label cursor-pointer hover:!text-white !text-xs' href={"https://github.com/CMD-Forum/cmd-forum"}><MegaphoneIcon className='w-4 h-4'/>New Update - Alpha 1.2</Link>              
                       </div>
                     </DropdownCustom>
-                  </Dropdown>
+                  </Dropdown>*/}
 
                 </div>
                 
@@ -60,6 +61,7 @@ export async function Navigation() {
               <div className={"flex-row gap-2 hidden md:flex"}>
                 <div className={"ml-auto flex gap-4"}>
 
+                  {/* // Same reason as above
                   <Dropdown headerText={"Login or Signup"} headerIcon={<UserCircleIcon />} headerClassName={"!border-1 !border-border"}> 
                     <DropdownLink text={"Login"} icon={<ArrowRightEndOnRectangleIcon />} link={"/login"} />
                     <DropdownLink text={"Signup"} icon={<UserPlusIcon />} link={"/signup"} />
@@ -71,7 +73,7 @@ export async function Navigation() {
                         <Link className='label cursor-pointer hover:!text-white !text-xs' href={"https://github.com/CMD-Forum/cmd-forum"}><MegaphoneIcon className='w-4 h-4'/>New Update - Alpha 1.2</Link>              
                       </div>
                     </DropdownCustom>
-                  </Dropdown>
+                  </Dropdown> */}
 
                 </div>
 
