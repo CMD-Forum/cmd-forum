@@ -16,6 +16,7 @@ import { UserRole } from "@prisma/client";
 
 // Providers
 import GitHub from "next-auth/providers/github";
+import Passkey from "next-auth/providers/passkey"
 // import Resend from "next-auth/providers/resend"
 
 // Main
@@ -60,6 +61,7 @@ export const {
     //@ts-ignore
     adapter: PrismaAdapter(prisma),
     session: { strategy: "jwt" },
+    experimental: { enableWebAuthn: true },
     callbacks: {
 
         async signIn({ user }) {
@@ -143,6 +145,7 @@ export const {
             } as unknown as NextAuthUserWithStringId;
           },
       }),
+      Passkey,
       Credentials({
           // @ts-ignore: See above ts-ignore. Will fix at some point (never).
           async authorize(credentials) {
