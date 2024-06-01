@@ -23,16 +23,14 @@ export default function Search({
       <div className="error flex flex-col w-full">
 
             <div className="flex flex-col border-0 border-border p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48 bg-card mt-8 md:mt-0">
-
                 <h1 className="header">Search</h1>
                 <p className="subtitle">Find that post you liked.</p>   
-
             </div>
 
             <div className='px-6 flex flex-col md:flex-row gap-2 max-w-[70rem] xl:w-[70rem] xl:m-auto mt-6 xl:mt-6'>
                 <SearchBar />   
                 <div className='flex flex-row gap-2'>
-                    <Dropdown headerText={"Sort"} align={"left"} headerClassName={"!border-1 !border-border"} accountHeading={false} headerIcon={<ChartBarIcon />}>
+                    <Dropdown defaultPlacement={"bottom-start"} headerText={"Sort"} headerClassName={"!border-1 !border-border"} accountHeading={false} headerIcon={<ChartBarIcon />}>
                         <DropdownLink text='Relevance' link={"/"} icon={<MagnifyingGlassIcon />} />
                         <DropdownLink text='Hot' link={"/"} icon={<BoltIcon />} />
                         <DropdownLink text='Rising' link={"/"} icon={<ArrowTrendingUpIcon />} />

@@ -137,8 +137,7 @@ export function CardPost( post: Post ) {
                         </div>
                     }
                     
-                    <Dropdown 
-                        align={"right"} 
+                    <Dropdown
                         accountHeading={false} 
                         headerIcon={<EllipsisVerticalIcon />} 
                         headerText={null} 
