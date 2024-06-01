@@ -10,7 +10,7 @@ import { createCommunity, createUserMembershipRecord, getCommunityByName } from 
 import { CreateCommunitySchema } from "@/app/(general)/lib/schemas";
 
 function ErrorMessage(props: { message: string }) {
-    return <p className="dark:text-red-300 text-sm">{props.message}</p>;
+    return <p className="text-red-300 text-sm">{props.message}</p>;
 }
 
 export default function CreateCommunityForm() {

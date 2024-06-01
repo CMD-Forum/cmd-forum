@@ -14,7 +14,7 @@ import { useSearchParams } from 'next/navigation'
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/16/solid";
 
 function ErrorMessage(props: { message: string }) {
-    return <p className="dark:text-red-300 text-sm">{props.message}</p>;
+    return <p className="text-red-300 text-sm">{props.message}</p>;
 }
 
 export default function LoginForm() {

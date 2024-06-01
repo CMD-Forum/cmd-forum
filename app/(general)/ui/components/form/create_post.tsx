@@ -45,7 +45,7 @@ const FormSchema = z.object({
 
 function ErrorMessage(props: { message: string }) {
 
-    return <p className="dark:text-red-300 text-sm">{props.message}</p>;
+    return <p className="text-red-300 text-sm">{props.message}</p>;
     
 }
 

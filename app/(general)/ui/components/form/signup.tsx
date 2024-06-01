@@ -43,7 +43,7 @@ export const SignupSchema = z.
     });
 
 function ErrorMessage(props: { message: string }) {
-    return <p className="dark:text-red-300 subtitle">{props.message}</p>;
+    return <p className="text-red-300 subtitle">{props.message}</p>;
 }
 
 export default function SignupForm () {
