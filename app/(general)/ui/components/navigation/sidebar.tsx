@@ -44,19 +44,19 @@ export default function Sidebar() {
             <AnimatePresence>
                 <div className="hidden md:flex">
                     <>
-                        <div className="flex flex-row justify-between top-0 w-full h-fit p-3 fixed bg-card-light z-[50] md:hidden">
+                        <div className="flex flex-row justify-between top-0 w-full h-fit p-3 fixed bg-card-light z-[50] md:hidden overflow-auto">
                             <button className="navlink !px-2 !py-2 z-[100] ml-2 !w-fit " onClick={() => setExpanded(!expanded)}><Bars2Icon className="w-4 h-4" /></button>    
                         </div>
                     </>
                     
                     <motion.div 
-                        className={`bg-card ${expanded ? "z-[9999999] lg:z-[9999999]" : "-z-[50] md:z-[9999999]" } p-4 fixed md:sticky top-0 h-screen overflow-y-scroll overflow-x-hidden`}
+                        className={`bg-card ${expanded ? "z-[9999999] lg:z-[9999999]" : "-z-[50] md:z-[9999999]" } p-4 fixed md:sticky top-0 h-screen overflow-y-auto hide-scrollbar overflow-x-hidden`}
                         initial={{ width: expanded ? 300 : 74}}
                         animate={{ width: expanded ? 300 : 74}}
                         exit={{ width: expanded ? 300 : 74 }}
                         transition={{ ease: "easeOut", duration: 0.2 }}
                     >
-                        <div className="sticky top-4 overflow-y-scroll overflow-x-hidden">
+                        <div className="sticky top-4 overflow-y-auto overflow-x-hidden">
                             <div className={`flex flex-row items-center ${expanded ? "justify-between" : "justify-center"} `}>
                                 { expanded ? <Link className={`z-50 ml-0 mr-0 flex font-extrabold text-2xl hover:text-gray-300 transition-all whitespace-nowrap overflow-hidden w-[100px] overflow-ellipsis`} href={"/"}>CMD/&gt;</Link> : null }
                                 <button className="navlink !px-2 !py-2" onClick={() => setExpanded(!expanded)}>{ expanded ? <ChevronLeftIcon className="w-5 h-5" /> : <ChevronRightIcon className="w-5 h-5" /> }</button>
@@ -136,13 +136,13 @@ export default function Sidebar() {
                     </>
                     
                     <motion.div 
-                        className={`bg-card p-4 fixed z-[500] md:sticky top-0 h-screen overflow-y-scroll !w-[300px]`}
+                        className={`bg-card p-4 fixed z-[500] md:sticky top-0 h-screen overflow-y-auto hide-scrollbar !w-[300px]`}
                         initial={{ x: expanded ? 0 : -300}}
                         animate={{ x: expanded ? 0 : -300}}
                         exit={{ x: expanded ? 0 : -300 }}
                         transition={{ ease: "easeOut", duration: 0.2 }}
                     >
-                        <div className="sticky top-4 overflow-y-scroll">
+                        <div className="sticky top-4 overflow-y-auto">
                             <div className={`flex flex-row items-center justify-between`}>
                                 <Link className={`z-50 ml-0 mr-0 flex font-extrabold text-2xl hover:text-gray-300 transition-all whitespace-nowrap overflow-hidden w-[100px] overflow-ellipsis`} href={"/"}>CMD/&gt;</Link>
                                 <button className="navlink !px-2 !py-2" onClick={() => setExpanded(!expanded)}>{ expanded ? <ChevronLeftIcon className="w-5 h-5" /> : <ChevronRightIcon className="w-5 h-5" /> }</button>
