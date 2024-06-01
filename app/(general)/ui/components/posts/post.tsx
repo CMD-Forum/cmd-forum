@@ -10,6 +10,7 @@ import { ArchiveBoxXMarkIcon, ChatBubbleBottomCenterIcon, ChatBubbleLeftEllipsis
 import { SavePostButton } from '../button';
 import { useSession } from 'next-auth/react';
 import rehypeSanitize from 'rehype-sanitize';
+import ProfileImage from '../account/ProfileImage';
 
 /**
  * Horizontal card display of the given post.
@@ -99,7 +100,8 @@ export function CardPost( post: Post ) {
                                     <div className='hidden md:flex flex-row gap-2'>  
                                         <Hovercard headerText={`@${post.author.username}`} headerIcon={null} headerClassName={"text-sm"}>
                                             <div className='flex flex-row gap-4 p-4 w-full max-w-[300px]'>
-                                                <img src={post.author.image} className='w-6 h-6 rounded-sm' alt='Profile Image'></img>
+                                                {/* @ts-ignore */}
+                                                <ProfileImage user={post.author} />
                                                 <div className='flex flex-col'>
                                                     <Link href={`/user/${post.author.username}`} className='hover:underline w-fit subtitle'>@{post.author.username}</Link>     
                                                     <p className='subtitle'>{post.author.description}</p>             
@@ -140,7 +142,8 @@ export function CardPost( post: Post ) {
                     <Dropdown
                         trigger={<button className='navlink !px-2'><EllipsisVerticalIcon className='w-5 h-5' /></button>}
                     >
-                        <DropdownLink text={post.author.username} icon={<img src={post.author.image} alt={post.author.username}></img>} link={`/user/${post.author.username}`}></DropdownLink>
+                        {/* @ts-ignore */}
+                        <DropdownLink text={post.author.username} icon={<ProfileImage user={post.author} imgSize={"5"} />} link={`/user/${post.author.username}`}></DropdownLink>
                         <DropdownLink text={post.community.display_name} icon={<img src={post.community.image} alt={post.community.display_name}></img>} link={`/c/${post.community.name}`}></DropdownLink>
                         <hr className='mt-1 !mb-1'/>
                         <DropdownShare icon={<ShareIcon />} text={text} title={title} url={url} />

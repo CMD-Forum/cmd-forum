@@ -3,6 +3,7 @@
 import { BookOpenIcon, CalendarDaysIcon, ChatBubbleBottomCenterTextIcon, Cog6ToothIcon, HomeIcon, MagnifyingGlassIcon, PencilSquareIcon, ShieldCheckIcon, UserIcon, ViewColumnsIcon } from "@heroicons/react/20/solid";
 import Link from "next/link"
 import { motion } from "framer-motion";
+import ProfileImage from "./ProfileImage";
   
 const variants = {
 
@@ -39,7 +40,8 @@ export default function ProfileMain(user: ProfileProps) {
 
                     <div className='flex flex-row gap-3 items-center'>
 
-                        <img src={user.image} className='h-[56px] rounded-md' alt={`${user.username}'s Profile Image`} />
+                        {/* @ts-ignore */}
+                        <ProfileImage user={user} imgSize={"14"} />
 
                         <div className='flex flex-col'>
 
