@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import LogoutButton from "../signoutButton";
 import { getAllUserMembershipRecords } from "@/app/(general)/lib/data";
 import Dropdown, { DropdownCustom, DropdownLink, DropdownUser } from "../dropdown/dropdown";
+import ProfileImage from "../account/ProfileImage";
 
 export default function Sidebar() {
 
@@ -123,7 +124,7 @@ export default function Sidebar() {
                             <button className="navlink !px-2 !py-2 z-[100] ml-2 !w-fit " onClick={() => setExpanded(!expanded)}><Bars2Icon className="w-4 h-4" /></button>  
                             { session?.user && 
                                 // @ts-ignore
-                                <Dropdown trigger={<button className="navlink"><img src={session.user.image} className="w-5 h-5 rounded" alt="Your Profile Image" /><ChevronDownIcon className="w-4 h-4" /></button>}>
+                                <Dropdown trigger={<button className="navlink"><ProfileImage user={session.user} imgSize={"5"} /><ChevronDownIcon className="w-4 h-4" /></button>}>
                                     <DropdownUser />
                                     <hr className='mt-1 mb-1' />
                                     <DropdownLink text={"Saved Posts"} icon={<BookmarkIcon />} link={"/posts/saved"} />
