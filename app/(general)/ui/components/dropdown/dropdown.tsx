@@ -1,17 +1,15 @@
 "use client";
 
-import { AnimatePresence, cubicBezier, easeIn, easeInOut, easeOut, motion } from "framer-motion";
+import { cubicBezier, motion } from "framer-motion";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import React, { MouseEventHandler, useEffect, useRef } from "react";
+import React, { MouseEventHandler } from "react";
 import { useState } from "react";
 import type { Route } from 'next'
 
 import {
     useFloating,
     autoUpdate,
-    offset,
-    flip,
     shift,
     useClick,
     useDismiss,
@@ -19,9 +17,6 @@ import {
     useInteractions,
     FloatingFocusManager,
     Placement,
-    FloatingList,
-    useListNavigation,
-    useTypeahead,
 } from '@floating-ui/react';
 import { ChevronDownIcon } from "@heroicons/react/16/solid";
 
@@ -38,25 +33,17 @@ import { ChevronDownIcon } from "@heroicons/react/16/solid";
 
 export default function Dropdown({ 
     defaultPlacement = "bottom-end", 
-    children, 
-    accountHeading = false, 
-    headerText, 
-    headerIcon, 
-    className, 
-    headerClassName,
-    chevronIcon = true,
+    trigger,
+    children,
+    className,
 }: { 
     defaultPlacement?: Placement, 
+    trigger: React.ReactNode,
     children: React.ReactNode, 
-    accountHeading?: boolean, 
-    headerText?: string | React.ReactNode, 
-    headerIcon?: React.ReactNode, 
-    className?: string, headerClassName?: string,
-    chevronIcon?: boolean, 
+    className?: string,
 }) {
 
     const [open, setIsOpen] = useState<boolean>(false);
-    const { data: session } = useSession();
 
     const {refs, floatingStyles, context} = useFloating({
         open: open,
@@ -81,46 +68,17 @@ export default function Dropdown({
     return (
         <>
             <div className="w-fit">
-                { accountHeading === true ? (
-                    <>
-                        {session && (
-                            <button 
-                                className={`navlink ${headerClassName ? headerClassName : ""} !p-0 !border-0 !mt-0 flex !font-medium !bg-transparent`}
-                                onClick={() => setIsOpen(!open)}
-                                ref={refs.setReference}
-                                {...getReferenceProps()}
-                            >
-                                {session.user.image 
-                                    ?
-                                    <img className={`w-[36px] h-[36px] transition-all border-1 border-border hover:brightness-75 ${open === true ? "brightness-75" : ""} rounded-md`} src={session.user.image} alt='Your Account Image' />
-                                    :
-                                    <img className={`w-[36px] h-[36px] transition-all border-1 border-border hover:brightness-75 ${open === true ? "brightness-75" : ""} rounded-md`} src="/images/favicon/favicon.svg" alt='Your Account Image' />
-                                }
-                            </button>
-                        )}        
-                    </>
-                ) : (
-                    <>
-                        <button 
-                            className={`navlink ${headerClassName} ${headerIcon && !headerText ? "!px-2" : ""} ${open ? "!bg-border" : ""} !mt-0 flex !font-medium`}
-                            onClick={() => setIsOpen(!open)}
-                            ref={refs.setReference}
-                            {...getReferenceProps()}
-                        >
-                            { headerIcon ?
-                                // @ts-ignore
-                                React.cloneElement(headerIcon, {
-                                    className: "w-5 h-5",
-                                })
-                                :
-                                null
-                            }       
-                            { headerText ? headerText : null }
-                            { chevronIcon ? <ChevronDownIcon className="w-4 h-4" /> : null }
-                     
-                        </button>
-                    </>
-                )}
+
+                <>
+                    {/* @ts-ignore */}
+                    {React.cloneElement(trigger, {
+                        onClick: () => setIsOpen(!open),
+                        ref: refs.setReference,
+                        "data-navlink-enabled": open ? "true" : "false" ,
+                        ...getReferenceProps()
+                    })}
+                </>
+
                 {open &&
                     <FloatingFocusManager context={context} modal={false}>
                         <div 

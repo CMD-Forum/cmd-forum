@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronLeftIcon, ChevronRightIcon, HomeIcon, MagnifyingGlassIcon, ViewColumnsIcon, Bars2Icon, MapPinIcon, UserIcon, UserCircleIcon, AdjustmentsHorizontalIcon, ArrowRightStartOnRectangleIcon, ArrowRightEndOnRectangleIcon, UserPlusIcon, PlusIcon, BookmarkIcon } from "@heroicons/react/16/solid";
+import { ChevronLeftIcon, ChevronRightIcon, HomeIcon, MagnifyingGlassIcon, ViewColumnsIcon, Bars2Icon, MapPinIcon, UserIcon, UserCircleIcon, AdjustmentsHorizontalIcon, ArrowRightStartOnRectangleIcon, ArrowRightEndOnRectangleIcon, UserPlusIcon, PlusIcon, BookmarkIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -122,8 +122,8 @@ export default function Sidebar() {
                         <div className="flex flex-row justify-between top-0 w-full h-fit p-3 fixed bg-card-light z-[50] md:hidden">
                             <button className="navlink !px-2 !py-2 z-[100] ml-2 !w-fit " onClick={() => setExpanded(!expanded)}><Bars2Icon className="w-4 h-4" /></button>  
                             { session?.user && 
-                                //@ts-ignore
-                                <Dropdown accountHeading={false} headerText={null} headerIcon={<img src={session?.user.image} alt="Your Profile Image" className="w-5 h-5 rounded" />}>
+                                // @ts-ignore
+                                <Dropdown trigger={<button className="navlink"><img src={session.user.image} className="w-5 h-5 rounded" alt="Your Profile Image" /><ChevronDownIcon className="w-4 h-4" /></button>}>
                                     <DropdownUser />
                                     <hr className='mt-1 mb-1' />
                                     <DropdownLink text={"Saved Posts"} icon={<BookmarkIcon />} link={"/posts/saved"} />

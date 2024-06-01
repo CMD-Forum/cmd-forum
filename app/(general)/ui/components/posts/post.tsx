@@ -138,10 +138,7 @@ export function CardPost( post: Post ) {
                     }
                     
                     <Dropdown
-                        accountHeading={false} 
-                        headerIcon={<EllipsisVerticalIcon />} 
-                        headerText={null} 
-                        headerClassName={"mt-4"}
+                        trigger={<button className='navlink !px-2'><EllipsisVerticalIcon className='w-5 h-5' /></button>}
                     >
                         <DropdownLink text={post.author.username} icon={<img src={post.author.image} alt={post.author.username}></img>} link={`/user/${post.author.username}`}></DropdownLink>
                         <DropdownLink text={post.community.display_name} icon={<img src={post.community.image} alt={post.community.display_name}></img>} link={`/c/${post.community.name}`}></DropdownLink>

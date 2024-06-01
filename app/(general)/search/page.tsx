@@ -30,7 +30,7 @@ export default function Search({
             <div className='px-6 flex flex-col md:flex-row gap-2 max-w-[70rem] xl:w-[70rem] xl:m-auto mt-6 xl:mt-6'>
                 <SearchBar />   
                 <div className='flex flex-row gap-2'>
-                    <Dropdown defaultPlacement={"bottom-start"} headerText={"Sort"} headerClassName={"!border-1 !border-border"} accountHeading={false} headerIcon={<ChartBarIcon />}>
+                    <Dropdown defaultPlacement={"bottom-start"} trigger={<button className='navlink'><ChartBarIcon className='w-5 h-5' />Sort</button>}>
                         <DropdownLink text='Relevance' link={"/"} icon={<MagnifyingGlassIcon />} />
                         <DropdownLink text='Hot' link={"/"} icon={<BoltIcon />} />
                         <DropdownLink text='Rising' link={"/"} icon={<ArrowTrendingUpIcon />} />

@@ -35,11 +35,9 @@ body {
 } /*/
 
 @layer utilities {
-
   .word-break-all {
     word-break: break-all;
   }
-
 }
 
 // Accessibility
@@ -53,7 +51,6 @@ a {
 // Main
 
 .navlink {
-
   @apply font-normal;
   @apply text-sm;
   @apply text-white;
@@ -99,55 +96,48 @@ a {
 }
 
 .navlink:disabled {
-
   @apply text-gray-400;
   @apply hover:bg-transparent;
   @apply cursor-not-allowed;
   @apply border-border #{!important};
+}
 
+.navlink[data-navlink-enabled="true"] {
+  @apply border-border-light;
+  @apply bg-border;
 }
 
 .navlink-ghost {
-
   @extend .navlink;
   @apply bg-transparent;
   @apply hover:bg-border;
   @apply border-0;
-
 }
 
 .navlink-full {
-
   @extend .navlink;
   @apply bg-white;
   @apply text-black;
   @apply hover:bg-neutral-300;
   @apply focus:bg-neutral-300;
   @apply border-0;
-
 }
 
 .navlink-full.icon {
-
   @apply p-2;
-
 }
 
 .navlink-full:disabled {
-
   @apply bg-neutral-400;
   @apply hover:bg-neutral-400;
   @apply hover:cursor-not-allowed;
   @apply border-neutral-400;
   @apply text-black;
-
 }
 
 .navlink-small {
-
   @extend .navlink;
   @apply h-[30px];
-
 }
 
 .navlink-destructive {
