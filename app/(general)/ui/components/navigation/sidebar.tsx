@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import LogoutButton from "../signoutButton";
 import { getAllUserMembershipRecords } from "@/app/(general)/lib/data";
+import Dropdown, { DropdownCustom, DropdownLink, DropdownUser } from "../dropdown/dropdown";
 
 export default function Sidebar() {
 
@@ -53,6 +54,7 @@ export default function Sidebar() {
                         initial={{ width: expanded ? 300 : 74}}
                         animate={{ width: expanded ? 300 : 74}}
                         exit={{ width: expanded ? 300 : 74 }}
+                        transition={{ ease: "easeOut", duration: 0.2 }}
                     >
                         <div className="sticky top-4 overflow-y-scroll overflow-x-hidden">
                             <div className={`flex flex-row items-center ${expanded ? "justify-between" : "justify-center"} `}>
@@ -118,7 +120,18 @@ export default function Sidebar() {
                 <div className="flex md:hidden">
                     <>
                         <div className="flex flex-row justify-between top-0 w-full h-fit p-3 fixed bg-card-light z-[50] md:hidden">
-                            <button className="navlink !px-2 !py-2 z-[100] ml-2 !w-fit " onClick={() => setExpanded(!expanded)}><Bars2Icon className="w-4 h-4" /></button>    
+                            <button className="navlink !px-2 !py-2 z-[100] ml-2 !w-fit " onClick={() => setExpanded(!expanded)}><Bars2Icon className="w-4 h-4" /></button>  
+                            { session?.user && 
+                                //@ts-ignore
+                                <Dropdown accountHeading={false} headerText={null} headerIcon={<img src={session?.user.image} alt="Your Profile Image" className="w-5 h-5 rounded" />}>
+                                    <DropdownUser />
+                                    <hr className='mt-1 mb-1' />
+                                    <DropdownLink text={"Saved Posts"} icon={<BookmarkIcon />} link={"/posts/saved"} />
+                                    <hr className='mt-1 mb-1' />
+                                    <DropdownLink text={"Settings"} icon={<AdjustmentsHorizontalIcon />} link={"/account/settings"} />
+                                    <LogoutButton className={"hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm subtitle hover:!text-white rounded-md"}><ArrowRightEndOnRectangleIcon className='w-5 h-5' />Logout</LogoutButton>
+                                </Dropdown>                            
+                            }  
                         </div>
                     </>
                     
@@ -127,7 +140,7 @@ export default function Sidebar() {
                         initial={{ x: expanded ? 0 : -300}}
                         animate={{ x: expanded ? 0 : -300}}
                         exit={{ x: expanded ? 0 : -300 }}
-                        transition={{ ease: "easeInOut", stiffness: 100 }}
+                        transition={{ ease: "easeOut", duration: 0.2 }}
                     >
                         <div className="sticky top-4 overflow-y-scroll">
                             <div className={`flex flex-row items-center justify-between`}>
@@ -159,19 +172,7 @@ export default function Sidebar() {
                                                 return <Link key={membership.community.id} className={`navlink-sidebar ${expanded ? "" : "max-w-fit"} ${pathname === `/c/${membership.community.name}` ? "after-active" : null}`} href={`/c/${membership.community.name}`}><img src={membership.community.image} alt={membership.community.display_name} className="w-5 h-5 rounded" /><span className={`${expanded ? "flex" : "hidden"}`}>{membership.community.display_name}</span></Link> 
                                             })}
                                         </ul>
-                                    </div>
-
-                                    <hr className="mt-4 mb-4"/>
-
-                                    <div className="flex flex-col gap-1">
-                                        <p className={`subtitle flex gap-1 whitespace-nowrap overflow-hidden w-[200px] overflow-ellipsis`}><UserIcon className="!w-5 !h-5" />Your Account</p>
-                                        <ul className="flex flex-col gap-1 mt-2">
-                                            <Link className={`navlink-sidebar ${pathname === `/user/${session.user.username}` ? "after-active" : null}`} href={`/user/${session.user.username}`}><UserCircleIcon className="w-5 h-5" /><span>Profile</span></Link> 
-                                            <Link className={`navlink-sidebar ${pathname === `/posts/saved` ? "after-active" : null}`} href={`/posts/saved`}><BookmarkIcon className="w-5 h-5" /><span>Saved Posts</span></Link> 
-                                            <Link className={`navlink-sidebar ${pathname === `/account/settings` ? "after-active" : null}`} href={`/account/settings`}><AdjustmentsHorizontalIcon className="w-5 h-5" /><span>Settings</span></Link> 
-                                            <LogoutButton className={"navlink-sidebar"}><ArrowRightStartOnRectangleIcon className="w-5 h-5" />Logout</LogoutButton>
-                                        </ul>
-                                    </div>                           
+                                    </div>                      
                                 </>
                                 :
                                 <>
