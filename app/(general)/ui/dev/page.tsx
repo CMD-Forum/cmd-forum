@@ -89,28 +89,26 @@ export default function DeveloperPage() {
                     <LargeDropdown title={"Dropdowns"}>
 
                         <h2 className="header-5 w-full mb-4">Example: User Dropdown</h2>
-                        <Dropdown align={"left"} accountHeading={true} headerText={"Click Me"} headerIcon={null}>
+                        <Dropdown 
+                            trigger={<button className="navlink">Click Me</button>}
+                        >
                             <DropdownUser />
                             <hr className='mt-1 mb-1' />
                             <DropdownLink text={"Saved Posts"} icon={<BookmarkIcon />} link={"/posts/saved"} />
                             <hr className='mt-1 mb-1' />
                             <DropdownLink text={"Settings"} icon={<Cog6ToothIcon />} link={"/account/settings"} />
-                            <LogoutButton className={"hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm subtitle hover:!text-white"}><ArrowRightEndOnRectangleIcon className='w-5 h-5' />Logout</LogoutButton>
+                            <LogoutButton className={"hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm subtitle hover:!text-white rounded"}><ArrowRightEndOnRectangleIcon className='w-5 h-5' />Logout</LogoutButton>
                             <hr className='mt-1 mb-1' />
                             <DropdownCustom className={"hover:bg-card"}>
-                            <div className='flex flex-col gap-1 items-center w-full'>
-                                <Link className='label cursor-pointer hover:!text-white !text-xs' href={"https://github.com/CMD-Forum/cmd-forum"}><MegaphoneIcon className='w-4 h-4'/>New Update - Alpha 1.2</Link>              
-                            </div>
+                                <div className='flex flex-col gap-1 items-center w-full'>
+                                    <Link className='label cursor-pointer hover:!text-white !text-xs' href={"https://github.com/CMD-Forum/cmd-forum"}><MegaphoneIcon className='w-4 h-4'/>New Update - Alpha 1.2</Link>              
+                                </div>
                             </DropdownCustom>
                         </Dropdown>
 
                         <h2 className="header-5 w-full mb-4 mt-4">Example: Post Dropdown</h2>
                         <Dropdown 
-                            align={"left"} 
-                            accountHeading={false} 
-                            headerIcon={<EllipsisVerticalIcon />} 
-                            headerText={null} 
-                            headerClassName={"mt-4"}
+                            trigger={<button className="navlink !px-2"><EllipsisVerticalIcon className="w-5 h-5" /></button>}
                         >
                             <DropdownLink text={"User"} icon={<img src={"/images/favicon/favicon.svg"} alt={""}></img>} link={`/user`}></DropdownLink>
                             <DropdownLink text={"General"} icon={<img src={"/images/favicon/favicon.svg"} alt={""}></img>} link={`/c`}></DropdownLink>
