@@ -1,5 +1,4 @@
 import { Landing } from "./ui/components/home";
-import Modal from "./ui/components/modal";
 
 export default async function HomePage() {
 
