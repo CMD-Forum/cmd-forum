@@ -15,7 +15,7 @@ const variants = {
 interface ProfileProps {
 
     username: string;
-    image: string;
+    image: string | null;
     description: string;
     createdAt: Date;
     postCount: string | number;
