@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import LogoutButton from "../signoutButton";
 import { getAllUserMembershipRecords } from "@/app/(general)/lib/data";
-import Dropdown, { DropdownCustom, DropdownLink, DropdownUser } from "../dropdown/dropdown";
+import Dropdown, { DropdownLink, DropdownUser } from "../dropdown/dropdown";
 import ProfileImage from "../account/ProfileImage";
 
 export default function Sidebar() {
@@ -38,8 +38,6 @@ export default function Sidebar() {
         fetchUserMembership();
     }, [session?.user.id])
 
-    console.log(userMemberships);
-
     return (
         <>
             <AnimatePresence>
@@ -56,11 +54,13 @@ export default function Sidebar() {
                         animate={{ width: expanded ? 300 : 74}}
                         exit={{ width: expanded ? 300 : 74 }}
                         transition={{ ease: "easeOut", duration: 0.2 }}
+                        role="navigation"
+                        aria-label="Sidebar"
                     >
                         <div className="sticky top-4 overflow-y-auto overflow-x-hidden">
                             <div className={`flex flex-row items-center ${expanded ? "justify-between" : "justify-center"} `}>
                                 { expanded ? <Link className={`z-50 ml-0 mr-0 flex font-extrabold text-2xl hover:text-gray-300 transition-all whitespace-nowrap overflow-hidden w-[100px] overflow-ellipsis`} href={"/"}>CMD/&gt;</Link> : null }
-                                <button className="navlink !px-2 !py-2" onClick={() => setExpanded(!expanded)}>{ expanded ? <ChevronLeftIcon className="w-5 h-5" /> : <ChevronRightIcon className="w-5 h-5" /> }</button>
+                                <button className="navlink !px-2 !py-2" onClick={() => setExpanded(!expanded)} aria-label={ expanded ? "Close Sidebar" : "Open Sidebar"}>{ expanded ? <ChevronLeftIcon className="w-5 h-5" /> : <ChevronRightIcon className="w-5 h-5" /> }</button>
                             </div>
                             <hr className="mt-4 mb-4"/>
                             <div className="flex flex-col gap-1">
@@ -142,11 +142,13 @@ export default function Sidebar() {
                         animate={{ x: expanded ? 0 : -300}}
                         exit={{ x: expanded ? 0 : -300 }}
                         transition={{ ease: "easeOut", duration: 0.2 }}
+                        role="navigation"
+                        aria-label="Sidebar"
                     >
                         <div className="sticky top-4 overflow-y-auto">
                             <div className={`flex flex-row items-center justify-between`}>
                                 <Link className={`z-50 ml-0 mr-0 flex font-extrabold text-2xl hover:text-gray-300 transition-all whitespace-nowrap overflow-hidden w-[100px] overflow-ellipsis`} href={"/"}>CMD/&gt;</Link>
-                                <button className="navlink !px-2 !py-2" onClick={() => setExpanded(!expanded)}>{ expanded ? <ChevronLeftIcon className="w-5 h-5" /> : <ChevronRightIcon className="w-5 h-5" /> }</button>
+                                <button className="navlink !px-2 !py-2" onClick={() => setExpanded(!expanded)} aria-label={ expanded ? "Close Sidebar" : "Open Sidebar"}>{ expanded ? <ChevronLeftIcon className="w-5 h-5" /> : <ChevronRightIcon className="w-5 h-5" /> }</button>
                             </div>
                             <hr className="mt-4 mb-4"/>
                             <div className="flex flex-col gap-1">
