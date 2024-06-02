@@ -1,5 +1,6 @@
 "use client";
 
+import { PostAuthor } from "@/types/types";
 import { User } from "@prisma/client";
 
 /**
@@ -10,7 +11,7 @@ import { User } from "@prisma/client";
  * <ProfileImage user={post.author} />
  */
 
-export default function ProfileImage({ user, imgSize = "8" }: { user: User, imgSize?: string }) {
+export default function ProfileImage({ user, imgSize = "8" }: { user: User | PostAuthor, imgSize?: string }) {
 
     if ( user ) {
         if ( user.image ) {

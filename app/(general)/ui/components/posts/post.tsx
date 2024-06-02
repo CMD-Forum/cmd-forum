@@ -236,7 +236,7 @@ export function FullPost( post: Post ) {
                                     <h4 className="w-fit flex gap-2">
                                         <Hovercard headerText={`@${post.author.username}`} headerIcon={null} headerClassName={"text-sm"}>
                                             <div className='flex flex-row gap-4 p-4 w-full max-w-[250px]'>
-                                                <img src={post.author.image} className='w-6 h-6 rounded-sm' alt='Profile Image' />
+                                                <ProfileImage user={post.author} imgSize={"6"} />
                                                 <div className='flex flex-col'>
                                                     <Link href={`/user/${post.author.username}`} className='hover:underline w-fit subtitle'>@{post.author.username}</Link>     
                                                     <p className='subtitle'>{post.author.description}</p>             

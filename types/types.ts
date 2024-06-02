@@ -33,7 +33,7 @@ export interface PostAuthor {
     /**
      * The authors profile image source.
      */
-    image: string | undefined;
+    image: string | null;
 
     /**
      * The authors profile description.
