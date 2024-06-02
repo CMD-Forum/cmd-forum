@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { prisma } from "../../../lib/db";
+import ProfileImage from "../account/ProfileImage";
 
 export async function CommunityAdministrators({ communityId }: { communityId: string }) {
 
@@ -32,13 +33,11 @@ export async function CommunityAdministrators({ communityId }: { communityId: st
                         }
                     })
 
-                    console.log("User:", user);
-
                     if ( user ) {
                         return (
                             <div key={admin_id} className="flex flex-row gap-4 w-full">
                                 <div className="bg-card border-0 border-border p-4 rounded-md flex flex-row gap-4 items-center w-full">
-                                    <img src={user.image} className="w-6 h-6 rounded-sm" alt={`Profile Picture of ${user.username}`} />
+                                    <ProfileImage user={user} imgSize={"6"} />
                                     <Link href={`/user/${user.username}`} className="hover:text-gray-300 transition-all">{user?.username}</Link>   
                                 </div>     
                             </div>    
