@@ -97,8 +97,6 @@ export default async function RootLayout({
                 zIndex={999999}
               />
 
-              <div id='modal-root'>
-
                 <div className='hidden md:flex'>
                   <Banner 
                     message={"This is a development version of Command - things may be unfinished or broken."} 
@@ -123,8 +121,6 @@ export default async function RootLayout({
                   </div>
 
                 <Footer />
-
-              </div>
 
             </body>
 
