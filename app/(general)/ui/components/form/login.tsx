@@ -49,91 +49,92 @@ export default function LoginForm() {
 
     return ( 
 
-        <form className="flex flex-col gap-2 bg-background rounded-lg w-[80%] md:w-[50%] max-w-xl" onSubmit={form.handleSubmit(onSubmit)}>
+        <form className="flex flex-col rounded-lg w-[100%] md:w-[50%] max-w-[600px]" onSubmit={form.handleSubmit(onSubmit)}>
 
-            <h2 className="header !text-4xl text-center">Login to CMD</h2>
-            <p className={`text-gray-300 font-bold text-center mb-2`}>Login to your existing CMD account.</p>
+            <div className="bg-card p-12 flex flex-col gap-2 rounded-t-md">
+                <h2 className="!text-2xl md:text-3xl font-inter font-bold text-white">Login to CMD</h2>
+                <p className={`subtitle mb-2`}>Login to your existing CMD account, or use a third party provider.</p>
 
-            <Link href={"/signup"} className="text-center text-sm text-gray-300 hover:underline cursor-pointer">Don&apos;t have an account?</Link>
+                {/* */}
 
-            {/* */}
+                {query_error === "OAuthCallbackError" ? <Alert type="error"><AlertTitle>Authentication Failed</AlertTitle><AlertSubtitle>The external provider cancelled the login, please try again.</AlertSubtitle></Alert> : null }
+                {query_error === "OAuthSigninError" ? <Alert type="error"><AlertTitle>Authentication Failed</AlertTitle><AlertSubtitle>The login failed for an unknown reason, please try again.</AlertSubtitle></Alert> : null }
+                {query_error === "AdapterError" ? <Alert type="error"><AlertTitle>Authentication Failed</AlertTitle><AlertSubtitle>The database is currently experiencing issues, please try again later.</AlertSubtitle></Alert> : null }
+                {query_error === "CredentialsSignin" ? <Alert type="error"><AlertTitle>Authentication Failed</AlertTitle><AlertSubtitle>The username or password is incorrect.</AlertSubtitle></Alert> : null }
+                {query_error === "AuthorizedCallbackError" ? <Alert type="error"><AlertTitle>Authentication Failed</AlertTitle><AlertSubtitle>The account does not exist or has not verified their email.</AlertSubtitle></Alert> : null }
+                {query_error === "OAuthAccountNotLinked" ? <Alert type="error"><AlertTitle>Authentication Failed</AlertTitle><AlertSubtitle>The email of your external account is already associated with an account that exists on Command.</AlertSubtitle></Alert> : null }
 
-            {query_error === "OAuthCallbackError" ? <Alert type="error"><AlertTitle>Authentication Failed</AlertTitle><AlertSubtitle>The external provider cancelled the login, please try again.</AlertSubtitle></Alert> : null }
-            {query_error === "OAuthSigninError" ? <Alert type="error"><AlertTitle>Authentication Failed</AlertTitle><AlertSubtitle>The login failed for an unknown reason, please try again.</AlertSubtitle></Alert> : null }
-            {query_error === "AdapterError" ? <Alert type="error"><AlertTitle>Authentication Failed</AlertTitle><AlertSubtitle>The database is currently experiencing issues, please try again later.</AlertSubtitle></Alert> : null }
-            {query_error === "CredentialsSignin" ? <Alert type="error"><AlertTitle>Authentication Failed</AlertTitle><AlertSubtitle>The username or password is incorrect.</AlertSubtitle></Alert> : null }
-            {query_error === "AuthorizedCallbackError" ? <Alert type="error"><AlertTitle>Authentication Failed</AlertTitle><AlertSubtitle>The account does not exist or has not verified their email.</AlertSubtitle></Alert> : null }
-            {query_error === "OAuthAccountNotLinked" ? <Alert type="error"><AlertTitle>Authentication Failed</AlertTitle><AlertSubtitle>The email of your OAuth provider account is already associated with an account that exists on Command.</AlertSubtitle></Alert> : null }
+                {success ? (
+                    <Alert type='notice'>
+                        <AlertTitle>{success}</AlertTitle>
+                    </Alert>
+                ): (
+                    <pre></pre>
+                )}
 
-            {success ? (
-                <Alert type='notice'>
-                    <AlertTitle>{success}</AlertTitle>
-                </Alert>
-            ): (
-                <pre></pre>
-            )}
+                {error ? (
+                    <Alert type='error'>
+                        <AlertTitle>{error}</AlertTitle>
+                    </Alert>
+                ): (
+                    <pre></pre>
+                )}
 
-            {error ? (
-                <Alert type='error'>
-                    <AlertTitle>{error}</AlertTitle>
-                </Alert>
-            ): (
-                <pre></pre>
-            )}
+                {/* */}
 
-    
-
-            {/* */}
-
-            <div className="flex gap-1 facebookTheme:text-[11px] font-medium">Email<p className="text-[#fca5a5]">*</p></div>
-            <input
-                {...form.register('email')}
-                disabled={isPending}
-                className={`generic_field ${form.formState.errors.email ? "errored" : ""}`}
-            />
-
-            {form.formState.errors.email && (
-                // @ts-ignore
-                <ErrorMessage message={form.formState.errors.email.message} />
-            )}
-
-            {/* */}
-
-            <div className="flex gap-1 facebookTheme:text-[11px] font-medium">Password<p className="text-[#fca5a5]">*</p></div>
-            <div className="relative">
+                <div className="subtitle flex gap-1">Email<p className="text-[#fca5a5]">*</p></div>
                 <input
-                    type={showPassword ? "text" : "password"}
-                    {...form.register('password')}
+                    {...form.register('email')}
                     disabled={isPending}
-                    className={`generic_field ${form.formState.errors.email ? "errored" : ""} w-full`}
+                    className={`generic_field ${form.formState.errors.email ? "errored" : ""}`}
                 />
-                <button onClick={() => setShowPassword(!showPassword)} type={"button"} className="absolute right-1 top-[3px] border-1 border-border hover:border-border-light hover:bg-border focus:border-border-light focus:bg-border rounded-md transition-all px-1 py-1 outline-none" aria-label={"Show the Password Field"}>{ showPassword ? <EyeSlashIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" /> }</button>              
+
+                {form.formState.errors.email && (
+                    // @ts-ignore
+                    <ErrorMessage message={form.formState.errors.email.message} />
+                )}
+
+                {/* */}
+
+                <div className="subtitle flex gap-1">Password<p className="text-[#fca5a5]">*</p></div>
+                <div className="relative">
+                    <input
+                        type={showPassword ? "text" : "password"}
+                        {...form.register('password')}
+                        disabled={isPending}
+                        className={`generic_field ${form.formState.errors.email ? "errored" : ""} w-full`}
+                    />
+                    <button onClick={() => setShowPassword(!showPassword)} type={"button"} className="absolute right-1 top-[3px] border-1 border-border hover:border-border-light hover:bg-border focus:border-border-light focus:bg-border rounded-md transition-all px-1 py-1 outline-none" aria-label={"Show the Password Field"}>{ showPassword ? <EyeSlashIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" /> }</button>              
+                </div>
+
+                {form.formState.errors.password && (
+                    // @ts-ignore
+                    <ErrorMessage message={form.formState.errors.password.message} />
+                )}
+
+                <Link href={"/forgot-password"} className="text-sm text-gray-300 hover:underline cursor-pointer w-fit mb-4">Forgot your password?</Link>  
+
+                {/* */}
+
+                <button disabled={!form.formState.isValid || isPending} type="submit" className="navlink-full !w-full h-[36px] justify-center min-w-[62px]">     
+                    {isPending ? <img src="/spinner.svg" alt="Loading..." className="spinner"/>  : 'Login' }
+                </button>
+                {/* */}       
+
+                <div className="flex flex-col gap-1 mt-4">
+                    <Link href={"/signup"} className="text-center text-sm text-gray-300 hover:underline cursor-pointer">Don&apos;t have an account?</Link>                             
+                </div>
+      
             </div>
 
-            {form.formState.errors.password && (
-                // @ts-ignore
-                <ErrorMessage message={form.formState.errors.password.message} />
-            )}
+            <hr className="!mt-0 !mb-0 !p-0" />
 
-            {/* */}
-
-            <button disabled={!form.formState.isValid || isPending} type="submit" className="navlink-full !w-full h-[36px] justify-center min-w-[62px]">     
-                {isPending ? <img src="/spinner.svg" alt="Loading..." className="spinner"/>  : 'Login' }
-            </button>
-            {/* */}
-
-            {/*<pre>Validation status: {JSON.stringify(zo.validation, null, 2)}</pre>*/}
-
-            <div className="flex flex-row relative mt-4 mb-4">
-                <span className="w-full border-b-1 border-border"></span>
-                <p className="absolute right-[50%] bottom-0 px-2 bg-background translate-x-2/4 translate-y-2/4 text-sm text-gray-300">OR LOGIN WITH</p>
+            <div className="bg-card-light p-12 rounded-b-md">
+                <div className="flex flex-col gap-2">
+                    <OAuthButtons width_full={true} />
+                </div>      
+                <p className="text-center mt-4 text-sm text-gray-300">By logging in to CMD, you agree to the terms and conditions.</p>         
             </div>
-
-            <div className="flex flex-col gap-2">
-                <OAuthButtons width_full={true} />
-            </div>
-
-            <p className="text-center mt-4 text-sm text-gray-300">By logging in to CMD, you agree to the terms and conditions.</p>
 
         </form>
     

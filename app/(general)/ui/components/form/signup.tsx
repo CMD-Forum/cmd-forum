@@ -83,127 +83,131 @@ export default function SignupForm () {
 
     return ( 
 
-        <form className="flex flex-col gap-2 bg-background rounded-lg w-[80%] md:w-[50%] max-w-xl" onSubmit={form.handleSubmit(onSubmit)}>
+        <form className="flex flex-col rounded-lg w-[100%] md:w-[50%] max-w-[600px]" onSubmit={form.handleSubmit(onSubmit)}>
 
-            <h2 className="header !text-4xl text-center">Signup for CMD.</h2>
-            <p className={`text-gray-300 font-bold text-center mb-2`}>Signup for an account with CMD/&gt;.</p>
+            <div className="bg-card p-12 flex flex-col gap-2 rounded-t-md">
+                <h2 className="!text-2xl md:text-3xl font-inter font-bold text-white">Signup for CMD</h2>
+                <p className={`subtitle mb-2`}>Signup for an account with CMD, or use a third party provider.</p>
 
-            <Link href={"/login"} className="text-center text-sm text-gray-300 hover:underline cursor-pointer">Already have an account?</Link>
+                {/* */}
 
-            {/* */}
+                {success ? (
+                    <Alert type="success">
+                        <AlertTitle>{success}</AlertTitle>
+                    </Alert>
+                ): (
+                    <pre></pre>
+                )}
 
-            {success ? (
-                <Alert type="success">
-                    <AlertTitle>{success}</AlertTitle>
-                </Alert>
-            ): (
-                <pre></pre>
-            )}
+                
+                {error ? (
+                    <Alert type="error">
+                        <AlertTitle>{error}</AlertTitle>
+                    </Alert>
+                ): (
+                    <pre></pre>
+                )}         
 
-            
-            {error ? (
-                <Alert type="error">
-                    <AlertTitle>{error}</AlertTitle>
-                </Alert>
-            ): (
-                <pre></pre>
-            )}         
+                {/* */}
 
-            {/* */}
-
-            <div className="flex gap-1 subtitle">Username<p className="text-[#fca5a5]">*</p></div>
-            <input
-                {...form.register('username')}
-                disabled={isPending}
-                className={`generic_field ${form.formState.errors.username ? "errored" : ""}`}
-            />
-
-            {form.formState.errors.username && (
-                // @ts-expect-error
-                <ErrorMessage message={form.formState.errors.username.message} />
-            )}
-
-            {/* */}
-
-            {/*<div className="flex gap-1 facebookTheme:text-[11px] font-medium">Name<p className="text-[#fca5a5]">*</p></div>
-            <input
-                {...form.register('name')}
-                disabled={isPending}
-                placeholder="John Doe"
-                className={`generic_field ${form.formState.errors.name ? "errored" : ""}`}
-            />
-
-            {form.formState.errors.name && (
-
-                // @ts-expect-error
-                <ErrorMessage message={form.formState.errors.name.message} />
-
-            )}
-
-            */}
-            {/* */}
-
-            <div className="flex gap-1 subtitle">Email<p className="text-[#fca5a5]">*</p></div>
-            <input
-                {...form.register('email')}
-                disabled={isPending}
-                className={`generic_field ${form.formState.errors.email ? "errored" : ""}`}
-            />
-
-            {form.formState.errors.email && (
-                // @ts-ignore
-                <ErrorMessage message={form.formState.errors.email.message} />
-            )}
-
-            {/* */}
-
-            <div className="flex gap-1 subtitle">Password<p className="text-[#fca5a5]">*</p></div>
-            <div className="relative">
+                <div className="flex gap-1 subtitle">Username<p className="text-[#fca5a5]">*</p></div>
                 <input
-                    type={showPassword ? "text" : "password"}
-                    {...form.register('password')}
+                    {...form.register('username')}
                     disabled={isPending}
-                    className={`generic_field ${form.formState.errors.email ? "errored" : ""} w-full`}
+                    className={`generic_field ${form.formState.errors.username ? "errored" : ""}`}
                 />
-                <button onClick={() => setShowPassword(!showPassword)} type={"button"} className="absolute right-1 top-[3px] border-1 border-border hover:border-border-light hover:bg-border focus:border-border-light focus:bg-border rounded-md transition-all px-1 py-1 outline-none" aria-label={"Show the Password Field"}>{ showPassword ? <EyeSlashIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" /> }</button>              
-            </div>
 
-            {form.formState.errors.password && (
-                // @ts-ignore
-                <ErrorMessage message={form.formState.errors.password.message} />
-            )}
+                {form.formState.errors.username && (
+                    // @ts-expect-error
+                    <ErrorMessage message={form.formState.errors.username.message} />
+                )}
 
-            {/* */}
+                {/* */}
 
-            <div className="flex gap-1 subtitle">Confirm Password<p className="text-[#fca5a5]">*</p></div>
-            <div className="relative">
+                {/*<div className="flex gap-1 facebookTheme:text-[11px] font-medium">Name<p className="text-[#fca5a5]">*</p></div>
                 <input
-                    type={showConfirmPassword ? "text" : "password"}
-                    {...form.register('confirmpassword')}
+                    {...form.register('name')}
                     disabled={isPending}
-                    className={`generic_field ${form.formState.errors.email ? "errored" : ""} w-full`}
+                    placeholder="John Doe"
+                    className={`generic_field ${form.formState.errors.name ? "errored" : ""}`}
                 />
-                <button onClick={() => setShowConfirmPassword(!showConfirmPassword)} type={"button"} className="absolute right-1 top-[3px] border-1 border-border hover:border-border-light hover:bg-border focus:border-border-light focus:bg-border rounded-md transition-all px-1 py-1 outline-none" aria-label={"Show the Confirm Password Field"}>{ showConfirmPassword ? <EyeSlashIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" /> }</button>              
+
+                {form.formState.errors.name && (
+
+                    // @ts-expect-error
+                    <ErrorMessage message={form.formState.errors.name.message} />
+
+                )}
+
+                */}
+                {/* */}
+
+                <div className="flex gap-1 subtitle">Email<p className="text-[#fca5a5]">*</p></div>
+                <input
+                    {...form.register('email')}
+                    disabled={isPending}
+                    className={`generic_field ${form.formState.errors.email ? "errored" : ""}`}
+                />
+
+                {form.formState.errors.email && (
+                    // @ts-ignore
+                    <ErrorMessage message={form.formState.errors.email.message} />
+                )}
+
+                {/* */}
+
+                <div className="flex gap-1 subtitle">Password<p className="text-[#fca5a5]">*</p></div>
+                <div className="relative">
+                    <input
+                        type={showPassword ? "text" : "password"}
+                        {...form.register('password')}
+                        disabled={isPending}
+                        className={`generic_field ${form.formState.errors.email ? "errored" : ""} w-full`}
+                    />
+                    <button onClick={() => setShowPassword(!showPassword)} type={"button"} className="absolute right-1 top-[3px] border-1 border-border hover:border-border-light hover:bg-border focus:border-border-light focus:bg-border rounded-md transition-all px-1 py-1 outline-none" aria-label={"Show the Password Field"}>{ showPassword ? <EyeSlashIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" /> }</button>              
+                </div>
+
+                {form.formState.errors.password && (
+                    // @ts-ignore
+                    <ErrorMessage message={form.formState.errors.password.message} />
+                )}
+
+                {/* */}
+
+                <div className="flex gap-1 subtitle">Confirm Password<p className="text-[#fca5a5]">*</p></div>
+                <div className="relative">
+                    <input
+                        type={showConfirmPassword ? "text" : "password"}
+                        {...form.register('confirmpassword')}
+                        disabled={isPending}
+                        className={`generic_field ${form.formState.errors.email ? "errored" : ""} w-full`}
+                    />
+                    <button onClick={() => setShowConfirmPassword(!showConfirmPassword)} type={"button"} className="absolute right-1 top-[3px] border-1 border-border hover:border-border-light hover:bg-border focus:border-border-light focus:bg-border rounded-md transition-all px-1 py-1 outline-none" aria-label={"Show the Confirm Password Field"}>{ showConfirmPassword ? <EyeSlashIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" /> }</button>              
+                </div>
+
+                {form.formState.errors.confirmpassword && (
+                    // @ts-ignore
+                    <ErrorMessage message={form.formState.errors.confirmpassword.message} />
+                )}
+
+                {/* */}
+
+                <button disabled={!form.formState.isValid || isPending} type="submit" className="navlink-full !w-full h-[36px] justify-center">
+                    {isPending ? <img src="/spinner.svg" alt="Loading..." className="spinner"/>  : 'Signup' }
+                </button>
+
+                <div className="flex flex-col gap-1 mt-4">
+                    <Link href={"/login"} className="text-center text-sm text-gray-300 hover:underline cursor-pointer">Already have an account?</Link>                             
+                </div>
             </div>
 
-            {form.formState.errors.confirmpassword && (
-                // @ts-ignore
-                <ErrorMessage message={form.formState.errors.confirmpassword.message} />
-            )}
+            <hr className="!mt-0 !mb-0 !p-0" />
 
-            {/* */}
-
-            <button disabled={!form.formState.isValid || isPending} type="submit" className="navlink-full !w-full h-[36px] justify-center">
-                {isPending ? <img src="/spinner.svg" alt="Loading..." className="spinner"/>  : 'Signup' }
-            </button>
-
-            <div className="flex flex-row relative mt-4 mb-4">
-                <span className="w-full border-b-1 border-border"></span>
-                <p className="absolute right-[50%] bottom-0 px-2 bg-background translate-x-2/4 translate-y-2/4 subtitle">OR SIGNUP WITH</p>
-            </div>
-
-            <div className="flex flex-col gap-2">
-                <OAuthButtons width_full={true} />
+            <div className="bg-card-light p-12 rounded-b-md">
+                <div className="flex flex-col gap-2">
+                    <OAuthButtons width_full={true} />
+                </div>                
+                <p className="text-center mt-4 text-sm text-gray-300">By signing up for CMD, you agree to the terms and conditions.</p>
             </div>
 
         </form>
