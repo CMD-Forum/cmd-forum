@@ -1,10 +1,11 @@
 import LargeDropdown from "@/app/(general)/ui/components/large_dropdown";
 import { CommunityAdministrators } from "@/app/(general)/ui/components/moderation/admin_list";
 import { ModlogList } from "@/app/(general)/ui/components/moderation/modlog_list";
+import { prisma } from "@/app/(general)/lib/db";
 
 export default async function ModerationPage({ params }: { params: { community: string } }) {
     
-    const community = await prisma?.community.findUnique({
+    const community = await prisma.community.findUnique({
         where: {
             name: params.community
         },
