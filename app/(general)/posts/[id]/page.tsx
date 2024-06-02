@@ -58,6 +58,7 @@ export default async function PostView({ params }: { params: { id: string } }) {
       <FullPost
         id={post.id}
         title={post.title} 
+        // @ts-ignore
         author={post.author} 
         community={post.community} 
         createdAt={post.createdAt} 
