@@ -19,18 +19,13 @@ export default function ProfileImage({ user, imgSize = "8" }: { user: User | Pos
                 <img className={`w-${imgSize} h-${imgSize} rounded`} src={user.image} alt={`Profile Image of @${user.username}`} />
             );
         } else if ( ! user.image ) {
-            const initial = user.username[0];
             return (
-                <p className={`flex justify-center items-center w-${imgSize} h-${imgSize} rounded bg-border-light !text-white font-medium leading-none overflow-ellipsis whitespace-nowrap overflow-hidden text-${imgSize}`} aria-label={`Profile Image of @${user.username}`}>
-                    {initial}
-                </p>
+                <img className={`w-${imgSize} h-${imgSize} rounded`} src={"/ProfileImage.svg"} alt={`Profile Image of @${user.username}`} />
             );            
         }    
     } else {
         return (
-            <div className={`flex justify-center items-center w-${imgSize} h-${imgSize} rounded bg-border-light !text-white font-medium leading-none`} aria-label="Profile Image not available.">
-                ?
-            </div>
+            <img className={`w-${imgSize} h-${imgSize} rounded`} src={"/ProfileImage.svg"} alt={`Profile Image couldn't be loaded`} />
         );
     }
 
