@@ -63,25 +63,16 @@ export function CardPost( post: Post ) {
         <div className="flex flex-col sm:flex-row w-full items-center gap-4 relative group transition-all bg-card border-0 border-border group-hover/title:!border-white h-fit rounded-md px-6 py-6">
 
             {post.imageurl 
-                
                 ?
-
-                    <img src={post.imageurl} alt={post.imagealt!} className="rounded-md sm:!max-w-[146px] sm:!min-w-[146px] m-auto sm:!h-[146px] sm:!w-[146px] overflow-hidden bg-cover" />
-
+                <img src={post.imageurl} alt={post.imagealt!} className={`rounded-md ${session ? "sm:!max-w-[146px] sm:!min-w-[146px] sm:!h-[146px] sm:!w-[146px]" : "sm:!max-w-[104px] sm:!min-w-[104px] sm:!h-[104px] sm:!w-[104px]" } m-auto overflow-hidden bg-cover`} />
                 :
-
-                    <img src={"/text_post_icon.png"} alt={"This post has no image."} className="rounded-md hidden sm:flex sm:!max-w-[146px] sm:!min-w-[146px] m-auto sm:!h-[146px] sm:!w-[146px] overflow-hidden bg-cover" />
-
+                <img src={"/text_post_icon.png"} alt={"This post has no image."} className={`rounded-md hidden sm:flex ${session ? "sm:!max-w-[146px] sm:!min-w-[146px] sm:!h-[146px] sm:!w-[146px]" : "sm:!max-w-[104px] sm:!min-w-[104px] sm:!h-[104px] sm:!w-[104px]" } m-auto overflow-hidden bg-cover`} />
             }
 
             <div className="flex w-full bg-transparent h-fit flex-col">
-
                 <div className="text-sm z-20 w-fit flex flex-col">
-
                     <div className='flex flex-col'>
-
-                        <div className='flex flex-row gap-2 items-center'>
-
+                        <div className='flex flex-row gap-2 items-center justify-center'>
                             <div className='flex flex-col'>
                                 <Link className="subtitle hover:underline" href={`/c/${post.community.name}`}>{post.community.name}</Link>   
                                 { ! post.author ?
@@ -93,7 +84,6 @@ export function CardPost( post: Post ) {
                                             <p className='subtitle'>{post.createdAt.toLocaleString()}</p>
                                         </div>                                       
                                     </>
-                                    
 
                                     :
 
@@ -111,25 +101,18 @@ export function CardPost( post: Post ) {
                                         <p className='hidden sm:flex subtitle'>•</p> 
                                         <p className='hidden sm:flex subtitle'>{post.createdAt.toLocaleString()}</p>                         
                                     </div>
-                                
-
                                 }                                                              
                             </div>
-
                         </div>
-
                     </div>
-
-  
-
                 </div>
                 
                 <Link href={`/posts/${post.id}`} className="group/title w-fit font-sans font-semibold text-[18px] md:text-lg group-hover:text-gray-300 transition-all facebookTheme:text-lg peer">{post.title}</Link>
 
                 <p className='subtitle'>{post.tagline}</p>
 
-                <div className='flex flex-row mt-4 justify-between'>
-                    { session &&
+                { session &&
+                    <div className='flex flex-row mt-4 justify-between'>
                         <div className='flex flex-row gap-2'>
                             <button className='navlink !px-2 mr-auto'><ChevronUpIcon className='w-5 h-5' /></button>
                             <button className='navlink !px-2 mr-auto'><ChevronDownIcon className='w-5 h-5' /></button>
@@ -137,41 +120,38 @@ export function CardPost( post: Post ) {
                             {/* @ts-ignore */}
                             <SavePostButton btnText={"Save"} userID={session.user.id} postID={post.id} />
                         </div>
-                    }
-                    
-                    <Dropdown
-                        trigger={<button className='navlink !px-2'><EllipsisVerticalIcon className='w-5 h-5' /></button>}
-                    >
-                        {/* @ts-ignore */}
-                        <DropdownLink text={post.author.username} icon={<ProfileImage user={post.author} imgSize={"5"} />} link={`/user/${post.author.username}`}></DropdownLink>
-                        <DropdownLink text={post.community.display_name} icon={<img src={post.community.image} alt={post.community.display_name}></img>} link={`/c/${post.community.name}`}></DropdownLink>
-                        <hr className='mt-1 !mb-1'/>
-                        <DropdownShare icon={<ShareIcon />} text={text} title={title} url={url} />
-                        { session 
-                        ?
-                            <>
-                                { session.user.id === post.authorId 
-                                ?
+
+                        <Dropdown
+                            trigger={<button className='navlink !px-2'><EllipsisVerticalIcon className='w-5 h-5' /></button>}
+                        >
+                            {/* @ts-ignore */}
+                            <DropdownLink text={post.author.username} icon={<ProfileImage user={post.author} imgSize={"5"} />} link={`/user/${post.author.username}`}></DropdownLink>
+                            <DropdownLink text={post.community.display_name} icon={<img src={post.community.image} alt={post.community.display_name}></img>} link={`/c/${post.community.name}`}></DropdownLink>
+                            <hr className='mt-1 !mb-1'/>
+                            <DropdownShare icon={<ShareIcon />} text={text} title={title} url={url} />
+                            { session 
+                            ?
                                 <>
-                                    <hr className='mt-1 !mb-1'/>
-                                    <DropdownButton icon={<ArchiveBoxXMarkIcon />} text={"Delete"} onClick={() => console.log("delete post")} destructive={true} />                                 
+                                    { session.user.id === post.authorId 
+                                    ?
+                                    <>
+                                        <hr className='mt-1 !mb-1'/>
+                                        <DropdownButton icon={<ArchiveBoxXMarkIcon />} text={"Delete"} onClick={() => console.log("delete post")} destructive={true} />                                 
+                                    </>
+                                    :
+                                    null
+                                    }                           
                                 </>
-                                :
+                            :
                                 null
-                                }                           
-                            </>
-                        :
-                            null
-                        }
-                    </Dropdown>                                        
-                </div>
+                            }
+                        </Dropdown>                         
+                    </div>
+                }                  
 
             </div>
-
         </div>
-
     )
-
 }
 
 /**
@@ -275,9 +255,7 @@ export function FullPost( post: Post ) {
                         }
 
                         <div className='markdown-body'>
-
                             <MarkdownPreview source={post.content} rehypePlugins={[rehypeSanitize]} />
-
                         </div>                        
                     </div>
 
