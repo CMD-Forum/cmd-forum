@@ -46,7 +46,7 @@ model Community {
   updatedAt      DateTime @default(now()) @updatedAt /// When the community database entry was last updated.
   name           String   @unique @default("") @db.VarChar(50) /// Name used in URL to find community, always lower case to prevent issues.
   display_name   String   @unique @default("") @db.VarChar(50) /// Name shown anywhere other than the URL, can contain upper case letters since it is not used for identification.
-  description    String   @default("This community doesn&apos;t have a description.") /// Description of the community.
+  description    String   @default("This community doesn't have a description.") /// Description of the community.
   image          String   @default("/images/favicon/favicon.svg") /// Image that is shown for the community, defaults to the favicon.
   public         Boolean  @default(true) /// If false, this community cannot be accessed and will not be shown. Currently unimplemented.
   admin_ids      String[] @default([]) /// User CUIDS of the community administrator(s).
