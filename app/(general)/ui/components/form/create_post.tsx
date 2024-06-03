@@ -11,49 +11,32 @@ import { FaGithub, FaMarkdown } from "react-icons/fa6";
 import Link from "next/link";
 import MarkdownEditor from '@uiw/react-markdown-editor';
 import rehypeSanitize from "rehype-sanitize";
+import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
-
     title: z
         .string()
         .min(5, "Title must have at least 5 characters.")
         .max(75, "Title must be under 75 characters."),
-
-    tagline: z
-        .string()
-        .min(5, "Tagline must be at least 5 characters.")
-        .max(40, "Tagline must be at most 40 characters."),
-    
     community: z
         .string()
         .min(2, "All communitys are 2 characters or over.")
         .max(20, "All communitys have a maximum of 20 characters."),
-    image_url: z
+    /*content: z
         .string()
-        .url( { message: "Image must be a URL and start with `https://`" } )
-        .optional()
-        .or(z.literal(null))
-        .or(z.literal("")),
-    image_alt: z
-        .string()
-        .min(5, "Image Alt Tag must be at least 5 characters.")
-        .max(75, "Image Alt Tag must be no more than 30 characters.")
-        .optional()
-        .or(z.literal(null))
-        .or(z.literal("")),
-})
+        .min(50, "Content must be at least 50 characters")
+        .max(99999, "Posts cannot exceed 99,999 characters long. Split the post if required.")*/
+});
 
 function ErrorMessage(props: { message: string }) {
-
     return <p className="text-red-300 text-sm">{props.message}</p>;
-    
 }
 
 export default function CreatePostForm() {
 
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<false | true | null>(null);
-    const [com_err, setCom_Err] = useState<false | true | null>(null);
+    const [com_err, setCom_Err] = useState<string>();
     const [create_err, setCreate_Err] = useState<false | true | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [content, setContent]= useState("");
@@ -63,68 +46,55 @@ export default function CreatePostForm() {
       defaultValues: {
         community: '',
         title: '',
-        tagline: '',
-        image_url: '',
       },
     });
 
-    const { data: session, update } = useSession();
+    const { data: session } = useSession();
+    const router = useRouter();
 
     if ( ! session ) {
-
         return (
             <Alert type={"error"}>
                 <AlertTitle>It looks like you&apos; not logged in, please log in.</AlertTitle>
             </Alert>
         );
-
     };
 
     const OnSubmit = async (values: z.infer<typeof FormSchema>) => {
 
       setIsLoading(true);
-      setCom_Err(false);
+      setCom_Err("");
       setSuccess(false);
   
-      const post_community = await getCommunityByName(values.community)
+      const post_community = await getCommunityByName(values.community);
   
       if (post_community) {
   
         const postData = {
-  
           title: values.title,
           communityId: post_community.id,
           content: content,
-          tagline: values.tagline,
           imageurl: null,
           imagealt: null,
           authorId: session.user.id,
-  
         };
         
         try {
-
-            console.log("[INFO] Community found");
             // @ts-ignore
             const post = await createPost(postData); 
-            console.log("[INFO] ", post)
             setIsLoading(false); 
             setSuccess(true);
-             
+            router.push(`/posts/${post.id}`);
         } catch ( error ) {
-            console.log("[ERROR]: Post creation failed at onSubmit");
-            setCom_Err(true);
+            // @ts-ignore
+            setCom_Err("Sorry, something went wrong.");
             setIsLoading(false);
         }
-        
 
       } else {
-  
-        setCom_Err(true);           
+        setCom_Err("Sorry, something went wrong.");           
         setIsLoading(false);
-  
       }
-  
     };
   
     return (
@@ -133,7 +103,7 @@ export default function CreatePostForm() {
 
             {com_err && (
                 <Alert type="error">
-                    <AlertTitle>The specified community was not found.</AlertTitle>
+                    <AlertTitle>{com_err}</AlertTitle>
                 </Alert>
             )}
 
@@ -164,10 +134,8 @@ export default function CreatePostForm() {
             />
 
             {form.formState.errors.community && (
-
                 // @ts-expect-error
                 <ErrorMessage message={form.formState.errors.community.message} />
-
             )}
 
             {/* */}
@@ -180,21 +148,20 @@ export default function CreatePostForm() {
             />
 
             {form.formState.errors.title && (
-
                 // @ts-expect-error
                 <ErrorMessage message={form.formState.errors.title.message} />
-
             )}
 
             {/* */}
 
             <div className="flex gap-1 font-medium">Content<p className="text-[#fca5a5]">*</p></div>
+
             <MarkdownEditor
                 value={content}
-                onChange={setContent}
                 enablePreview={true}
                 enableScroll={true}
                 previewProps={{ rehypePlugins: [rehypeSanitize] }} 
+                onChange={setContent}
             />
 
             <div className="flex gap-2 flex-col md:flex-row w-full">
@@ -210,28 +177,9 @@ export default function CreatePostForm() {
 
             {/* */}
 
-            <div className="flex gap-1 font-medium">
-                Tagline
-                <p className="text-[#fca5a5]">*</p>
-            </div>
-            <input
-                {...form.register('tagline')}
-                placeholder="My amazing code"
-                className={`generic_field ${form.formState.errors.tagline ? "errored" : ""}`}
-            />
-
-            {form.formState.errors.tagline && (
-
-                // @ts-expect-error
-                <ErrorMessage message={form.formState.errors.tagline.message} />
-
-            )}
-
-            {/* */}
-
             <button type="submit" className="navlink-full !w-full sm:!w-fit justify-center min-w-[62px]">
                 {isLoading ? <img src="/spinner.svg" alt="Submitting..." className="spinner"/>  : null }    
-                Submit Post
+                Submit
             </button>
 
         </form>

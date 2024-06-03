@@ -61,7 +61,7 @@ model Post {
   updatedAt   DateTime  @default(now()) @updatedAt @db.Timestamptz(3) /// When the post database entry was last updated.
   title       String    @db.VarChar(255) /// The title of the post.
   content     String    /// The main content of the post.
-  tagline     String    /// The tagline of the post. This is a small snippet of the post.
+  tagline     String?   /// The tagline of the post. Deprecated, do not use.
   imageurl    String?   /// If the post is an image post, this is the images URL.
   imagealt    String?   /// If the post is an image post, this is the images accessibility tag.
   public      Boolean   @default(true) /// If false, this post cannot be accessed and will not be shown. Currently unimplemented.

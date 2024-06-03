@@ -7,19 +7,14 @@ import { zodResolver } from "@hookform/resolvers/zod" // Form Validation
 import Alert, { AlertSubtitle, AlertTitle } from "../new_alert";
 import { useSession } from "next-auth/react";
 import { createPost, getCommunityByName } from "@/app/(general)/lib/data";
+import { useRouter } from "next/navigation";
+import { CloudArrowUpIcon } from "@heroicons/react/16/solid";
 
 const FormSchema = z.object({
-
     title: z
         .string()
         .min(5, "Title must have at least 5 characters.")
         .max(75, "Title must be under 75 characters."),
-
-    tagline: z
-        .string()
-        .min(5, "Tagline must be at least 5 characters.")
-        .max(40, "Tagline must be at most 40 characters."),
-    
     community: z
         .string()
         .min(2, "All communitys are 2 characters or over.")
@@ -27,16 +22,6 @@ const FormSchema = z.object({
     image_url: z
         .string()
         .url( { message: "Image must be a URL and start with `https://`" } )
-        .optional()
-        .or(z.literal(null))
-        .or(z.literal("")),
-    image_alt: z
-        .string()
-        .min(5, "Image Alt Tag must be at least 5 characters.")
-        .max(75, "Image Alt Tag must be no more than 30 characters.")
-        .optional()
-        .or(z.literal(null))
-        .or(z.literal("")),
 })
 
 function ErrorMessage(props: { message: string }) {
@@ -49,76 +34,60 @@ export default function CreateImagePostForm() {
 
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<false | true | null>(null);
-    const [com_err, setCom_Err] = useState<false | true | null>(null);
+    const [com_err, setCom_Err] = useState<string>();
     const [create_err, setCreate_Err] = useState<false | true | null>(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [content, setContent]= useState("");
 
     const form = useForm<z.infer<typeof FormSchema>>({
       resolver: zodResolver(FormSchema),
       defaultValues: {
         community: '',
         title: '',
-        tagline: '',
         image_url: '',
       },
     });
 
-    const { data: session, update } = useSession();
+    const { data: session } = useSession();
+    const router = useRouter();
 
     if ( ! session ) {
-
         return (
             <ErrorMessage message="Oops, something went wrong. Try logging in again." />
         );
-
     } 
 
     const OnSubmit = async (values: z.infer<typeof FormSchema>) => {
-  
-      console.log("[INFO] Form submitted");
 
       setIsLoading(true);
-      setCom_Err(false);
+      setCom_Err("");
       setSuccess(false);
   
       const post_community = await getCommunityByName(values.community)
   
       if (post_community) {
-  
+
         const postData = {
-  
           title: values.title,
           communityId: post_community.id,
           content: "",
-          tagline: values.tagline,
           imageurl: values.image_url,
-          imagealt: values.image_alt,
           authorId: session.user.id,
-  
         };
         
         try {
-
-            console.log("[INFO] Community found");
             // @ts-ignore
             const post = await createPost(postData); 
-            console.log("[INFO] ", post)
             setIsLoading(false); 
             setSuccess(true);
-             
+            router.push(`/posts/${post.id}`);
         } catch ( error ) {
-            console.log("[ERROR]: Post creation failed at onSubmit");
-            setCom_Err(true);
+            setCom_Err("Sorry, something went wrong.");
             setIsLoading(false);
         }
-        
 
       } else {
-  
-        setCom_Err(true);           
+        setCom_Err("Sorry, something went wrong.");           
         setIsLoading(false);
-  
       }
   
     };
@@ -129,7 +98,7 @@ export default function CreateImagePostForm() {
 
             {com_err && (
                 <Alert type="error">
-                    <AlertTitle>The specified community was not found.</AlertTitle>
+                    <AlertTitle>{com_err}</AlertTitle>
                 </Alert>
             )}
 
@@ -160,10 +129,8 @@ export default function CreateImagePostForm() {
             />
 
             {form.formState.errors.community && (
-
                 // @ts-expect-error
                 <ErrorMessage message={form.formState.errors.community.message} />
-
             )}
 
             {/* */}
@@ -176,29 +143,8 @@ export default function CreateImagePostForm() {
             />
 
             {form.formState.errors.title && (
-
                 // @ts-expect-error
                 <ErrorMessage message={form.formState.errors.title.message} />
-
-            )}
-
-            {/* */}
-
-            <div className="flex gap-1 font-medium">
-                Tagline
-                <p className="text-[#fca5a5]">*</p>
-            </div>
-            <input
-                {...form.register('tagline')}
-                placeholder="My amazing code"
-                className={`generic_field ${form.formState.errors.tagline ? "errored" : ""}`}
-            />
-
-            {form.formState.errors.tagline && (
-
-                // @ts-expect-error
-                <ErrorMessage message={form.formState.errors.tagline.message} />
-
             )}
 
             {/* */}
@@ -209,33 +155,21 @@ export default function CreateImagePostForm() {
             </div>
             <input
                 {...form.register('image_url')}
-                placeholder="https://www.imgur.com/testurl"
+                placeholder="https://domainimagesaretemporary.org/images/070524"
                 className={`generic_field ${form.formState.errors.image_url ? "errored" : ""}`}
             />
+
+            {/* This will come later */}
+            {/*<div className="flex rounded border-1 border-dashed border-border w-full h-fit p-12 hover:border-border-light focus:border-border-light transition-all items-center justify-center">
+                <div className="flex flex-col w-fit h-fit items-center justify-center">
+                    <CloudArrowUpIcon className="w-10 h-10" />
+                    <p className="subtitle">Drop your image here or click to upload</p>
+                </div>
+            </div>*/}
 
             {form.formState.errors.image_url && (
-
                 // @ts-expect-error
                 <ErrorMessage message={form.formState.errors.image_url.message} />
-
-            )}
-
-            {/* */}
-
-
-            <div className="flex gap-1 font-medium">
-                Accessibility Tag
-                <p className="text-[#fca5a5]">*</p>
-            </div>
-            <input
-                {...form.register('image_alt')}
-                placeholder="Code that appears to be React in an IDE."
-                className={`generic_field ${form.formState.errors.image_url ? "errored" : ""}`}
-            />
-
-            {form.formState.errors.image_alt && (
-                // @ts-expect-error
-                <ErrorMessage message={form.formState.errors.image_alt.message} />
             )}
 
             {/* */}
@@ -244,7 +178,7 @@ export default function CreateImagePostForm() {
                 
                 {/* eslint-disable-next-line @next/next/no-img-element*/}
                 {isLoading ? <img src="/spinner.svg" alt="Submitting..." className="spinner"/>  : null }
-                Submit Post
+                Submit
                 
             </button>
 

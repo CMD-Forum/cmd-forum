@@ -16,7 +16,6 @@ function ErrorMessage(props: { message: string }) {
 export default function CreateCommunityForm() {
 
     const [error, setError] = useState<string | null>(null);
-    const [errorTitle, setErrorTitle] = useState<string | null>(null);
     const [success, setSuccess] = useState<boolean | null>(null);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -105,10 +104,8 @@ export default function CreateCommunityForm() {
             />
 
             {form.formState.errors.name && (
-
                 // @ts-expect-error
                 <ErrorMessage message={form.formState.errors.name.message} />
-
             )}
 
             {/* */}
@@ -121,10 +118,8 @@ export default function CreateCommunityForm() {
             />
 
             {form.formState.errors.description && (
-
                 // @ts-expect-error
                 <ErrorMessage message={form.formState.errors.description.message} />
-
             )}
 
             {/* */}

@@ -84,7 +84,6 @@ interface createPostProps {
 
     title: string
     content: string
-    tagline: string
     imageurl: string | null | undefined
     imagealt: string | null | undefined
     authorId: string
@@ -98,7 +97,6 @@ export async function createPost( props: createPostProps ) {
         data: {
             title: props.title,
             content: props.content,
-            tagline: props.tagline,
             imageurl: props.imageurl,
             imagealt: props.imagealt,
             authorId: props.authorId,
