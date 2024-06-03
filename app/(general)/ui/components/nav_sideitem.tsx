@@ -268,30 +268,19 @@ export function CommunityInfobarItems( { community }: { community: Community } )
 export function CommunityInfobarItemsFull( { community }: { community: Community } ) {
 
     return (
-
         <div>
-
             <div className='flex-row gap-2 rounded-md w-full bg-transparent'>
-                
                 <div className='flex-col bg-card p-6 border-0 border-border lg:px-48'>
-
                     <div className='flex flex-row gap-3 items-center'>
-
                         <img src={community.image} className='h-[56px] rounded' alt={`${community.display_name}'s Community Image`} />
-
                         <div className='flex flex-col'>
-
                             <h1 className='header-2'>{community.display_name}</h1>   
                             <h2 className='subtitle'>{community.description}</h2>
-
                         </div>
-
                     </div>
 
                     <div className='flex flex-row gap-3 items-center mt-2'>
-
                         <div className='flex flex-row gap-3'>
-
                             <div className='flex flex-row gap-1'>
                                 <CalendarDaysIcon className='w-[20px]' />
                                 <p className='text-sm'>{community.createdAt.toLocaleDateString()}</p>  
@@ -311,26 +300,15 @@ export function CommunityInfobarItemsFull( { community }: { community: Community
                                 <ChatBubbleBottomCenterTextIcon className='w-[20px]' />
                                 <p className='text-sm'>---</p>
                             </div>
-
                         </div>
-
                     </div>
 
                     <div className='flex flex-row gap-2 mt-3 mb-3'>
-
-                        {/* @ts-ignore */}
-                        <Link className='navlink justify-center items-center' href={`/c/${community.name}/rules`}><BookOpenIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Rules</p></Link>
-                        {/* @ts-ignore */}
+                        <Link className='navlink justify-center items-center' href={`/c/${community.name}/info`}><BookOpenIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Information</p></Link>
                         <Link className='navlink justify-center items-center' href={`/c/${community.name}/moderation`}><ShieldCheckIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Moderation</p></Link>    
-
                     </div>
-
                 </div>
-
             </div>  
-
         </div>
-
     );
-
 }

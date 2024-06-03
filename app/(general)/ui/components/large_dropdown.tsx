@@ -12,7 +12,7 @@ export default function LargeDropdown( { children, title, description }: { child
 
             <div className="px-6">
                 <h3 className='font-bold text-xl'>{ title }</h3>     
-                <p className='text-sm'>{ description }</p>
+                <p className='text-sm subtitle'>{ description }</p>
             </div>
 
             <div className={`w-full border-t-1 border-border mt-6 px-6 max-h-0 ${ expanded ? "max-h-screen" : ""} overflow-hidden`}>
