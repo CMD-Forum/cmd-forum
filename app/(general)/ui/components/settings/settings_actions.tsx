@@ -68,8 +68,8 @@ export function ChangeAccountName({ userID } : { userID: string }) {
             </Modal.Custom>
 
             <Modal.Custom>{errors.username && <p className={`text-center md:!text-left subtitle`}>{errors.username.message}</p>}</Modal.Custom>
-            <Modal.Custom><p className={`${success ? "flex" : "hidden"} text-center w-full md:text-left text-gray-300`}>{success}</p></Modal.Custom>
-            <Modal.Custom><p className={`${error ? "flex" : "hidden"} text-center w-full md:text-left text-gray-300`}>{error}</p></Modal.Custom>
+            <Modal.Custom>{success && <p className={`text-center md:!text-left subtitle`}>{success}</p>}</Modal.Custom>
+            <Modal.Custom>{error && <p className={`text-center md:!text-left subtitle`}>{error}</p>}</Modal.Custom>
 
             <Modal.Button type={"navlink-full"} loadingVariable={loading} className={""} onClick={handleSubmit(onSubmit)} spinnerColor={"black"}>Change your name</Modal.Button> 
         </Modal>
@@ -135,12 +135,12 @@ export function ChangeAccountDescription({ userID } : { userID: string }) {
 
             <Modal.Custom>
                 <input className={"generic_field w-full mb-2 hidden"} {...UpdateDescriptionForm.register('userID')} disabled={true} placeholder={userID}></input>
-                <input className={"generic_field w-full mb-4"} {...UpdateDescriptionForm.register('description')} placeholder={"New Description"}></input>
+                <input className={"generic_field w-full mb-2"} {...UpdateDescriptionForm.register('description')} placeholder={"New Description"}></input>
             </Modal.Custom>
 
-            <Modal.Custom>{UpdateDescriptionForm.formState.errors.description && <p className={`text-center w-full md:text-left text-gray-300`}>{UpdateDescriptionForm.formState.errors.description.message}</p>}</Modal.Custom>
-            <Modal.Custom><p className={`${success ? "flex" : "hidden"} text-center w-full md:text-left text-gray-300`}>{success}</p></Modal.Custom>
-            <Modal.Custom><p className={`${error ? "flex" : "hidden"} text-center w-full md:text-left subtitle`}>{error}</p></Modal.Custom>
+            <Modal.Custom>{UpdateDescriptionForm.formState.errors.description && <p className={`text-center md:!text-left subtitle`}>{UpdateDescriptionForm.formState.errors.description.message}</p>}</Modal.Custom>
+            <Modal.Custom>{success && <p className={`text-center md:!text-left subtitle`}>{success}</p>}</Modal.Custom>
+            <Modal.Custom>{error && <p className={`text-center md:!text-left subtitle`}>{error}</p>}</Modal.Custom>
 
             <Modal.Button type="navlink-full" loadingVariable={loading} spinnerColor="black" onClick={handleSubmit(onSubmit)}>Change Description</Modal.Button> 
         </Modal>            
@@ -155,7 +155,7 @@ export function ChangeAccountDescription({ userID } : { userID: string }) {
  * @param btnType The type of the button, can also take any `className`.
  */
 
-export function DeleteAccountModal({ userID, username, btnType = "navlink-destructive" } : { userID: string, username: string, btnType?: string }) {
+export function DeleteAccountModal({ userID, username } : { userID: string, username: string }) {
 
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);

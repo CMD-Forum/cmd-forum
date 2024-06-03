@@ -93,7 +93,7 @@ export function Settings_DeleteAccount() {
                 <p className="subtitle hidden md:flex text-sm">If you&apos;re sure you want to, click the button.</p>
 
                 { session?.user.id && 
-                    <Modal closeBtn={true} openBtn={true} openBtnComponent={<button className={"navlink-full"}>Delete Button</button>}>
+                    <Modal closeBtn={true} openBtn={true} openBtnComponent={<button className={"navlink-destructive"}>Delete Account</button>}>
                         <Modal.Title>Sorry, this option is unavailable.</Modal.Title>
                         <Modal.Subtitle>You cannot manually delete your account at this moment. Please contact us if you absolutely need your account deleted.</Modal.Subtitle>
                     </Modal>

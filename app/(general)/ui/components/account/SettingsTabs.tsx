@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import AccountSettings, { SecuritySettings } from "../settings/settings";
-import { ChatBubbleBottomCenterTextIcon, KeyIcon, LockClosedIcon, PaintBrushIcon, UserIcon, ViewColumnsIcon } from "@heroicons/react/24/solid";
+import { ChatBubbleBottomCenterTextIcon, LockClosedIcon, PaintBrushIcon, UserIcon } from "@heroicons/react/24/solid";
 import Alert, { AlertTitle } from "../new_alert";
 
 export default function SettingsTabs() {

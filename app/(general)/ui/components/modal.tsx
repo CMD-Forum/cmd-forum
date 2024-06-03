@@ -176,9 +176,8 @@ Modal.Subtitle = Subtitle;
 const Button = ({ children, className = "", type, loadingVariable, onClick, spinnerColor, ...other }: { children: React.ReactNode, className?: string, type: "navlink" | "navlink-full" | "navlink-destructive" | "navlink-success" | "navlink-sidebar"| "navlink-small", loadingVariable?: any, spinnerColor: "white" | "black", onClick?: MouseEventHandler<HTMLButtonElement> }) => (
     
     <button className={`${type} ${className} !w-full md:!w-fit justify-center transition-all`} onClick={onClick} {...other}>
-        { ! loadingVariable ? children : null }
-        { loadingVariable === false ? children : null }
-        { loadingVariable === true ? <img src={`/spinner_${spinnerColor}.svg`} alt="Loading..." className="spinner"/>  : null }
+        { loadingVariable === true ? <img src={`/spinner_${spinnerColor}.svg`} alt="Loading..." className="spinner"/>  : children }
+        { ! loadingVariable ? null : children }
     </button>
 
 )
