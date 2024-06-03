@@ -127,7 +127,6 @@ export default async function SearchResults(search: SearchResultProps) {
                             imageurl={result.imageurl}
                             imagealt={result.imagealt}
                             public={result.public}
-                            tagline={result.tagline}
                             community={result.community}
                             author={result.author}
                         />

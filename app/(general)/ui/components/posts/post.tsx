@@ -109,7 +109,7 @@ export function CardPost( post: Post ) {
                 
                 <Link href={`/posts/${post.id}`} className="group/title w-fit font-sans font-semibold text-[18px] md:text-lg group-hover:text-gray-300 transition-all facebookTheme:text-lg peer">{post.title}</Link>
 
-                <p className='subtitle'>{post.tagline}</p>
+                {/*<p className='subtitle'>{post.tagline}</p>*/}
 
                 { session &&
                     <div className='flex flex-row mt-4 justify-between'>

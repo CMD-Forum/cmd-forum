@@ -5,6 +5,7 @@
 
 * **deps:** fixes prisma being undefined in the moderation page, closes [#23](https://github.com/CMD-Forum/cmd-forum/issues/23) ([d4e79a8](https://github.com/CMD-Forum/cmd-forum/commit/d4e79a892adbd2dd2fa4a53cced657ca6ed5a940))
 * **layout, aria:** removes unused modal root div ([24c84b3](https://github.com/CMD-Forum/cmd-forum/commit/24c84b3cc3e0e13e161d780e33ca2f73b12532a9))
+* **posts:** fixes post tagline issue ([de65eec](https://github.com/CMD-Forum/cmd-forum/commit/de65eec5d26a46f0dfc4b12a58f1adc5a90c173a))
 * **typescript:** fixes issues with images and `PostAuthor` type. ([d5db786](https://github.com/CMD-Forum/cmd-forum/commit/d5db7868589969857f0539bf36a00741e719c798))
 * **typescript:** makes `ProfileMain` accept null for image ([545b299](https://github.com/CMD-Forum/cmd-forum/commit/545b29924ebca64d03c6858e7f38c14f6212ccd7))
 * **typescript:** replaces `<img>` tag with `<ProfileImage />` to fix ts error. ([174fa7d](https://github.com/CMD-Forum/cmd-forum/commit/174fa7d161267b064dcafb5f90ee18e775a94410))
@@ -23,6 +24,7 @@
 ### Features
 
 * **aria:** adds aria labels and roles to sidebar ([a26d9ee](https://github.com/CMD-Forum/cmd-forum/commit/a26d9eedcd8b381e1e87d58c337511b39c143223))
+* **deps:** add conventional-changelog ([f3a58d6](https://github.com/CMD-Forum/cmd-forum/commit/f3a58d65149a46e19f99ec19d7a895fe53d18d48))
 * **ui:** add show password button to login & signup ([98fc15e](https://github.com/CMD-Forum/cmd-forum/commit/98fc15ec9c19b51bf0f52aa0fe375019c0331b40))
 * **ui:** adds new page for theme testing ([5a13239](https://github.com/CMD-Forum/cmd-forum/commit/5a13239bf9c02d28230dc56def97829aa19fe91a))
 * **ui:** dropdown overhauled ([1e91c71](https://github.com/CMD-Forum/cmd-forum/commit/1e91c71d6d2bdc7d34420a7112025006d5a9f778))
