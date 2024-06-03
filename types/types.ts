@@ -141,7 +141,7 @@ export interface Post {
     /**
      * The tagline of the post.
      */
-    tagline: string;
+    tagline?: string; // Only optional to prevent errors, do not use.
 
     /**
      * The URL of the posts image, may be undefined or null.

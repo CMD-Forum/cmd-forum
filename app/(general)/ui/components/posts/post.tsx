@@ -162,7 +162,6 @@ export function CardPost( post: Post ) {
  * @param {Date} updatedAt When the post was updated in the database.
  * @param {string} title Title of the post.
  * @param {string} content Main content of the post.
- * @param {string} tagline Tagline of the post.
  * @param {string} imageurl URL of the posts image, may be undefined or null.
  * @param {string} imagealt Alt tag of the posts image, may be undefined or null.
  * @param {boolean} public Whether the post is public or not.
@@ -184,7 +183,6 @@ export function CardPost( post: Post ) {
  *  createdAt={post.createdAt} 
  *  updatedAt={post.updatedAt}
  *  public={post.public}
- *  tagline={post.tagline} 
  *  content={post.content}
  *  imageurl={post.imageurl}
  *  imagealt={post.imagealt}

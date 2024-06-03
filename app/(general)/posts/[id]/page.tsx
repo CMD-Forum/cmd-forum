@@ -64,7 +64,6 @@ export default async function PostView({ params }: { params: { id: string } }) {
         createdAt={post.createdAt} 
         updatedAt={post.updatedAt}
         public={post.public}
-        tagline={post.tagline} 
         content={post.content}
         imageurl={post.imageurl}
         imagealt={post.imagealt}
