@@ -17,8 +17,8 @@ jobs:
       - uses: amannn/action-semantic-pull-request@v5.5.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - with:
-          types:
+        with:
+          types: |
             feat
             fix
             chore
@@ -31,6 +31,6 @@ jobs:
             build
             revert
           requireScope: false
-          ignoreLabels:
+          ignoreLabels: |
             bot
             ignore-semantic-pull-request
