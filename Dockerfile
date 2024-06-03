@@ -34,3 +34,7 @@ EXPOSE 3000
 ENV PORT 3000
 
 CMD ["npm", "start"]
+
+LABEL org.opencontainers.image.source=https://github.com/CMD-Forum/cmd-forum
+LABEL org.opencontainers.image.description="Container image for Command Forum."
+LABEL org.opencontainers.image.licenses=MIT
