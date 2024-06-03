@@ -6,8 +6,6 @@
 
 */
 
-import { env } from "process";
-
 export const privateRoutes: string[] = [
     "/account",
     "/account/settings",
