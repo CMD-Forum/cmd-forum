@@ -41,29 +41,30 @@ enum TwoFactorMethod {
 }
 
 model Community {
-  id             String   @id @default(cuid()) /// The CUID of the community.
+  id             String                @id @default(cuid()) /// The CUID of the community.
 
-  createdAt      DateTime @default(now()) /// When the community was created.
-  updatedAt      DateTime @default(now()) @updatedAt /// When the community database entry was last updated.
+  createdAt      DateTime              @default(now()) /// When the community was created.
+  updatedAt      DateTime              @default(now()) @updatedAt /// When the community database entry was last updated.
   
-  name           String   @unique @default("") @db.VarChar(50) /// Name used in URL to find community, always lower case to prevent issues.
-  display_name   String   @unique @default("") @db.VarChar(50) /// Name shown anywhere other than the URL, can contain upper case letters since it is not used for identification.
+  name           String                @unique @default("") @db.VarChar(50) /// Name used in URL to find community, always lower case to prevent issues.
+  display_name   String                @unique @default("") @db.VarChar(50) /// Name shown anywhere other than the URL, can contain upper case letters since it is not used for identification.
   
-  description    String   @default("This community doesn't have a description.") /// Description of the community.
+  description    String                @default("This community doesn't have a description.") /// Description of the community.
 
-  rules          String[] @default([]) // Rules of the community.
+  rules          String[]              @default([]) /// Rules of the community.
   
-  image          String   @default("/images/favicon/favicon.svg") /// Image that is shown for the community, defaults to the favicon.
+  image          String                @default("/images/favicon/favicon.svg") /// Image that is shown for the community, defaults to the favicon.
   
-  public         Boolean  @default(true) /// If false, this community cannot be accessed and will not be shown. Currently unimplemented.
+  public         Boolean               @default(true) /// If false, this community cannot be accessed and will not be shown. Currently unimplemented.
   
-  admin_ids      String[] @default([]) /// User CUIDS of the community administrator(s).
+  admin_ids      String[]              @default([]) /// User CUIDS of the community administrator(s).
+  admins         CommunityAdminship[]
  
-  memberships        CommunityMembership[]
+  memberships    CommunityMembership[]
   
-  sidebar_md     String   @default("") /// Deprecated, do not use.
+  sidebar_md     String                @default("") /// Deprecated, do not use.
   
-  posts          Post[]   // Relation to all posts in this community.
+  posts          Post[]                /// Relation to all posts in this community.
 }
 
 model Post {
@@ -114,10 +115,11 @@ model User {
   profile_image      String      @default("/images/favicon/favicon.svg") /// Deprecated, do not use.
   image              String?     /// The profile image of the user.
   
-  posts              Post[]     
-  savedPosts         String[]    @default([])
+  posts              Post[]      /// All posts made by the user.
+  savedPosts         String[]    @default([]) /// Posts saved by the user.
   
-  memberships        CommunityMembership[]
+  memberships        CommunityMembership[] /// Communities the user is a member of.
+  adminships         CommunityAdminship[]  /// Communities the user is an admin of.
   
   upvotes            Upvotes[]
   downvotes          Downvotes[]
@@ -224,6 +226,15 @@ model Downvotes {
 }
 
 model CommunityMembership {
+  userId             String
+  user               User        @relation(fields: [userId], references: [id])
+  communityId        String
+  community          Community   @relation(fields: [communityId], references: [id])
+
+  @@id([userId, communityId])
+}
+
+model CommunityAdminship { /// Yeah, bad name but can't think of anything better.
   userId             String
   user               User        @relation(fields: [userId], references: [id])
   communityId        String

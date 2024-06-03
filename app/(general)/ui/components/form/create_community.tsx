@@ -46,27 +46,18 @@ export default function CreateCommunityForm() {
   
       const existingCommunity = await getCommunityByName(values.name);
   
-      if ( ! existingCommunity ) {
+      if ( ! existingCommunity && session.user.id ) {
   
         const communityData = {
             name: values.name,
             description: values.description,
             image: values.image_url,
-            admin_ids: session.user.id ? [session.user.id] : [""]
+            creatorUserID: session.user.id
         };
         
         try {
             const community = await createCommunity(communityData); 
-            console.log(community.id);
-            try {
-                if ( session.user.id ) {
-                    const newMembershipRecord = await createUserMembershipRecord({ userID: session.user.id, communityID: community.id });    
-                } else {
-                    setError("Sorry, we're having issues getting your account information. Try logging out and in again.")
-                }
-            } catch ( error ) {
-                console.error(error);
-            }
+            const newMembershipRecord = await createUserMembershipRecord({ userID: session.user.id, communityID: community.id });    
             setIsLoading(false); 
             setSuccess(true);
         } catch ( error ) {

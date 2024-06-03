@@ -7,11 +7,11 @@ async function main() {
 
   const communities = [
 
-    { id: "1", name: "general", image: "https://placehold.co/400", public: true, display_name: "General", admin_ids: ["1, 2"] },
-    { id: "2", name: "meta", image: "https://placehold.co/400", public: true, display_name: "Meta", admin_ids: ["2, 1"] },
-    { id: "3", name: "television", image: "https://placehold.co/400", public: true, display_name: "Television", admin_ids: ["1"] },
-    { id: "4", name: "movies", image: "https://placehold.co/400", public: true, display_name: "Movies", admin_ids: ["3, 4"] },
-    { id: "5", name: "music", image: "https://placehold.co/400", public: true, display_name: "Music", admin_ids: ["4, 2"] },
+    { id: "1", name: "general", image: "https://placehold.co/400", public: true, display_name: "General" },
+    { id: "2", name: "meta", image: "https://placehold.co/400", public: true, display_name: "Meta" },
+    { id: "3", name: "television", image: "https://placehold.co/400", public: true, display_name: "Television" },
+    { id: "4", name: "movies", image: "https://placehold.co/400", public: true, display_name: "Movies" },
+    { id: "5", name: "music", image: "https://placehold.co/400", public: true, display_name: "Music" },
 
   ];
 

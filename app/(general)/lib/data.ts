@@ -1,5 +1,6 @@
 "use server";
 
+import { Community } from "@prisma/client";
 import { prisma } from "./db";
 
 // getUserBy
@@ -170,15 +171,29 @@ export async function getAllPostsFromCommunityID( id: string ) {
 
 // createCommunity
 
-export async function createCommunity( { name, description, admin_ids }: { name: string, description: string, admin_ids: string[] } ) {
+/**
+ * Creates a community with the given params.
+ * @param name The name of the community (Display name, not DB name).
+ * @param description The description of the community.
+ * @param creatorUserID The UserID of the community creator.
+ * @returns {Community}
+ */
+
+export async function createCommunity( { name, description, creatorUserID }: { name: string, description: string, creatorUserID: string } ) {
 
     const community = await prisma.community.create({
         data: {
             name: name.toLowerCase(),
             display_name: name,
             description: description,
-            admin_ids: admin_ids
-        }
+        },
+    });
+
+    const communityAdminship = await prisma.communityAdminship.create({
+        data: {
+            userId: creatorUserID,
+            communityId: community.id,
+        },
     });
 
     return community;
@@ -189,8 +204,9 @@ export async function createCommunity( { name, description, admin_ids }: { name:
 
 /**
  * Returns the IDs of all admins of the specified community.
- * @param string communityId
- * @returns 
+ * @param communityId The ID of the community.
+ * @returns {Community}
+ * @deprecated 'getCommunityAdminIDs' is deprecated.
  */
 
 export async function getCommunityAdminIDs( { communityId }: { communityId: string }) {
