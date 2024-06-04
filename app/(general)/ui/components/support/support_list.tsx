@@ -2,21 +2,28 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import useSWR from 'swr';
 
-// @ts-ignore
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
+// const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const variants = {
-
     hidden: { opacity: 0, y: -20 },
     visible: { opacity: 1, y: 0 },
-    
 };
+
+/**
+ * ## SupportList
+ * ---
+ * @deprecated `SupportList` is deprecated. Command is removing support articles entirely.
+ * @example
+ * <SupportList />
+ */
 
 export default function SupportList() {
 
-    const { data: articles, error, isLoading } = useSWR('/api/support/getAll', fetcher)
+    // const { data: articles, error, isLoading } = useSWR('/api/support/getAll', fetcher)
+    const articles = null
+    const error = null
+    const isLoading = null
     
     if ( error ) {
         return <p>error</p>

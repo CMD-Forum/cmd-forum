@@ -6,7 +6,6 @@ import CreateCommunityForm from "@/app/(general)/ui/components/form/create_commu
 import React from "react";
 import CreateImagePostForm from "./form/create_post_image";
 import { ChatBubbleBottomCenterTextIcon, PhotoIcon, ViewColumnsIcon } from "@heroicons/react/24/solid";
-import { ErrorBoundary } from "react-error-boundary";
 
 export default function CreateTabs() {
 
@@ -22,9 +21,7 @@ export default function CreateTabs() {
             </div>    
 
             <div className={`${ activeTab === 1 ? "flex flex-col w-full" : "hidden" }`}>
-                <ErrorBoundary fallback={<div>Something went wrong</div>}>
-                    <CreatePostForm />    
-                </ErrorBoundary> 
+                <CreatePostForm />    
             </div>
 
             <div className={`${ activeTab === 2 ? "flex flex-col w-full" : "hidden" }`}>
