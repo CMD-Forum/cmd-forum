@@ -1,5 +1,10 @@
 import { signOut } from "@/auth"
+import { Metadata } from 'next';
  
+export const metadata: Metadata = {
+  title: 'Logout - CMD',
+};
+
 export default function SignOutPage() {
   return (
     <div className="p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48">

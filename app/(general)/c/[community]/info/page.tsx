@@ -1,7 +1,17 @@
 import LargeDropdown from "@/app/(general)/ui/components/large_dropdown";
 import { prisma } from "@/app/(general)/lib/db";
+import { Metadata } from "next";
+ 
+export async function generateMetadata(
+  { params }: { params: { community: string } },
+): Promise<Metadata> {
+  const name = params.community.toLowerCase()
+  return {
+    title: name ? `c/${name} - Information` : "CMD/>",
+  }
+}
 
-export default async function RulesPage({ params }: { params: { community: string } }) {
+export default async function InformationPage({ params }: { params: { community: string } }) {
     
     const community = await prisma.community.findUnique({
         where: {

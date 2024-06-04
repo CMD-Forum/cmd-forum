@@ -1,8 +1,16 @@
 import ProfileMain from "@/app/(general)/ui/components/account/ProfileMain";
 import { prisma } from "@/app/(general)/lib/db";
 import { Error404 } from "../../ui/error404";
-import PostListCustom from "../../ui/components/posts/post_list_custom";
 import PostListByUser from "../../ui/components/posts/post_list_custom";
+import { Metadata } from "next";
+ 
+export async function generateMetadata(
+  { params }: { params: { name: string } },
+): Promise<Metadata> {
+  return {
+    title: params.name ? `@${params.name} - CMD` : "CMD/>",
+  }
+}
 
 export default async function UserPage({ params }: { params: { name: string } }) {
 

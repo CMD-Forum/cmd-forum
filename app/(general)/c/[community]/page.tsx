@@ -2,6 +2,16 @@ import { prisma } from "@/app/(general)/lib/db";
 import { notFound } from 'next/navigation';
 import { PostListByCommunity } from "../../ui/components/posts/post_list_custom";
 import { CommunityInfobarItemsFull } from "../../ui/components/nav_sideitem";
+import { Metadata } from "next";
+ 
+export async function generateMetadata(
+  { params }: { params: { community: string } },
+): Promise<Metadata> {
+  const name = params.community.toLowerCase()
+  return {
+    title: name ? `c/${name}` : "CMD/>",
+  }
+}
 
 export default async function CommunityPage({ params }: { params: { community: string } }) {
 
@@ -12,7 +22,7 @@ export default async function CommunityPage({ params }: { params: { community: s
   }
 
   return (
-    <main className="flex min-h-fit flex-col w-full">
+    <main className="flex min-h-fit flex-col w-full">      
       <div className="error flex flex-col w-full mt-14 md:mt-0">
         <CommunityInfobarItemsFull 
           community={dbCommunity} 

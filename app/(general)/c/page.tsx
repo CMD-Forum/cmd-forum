@@ -1,4 +1,9 @@
 import { CommunityList } from "../ui/components/community/community_list";
+import { Metadata } from 'next';
+ 
+export const metadata: Metadata = {
+  title: 'Community - CMD',
+};
 
 export default function CommunityPage() {
     return (

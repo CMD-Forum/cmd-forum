@@ -3,6 +3,11 @@ import Dropdown, { DropdownLink } from '../ui/components/dropdown/dropdown';
 import SearchBar from '../ui/components/search/searchbar';
 import SearchResults from '../ui/components/search/searchresults';
 import Link from 'next/link';
+import { Metadata } from 'next';
+ 
+export const metadata: Metadata = {
+  title: 'Search - CMD',
+};
 
 export default function Search({
     searchParams,

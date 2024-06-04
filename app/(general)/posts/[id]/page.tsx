@@ -1,17 +1,24 @@
 import { prisma } from '@/app/(general)/lib/db';
 import { Error404 } from '../../ui/error404';
 import { FullPost } from '../../ui/components/posts/post';
+import { Metadata } from "next";
+ 
+export async function generateMetadata(
+  { params }: { params: { id: string } },
+): Promise<Metadata> {
+  const id = params.id.toLowerCase()
+  const post = await prisma.post.findUnique({ where: { id: id }, select: { title: true, community: { select: { name: true }} }});
+  return {
+    title: post?.title ? `${post.title} - c/${post.community.name}` : "CMD/>",
+  }
+}
 
 export default async function PostView({ params }: { params: { id: string } }) {
 
   if ( ! params.id ) {
-
     return (
-
       <Error404 />
-
     );
-
   }
 
   const post = await prisma.post.findUnique({
@@ -42,13 +49,9 @@ export default async function PostView({ params }: { params: { id: string } }) {
   })
 
   if ( ! post ) {
-
     return (
-
       <Error404 />
-
     );
-
   }
 
   return (

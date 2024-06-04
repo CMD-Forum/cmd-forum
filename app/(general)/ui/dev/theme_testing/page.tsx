@@ -1,13 +1,16 @@
 import { ChevronDownIcon } from "@heroicons/react/16/solid";
 import Dropdown, { DropdownLink } from "../../components/dropdown/dropdown";
+import { Metadata } from 'next';
+ 
+export const metadata: Metadata = {
+  title: 'Theme Testing - CMD',
+};
 
 export default function ThemeTestingPage() {
 
     return (
         <main className="flex min-h-screen min-w-screen bg-white flex-col w-full">
-
             <div className="error flex flex-col w-full">
-
                 <div className="flex flex-col border-b-1 border-border-light/25 p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48 bg-transparent mt-8 md:mt-0">
                     <h1 className="text-3xl font-inter font-bold antialiased !text-black">Theme Testing</h1>
                 </div>
@@ -21,9 +24,7 @@ export default function ThemeTestingPage() {
                         </Dropdown>
                     </div>
                 </div>
-
             </div>
-
         </main>
     );
 

@@ -1,4 +1,9 @@
 import SignupForm from "@/app/(general)/ui/components/form/signup";
+import { Metadata } from 'next';
+ 
+export const metadata: Metadata = {
+  title: 'Signup - CMD',
+};
 
 export default function SignupPage () {
 

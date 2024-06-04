@@ -1,5 +1,9 @@
-import Link from "next/link";
 import SupportList from "../ui/components/support/support_list";
+import { Metadata } from 'next';
+ 
+export const metadata: Metadata = {
+  title: 'Support - CMD',
+};
 
 const support = async () => {
 

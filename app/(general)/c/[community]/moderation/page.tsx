@@ -2,6 +2,16 @@ import LargeDropdown from "@/app/(general)/ui/components/large_dropdown";
 import { CommunityAdministrators } from "@/app/(general)/ui/components/moderation/admin_list";
 import { ModlogList } from "@/app/(general)/ui/components/moderation/modlog_list";
 import { prisma } from "@/app/(general)/lib/db";
+import { Metadata } from "next";
+ 
+export async function generateMetadata(
+  { params }: { params: { community: string } },
+): Promise<Metadata> {
+  const name = params.community.toLowerCase()
+  return {
+    title: name ? `c/${name} - Moderation` : "CMD/>",
+  }
+}
 
 export default async function ModerationPage({ params }: { params: { community: string } }) {
     

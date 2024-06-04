@@ -1,12 +1,15 @@
 import LargeDropdown from "../../components/large_dropdown";
+import { Metadata } from 'next';
+ 
+export const metadata: Metadata = {
+  title: 'Development Message - CMD',
+};
 
 export default function DevelopmentMessage() {
 
     return (
         <main className="flex min-h-screen flex-col w-full">
-
             <div className="error flex flex-col w-full">
-
                 <div className="flex flex-col border-0 border-border p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48 bg-card mt-8 md:mt-0">
                     <h1 className="header">Development Message</h1>
                     <p className={`subtitle sm:hidden`}>Learn more about the development of Command.</p>
@@ -29,9 +32,7 @@ export default function DevelopmentMessage() {
                     </LargeDropdown>
 
                 </div>
-
             </div>
-
         </main>
     );
 

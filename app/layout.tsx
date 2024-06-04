@@ -1,13 +1,12 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter, IBM_Plex_Mono } from 'next/font/google';
 import './(general)/globals.scss';
-import { Navigation, Footer } from '@/app/(general)/ui/navigation';
+import { Footer } from '@/app/(general)/ui/navigation';
 import { SessionProvider } from 'next-auth/react';
 import { auth } from '@/auth';
 import NextTopLoader from 'nextjs-toploader';
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Sidebar from './(general)/ui/components/navigation/sidebar';
-import Banner from './(general)/ui/components/banner';
 import React from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -20,8 +19,8 @@ const metadataBaseUrl = process.env.NODE_ENV === 'production'
 
 const APP_NAME = "CMD/>";
 const APP_DEFAULT_TITLE = "CMD/>";
-const APP_TITLE_TEMPLATE = "CMD/>";
-const APP_DESCRIPTION = "CMD/> Forum Site";
+const APP_TITLE_TEMPLATE = "%s";
+const APP_DESCRIPTION = "Command Forum Site";
 
 export const metadata: Metadata = {
   metadataBase: metadataBaseUrl ? new URL(metadataBaseUrl) : new URL("https://cmd-forum.vercel.app/"),
@@ -64,13 +63,9 @@ export const viewport: Viewport = {
 };
 
 export default async function RootLayout({
-
   children,
-
 }: {
-
   children: React.ReactNode
-
 }) {
 
   const session = await auth();
