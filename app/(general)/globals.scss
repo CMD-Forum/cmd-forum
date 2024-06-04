@@ -118,6 +118,7 @@ a {
   @extend .navlink;
   @apply bg-transparent;
   @apply hover:bg-border;
+  @apply focus:bg-border;
   @apply border-0;
 }
 
@@ -597,10 +598,9 @@ hr {
 
 .subtitle {
 
-  @apply text-gray-300 #{!important};
+  @apply text-gray-300;
   @apply font-medium #{!important};
-  @apply antialiased #{!important};
-  @apply text-sm #{!important};  
+  @apply text-sm;  
 
 }
 

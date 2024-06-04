@@ -98,14 +98,14 @@ export default async function RootLayout({
                 zIndex={999999}
               />
 
-                <div className='hidden md:flex'>
+                {/*<div className='hidden md:flex'>
                   <Banner 
                     message={"This is a development version of Command - things may be unfinished or broken."} 
                     fixedAtTop={false} 
                     learnMoreEnabled={true}
                     learnMoreLink={"/ui/dev/development_message"}
                   />                  
-                </div>
+                </div>*/}
 
                 {/*<Navigation />*/}
 

@@ -9,7 +9,6 @@ import LogoutButton from "../components/signoutButton";
 import Link from "next/link";
 import Modal from "../components/modal";
 import Bottomdrawer, { BottomdrawerBody, BottomdrawerHeader } from "../components/bottom_drawer";
-import { CardPost } from "../components/posts/post";
 
 export default function DeveloperPage() {
 
@@ -61,8 +60,8 @@ export default function DeveloperPage() {
 
                         <h2 className="header-5 w-full mb-4">Notice</h2>
                         <Alert type={"notice"}>
-                            <AlertTitle>Notice</AlertTitle>
-                            <AlertSubtitle>Please be respectful.</AlertSubtitle>
+                            <AlertTitle>Notice to all users.</AlertTitle>
+                            <AlertSubtitle>The website will be down for maintenance from 9:00am to 14:30pm GMT.</AlertSubtitle>
                         </Alert>
 
                         <h2 className="header-5 w-full mb-4 mt-4">Alert</h2>
