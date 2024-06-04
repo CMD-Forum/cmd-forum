@@ -1,6 +1,7 @@
-import { prisma } from '@/app/(general)/lib/db';
 import { NextResponse } from 'next/server';
 import xss from 'xss';
+
+import { prisma } from '@/app/(general)/lib/db';
 
 export async function POST(req: Request, res: Response) {
 

@@ -1,5 +1,6 @@
-import { prisma } from '@/app/(general)/lib/db';
 import { NextResponse } from 'next/server';
+
+import { prisma } from '@/app/(general)/lib/db';
 import { CreateCommunitySchema } from '@/app/(general)/lib/schemas';
 
 

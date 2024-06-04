@@ -1,5 +1,6 @@
-import SettingsTabs from "@/app/(general)/ui/components/account/SettingsTabs";
 import { Metadata } from 'next';
+
+import SettingsTabs from "@/app/(general)/ui/components/account/SettingsTabs";
  
 export const metadata: Metadata = {
   title: 'Settings - CMD',

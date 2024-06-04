@@ -1,8 +1,10 @@
-import { prisma } from "@/app/(general)/lib/db";
-import { notFound } from 'next/navigation';
-import { PostListByCommunity } from "../../ui/components/posts/post_list_custom";
-import { CommunityInfobarItemsFull } from "../../ui/components/nav_sideitem";
 import { Metadata } from "next";
+import { notFound } from 'next/navigation';
+
+import { prisma } from "@/app/(general)/lib/db";
+
+import { CommunityInfobarItemsFull } from "../../ui/components/nav_sideitem";
+import { PostListByCommunity } from "../../ui/components/posts/post_list_custom";
  
 export async function generateMetadata(
   { params }: { params: { community: string } },

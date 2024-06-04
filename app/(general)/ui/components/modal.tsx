@@ -1,8 +1,8 @@
 "use client";
 
-import React, { MouseEventHandler, useEffect, useState } from "react";
-import { AnimatePresence, motion } from 'framer-motion';
 import { XMarkIcon } from "@heroicons/react/24/solid";
+import { AnimatePresence, motion } from 'framer-motion';
+import React, { MouseEventHandler, useEffect, useState } from "react";
 import { createPortal } from 'react-dom';
 
 interface ModalProps {

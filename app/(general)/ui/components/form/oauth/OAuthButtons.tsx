@@ -1,10 +1,11 @@
 "use client";
 
-import { defaultLoginRedirect } from "@/routes";
 import { KeyIcon } from "@heroicons/react/16/solid";
 import { signIn, useSession } from "next-auth/react";
-import { FaGithub } from "react-icons/fa6";
 import { signIn as WebAuthnSignIn } from "next-auth/webauthn"
+import { FaGithub } from "react-icons/fa6";
+
+import { defaultLoginRedirect } from "@/routes";
 
 interface OAuthButtonsProps {
     width_full: boolean

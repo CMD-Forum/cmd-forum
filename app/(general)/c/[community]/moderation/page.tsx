@@ -1,8 +1,9 @@
+import { Metadata } from "next";
+
+import { prisma } from "@/app/(general)/lib/db";
 import LargeDropdown from "@/app/(general)/ui/components/large_dropdown";
 import { CommunityAdministrators } from "@/app/(general)/ui/components/moderation/admin_list";
 import { ModlogList } from "@/app/(general)/ui/components/moderation/modlog_list";
-import { prisma } from "@/app/(general)/lib/db";
-import { Metadata } from "next";
  
 export async function generateMetadata(
   { params }: { params: { community: string } },

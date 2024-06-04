@@ -1,7 +1,9 @@
-import { SignupSchema } from "../../ui/components/form/signup";
-import * as z from "zod";
 import bcrypt from "bcryptjs";
+import * as z from "zod";
+
 import { prisma } from "@/app/(general)/lib/db";
+
+import { SignupSchema } from "../../ui/components/form/signup";
 
 export const signup = async (values: z.infer<typeof SignupSchema>) => {
 
@@ -11,7 +13,7 @@ export const signup = async (values: z.infer<typeof SignupSchema>) => {
 
         return { error: "Invalid fields!" };
 
-    };
+    }
 
     const { username, email, password } = validatedFields.data;
     const hashedPassword = await bcrypt.hash(password, 10);

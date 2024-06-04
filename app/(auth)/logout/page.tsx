@@ -1,5 +1,6 @@
-import { signOut } from "@/auth"
 import { Metadata } from 'next';
+
+import { signOut } from "@/auth"
  
 export const metadata: Metadata = {
   title: 'Logout - CMD',

@@ -1,6 +1,7 @@
-import LargeDropdown from "@/app/(general)/ui/components/large_dropdown";
-import { prisma } from "@/app/(general)/lib/db";
 import { Metadata } from "next";
+
+import { prisma } from "@/app/(general)/lib/db";
+import LargeDropdown from "@/app/(general)/ui/components/large_dropdown";
  
 export async function generateMetadata(
   { params }: { params: { community: string } },

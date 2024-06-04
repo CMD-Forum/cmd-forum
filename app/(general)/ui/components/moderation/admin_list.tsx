@@ -1,4 +1,5 @@
 import Link from "next/link";
+
 import { prisma } from "../../../lib/db";
 import ProfileImage from "../account/ProfileImage";
 
@@ -19,7 +20,7 @@ export async function CommunityAdministrators({ communityId }: { communityId: st
                 </div>            
             </div>
         );
-    };
+    }
 
     const admins = await prisma.communityAdminship.findMany({ where: { communityId: communityId }});
 

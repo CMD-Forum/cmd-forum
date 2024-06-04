@@ -1,15 +1,17 @@
 "use client";
 
-import { ChevronLeftIcon, ChevronRightIcon, HomeIcon, MagnifyingGlassIcon, ViewColumnsIcon, Bars2Icon, MapPinIcon, UserIcon, UserCircleIcon, AdjustmentsHorizontalIcon, ArrowRightStartOnRectangleIcon, ArrowRightEndOnRectangleIcon, UserPlusIcon, PlusIcon, BookmarkIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
+import { AdjustmentsHorizontalIcon, ArrowRightEndOnRectangleIcon, ArrowRightStartOnRectangleIcon, Bars2Icon, BookmarkIcon, ChevronDownIcon,ChevronLeftIcon, ChevronRightIcon, HomeIcon, MagnifyingGlassIcon, MapPinIcon, PlusIcon, UserCircleIcon, UserIcon, UserPlusIcon, ViewColumnsIcon } from "@heroicons/react/16/solid";
 import { AnimatePresence, motion } from "framer-motion";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import LogoutButton from "../signoutButton";
+
 import { getAllUserMembershipRecords } from "@/app/(general)/lib/data";
+
 import ProfileImage from "../account/ProfileImage";
 import Menu, { MenuLink, MenuUser } from "../menu/menu";
+import LogoutButton from "../signoutButton";
 
 export default function Sidebar() {
 

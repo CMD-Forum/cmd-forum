@@ -1,5 +1,6 @@
-import { prisma } from '@/app/(general)/lib/db';
 import { NextResponse } from 'next/server'
+
+import { prisma } from '@/app/(general)/lib/db';
 
 export async function POST( req: Request ) {
 
@@ -57,7 +58,7 @@ export async function POST( req: Request ) {
 
             return NextResponse.json({ message: "Sorry, an error occurred." }, { status: 500 })
         
-        };
+        }
 
         return NextResponse.json({ message: "Post is not saved." }, { status: 400 })
 

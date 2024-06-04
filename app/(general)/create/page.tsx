@@ -1,5 +1,6 @@
-import CreateTabs from "@/app/(general)/ui/components/tabs";
 import { Metadata } from 'next';
+
+import CreateTabs from "@/app/(general)/ui/components/tabs";
  
 export const metadata: Metadata = {
   title: 'Create - CMD',

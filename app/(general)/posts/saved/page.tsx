@@ -1,7 +1,10 @@
 import '@/app/(general)/ui/components/posts/post';
-import { SavedPostListByUserID } from '../../ui/components/posts/post_list_custom';
-import { auth } from '@/auth';
+
 import { Metadata } from 'next';
+
+import { auth } from '@/auth';
+
+import { SavedPostListByUserID } from '../../ui/components/posts/post_list_custom';
  
 export const metadata: Metadata = {
   title: 'Saved Posts - CMD',

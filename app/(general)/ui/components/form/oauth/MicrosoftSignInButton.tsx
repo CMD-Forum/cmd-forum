@@ -1,5 +1,5 @@
-import { FC, ReactNode } from "react";
 import Image from "next/image";
+import { FC, ReactNode } from "react";
 
 interface MicrosoftSignInButtonProps {
 

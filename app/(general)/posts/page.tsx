@@ -1,7 +1,10 @@
 import '@/app/(general)/ui/components/posts/post';
-import PostList from '@/app/(general)/ui/components/posts/post_list';
-import Alert, { AlertSubtitle, AlertTitle } from '../ui/components/new_alert';
+
 import { Metadata } from 'next';
+
+import PostList from '@/app/(general)/ui/components/posts/post_list';
+
+import Alert, { AlertSubtitle, AlertTitle } from '../ui/components/new_alert';
  
 export const metadata: Metadata = {
   title: 'Posts - CMD',

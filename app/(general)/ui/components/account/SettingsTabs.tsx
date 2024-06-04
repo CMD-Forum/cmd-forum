@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import AccountSettings, { SecuritySettings } from "../settings/settings";
 import { ChatBubbleBottomCenterTextIcon, LockClosedIcon, PaintBrushIcon, UserIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
+
 import Alert, { AlertTitle } from "../new_alert";
+import AccountSettings, { SecuritySettings } from "../settings/settings";
 
 export default function SettingsTabs() {
 

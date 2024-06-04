@@ -1,9 +1,9 @@
 "use client";
 
-import { BookmarkIcon as BookmarkIconOutline } from "@heroicons/react/24/outline";
 import { BookmarkIcon } from "@heroicons/react/16/solid";
-import { useEffect, useState } from "react";
+import { BookmarkIcon as BookmarkIconOutline } from "@heroicons/react/24/outline";
 import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 export function SavePostButton({ userID, postID }: { userID: string, postID: string }) {
 
@@ -26,7 +26,7 @@ export function SavePostButton({ userID, postID }: { userID: string, postID: str
                 setSaved(true);
             } else {
                 setSaved(false);
-            };            
+            }            
             setIsLoading(false);
             return res.json();
         })        
@@ -56,7 +56,7 @@ export function SavePostButton({ userID, postID }: { userID: string, postID: str
             .then((res) => {
                 if ( res.status === 200 ) {
                     setSaved(false);
-                };         
+                }         
                 return res.json();
             })  
         }

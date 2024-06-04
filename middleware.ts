@@ -1,16 +1,18 @@
-import authConfig from "@/auth.config";
 import NextAuth from "next-auth";
+
+import authConfig from "@/auth.config";
 
 const { auth } = NextAuth(authConfig);
 
+import { NextResponse } from "next/server";
+
 import {
-    defaultLoginRedirect,
     apiAuthPrefix,
     authRoutes,
+    defaultLoginRedirect,
     privateRoutes,
     publicOnlyRoutes
 } from "@/routes"
-import { NextResponse } from "next/server";
 
 // @ts-ignore
 export default auth((req) => {

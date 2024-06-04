@@ -5,18 +5,18 @@
  */
 
 // import authConfig from "./auth.config" // See line 2 of top comment.
-import { prisma } from "./app/(general)/lib/db";
 import { PrismaAdapter } from "@auth/prisma-adapter";
+import { UserRole } from "@prisma/client";
+import bcrypt from "bcryptjs";
 import NextAuth, { type DefaultSession } from "next-auth"
 import Credentials from "next-auth/providers/credentials";
-import { LoginSchema } from "./app/(general)/lib/schemas";
-import { getUserByEmail, getUserById } from "./app/(general)/lib/data";
-import bcrypt from "bcryptjs";
-import { UserRole } from "@prisma/client";
-
 // Providers
 import GitHub from "next-auth/providers/github";
 import Passkey from "next-auth/providers/passkey"
+
+import { getUserByEmail, getUserById } from "./app/(general)/lib/data";
+import { prisma } from "./app/(general)/lib/db";
+import { LoginSchema } from "./app/(general)/lib/schemas";
 // import Resend from "next-auth/providers/resend"
 
 // Main

@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { CardPost } from "./posts/post";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+
+import { CardPost } from "./posts/post";
 
 export function Landing() {
 

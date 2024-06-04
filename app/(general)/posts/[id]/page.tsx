@@ -1,7 +1,9 @@
-import { prisma } from '@/app/(general)/lib/db';
-import { Error404 } from '../../ui/error404';
-import { FullPost } from '../../ui/components/posts/post';
 import { Metadata } from "next";
+
+import { prisma } from '@/app/(general)/lib/db';
+
+import { FullPost } from '../../ui/components/posts/post';
+import { Error404 } from '../../ui/error404';
  
 export async function generateMetadata(
   { params }: { params: { id: string } },

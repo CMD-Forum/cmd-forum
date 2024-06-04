@@ -1,6 +1,7 @@
 import { ChevronDownIcon } from "@heroicons/react/16/solid";
-import Dropdown, { DropdownLink } from "../../components/dropdown/dropdown";
 import { Metadata } from 'next';
+
+import Dropdown, { DropdownLink } from "../../components/dropdown/dropdown";
 import Menu, { MenuLink } from "../../components/menu/menu";
  
 export const metadata: Metadata = {

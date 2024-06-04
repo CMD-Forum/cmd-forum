@@ -1,9 +1,10 @@
-import { prisma } from "@/app/(general)/lib/db";
 import { NextRequest, NextResponse } from "next/server";
+
+import { prisma } from "@/app/(general)/lib/db";
 
 export async function GET( req: NextRequest ) {
 
-    try {;
+    try {
 
         const postCount = await prisma.post.count();     
               

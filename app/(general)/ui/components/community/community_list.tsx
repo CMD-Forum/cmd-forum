@@ -1,11 +1,13 @@
 "use client";
 
-import { CardPost } from '@/app/(general)/ui/components/posts/post';
-import { useState, useEffect } from 'react';
-import { getAllCommunitys, getAllPostsFromCommunityID, getAllPostsFromUsername } from '@/app/(general)/lib/data';
-import { Post } from '@/types/types';
-import { useRouter } from 'next/navigation';
 import { Community } from '@prisma/client';
+import { useRouter } from 'next/navigation';
+import { useEffect,useState } from 'react';
+
+import { getAllCommunitys, getAllPostsFromCommunityID, getAllPostsFromUsername } from '@/app/(general)/lib/data';
+import { CardPost } from '@/app/(general)/ui/components/posts/post';
+import { Post } from '@/types/types';
+
 import { CardCommunity } from './community';
 
 export function CommunityList() {

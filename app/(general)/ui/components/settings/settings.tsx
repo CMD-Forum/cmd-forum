@@ -1,6 +1,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
+
 import { Settings_ChangeAccountUsername, Settings_ChangeDescription, Settings_DeleteAccount, Settings_Setup2FA } from "./settings_sections";
 
 export default function AccountSettings() {

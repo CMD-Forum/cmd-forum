@@ -1,10 +1,11 @@
 "use client";
 
-import { CardPost } from '@/app/(general)/ui/components/posts/post';
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/16/solid';
 import { Post } from '@prisma/client';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+
+import { CardPost } from '@/app/(general)/ui/components/posts/post';
 
 export default function PostList() {
 
@@ -22,13 +23,13 @@ export default function PostList() {
             setPage(page + 1);
             setPageForwardAllowed(true);
         }
-    };
+    }
     function lastPage() {
         if ( page > 0 ) {
             setPage(page - 1);
             setPageForwardAllowed(true);
         }
-    };    
+    }    
 
     try {        
 
@@ -95,7 +96,7 @@ export default function PostList() {
                 <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>         
             </div>
         );
-    };
+    }
 
     if ( totalPosts <= 0 ) { // Tried `if ( ! posts )` but that didn't work for some reason.
         return (

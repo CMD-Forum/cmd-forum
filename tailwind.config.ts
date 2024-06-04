@@ -82,4 +82,4 @@ function addVariablesForColors({ addBase, theme }: { addBase: any, theme: any })
     ':root': newVars,
   });
 
-};
+}

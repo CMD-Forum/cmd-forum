@@ -1,14 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
-import * as z from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod" // Form Validation
-import Alert, { AlertSubtitle, AlertTitle } from "../new_alert";
-import { useSession } from "next-auth/react";
-import { createPost, getCommunityByName } from "@/app/(general)/lib/data";
-import { useRouter } from "next/navigation";
 import { CloudArrowUpIcon } from "@heroicons/react/16/solid";
+import { zodResolver } from "@hookform/resolvers/zod" // Form Validation
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+
+import { createPost, getCommunityByName } from "@/app/(general)/lib/data";
+
+import Alert, { AlertSubtitle, AlertTitle } from "../new_alert";
 
 const FormSchema = z.object({
     title: z

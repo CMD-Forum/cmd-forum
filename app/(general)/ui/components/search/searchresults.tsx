@@ -1,4 +1,5 @@
 import { prisma } from "@/app/(general)/lib/db";
+
 import { CardPost } from "../posts/post";
 
 interface SearchResultProps {

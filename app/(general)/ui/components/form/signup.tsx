@@ -1,14 +1,16 @@
 'use client';
 
-import React, { useState, useTransition } from "react";
-import Link from "next/link";
-import * as z from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod"
-import Alert, { AlertSubtitle, AlertTitle } from "../new_alert";
-import { signup } from "@/app/(general)/lib/actions/signup";
-import { OAuthButtons } from "./oauth/OAuthButtons";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/16/solid";
+import { zodResolver } from "@hookform/resolvers/zod"
+import Link from "next/link";
+import React, { useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+
+import { signup } from "@/app/(general)/lib/actions/signup";
+
+import Alert, { AlertSubtitle, AlertTitle } from "../new_alert";
+import { OAuthButtons } from "./oauth/OAuthButtons";
 
 export const SignupSchema = z.
     object({

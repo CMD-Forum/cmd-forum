@@ -1,6 +1,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
+
 import Modal from "../modal";
 import { ChangeAccountDescription, ChangeAccountName } from "./settings_actions";
 

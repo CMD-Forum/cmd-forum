@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import CreatePostForm from "@/app/(general)/ui/components/form/create_post";
-import CreateCommunityForm from "@/app/(general)/ui/components/form/create_community";
-import React from "react";
-import CreateImagePostForm from "./form/create_post_image";
 import { ChatBubbleBottomCenterTextIcon, PhotoIcon, ViewColumnsIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
+import React from "react";
+
+import CreateCommunityForm from "@/app/(general)/ui/components/form/create_community";
+import CreatePostForm from "@/app/(general)/ui/components/form/create_post";
+
+import CreateImagePostForm from "./form/create_post_image";
 
 export default function CreateTabs() {
 

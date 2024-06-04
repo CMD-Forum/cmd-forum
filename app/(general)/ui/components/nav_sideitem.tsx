@@ -1,6 +1,8 @@
 "use client";
 
 import { 
+    ArrowRightEndOnRectangleIcon,
+    Bars3Icon,
     BookOpenIcon, 
     CalendarDaysIcon, 
     ChatBubbleBottomCenterTextIcon, 
@@ -10,19 +12,17 @@ import {
     PencilSquareIcon, 
     ShieldCheckIcon, 
     UserIcon, 
+    UserPlusIcon,
     ViewColumnsIcon, 
-    Bars3Icon,
-    XMarkIcon,
-    ArrowRightEndOnRectangleIcon,
-    UserPlusIcon
-} from "@heroicons/react/20/solid";
+    XMarkIcon} from "@heroicons/react/20/solid";
+import { Community } from "@prisma/client";
+import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link"
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
-import { inter } from "../fonts";
 import { useSession } from "next-auth/react"
-import { Community } from "@prisma/client";
+import { useState } from "react";
+
+import { inter } from "../fonts";
 
 export function NavSideItems() {
 

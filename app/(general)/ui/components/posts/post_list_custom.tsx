@@ -1,11 +1,12 @@
 "use client";
 
-import { CardPost } from '@/app/(general)/ui/components/posts/post';
-import { useState, useEffect } from 'react';
-import { Post } from '@/types/types';
 import { ArrowLeftIcon, ArrowPathIcon, ArrowRightIcon } from '@heroicons/react/16/solid';
-import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect,useState } from 'react';
+
+import { CardPost } from '@/app/(general)/ui/components/posts/post';
+import { Post } from '@/types/types';
 
 /**
  * PostListByUser
@@ -29,13 +30,13 @@ export default function PostListByUser( { username }: { username: string } ) {
             setPage(page + 1);
             setPageForwardAllowed(true);
         }
-    };
+    }
     function lastPage() {
         if ( page > 0 ) {
             setPage(page - 1);
             setPageForwardAllowed(true);
         }
-    };    
+    }    
 
     const router = useRouter();
 
@@ -109,7 +110,7 @@ export default function PostListByUser( { username }: { username: string } ) {
                 <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>         
             </div>
         );
-    };
+    }
 
     if ( totalPages <= 0 ) { // Tried `if ( ! posts )` but that didn't work for some reason.
         return (
@@ -178,13 +179,13 @@ export function PostListByCommunity( { communityID }: { communityID: string } ) 
             setPage(page + 1);
             setPageForwardAllowed(true);
         }
-    };
+    }
     function lastPage() {
         if ( page > 0 ) {
             setPage(page - 1);
             setPageForwardAllowed(true);
         }
-    };    
+    }    
 
     const router = useRouter();
 
@@ -258,7 +259,7 @@ export function PostListByCommunity( { communityID }: { communityID: string } ) 
                 <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>         
             </div>
         );
-    };
+    }
 
     if ( totalPages <= 0 ) { // Tried `if ( ! posts )` but that didn't work for some reason.
         return (
@@ -329,13 +330,13 @@ export function SavedPostListByUserID( { userID }: { userID: string } ) {
             setPage(page + 1);
             setPageForwardAllowed(true);
         }
-    };
+    }
     function lastPage() {
         if ( page > 0 ) {
             setPage(page - 1);
             setPageForwardAllowed(true);
         }
-    };    
+    }    
 
     const router = useRouter();
  
@@ -416,7 +417,7 @@ export function SavedPostListByUserID( { userID }: { userID: string } ) {
                 <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>         
             </div>
         );
-    };
+    }
 
     if ( totalPages <= 0 ) { // Tried `if ( ! posts )` but that didn't work for some reason.
         return (

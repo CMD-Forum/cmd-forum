@@ -1,5 +1,6 @@
-import { CommunityList } from "../ui/components/community/community_list";
 import { Metadata } from 'next';
+
+import { CommunityList } from "../ui/components/community/community_list";
  
 export const metadata: Metadata = {
   title: 'Community - CMD',

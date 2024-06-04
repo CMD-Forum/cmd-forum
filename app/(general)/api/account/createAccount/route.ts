@@ -1,7 +1,8 @@
-import { prisma } from '@/app/(general)/lib/db';
-import { NextResponse } from 'next/server';
 import { hash } from 'bcryptjs';
+import { NextResponse } from 'next/server';
 import * as z from 'zod';
+
+import { prisma } from '@/app/(general)/lib/db';
 
 // Input validation schema
 

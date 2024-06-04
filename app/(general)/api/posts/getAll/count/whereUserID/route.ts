@@ -1,9 +1,10 @@
-import { prisma } from "@/app/(general)/lib/db";
 import { NextRequest, NextResponse } from "next/server";
+
+import { prisma } from "@/app/(general)/lib/db";
 
 export async function GET( req: NextRequest ) {
 
-    try {;
+    try {
 
         if ( ! req.body) {
             return NextResponse.json({ message: "Request body is required." }, { status: 400 });

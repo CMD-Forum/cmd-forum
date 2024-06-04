@@ -1,16 +1,18 @@
 "use client";
 
-import Link from 'next/link';
+import { ArchiveBoxXMarkIcon, ChatBubbleBottomCenterIcon, ChatBubbleLeftEllipsisIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/16/solid';
 import { EllipsisVerticalIcon, ShareIcon } from '@heroicons/react/24/solid';
 import MarkdownPreview from '@uiw/react-markdown-preview';
-import Dropdown, { DropdownButton, DropdownLink, DropdownShare } from '../dropdown/dropdown';
-import Hovercard from '../dropdown/hovercard';
-import { Post } from '@/types/types';
-import { ArchiveBoxXMarkIcon, ChatBubbleBottomCenterIcon, ChatBubbleLeftEllipsisIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/16/solid';
-import { SavePostButton } from '../button';
+import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import rehypeSanitize from 'rehype-sanitize';
+
+import { Post } from '@/types/types';
+
 import ProfileImage from '../account/ProfileImage';
+import { SavePostButton } from '../button';
+import Dropdown, { DropdownButton, DropdownLink, DropdownShare } from '../dropdown/dropdown';
+import Hovercard from '../dropdown/hovercard';
 import Menu, { MenuButton, MenuLink, MenuShare } from '../menu/menu';
 
 /**

@@ -1,13 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
-import * as z from "zod";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod" // Form Validation
-import Alert, { AlertTitle } from "../new_alert";
 import { useSession } from "next-auth/react";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+
 import { createCommunity, createUserMembershipRecord, getCommunityByName } from "@/app/(general)/lib/data";
 import { CreateCommunitySchema } from "@/app/(general)/lib/schemas";
+
+import Alert, { AlertTitle } from "../new_alert";
 
 function ErrorMessage(props: { message: string }) {
     return <p className="text-red-300 text-sm">{props.message}</p>;

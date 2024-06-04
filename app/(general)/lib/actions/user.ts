@@ -1,7 +1,8 @@
 "use server";
 
-import { prisma } from "@/app/(general)/lib/db";
 import { Prisma } from "@prisma/client";
+
+import { prisma } from "@/app/(general)/lib/db";
 
 export async function ChangeAccountUsername( { userID, newUsername } : { userID: string, newUsername: string }) {
     try {

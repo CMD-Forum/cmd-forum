@@ -1,23 +1,22 @@
 "use client";
 
-import { cubicBezier, motion } from "framer-motion";
-import { useSession } from "next-auth/react";
-import Link from "next/link";
-import React, { MouseEventHandler } from "react";
-import { useState } from "react";
-import type { Route } from 'next';
-
 import {
-    useFloating,
     autoUpdate,
+    FloatingFocusManager,
+    Placement,
     shift,
     useClick,
     useDismiss,
-    useRole,
+    useFloating,
     useInteractions,
-    FloatingFocusManager,
-    Placement,
+    useRole,
 } from '@floating-ui/react';
+import { cubicBezier, motion } from "framer-motion";
+import type { Route } from 'next';
+import Link from "next/link";
+import { useSession } from "next-auth/react";
+import React, { MouseEventHandler } from "react";
+import { useState } from "react";
 
 /**
  * ## Menu

@@ -1,8 +1,10 @@
-import ProfileMain from "@/app/(general)/ui/components/account/ProfileMain";
-import { prisma } from "@/app/(general)/lib/db";
-import { Error404 } from "../../ui/error404";
-import PostListByUser from "../../ui/components/posts/post_list_custom";
 import { Metadata } from "next";
+
+import { prisma } from "@/app/(general)/lib/db";
+import ProfileMain from "@/app/(general)/ui/components/account/ProfileMain";
+
+import PostListByUser from "../../ui/components/posts/post_list_custom";
+import { Error404 } from "../../ui/error404";
  
 export async function generateMetadata(
   { params }: { params: { name: string } },

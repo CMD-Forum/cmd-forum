@@ -1,7 +1,8 @@
 "use client";
 
-import { PostAuthor } from "@/types/types";
 import { User } from "@prisma/client";
+
+import { PostAuthor } from "@/types/types";
 
 /**
  * Returns the profile image of a user, and if it doesn't exist then returns the initials.

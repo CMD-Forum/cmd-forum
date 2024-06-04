@@ -1,14 +1,16 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { startTransition, useEffect, useState } from "react";
-import Modal from "../modal";
-import { ChangeAccountUsername, DeleteAccount, ChangeAccountDescription as FuncChangeAccountDescription } from "@/app/(general)/lib/actions/user";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+
+import { ChangeAccountDescription as FuncChangeAccountDescription,ChangeAccountUsername, DeleteAccount } from "@/app/(general)/lib/actions/user";
 import { DeleteAccountSchema, UpdateDescriptionSchema, UpdateUsernameSchema } from "@/app/(general)/lib/schemas";
+
 import { inter } from "../../fonts";
-import { useRouter } from "next/navigation";
+import Modal from "../modal";
 
 /**
  * Modal prompt with an input to change the specified accounts username.

@@ -1,10 +1,11 @@
 import { ArrowTrendingUpIcon, BoltIcon, ChartBarIcon, MagnifyingGlassIcon, PlusIcon } from '@heroicons/react/24/solid';
+import { Metadata } from 'next';
+import Link from 'next/link';
+
 import Dropdown, { DropdownLink } from '../ui/components/dropdown/dropdown';
+import Menu, { MenuLink } from '../ui/components/menu/menu';
 import SearchBar from '../ui/components/search/searchbar';
 import SearchResults from '../ui/components/search/searchresults';
-import Link from 'next/link';
-import { Metadata } from 'next';
-import Menu, { MenuLink } from '../ui/components/menu/menu';
  
 export const metadata: Metadata = {
   title: 'Search - CMD',

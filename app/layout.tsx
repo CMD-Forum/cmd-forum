@@ -1,13 +1,16 @@
-import type { Metadata, Viewport } from 'next';
-import { Inter, IBM_Plex_Mono } from 'next/font/google';
 import './(general)/globals.scss';
-import { Footer } from '@/app/(general)/ui/navigation';
-import { SessionProvider } from 'next-auth/react';
-import { auth } from '@/auth';
-import NextTopLoader from 'nextjs-toploader';
+
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import Sidebar from './(general)/ui/components/navigation/sidebar';
+import type { Metadata, Viewport } from 'next';
+import { IBM_Plex_Mono,Inter } from 'next/font/google';
+import { SessionProvider } from 'next-auth/react';
+import NextTopLoader from 'nextjs-toploader';
 import React from 'react';
+
+import { Footer } from '@/app/(general)/ui/navigation';
+import { auth } from '@/auth';
+
+import Sidebar from './(general)/ui/components/navigation/sidebar';
 
 const inter = Inter({ subsets: ['latin'] });
 const ibm_plex_mono = IBM_Plex_Mono({ subsets: ["latin"], weight: "400", variable: "--font-ibm_plex_mono" })

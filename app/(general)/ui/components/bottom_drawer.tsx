@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useAnimation, useDragControls, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { createPortal } from 'react-dom';
 import { XMarkIcon } from "@heroicons/react/24/solid";
+import { AnimatePresence, motion, useAnimation, useDragControls, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import React, { useEffect, useRef, useState } from "react";
+import { createPortal } from 'react-dom';
 
 export default function Bottomdrawer({ children, btnText, btnIcon, btnClassName, btnType = "navlink", btnDisabled }: { children: React.ReactNode, btnText?: string, btnIcon?: React.ReactNode, btnClassName?: string, btnType?: string, btnDisabled?: boolean }) {
 

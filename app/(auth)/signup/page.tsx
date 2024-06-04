@@ -1,5 +1,6 @@
-import SignupForm from "@/app/(general)/ui/components/form/signup";
 import { Metadata } from 'next';
+
+import SignupForm from "@/app/(general)/ui/components/form/signup";
  
 export const metadata: Metadata = {
   title: 'Signup - CMD',

@@ -1,17 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
-import * as z from "zod";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod" // Form Validation
-import Alert, { AlertSubtitle, AlertTitle } from "../new_alert";
-import { useSession } from "next-auth/react";
-import { createPost, getCommunityByName } from "@/app/(general)/lib/data";
-import { FaGithub, FaMarkdown } from "react-icons/fa6";
-import Link from "next/link";
 import MarkdownEditor from '@uiw/react-markdown-editor';
-import rehypeSanitize from "rehype-sanitize";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { FaGithub, FaMarkdown } from "react-icons/fa6";
+import rehypeSanitize from "rehype-sanitize";
+import * as z from "zod";
+
+import { createPost, getCommunityByName } from "@/app/(general)/lib/data";
+
+import Alert, { AlertSubtitle, AlertTitle } from "../new_alert";
 
 const FormSchema = z.object({
     title: z
@@ -58,7 +60,7 @@ export default function CreatePostForm() {
                 <AlertTitle>It looks like you&apos; not logged in, please log in.</AlertTitle>
             </Alert>
         );
-    };
+    }
 
     const OnSubmit = async (values: z.infer<typeof FormSchema>) => {
 

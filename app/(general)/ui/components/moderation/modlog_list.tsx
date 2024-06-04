@@ -1,4 +1,5 @@
 import Link from "next/link";
+
 import { prisma } from "../../../lib/db";
 
 export async function ModlogList({ communityId }: { communityId: string }) {

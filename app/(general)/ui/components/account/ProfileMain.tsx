@@ -1,8 +1,9 @@
 "use client";
 
 import { BookOpenIcon, CalendarDaysIcon, ChatBubbleBottomCenterTextIcon, Cog6ToothIcon, HomeIcon, MagnifyingGlassIcon, PencilSquareIcon, ShieldCheckIcon, UserIcon, ViewColumnsIcon } from "@heroicons/react/20/solid";
-import Link from "next/link"
 import { motion } from "framer-motion";
+import Link from "next/link"
+
 import ProfileImage from "./ProfileImage";
   
 const variants = {
