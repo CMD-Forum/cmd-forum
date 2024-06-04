@@ -9,11 +9,6 @@ import LogoutButton from "../components/signoutButton";
 import Link from "next/link";
 import Modal from "../components/modal";
 import Bottomdrawer, { BottomdrawerBody, BottomdrawerHeader } from "../components/bottom_drawer";
-import { Metadata } from 'next';
- 
-export const metadata: Metadata = {
-  title: 'Design - CMD',
-};
 
 export default function DeveloperPage() {
 
