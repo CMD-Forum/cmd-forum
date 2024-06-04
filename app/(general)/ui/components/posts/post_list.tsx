@@ -138,8 +138,8 @@ export default function PostList() {
                   );
             })}
             <div className='flex gap-4'>
-                <button onClick={() => lastPage()} className='navlink !px-2' disabled={ page === 0 ? true : false }><ArrowLeftIcon className='w-5 h-5' /></button>  
-                <button onClick={() => nextPage()} className='navlink !px-2' disabled={ pageForwardAllowed === false ? true : false }><ArrowRightIcon className='w-5 h-5' /></button>            
+                <button onClick={() => lastPage()} className='navlink !px-2' disabled={ page === 0 ? true : false } aria-label='Last Page'><ArrowLeftIcon className='w-5 h-5' /></button>  
+                <button onClick={() => nextPage()} className='navlink !px-2' disabled={ pageForwardAllowed === false ? true : false } aria-label='Next Page'><ArrowRightIcon className='w-5 h-5' /></button>            
             </div>
         </div>
     );

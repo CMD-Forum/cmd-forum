@@ -69,7 +69,7 @@ export function SavePostButton({ userID, postID }: { userID: string, postID: str
     }
 
     return (
-        <button className={`navlink !px-2 md:!px-3 ${saved ? "!bg-border" : "" } mr-auto`} onClick={() => SavePost()}>
+        <button className={`navlink !px-2 md:!px-3 ${saved ? "!bg-border" : "" } mr-auto`} onClick={() => SavePost()} aria-label="Save Post">
             { saved ? <BookmarkIcon className="w-5 h-5" /> : <BookmarkIconOutline className='w-5 h-5' /> }
             <span className='hidden md:flex'>{ saved ? "Saved" : "Save" }</span>
         </button>

@@ -80,24 +80,24 @@ export default function Sidebar() {
 
                                     <div className="flex flex-col gap-1">
                                         <p className={`subtitle flex gap-1 whitespace-nowrap overflow-hidden w-[200px] overflow-ellipsis ${expanded ? "" : "hidden"}`}><MapPinIcon className="!w-5 !h-5" />Joined Communites</p>
-                                        <ul className="mt-2 gap-1">
+                                        <div className="mt-2 gap-1">
                                             {/* @ts-ignore */}
                                             { userMemberships && userMemberships.memberships.map((membership) => {
                                                 return <Link key={membership.community.id} className={`navlink-sidebar ${expanded ? "" : "max-w-fit"} ${pathname === `/c/${membership.community.name}` ? "after-active" : null}`} href={`/c/${membership.community.name}`}><img src={membership.community.image} alt={membership.community.display_name} className="w-5 h-5 rounded" /><span className={`${expanded ? "flex" : "hidden"}`}>{membership.community.display_name}</span></Link> 
                                             })}
-                                        </ul>
+                                        </div>
                                     </div>
 
                                     <hr className="mt-4 mb-4"/>
 
                                     <div className="flex flex-col gap-1 overflow-x-hidden">
                                         <p className={`subtitle flex gap-1 whitespace-nowrap overflow-hidden w-[200px] overflow-ellipsis ${expanded ? "" : "hidden"}`}><UserIcon className="!w-5 !h-5" />Your Account</p>
-                                        <ul className="flex flex-col gap-1 mt-2">
+                                        <div className="flex flex-col gap-1 mt-2">
                                             <Link className={`navlink-sidebar ${expanded ? "" : "max-w-fit"} ${pathname === `/user/${session.user.username}` ? "after-active" : null}`} href={`/user/${session.user.username}`}><UserCircleIcon className="w-5 h-5" /><span className={`${expanded ? "flex" : "hidden"}`}>Profile</span></Link> 
                                             <Link className={`navlink-sidebar ${expanded ? "" : "max-w-fit"} ${pathname === `/posts/saved` ? "after-active" : null}`} href={`/posts/saved`}><BookmarkIcon className="w-5 h-5" /><span className={`${expanded ? "flex" : "hidden"}`}>Saved Posts</span></Link> 
                                             <Link className={`navlink-sidebar ${expanded ? "" : "max-w-fit"} ${pathname === `/account/settings` ? "after-active" : null}`} href={`/account/settings`}><AdjustmentsHorizontalIcon className="w-5 h-5" /><span className={`${expanded ? "flex" : "hidden"}`}>Settings</span></Link> 
                                             <LogoutButton className={"navlink-sidebar"}><ArrowRightStartOnRectangleIcon className="w-5 h-5" /><span className={`${expanded ? "flex" : "hidden"}`}>Logout</span></LogoutButton>
-                                        </ul>
+                                        </div>
                                     </div>                           
                                 </>
                                 :
@@ -106,10 +106,10 @@ export default function Sidebar() {
 
                                     <div className="flex flex-col gap-1 overflow-x-hidden">
                                         <p className={`subtitle flex gap-1 whitespace-nowrap overflow-hidden w-[200px] overflow-ellipsis ${expanded ? "" : "hidden"}`}><UserIcon className="!w-5 !h-5" />Your Account</p>
-                                        <ul className="flex flex-col gap-1 mt-2">
+                                        <div className="flex flex-col gap-1 mt-2">
                                             <Link className={`navlink-sidebar ${expanded ? "" : "max-w-fit"} ${pathname === `/login` ? "after-active" : null}`} href={`/login`}><ArrowRightEndOnRectangleIcon className="w-5 h-5" /><span className={`${expanded ? "flex" : "hidden"}`}>Login</span></Link> 
                                             <Link className={`navlink-sidebar ${expanded ? "" : "max-w-fit"} ${pathname === `/signup` ? "after-active" : null}`} href={`/signup`}><UserPlusIcon className="w-5 h-5" /><span className={`${expanded ? "flex" : "hidden"}`}>Signup</span></Link> 
-                                        </ul>
+                                        </div>
                                     </div>                               
                                 </>
                             }
@@ -169,12 +169,12 @@ export default function Sidebar() {
 
                                     <div className="flex flex-col gap-1">
                                         <p className={`subtitle flex gap-1 whitespace-nowrap overflow-hidden w-[200px] overflow-ellipsis ${expanded ? "" : "hidden"}`}><MapPinIcon className="!w-5 !h-5" />Joined Communites</p>
-                                        <ul className="mt-2 gap-1">
+                                        <div className="mt-2 gap-1">
                                             {/* @ts-ignore */}
                                             { userMemberships && userMemberships.memberships.map((membership) => {
                                                 return <Link key={membership.community.id} className={`navlink-sidebar ${expanded ? "" : "max-w-fit"} ${pathname === `/c/${membership.community.name}` ? "after-active" : null}`} href={`/c/${membership.community.name}`}><img src={membership.community.image} alt={membership.community.display_name} className="w-5 h-5 rounded" /><span className={`${expanded ? "flex" : "hidden"}`}>{membership.community.display_name}</span></Link> 
                                             })}
-                                        </ul>
+                                        </div>
                                     </div>                      
                                 </>
                                 :
@@ -183,10 +183,10 @@ export default function Sidebar() {
 
                                     <div className="flex flex-col gap-1 overflow-x-hidden">
                                         <p className={`subtitle flex gap-1 whitespace-nowrap overflow-hidden w-[200px] overflow-ellipsis`}><UserIcon className="!w-5 !h-5" />Your Account</p>
-                                        <ul className="flex flex-col gap-1 mt-2">
+                                        <div className="flex flex-col gap-1 mt-2">
                                             <Link className={`navlink-sidebar ${pathname === `/login` ? "after-active" : null}`} href={`/login`}><ArrowRightEndOnRectangleIcon className="w-5 h-5" /><span>Login</span></Link> 
                                             <Link className={`navlink-sidebar ${pathname === `/signup` ? "after-active" : null}`} href={`/signup`}><UserPlusIcon className="w-5 h-5" /><span>Signup</span></Link> 
-                                        </ul>
+                                        </div>
                                     </div>                               
                                 </>
                             }
@@ -194,10 +194,7 @@ export default function Sidebar() {
                         </div>  
                     </motion.div>                     
                 </div>
-       
             </AnimatePresence>        
         </>
-
     );
-
 }

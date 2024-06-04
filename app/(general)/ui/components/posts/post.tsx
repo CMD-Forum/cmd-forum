@@ -114,15 +114,15 @@ export function CardPost( post: Post ) {
                 { session &&
                     <div className='flex flex-row mt-4 justify-between'>
                         <div className='flex flex-row gap-2'>
-                            <button className='navlink !px-2 mr-auto'><ChevronUpIcon className='w-5 h-5' /></button>
-                            <button className='navlink !px-2 mr-auto'><ChevronDownIcon className='w-5 h-5' /></button>
+                            <button className='navlink !px-2 mr-auto' aria-label='Upvote'><ChevronUpIcon className='w-5 h-5' /></button>
+                            <button className='navlink !px-2 mr-auto' aria-label='Downvote'><ChevronDownIcon className='w-5 h-5' /></button>
                             {/*<Link className='navlink-emphasis !px-2 md:!px-3 mr-auto' href={`/posts/${post.id}`}><ChatBubbleLeftEllipsisIcon className='w-5 h-5' /><span className='hidden md:flex'>Comments</span></Link>*/}                        
                             {/* @ts-ignore */}
                             <SavePostButton btnText={"Save"} userID={session.user.id} postID={post.id} />
                         </div>
 
                         <Dropdown
-                            trigger={<button className='navlink !px-2'><EllipsisVerticalIcon className='w-5 h-5' /></button>}
+                            trigger={<button className='navlink !px-2' aria-label='More Options'><EllipsisVerticalIcon className='w-5 h-5' /></button>}
                         >
                             {/* @ts-ignore */}
                             <DropdownLink text={post.author.username} icon={<ProfileImage user={post.author} imgSize={"5"} />} link={`/user/${post.author.username}`}></DropdownLink>
@@ -259,7 +259,7 @@ export function FullPost( post: Post ) {
 
                     { session?.user && 
                         <div className='flex flex-row gap-2 md:bg-card w-full h-fit md:p-6 rounded-md mt-2 md:mt-6'>
-                            <button className='navlink' disabled onClick={() => { throw new Error("Feature Unimplemented") }}><ChatBubbleLeftEllipsisIcon className="w-5 h-5" />Submit Comment</button>
+                            <button className='navlink' disabled onClick={() => { throw new Error("Feature Unimplemented") }}><ChatBubbleLeftEllipsisIcon className="w-5 h-5" aria-label='Submit Comment' />Submit Comment</button>
                             {/* @ts-ignore */}
                             <SavePostButton userID={session.user.id} postID={post.id} />
                         </div>                    
