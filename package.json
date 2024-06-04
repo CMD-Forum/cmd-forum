@@ -52,7 +52,6 @@
     "swr": "^2.2.5",
     "use-debounce": "^10.0.0",
     "xss": "^1.0.15",
-    "yesno": "^0.4.0",
     "zod": "^3.23.4"
   },
   "devDependencies": {
