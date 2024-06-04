@@ -64,9 +64,9 @@ export function CardPost( post: Post ) {
 
             {post.imageurl 
                 ?
-                <img src={post.imageurl} alt={post.imagealt!} className={`rounded-md ${session ? "sm:!max-w-[146px] sm:!min-w-[146px] sm:!h-[146px] sm:!w-[146px]" : "sm:!max-w-[104px] sm:!min-w-[104px] sm:!h-[104px] sm:!w-[104px]" } m-auto overflow-hidden bg-cover`} />
+                <img rel='preload' src={post.imageurl} alt={post.imagealt!} className={`rounded-md ${session ? "sm:!max-w-[146px] sm:!min-w-[146px] sm:!h-[146px] sm:!w-[146px]" : "sm:!max-w-[104px] sm:!min-w-[104px] sm:!h-[104px] sm:!w-[104px]" } m-auto overflow-hidden bg-cover`} />
                 :
-                <img src={"/text_post_icon.png"} alt={"This post has no image."} className={`rounded-md hidden sm:flex ${session ? "sm:!max-w-[146px] sm:!min-w-[146px] sm:!h-[146px] sm:!w-[146px]" : "sm:!max-w-[104px] sm:!min-w-[104px] sm:!h-[104px] sm:!w-[104px]" } m-auto overflow-hidden bg-cover`} />
+                <img rel='preload' src={"/text_post_icon.webp"} alt={"This post has no image."} className={`rounded-md hidden sm:flex ${session ? "sm:!max-w-[146px] sm:!min-w-[146px] sm:!h-[146px] sm:!w-[146px]" : "sm:!max-w-[104px] sm:!min-w-[104px] sm:!h-[104px] sm:!w-[104px]" } m-auto overflow-hidden bg-cover`} />
             }
 
             <div className="flex w-full bg-transparent h-fit flex-col">
