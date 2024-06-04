@@ -13,7 +13,6 @@ module.exports = {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-        'facebook-grey-btn': 'url(https://web.archive.org/web/20110414215758im_/http://static.ak.fbcdn.net/rsrc.php/v1/zD/r/B4K_BWwP7P5.png)'
       },
       colors: {
         'semitransparent': 'hsla(0, 0%, 0%, 0.75)',
