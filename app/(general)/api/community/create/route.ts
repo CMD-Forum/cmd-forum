@@ -9,7 +9,7 @@ export async function POST(req: Request) {
 
         return NextResponse.json({ message: "Community creation is currently unavailable through the API."}, { status: 500 })
 
-        const body = await req.json();
+       /* const body = await req.json();
         const { name, description, image_url } = CreateCommunitySchema.parse(body);
 
         const CommunityNameExists = await prisma.community.findUnique({
@@ -33,7 +33,7 @@ export async function POST(req: Request) {
             }
         });
 
-        return NextResponse.json({ community: newCommunity, message: "Community has been created."}, { status: 201 });
+        return NextResponse.json({ community: newCommunity, message: "Community has been created."}, { status: 201 });*/
 
     } catch(error) {
         console.error(error);

@@ -5,13 +5,16 @@
     "plugin:@next/next/recommended"
   ],
   "plugins": [
-    "deprecation"
+    "deprecation",
+    "simple-import-sort"
   ],
   "rules": {
     "@next/next/no-img-element": "off",
     "deprecation/deprecation": "warn",
     "no-unused-vars": "warn",
-    "no-extra-semi": "warn"
+    "no-extra-semi": "warn",
+    "simple-import-sort/imports": "warn",
+    "simple-import-sort/exports": "warn"
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
