@@ -8,8 +8,8 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import LogoutButton from "../signoutButton";
 import { getAllUserMembershipRecords } from "@/app/(general)/lib/data";
-import Dropdown, { DropdownLink, DropdownUser } from "../dropdown/dropdown";
 import ProfileImage from "../account/ProfileImage";
+import Menu, { MenuLink, MenuUser } from "../menu/menu";
 
 export default function Sidebar() {
 
@@ -124,14 +124,14 @@ export default function Sidebar() {
                             <button className="navlink !px-2 !py-2 z-[100] ml-2 !w-fit " onClick={() => setExpanded(!expanded)}><Bars2Icon className="w-4 h-4" /></button>  
                             { session?.user && 
                                 // @ts-ignore
-                                <Dropdown trigger={<button className="navlink"><ProfileImage user={session.user} imgSize={"5"} /><ChevronDownIcon className="w-4 h-4" /></button>}>
-                                    <DropdownUser />
+                                <Menu trigger={<button className="navlink"><ProfileImage user={session.user} imgSize={"5"} /><ChevronDownIcon className="w-4 h-4" /></button>}>
+                                    <MenuUser />
                                     <hr className='mt-1 mb-1' />
-                                    <DropdownLink text={"Saved Posts"} icon={<BookmarkIcon />} link={"/posts/saved"} />
+                                    <MenuLink text={"Saved Posts"} icon={<BookmarkIcon />} link={"/posts/saved"} />
                                     <hr className='mt-1 mb-1' />
-                                    <DropdownLink text={"Settings"} icon={<AdjustmentsHorizontalIcon />} link={"/account/settings"} />
+                                    <MenuLink text={"Settings"} icon={<AdjustmentsHorizontalIcon />} link={"/account/settings"} />
                                     <LogoutButton className={"hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm subtitle hover:!text-white rounded-md"}><ArrowRightEndOnRectangleIcon className='w-5 h-5' />Logout</LogoutButton>
-                                </Dropdown>                            
+                                </Menu>                            
                             }  
                         </div>
                     </>

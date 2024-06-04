@@ -11,6 +11,7 @@ import { SavePostButton } from '../button';
 import { useSession } from 'next-auth/react';
 import rehypeSanitize from 'rehype-sanitize';
 import ProfileImage from '../account/ProfileImage';
+import Menu, { MenuButton, MenuLink, MenuShare } from '../menu/menu';
 
 /**
  * Horizontal card display of the given post.
@@ -121,14 +122,14 @@ export function CardPost( post: Post ) {
                             <SavePostButton btnText={"Save"} userID={session.user.id} postID={post.id} />
                         </div>
 
-                        <Dropdown
+                        <Menu
                             trigger={<button className='navlink !px-2' aria-label='More Options'><EllipsisVerticalIcon className='w-5 h-5' /></button>}
                         >
                             {/* @ts-ignore */}
-                            <DropdownLink text={post.author.username} icon={<ProfileImage user={post.author} imgSize={"5"} />} link={`/user/${post.author.username}`}></DropdownLink>
-                            <DropdownLink text={post.community.display_name} icon={<img src={post.community.image} alt={post.community.display_name}></img>} link={`/c/${post.community.name}`}></DropdownLink>
+                            <MenuLink text={post.author.username} icon={<ProfileImage user={post.author} imgSize={"5"} />} link={`/user/${post.author.username}`}></MenuLink>
+                            <MenuLink text={post.community.display_name} icon={<img src={post.community.image} alt={post.community.display_name}></img>} link={`/c/${post.community.name}`}></MenuLink>
                             <hr className='mt-1 !mb-1'/>
-                            <DropdownShare icon={<ShareIcon />} text={text} title={title} url={url} />
+                            <MenuShare icon={<ShareIcon />} text={text} title={title} url={url} />
                             { session 
                             ?
                                 <>
@@ -136,7 +137,7 @@ export function CardPost( post: Post ) {
                                     ?
                                     <>
                                         <hr className='mt-1 !mb-1'/>
-                                        <DropdownButton icon={<ArchiveBoxXMarkIcon />} text={"Delete"} onClick={() => console.log("delete post")} destructive={true} />                                 
+                                        <MenuButton icon={<ArchiveBoxXMarkIcon />} text={"Delete"} onClick={() => console.log("delete post")} destructive={true} />                                 
                                     </>
                                     :
                                     null
@@ -145,7 +146,7 @@ export function CardPost( post: Post ) {
                             :
                                 null
                             }
-                        </Dropdown>                         
+                        </Menu>                         
                     </div>
                 }                  
 

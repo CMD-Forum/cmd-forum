@@ -1,7 +1,6 @@
 "use client";
 
 import { ArchiveBoxXMarkIcon, ArrowRightEndOnRectangleIcon, BookmarkIcon, Cog6ToothIcon, EllipsisVerticalIcon, MegaphoneIcon, ShareIcon } from "@heroicons/react/16/solid";
-import Dropdown, { DropdownButton, DropdownCustom, DropdownLink, DropdownShare, DropdownUser } from "../components/dropdown/dropdown";
 import LargeDropdown from "../components/large_dropdown";
 import Alert, { AlertSubtitle, AlertTitle } from "../components/new_alert";
 import ComIDBtn, { ComMemBtn } from "./test";
@@ -9,6 +8,7 @@ import LogoutButton from "../components/signoutButton";
 import Link from "next/link";
 import Modal from "../components/modal";
 import Bottomdrawer, { BottomdrawerBody, BottomdrawerHeader } from "../components/bottom_drawer";
+import Menu, { MenuButton, MenuCustom, MenuLink, MenuShare, MenuUser } from "../components/menu/menu";
 
 export default function DeveloperPage() {
 
@@ -87,35 +87,35 @@ export default function DeveloperPage() {
                 <div className="flex flex-col gap-2 mt-4 w-full">
                     <LargeDropdown title={"Dropdowns"}>
 
-                        <h2 className="header-5 w-full mb-4">Example: User Dropdown</h2>
-                        <Dropdown 
+                        <h2 className="header-5 w-full mb-4">Example: User Menu</h2>
+                        <Menu 
                             trigger={<button className="navlink">Click Me</button>}
                         >
-                            <DropdownUser />
+                            <MenuUser />
                             <hr className='mt-1 mb-1' />
-                            <DropdownLink text={"Saved Posts"} icon={<BookmarkIcon />} link={"/posts/saved"} />
+                            <MenuLink text={"Saved Posts"} icon={<BookmarkIcon />} link={"/posts/saved"} />
                             <hr className='mt-1 mb-1' />
-                            <DropdownLink text={"Settings"} icon={<Cog6ToothIcon />} link={"/account/settings"} />
+                            <MenuLink text={"Settings"} icon={<Cog6ToothIcon />} link={"/account/settings"} />
                             <LogoutButton className={"hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm subtitle hover:!text-white rounded"}><ArrowRightEndOnRectangleIcon className='w-5 h-5' />Logout</LogoutButton>
                             <hr className='mt-1 mb-1' />
-                            <DropdownCustom className={"hover:bg-card"}>
+                            <MenuCustom className={"hover:bg-card"}>
                                 <div className='flex flex-col gap-1 items-center w-full'>
                                     <Link className='label cursor-pointer hover:!text-white !text-xs' href={"https://github.com/CMD-Forum/cmd-forum"}><MegaphoneIcon className='w-4 h-4'/>New Update - Alpha 1.2</Link>              
                                 </div>
-                            </DropdownCustom>
-                        </Dropdown>
+                            </MenuCustom>
+                        </Menu>
 
-                        <h2 className="header-5 w-full mb-4 mt-4">Example: Post Dropdown</h2>
-                        <Dropdown 
+                        <h2 className="header-5 w-full mb-4 mt-4">Example: Post Menu</h2>
+                        <Menu 
                             trigger={<button className="navlink !px-2"><EllipsisVerticalIcon className="w-5 h-5" /></button>}
                         >
-                            <DropdownLink text={"User"} icon={<img src={"/images/favicon/favicon.svg"} alt={""}></img>} link={`/user`}></DropdownLink>
-                            <DropdownLink text={"General"} icon={<img src={"/images/favicon/favicon.svg"} alt={""}></img>} link={`/c`}></DropdownLink>
+                            <MenuLink text={"User"} icon={<img src={"/images/favicon/favicon.svg"} alt={""}></img>} link={`/user`}></MenuLink>
+                            <MenuLink text={"General"} icon={<img src={"/images/favicon/favicon.svg"} alt={""}></img>} link={`/c`}></MenuLink>
                             <hr className='mt-1 !mb-1'/>
-                            <DropdownShare icon={<ShareIcon />} text={"Share"} title={"Share the Command UI Page!"} url={"/dev"} />
+                            <MenuShare icon={<ShareIcon />} text={"Share"} title={"Share the Command UI Page!"} url={"/dev"} />
                             {/* @ts-ignore */}
-                            <DropdownButton icon={<ArchiveBoxXMarkIcon />} text={"Delete"} destructive={true} />                                 
-                        </Dropdown>  
+                            <MenuButton icon={<ArchiveBoxXMarkIcon />} text={"Delete"} destructive={true} />                                 
+                        </Menu>  
                         <div className="mb-40" />
 
                     </LargeDropdown>                    

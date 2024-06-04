@@ -13,7 +13,7 @@ const variants = {
 /**
  * ## SupportList
  * ---
- * @deprecated `SupportList` is deprecated. Command is removing support articles entirely.
+ * @deprecated Command is removing support articles entirely.
  * @example
  * <SupportList />
  */

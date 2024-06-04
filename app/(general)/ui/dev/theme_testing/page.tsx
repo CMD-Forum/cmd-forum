@@ -1,6 +1,7 @@
 import { ChevronDownIcon } from "@heroicons/react/16/solid";
 import Dropdown, { DropdownLink } from "../../components/dropdown/dropdown";
 import { Metadata } from 'next';
+import Menu, { MenuLink } from "../../components/menu/menu";
  
 export const metadata: Metadata = {
   title: 'Theme Testing - CMD',
@@ -18,10 +19,10 @@ export default function ThemeTestingPage() {
                 <div className='flex flex-col px-6 lg:py-12 lg:px-48 mt-6 mb-6'>
                     <div className="flex flex-col gap-2">
                         <p className="font-medium text-sm !text-black">Dropdown</p>    
-                        <Dropdown trigger={<button className="navlink">Dropdown<ChevronDownIcon className="w-4 h-4" /></button>}>
-                            <DropdownLink text='Item a' link={"/"} icon={null} />
-                            <DropdownLink text='Item b' link={"/"} icon={null} />
-                        </Dropdown>
+                        <Menu trigger={<button className="navlink">Dropdown<ChevronDownIcon className="w-4 h-4" /></button>}>
+                            <MenuLink text='Item a' link={"/"} icon={null} />
+                            <MenuLink text='Item b' link={"/"} icon={null} />
+                        </Menu>
                     </div>
                 </div>
             </div>

@@ -1,8 +1,7 @@
 {
   "extends": [
     "eslint:recommended",
-    "next/core-web-vitals",
-    "plugin:@next/next/recommended"
+    "next/core-web-vitals"
   ],
   "plugins": [
     "deprecation",

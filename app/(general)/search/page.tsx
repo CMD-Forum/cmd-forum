@@ -4,6 +4,7 @@ import SearchBar from '../ui/components/search/searchbar';
 import SearchResults from '../ui/components/search/searchresults';
 import Link from 'next/link';
 import { Metadata } from 'next';
+import Menu, { MenuLink } from '../ui/components/menu/menu';
  
 export const metadata: Metadata = {
   title: 'Search - CMD',
@@ -35,11 +36,11 @@ export default function Search({
             <div className='px-6 flex flex-col md:flex-row gap-2 max-w-[70rem] xl:w-[70rem] xl:m-auto mt-6 xl:mt-6'>
                 <SearchBar />   
                 <div className='flex flex-row gap-2'>
-                    <Dropdown defaultPlacement={"bottom-start"} trigger={<button className='navlink'><ChartBarIcon className='w-5 h-5' />Sort</button>}>
-                        <DropdownLink text='Relevance' link={"/"} icon={<MagnifyingGlassIcon />} />
-                        <DropdownLink text='Hot' link={"/"} icon={<BoltIcon />} />
-                        <DropdownLink text='Rising' link={"/"} icon={<ArrowTrendingUpIcon />} />
-                    </Dropdown>
+                    <Menu defaultPlacement={"bottom-start"} trigger={<button className='navlink'><ChartBarIcon className='w-5 h-5' />Sort</button>}>
+                        <MenuLink text='Relevance' link={"/"} icon={<MagnifyingGlassIcon />} />
+                        <MenuLink text='Hot' link={"/"} icon={<BoltIcon />} />
+                        <MenuLink text='Rising' link={"/"} icon={<ArrowTrendingUpIcon />} />
+                    </Menu>
                     <Link className={"navlink-full"} href={"/create"}><PlusIcon className={"w-5 h-5"} />Create</Link>                    
                 </div>             
             </div>

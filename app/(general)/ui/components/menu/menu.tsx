@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { MouseEventHandler } from "react";
 import { useState } from "react";
-import type { Route } from 'next'
+import type { Route } from 'next';
 
 import {
     useFloating,
@@ -20,18 +20,24 @@ import {
 } from '@floating-ui/react';
 
 /**
- * Dropdown
- * @param {boolean} [defaultPlacement] Where the dropdown is aligned to the button.
- * @param {React.ReactNode} children Children to be passed.
- * @param {boolean} [accountHeading] If set to true, replaces the dropdown button with the information of the currently signed in user.
- * @param {string} [headerText]
- * @param {React.ReactNode} [headerIcon]  
- * @param {string} [className]
- * @param {string} [headerClassName]
- * @deprecated Use `Menu` instead.
+ * ## Menu
+ * ---
+ * @param [defaultPlacement] Where the menu is aligned to the button.
+ * @param trigger The component that triggers the menu.
+ * @param children Children to be passed.
+ * @param [className] Optional, className(s) to be passed.
+ * @example
+ *  <Menu
+        trigger={<button className='navlink !px-2'>Menu</button>}
+    >
+        <MenuLink text={"Item a"} icon={null} link={`/example-a`} />
+        <MenuLink text={"Item b"} icon={null} link={`/example-b`} />
+        <hr className='mt-1 !mb-1'/>
+        <MenuLink text={"Item c"} icon={null} link={`/example-c`} />
+    </Menu> 
  */
 
-export default function Dropdown({ 
+export default function Menu({ 
     defaultPlacement = "bottom-end", 
     trigger,
     children,
@@ -105,14 +111,13 @@ export default function Dropdown({
     );
 }
 
-/**Dropdown Link
- * Dropdown item that's a NextJS link component.
- * @param {string} text The label of the link, appears beside the icon if given.
- * @param {string} [icon] 
- * @deprecated Use `MenuLink` instead.
+/**Menu Link
+ * Menu item that's a NextJS link component.
+ * @param text The label of the link, appears beside the icon if given.
+ * @param [icon]
  */
 
-export const DropdownLink = <T extends string>({ text, icon, link }: { text: string, icon: React.ReactElement | null, link: Route<T> | URL  }) => {
+export const MenuLink = <T extends string>({ text, icon, link }: { text: string, icon?: React.ReactElement | null, link: Route<T> | URL  }) => {
 
     return (
         <Link 
@@ -135,11 +140,7 @@ export const DropdownLink = <T extends string>({ text, icon, link }: { text: str
 
 }
 
-/**
- * @deprecated Use `MenuButton` instead.
- */
-
-export const DropdownButton = ({ text, icon, onClick, destructive }: { text: string, icon: React.ReactElement, onClick: MouseEventHandler<HTMLButtonElement>, destructive?: boolean }) => {
+export const MenuButton = ({ text, icon, onClick, destructive }: { text: string, icon: React.ReactElement, onClick: MouseEventHandler<HTMLButtonElement>, destructive?: boolean }) => {
 
     return (
         <button 
@@ -157,11 +158,7 @@ export const DropdownButton = ({ text, icon, onClick, destructive }: { text: str
 
 }
 
-/**
- * @deprecated Use `MenuItem` instead.
- */
-
-export const DropdownItem = ({ text, icon }: { text: string, icon: React.ReactElement | null }) => {
+export const MenuItem = ({ text, icon }: { text: string, icon: React.ReactElement | null }) => {
 
     return (
         <div 
@@ -182,11 +179,7 @@ export const DropdownItem = ({ text, icon }: { text: string, icon: React.ReactEl
 
 }
 
-/**
- * @deprecated Use `MenuUser` instead.
- */
-
-export const DropdownUser = () => {
+export const MenuUser = () => {
 
     const { data: session } = useSession();
 
@@ -208,11 +201,7 @@ export const DropdownUser = () => {
 
 }
 
-/**
- * @deprecated Use `MenuShare` instead.
- */
-
-export const DropdownShare = ({ title, text, url, icon }: { title: string, text: string, url: string, icon: React.ReactElement }) => {
+export const MenuShare = ({ title, text, url, icon }: { title: string, text: string, url: string, icon: React.ReactElement }) => {
 
     return (
         <button 
@@ -227,11 +216,7 @@ export const DropdownShare = ({ title, text, url, icon }: { title: string, text:
     );
 }
 
-/**
- * @deprecated Use `MenuCustom` instead.
- */
-
-export const DropdownCustom = ({ children, className }: { children: React.ReactNode | React.ReactElement, className?: string }) => {
+export const MenuCustom = ({ children, className }: { children: React.ReactNode | React.ReactElement, className?: string }) => {
 
     return (
         <div 
