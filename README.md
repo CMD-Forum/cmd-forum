@@ -37,8 +37,10 @@ To setup your .env file, you'll need to change a few things.
 | -------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------- |
 | DATABASE_URL         | Your database connection string                                          | N/A                                                           |
 | AUTH_SECRET          | Random, secure string. AuthJS recommends using `openssl rand -base64 32` to generate it | Don't share with anybody, as this is meant to be secret.  |
-| GITHUB_CLIENT_ID     | Your GitHub Client ID (see your developer settings)                      | See your developer settings for this.                         |
-| GITHUB_CLIENT_SECRET | Your GitHub Client Secret                                                | You should have this stored, as GitHub only shows it once.    |
+| GITHUB_CLIENT_ID     | Your GitHub Client ID (For Local Development)                            | See your GitHub developer settings for this.                         |
+| GITHUB_CLIENT_SECRET | Your GitHub Client Secret (For Local Development)                        | You should have this stored, as GitHub only shows it once.    |
+| GITHUB_CLIENT_ID_PROD     | Your GitHub Client ID (When deploying to production)                | See your GitHub developer settings for this.                         |
+| GITHUB_CLIENT_SECRET_PROD | Your GitHub Client Secret (When deploying to production)            | You should have this stored, as GitHub only shows it once.    |
 | NEXT_PUBLIC_METADATA_BASE_URL_DEV | Your local development URL (most likely <https://localhost:3000>) | Used for the metadata. |
 | NEXT_PUBLIC_METADATA_BASE_URL_PROD | Your production URL (where you'll deploy CMD/> to) | N/A |
 
@@ -96,26 +98,18 @@ To setup your .env file, you'll need to change a few things.
 | DATABASE_URL         | Your database connection string                                          | N/A                                                           |
 | AUTH_SECRET          | Random, secure string. AuthJS recommends using `openssl rand -base64 32` to generate it | Don't share with anybody, as this is meant to be secret.  |
 | AUTH_TRUST_HOST      | `false` if using HTTPS, `true` if using HTTP                             | Required for AuthJS to work over HTTP Connections. Not recommended to use due to security. |
-| GITHUB_CLIENT_ID     | Your GitHub Client ID (see your developer settings)                      | See your developer settings for this.                         |
-| GITHUB_CLIENT_SECRET | Your GitHub Client Secret                                                | You should have this stored, as GitHub only shows it once.    |
+| GITHUB_CLIENT_ID_PROD     | Your GitHub Client ID (see your developer settings)                      | See your developer settings for this.                         |
+| GITHUB_CLIENT_SECRET_PROD | Your GitHub Client Secret                                                | You should have this stored, as GitHub only shows it once.    |
 | NEXT_PUBLIC_METADATA_BASE_URL_DEV | Your local development URL (most likely <https://localhost:3000>) | Used for the metadata. |
 | NEXT_PUBLIC_METADATA_BASE_URL_PROD | Your production URL (where you'll deploy CMD/> to) | N/A |
-
-### Setup your database
 
 > [!IMPORTANT]
 > You should have a database already setup, however if you don't then do that before proceeding. You will need your database connection string (see `DATABASE_URL`), which
 > should include all required information, such as the URL, username and password.
 
-To fully setup your database, run the following commands in order:
-  - `npx prisma db push`
-  - `npx prisma generate` (stop the NextJS server before running this if already started)
+### Optional: Build the Docker Image
 
-If all goes well, your database should have all required tables and fields. Prisma should give an error if something goes wrong, however it shouldn't.
-
-> [!NOTE]
-> To check that the database is working properly, try making an account and creating a community and a post. Check them to make sure they appear and all information is there.
-> You can also run the seed file to fill the database with placeholder information.
+If you would prefer the build the Docker Image locally, then go the the project root directory and run `npm run setup`. Select `Build a Docker Image` and wait for it to complete. After it's done, you should have a Docker Image (`cmd-forum-docker`) available to you. You can confirm this by running `docker image ls` and seeing if `cmd-forum-docker` appears.
 
 ### Setup the Docker Container
 
@@ -126,7 +120,7 @@ There are two ways to setup a Docker Container, either by a command or by Docker
 The command below will start a Docker Container using a `.env` file in the same directory. Make sure this file is present, or the container will fail to start. If you want to change the port it is accessible on, change the first `3000` after `-p` to your desired port.
 
 ```bash
-docker create --env-file .env -p 3000:3000 cmd-forum-docker:latest
+docker create --env-file .env -p 3000:3000 ghcr.io/CMD-Forum/cmd-forum-docker:latest # Just 'cmd-forum-docker' if you have a local image.
 ```
 
 #### Docker Compose
@@ -140,17 +134,17 @@ name: "cmd-forum"
 services:
   cmd_forum:
     container_name: cmd-forum
-    image: cmd-forum-docker:latest
+    image: ghcr.io/CMD-Forum/cmd-forum-docker:latest # Just 'cmd-forum-docker' if you have a local image.
     env_file:
       - .env # Load .env, change if required.
     ports:
-      - 3002:3000 # Change the first 3000 if you want a different port.
+      - 3002:3000 # Change the 3002 if you want a different port.
   db: # Optional, but here as an example of how to setup a database.
     container_name: db
     image: postgres
     environment: # If using this database, change to desired values.
-      POSTGRES_USERNAME: postgres 
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_USERNAME: postgres # Definitely change this
+      POSTGRES_PASSWORD: postgres # and this
       TZ: Continent/City # Change to your Timezone (Format is Continent/City).
     ports:
       - 5432:5432 # Change the first 5432 if you want a different port.
@@ -176,47 +170,46 @@ When you're finished with the file, make sure you have your `.env` file in the s
 Here is a list of all packages used:
 
   -  @auth/prisma-adapter
+  -  @floating-ui/react
   -  @heroicons/react
   -  @hookform/resolvers
+  -  @next/eslint-plugin-next
   -  @prisma/client
   -  @uiw/react-markdown-editor
   -  @uiw/react-markdown-preview
   -  @vercel/speed-insights
-  -  bcrypt
   -  bcryptjs
+  -  conventional-changelog-cli
+  -  dotenv-cli
   -  framer-motion
-  -  katex
   -  next
   -  next-auth
   -  next-dev-https
   -  nextjs-toploader
   -  prisma-docs-generator
+  -  prompts
   -  react
   -  react-dom
-  -  react-error-boundary
-  -  react-helmet
   -  react-hook-form
   -  react-icons
-  -  react-zorm
+  -  rehype-sanitize
   -  sass
-  -  swr
   -  use-debounce
   -  xss
   -  zod
-  -  @types/bcrypt
+
   -  @types/bcryptjs
-  -  @types/mdx
   -  @types/node
   -  @types/react
   -  @types/react-dom
+  -  @typescript-eslint/parser
   -  autoprefixer
   -  eslint
   -  eslint-config-next
-  -  eslint-config-prettier
+  -  eslint-plugin-deprecation
+  -  eslint-plugin-simple-import-sort
   -  postcss
-  -  prettier
   -  prisma
-  -  stylelint-config-recommended
   -  tailwindcss
   -  tailwindcss-themer
   -  ts-node
