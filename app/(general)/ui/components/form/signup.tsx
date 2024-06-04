@@ -86,8 +86,10 @@ export default function SignupForm () {
         <form className="flex flex-col rounded-lg w-[100%] md:w-[50%] max-w-[600px]" onSubmit={form.handleSubmit(onSubmit)}>
 
             <div className="bg-card p-12 flex flex-col gap-2 rounded-t-md">
-                <h2 className="!text-2xl md:text-3xl font-inter font-bold text-white">Signup for CMD</h2>
-                <p className={`subtitle mb-2`}>Signup for an account with CMD, or use a third party provider.</p>
+                <div className="flex flex-col">
+                    <h2 className="!text-2xl md:text-3xl font-inter font-bold text-white">Signup for CMD</h2>
+                    <p className={`subtitle mb-2`}>Signup for an account with CMD, or use a third party provider.</p>                    
+                </div>
 
                 {/* */}
 
