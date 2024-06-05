@@ -7,7 +7,7 @@ import { SessionProvider } from 'next-auth/react';
 import NextTopLoader from 'nextjs-toploader';
 import React from 'react';
 
-import { Footer } from '@/app/(general)/ui/navigation';
+import { Footer } from '@/app/(general)/ui/components/navigation/footer';
 import { auth } from '@/auth';
 
 import Sidebar from './(general)/ui/components/navigation/sidebar';

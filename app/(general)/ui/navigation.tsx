@@ -132,7 +132,7 @@ export function Sidebar() {
 
 }*/
 
-export function Footer() {
+/*export function Footer() {
 
   const currentYear = new Date().getFullYear();
 
@@ -184,4 +184,4 @@ export function Footer() {
 
   );
 
-}
+}*/
