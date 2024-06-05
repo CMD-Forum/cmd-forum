@@ -77,7 +77,15 @@ export function CardPost( post: Post ) {
                     <div className='flex flex-col'>
                         <div className='flex flex-row gap-2 items-center justify-center'>
                             <div className='flex flex-col'>
-                                <Link className="subtitle hover:underline" href={`/c/${post.community.name}`}>{post.community.name}</Link>   
+                                <Hovercard trigger={<button className='subtitle'>c/{post.community.name}</button>}>
+                                    <div className='flex flex-row gap-4 p-4 w-full max-w-[350px]'>
+                                        <img className='w-8 h-8 rounded' src={post.community.image} alt='' />
+                                        <div className='flex flex-col'>
+                                            <Link href={`/c/${post.community.name}`} className='hover:underline w-fit subtitle'>c/{post.community.name}</Link>     
+                                            <p className='subtitle'>{post.community.description}</p>             
+                                        </div>
+                                    </div>
+                                </Hovercard>
                                 { ! post.author ?
 
                                     <>
@@ -91,8 +99,8 @@ export function CardPost( post: Post ) {
                                     :
 
                                     <div className='hidden md:flex flex-row gap-2'>  
-                                        <Hovercard headerText={`@${post.author.username}`} headerIcon={null} headerClassName={"text-sm"}>
-                                            <div className='flex flex-row gap-4 p-4 w-full max-w-[300px]'>
+                                        <Hovercard trigger={<button className="subtitle text-sm">@{post.author.username}</button>}>
+                                            <div className='flex flex-row gap-4 p-4 w-full max-w-[350px]'>
                                                 {/* @ts-ignore */}
                                                 <ProfileImage user={post.author} />
                                                 <div className='flex flex-col'>
@@ -212,12 +220,20 @@ export function FullPost( post: Post ) {
                         <div className='flex flex-row gap-2 items-center'>
                             <img src={post.community.image} className='w-8 h-8 rounded' alt={post.community.name}></img>
                             <div className='flex flex-col justify-center'>
-                                <Link className="w-fit hover:underline subtitle" href={`/c/${post.community.name}`}>{post.community.name}</Link>    
+                                <Hovercard trigger={<button className='subtitle'>c/{post.community.name}</button>}>
+                                    <div className='flex flex-row gap-4 p-4 w-full max-w-[350px]'>
+                                        <img className='w-8 h-8 rounded' src={post.community.image} alt='' />
+                                        <div className='flex flex-col'>
+                                            <Link href={`/c/${post.community.name}`} className='hover:underline w-fit subtitle'>c/{post.community.name}</Link>     
+                                            <p className='subtitle'>{post.community.description}</p>             
+                                        </div>
+                                    </div>
+                                </Hovercard>
                                 <div className="flex flex-row">
                                     <h4 className="w-fit flex gap-2">
-                                        <Hovercard headerText={`@${post.author.username}`} headerIcon={null} headerClassName={"text-sm"}>
-                                            <div className='flex flex-row gap-4 p-4 w-full max-w-[250px]'>
-                                                <ProfileImage user={post.author} imgSize={"6"} />
+                                        <Hovercard trigger={<button className='subtitle'>@{post.author.username}</button>}>
+                                            <div className='flex flex-row gap-4 p-4 w-full max-w-[350px]'>
+                                                <ProfileImage user={post.author} />
                                                 <div className='flex flex-col'>
                                                     <Link href={`/user/${post.author.username}`} className='hover:underline w-fit subtitle'>@{post.author.username}</Link>     
                                                     <p className='subtitle'>{post.author.description}</p>             

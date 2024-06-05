@@ -35,6 +35,7 @@ export default async function PostView({ params }: { params: { id: string } }) {
           name: true,
           image: true,
           public: true,
+          description: true,
         }
       },
       author: {

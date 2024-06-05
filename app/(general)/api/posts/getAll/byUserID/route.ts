@@ -33,9 +33,7 @@ export async function POST( req: Request ) {
                         updatedAt: true,
                         image: true,
                         description: true,
-
                     }
-
                 },
                 community: {
                     select: {
@@ -43,7 +41,8 @@ export async function POST( req: Request ) {
                         name: true,
                         display_name: true,
                         image: true,
-                        public: true
+                        public: true,
+                        description: true
                     }
                 }
             }

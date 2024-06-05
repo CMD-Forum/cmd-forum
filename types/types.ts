@@ -62,8 +62,14 @@ export interface PostCommunity {
 
     /**
      * The display name of the community.
+     * @deprecated
      */
     display_name: string;
+
+    /**
+     * The description of the community.
+     */
+    description: string;
 
     /**
      * The image of the community.

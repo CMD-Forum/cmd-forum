@@ -27,35 +27,27 @@ export async function POST( req: Request ) {
             },
 
             include: {
-
                 author: {
-
                     select: {
-
                         id: true,
                         username: true,
                         createdAt: true,
                         updatedAt: true,
                         image: true,
                         description: true,
-
                     }
-
                 },
 
                 community: {
-
                     select: {
-
                         id: true,
                         name: true,
                         // eslint-disable-next-line camelcase
                         display_name: true,
                         image: true,
-                        public: true
-
+                        public: true,
+                        description: true
                     }
-
                 }
             }
         });        
