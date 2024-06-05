@@ -40,19 +40,14 @@ export default async function SearchResults(search: SearchResultProps) {
         results = await prisma.post.findMany({
 
             orderBy: {
-
                 _relevance: {
                     fields: ['title', 'content'],
                     search: formattedQuery,
                     sort: 'desc'
                 }
-
             },
-
             where: {
-
                 OR: [
-
                     {
                         title: {
                             contains: formattedQuery,
@@ -72,18 +67,12 @@ export default async function SearchResults(search: SearchResultProps) {
                                 mode: "insensitive",
                             },
                         },
-                    }
-                    
+                    }    
                 ]
-
             },
-
             include: {
-
                 author: {
-
                     select: {
-
                         id: true,
                         name: true,
                         username: true,
@@ -91,23 +80,17 @@ export default async function SearchResults(search: SearchResultProps) {
                         updatedAt: true,
                         image: true,
                         description: true,
-
                     }
-
                 },
-
                 community: {
-
                     select: {
-
                         id: true,
                         name: true,
                         display_name: true,
                         image: true,
-                        public: true
-
+                        public: true,
+                        description: true,
                     }
-
                 }
             }
         });
