@@ -52,6 +52,10 @@ export default auth((req) => {
         };
     }; */
 
+    if ( nextUrl.pathname === "/" ) {
+        return Response.redirect(new URL("/posts", nextUrl));
+    }
+
     return NextResponse.next();
 
 })

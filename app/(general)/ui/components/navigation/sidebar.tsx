@@ -15,7 +15,8 @@ import LogoutButton from "../signoutButton";
 
 export default function Sidebar() {
 
-    const [expanded, setExpanded] = useState(true);
+
+    const [expanded, setExpanded] = useState<boolean>(true);
     const [userMemberships, setUserMemberships] = useState<any[]>();
     const pathname = usePathname();
 
