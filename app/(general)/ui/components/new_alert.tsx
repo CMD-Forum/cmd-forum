@@ -47,24 +47,24 @@ export default function Alert({
             ${visible === true ? "" : "hidden"}
         `}
         >
-            <div className="flex flex-row items-centre gap-3">
+            <div className="flex flex-row items-centre gap-3 h-fit">
                 
                 {/* Notice */}
                 { type === "notice" && <div className="w-5 !h-full"><BellIcon color="white" className="w-5 h-5" /></div> }
 
                 {/* Alert */}
-                { type === "alert" && <div className="w-5 !h-full"><ExclamationTriangleIcon color="#fb923c" className="w-5 h-5" /></div>}
+                { type === "alert" && <div className="w-5 !h-full items-center"><ExclamationTriangleIcon color="#fb923c" className="w-5 h-5" /></div>}
 
                 {/* Success */}
-                { type === "success" && <div className="w-5 !h-full"><CheckCircleIcon color="#4ade80" className="w-5 h-5" /></div> }
+                { type === "success" && <div className="w-5 !h-full items-center"><CheckCircleIcon color="#4ade80" className="w-5 h-5" /></div> }
                 
                 {/* Error */}
-                { type === "error" && <div className="w-5 !h-full"><XCircleIcon color="#ef4444" className="w-5 h-5" /></div> }
+                { type === "error" && <div className="w-5 !h-full items-center"><XCircleIcon color="#ef4444" className="w-5 h-5" /></div> }
 
-                <div className="flex flex-col">
+                <div className="flex flex-col h-fit">
                     { children }       
                 </div>      
-                { closeBtn && <button className="navlink-ghost !px-1 !py-1 !w-7 !h-7 mt-auto mb-auto ml-auto" type="button" onClick={() => setVisible(false)}><XMarkIcon className="w-5 h-5" /></button> }
+                { closeBtn && <button className="navlink-ghost !px-1 !py-1 !w-5 !h-5 ml-auto !text-gray-300 hover:!text-white focus:!text-white" type="button" onClick={() => setVisible(false)}><XMarkIcon className="w-5 h-5" /></button> }
             </div>  
              
         </div>
