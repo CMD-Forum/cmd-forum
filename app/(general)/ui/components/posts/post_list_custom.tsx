@@ -1,8 +1,8 @@
 "use client";
 
-import { ArrowLeftIcon, ArrowPathIcon, ArrowRightIcon } from '@heroicons/react/16/solid';
+import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/16/solid';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect,useState } from 'react';
 
 import { CardPost } from '@/app/(general)/ui/components/posts/post';
@@ -316,6 +316,7 @@ export function PostListByCommunity( { communityID }: { communityID: string } ) 
 export function SavedPostListByUserID( { userID }: { userID: string } ) {
 
     const [page, setPage] = useState(0);
+    // eslint-disable-next-line no-unused-vars
     const [totalPosts, setTotalPosts] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [pageForwardAllowed, setPageForwardAllowed] = useState<boolean>(true);

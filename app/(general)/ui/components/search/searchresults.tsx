@@ -3,17 +3,14 @@ import { prisma } from "@/app/(general)/lib/db";
 import { CardPost } from "../posts/post";
 
 interface SearchResultProps {
-
     query: string;
     currentPage: number;
     type: string;
-
 }
 
 export default async function SearchResults(search: SearchResultProps) {
 
     let results
-    let result_community
 
     const formattedQuery = search.query
         .split(' ')

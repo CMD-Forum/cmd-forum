@@ -5,16 +5,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React, { MouseEventHandler, useEffect, useState } from "react";
 import { createPortal } from 'react-dom';
 
-interface ModalProps {
-    children: React.ReactNode,
-    btnText: string, 
-    btnClassName: string, 
-    btnType: string, 
-    btnDisabled: boolean, 
-    closeBtn?: boolean, 
-    closeBtnComponent: React.ReactNode,    
-}
-
 const Modal = ({ 
     children,
     openBtn,

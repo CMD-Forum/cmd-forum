@@ -2,7 +2,6 @@ import { ArrowTrendingUpIcon, BoltIcon, ChartBarIcon, MagnifyingGlassIcon, PlusI
 import { Metadata } from 'next';
 import Link from 'next/link';
 
-import Dropdown, { DropdownLink } from '../ui/components/dropdown/dropdown';
 import Menu, { MenuLink } from '../ui/components/menu/menu';
 import SearchBar from '../ui/components/search/searchbar';
 import SearchResults from '../ui/components/search/searchresults';
@@ -22,6 +21,7 @@ export default function Search({
 }) {
 
     const query = searchParams?.query || '';
+    // eslint-disable-next-line no-unused-vars
     const type = searchParams?.type || 'post';
     const currentPage = Number(searchParams?.page) || 1;
 

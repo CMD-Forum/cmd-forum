@@ -1,6 +1,6 @@
 "use client";
 
-import { ArchiveBoxXMarkIcon, ChatBubbleBottomCenterIcon, ChatBubbleLeftEllipsisIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/16/solid';
+import { ArchiveBoxXMarkIcon, ChatBubbleLeftEllipsisIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/16/solid';
 import { EllipsisVerticalIcon, ShareIcon } from '@heroicons/react/24/solid';
 import MarkdownPreview from '@uiw/react-markdown-preview';
 import Link from 'next/link';
@@ -11,7 +11,6 @@ import { Post } from '@/types/types';
 
 import ProfileImage from '../account/ProfileImage';
 import { SavePostButton } from '../button';
-import Dropdown, { DropdownButton, DropdownLink, DropdownShare } from '../dropdown/dropdown';
 import Hovercard from '../dropdown/hovercard';
 import Menu, { MenuButton, MenuLink, MenuShare } from '../menu/menu';
 
@@ -137,7 +136,7 @@ export function CardPost( post: Post ) {
                         >
                             {/* @ts-ignore */}
                             <MenuLink text={post.author.username} icon={<ProfileImage user={post.author} imgSize={"5"} />} link={`/user/${post.author.username}`}></MenuLink>
-                            <MenuLink text={post.community.display_name} icon={<img src={post.community.image} alt={post.community.display_name}></img>} link={`/c/${post.community.name}`}></MenuLink>
+                            <MenuLink text={post.community.name} icon={<img src={post.community.image} alt={post.community.name}></img>} link={`/c/${post.community.name}`}></MenuLink>
                             <hr className='mt-1 !mb-1'/>
                             <MenuShare icon={<ShareIcon />} text={text} title={title} url={url} />
                             { session 

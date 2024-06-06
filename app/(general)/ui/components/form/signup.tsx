@@ -9,7 +9,7 @@ import * as z from "zod";
 
 import { signup } from "@/app/(general)/lib/actions/signup";
 
-import Alert, { AlertSubtitle, AlertTitle } from "../new_alert";
+import Alert, { AlertTitle } from "../new_alert";
 import { OAuthButtons } from "./oauth/OAuthButtons";
 
 export const SignupSchema = z.
@@ -53,7 +53,8 @@ export default function SignupForm () {
     const [isPending, startTransition] = useTransition();
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
-    const [isLoading, setIsLoading] = useState(false);
+    // eslint-disable-next-line no-unused-vars
+    const [isLoading, setIsLoading] = useState(false); // To be implemented at some point
 
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);

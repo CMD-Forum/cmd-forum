@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { startTransition, useEffect, useState } from "react";
+import { startTransition, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -101,6 +101,7 @@ export function ChangeAccountDescription({ userID } : { userID: string }) {
 
     });
 
+    // eslint-disable-next-line no-unused-vars
     const { handleSubmit, register, formState: { errors } } = UpdateDescriptionForm;
 
     const router = useRouter();

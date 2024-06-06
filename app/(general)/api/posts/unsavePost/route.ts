@@ -37,7 +37,7 @@ export async function POST( req: Request ) {
                     // @ts-ignore
                     const updatedSavedPosts = savedPosts.savedPosts.filter(post => post !== postID);
 
-                    const updatedUser = await prisma.user.update({
+                    await prisma.user.update({
                         where: {
                             id: userID,
                         },

@@ -3,7 +3,7 @@ import xss from 'xss';
 
 import { prisma } from '@/app/(general)/lib/db';
 
-export async function POST(req: Request, res: Response) {
+export async function POST(req: Request) {
 
     try {
 

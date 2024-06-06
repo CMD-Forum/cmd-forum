@@ -1,14 +1,10 @@
-import { BookmarkIcon } from '@heroicons/react/16/solid';
-import { ArrowRightEndOnRectangleIcon, Cog6ToothIcon, MegaphoneIcon, PlusIcon, QuestionMarkCircleIcon, UserCircleIcon, UserPlusIcon } from '@heroicons/react/24/solid';
+import { PlusIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import React from 'react';
-import { FaAndroid, FaApple, FaAppStore, FaAppStoreIos, FaGithub, FaGooglePlay } from "react-icons/fa6";
 
 import { auth } from '@/auth';
 
-import Dropdown, { DropdownCustom, DropdownLink, DropdownUser } from './components/dropdown/dropdown';
 import { BottombarItems, NavSideItems, TopbarItems } from './components/nav_sideitem';
-import LogoutButton from './components/signoutButton';
 import { inter } from './fonts';
 
 export async function Navigation() {

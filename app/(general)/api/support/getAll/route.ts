@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 import { prisma } from '@/app/(general)/lib/db';
 
-export async function GET( req: Request ) {
+export async function GET() {
 
     function timeout(delay: number) {
         return new Promise( res => setTimeout(res, delay) );
@@ -34,7 +34,7 @@ export async function GET( req: Request ) {
     }
 }
 
-export async function POST( req: Request) {
+export async function POST() {
     
     return NextResponse.json({ error: "503 Service Unavailable"}, { status: 503})
 

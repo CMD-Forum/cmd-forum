@@ -1,7 +1,6 @@
 "use client";
 
-import { XMarkIcon } from "@heroicons/react/24/solid";
-import { AnimatePresence, motion, useAnimation, useDragControls, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { AnimatePresence, motion, useSpring, useTransform } from 'framer-motion';
 import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from 'react-dom';
 
@@ -32,7 +31,6 @@ export default function Bottomdrawer({ children, btnText, btnIcon, btnClassName,
 
     let h = window.innerHeight;
     let y = useSpring(h, { stiffness: 500, damping: 40 });  
-    const x = useMotionValue(0); 
     
     const nearestSnapPoint = useTransform(y, value => {
 
@@ -43,6 +41,7 @@ export default function Bottomdrawer({ children, btnText, btnIcon, btnClassName,
     });
 
     useEffect(() => {
+        // eslint-disable-next-line deprecation/deprecation
         return y.onChange(() => {
             y.set(nearestSnapPoint.get());
         });

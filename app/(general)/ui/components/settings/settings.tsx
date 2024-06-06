@@ -62,8 +62,6 @@ export default function AccountSettings() {
 
 export function SecuritySettings() {
 
-    const { data: session } = useSession();
-
     return (
         <div className='mb-4 w-full'>
 

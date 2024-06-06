@@ -1,9 +1,12 @@
 import { NextResponse } from 'next/server';
 
+// eslint-disable-next-line no-unused-vars
 import { prisma } from '@/app/(general)/lib/db';
+// eslint-disable-next-line no-unused-vars
 import { CreateCommunitySchema } from '@/app/(general)/lib/schemas';
 
 
+// eslint-disable-next-line no-unused-vars
 export async function POST(req: Request) {
 
     try {

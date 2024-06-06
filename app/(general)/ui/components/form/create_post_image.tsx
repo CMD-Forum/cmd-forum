@@ -1,6 +1,5 @@
 "use client";
 
-import { CloudArrowUpIcon } from "@heroicons/react/16/solid";
 import { zodResolver } from "@hookform/resolvers/zod" // Form Validation
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -34,10 +33,10 @@ function ErrorMessage(props: { message: string }) {
 
 export default function CreateImagePostForm() {
 
+    // eslint-disable-next-line no-unused-vars
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<false | true | null>(null);
     const [com_err, setCom_Err] = useState<string>();
-    const [create_err, setCreate_Err] = useState<false | true | null>(null);
     const [isLoading, setIsLoading] = useState(false);
 
     const form = useForm<z.infer<typeof FormSchema>>({
@@ -107,12 +106,6 @@ export default function CreateImagePostForm() {
             {success && (
                 <Alert type="success">
                     <AlertTitle>Your post was successfully created.</AlertTitle>
-                </Alert>
-            )}
-
-            {create_err && (
-                <Alert type="error">
-                    <AlertTitle>Your post could not be created, please try again later.</AlertTitle>
                 </Alert>
             )}
 

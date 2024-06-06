@@ -19,6 +19,7 @@ export function OAuthButtons( props: OAuthButtonsProps ) {
         })
     }
 
+    // eslint-disable-next-line no-unused-vars
     const { data: session, update, status } = useSession();
 
     return (

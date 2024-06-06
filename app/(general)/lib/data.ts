@@ -1,7 +1,5 @@
 "use server";
 
-import { Community } from "@prisma/client";
-
 import { prisma } from "./db";
 
 // getUserBy
@@ -190,7 +188,7 @@ export async function createCommunity( { name, description, creatorUserID }: { n
         },
     });
 
-    const communityAdminship = await prisma.communityAdminship.create({
+    await prisma.communityAdminship.create({
         data: {
             userId: creatorUserID,
             communityId: community.id,

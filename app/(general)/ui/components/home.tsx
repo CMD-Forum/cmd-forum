@@ -4,8 +4,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
-import { CardPost } from "./posts/post";
-
 export function Landing() {
 
     const { data: session } = useSession();

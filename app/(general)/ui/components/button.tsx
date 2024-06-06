@@ -1,10 +1,8 @@
 "use client";
 
-import { BookmarkIcon, BookOpenIcon, PlusIcon, ShieldCheckIcon } from "@heroicons/react/16/solid";
+import { BookmarkIcon } from "@heroicons/react/16/solid";
 import { BookmarkIcon as BookmarkIconOutline } from "@heroicons/react/24/outline";
-import { Community } from "@prisma/client";
-import Link from "next/link";
-import { MouseEventHandler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export function SavePostButton({ userID, postID }: { userID: string, postID: string }) {
 

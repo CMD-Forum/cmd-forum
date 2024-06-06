@@ -33,6 +33,7 @@ export default function Sidebar() {
                 const memberships = await getAllUserMembershipRecords({ userID: session?.user.id });
                 if ( memberships ) {
                     memberships.memberships.map((membership) => {
+                        // eslint-disable-next-line no-unused-vars
                         const communityDisplayName = membership.community.name;
                     });                    
                 }

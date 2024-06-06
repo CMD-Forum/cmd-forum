@@ -1,26 +1,21 @@
 "use client";
 
-import { BookOpenIcon, CalendarDaysIcon, ChatBubbleBottomCenterTextIcon, Cog6ToothIcon, HomeIcon, MagnifyingGlassIcon, PencilSquareIcon, ShieldCheckIcon, UserIcon, ViewColumnsIcon } from "@heroicons/react/20/solid";
+import { CalendarDaysIcon, PencilSquareIcon } from "@heroicons/react/20/solid";
 import { motion } from "framer-motion";
-import Link from "next/link"
 
 import ProfileImage from "./ProfileImage";
   
 const variants = {
-
     hidden: { opacity: 0, y: -20 },
     visible: { opacity: 1, y: 0 },
-    
 };
 
 interface ProfileProps {
-
     username: string;
     image: string | null;
     description: string;
     createdAt: Date;
     postCount: string | number;
-
 }
 
 export default function ProfileMain(user: ProfileProps) {

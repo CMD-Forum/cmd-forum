@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Link from "next/link";
 
 import { prisma } from "../../../lib/db";

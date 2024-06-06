@@ -23,7 +23,7 @@ export async function POST( req: Request ) {
             return NextResponse.json({ message: "Post is already saved." }, { status: 400 })
         }
 
-        const updatedUser = await prisma.user.update({
+        await prisma.user.update({
             where: {
                 id: userID,
             },

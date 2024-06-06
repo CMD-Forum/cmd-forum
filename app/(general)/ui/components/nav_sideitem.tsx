@@ -1,5 +1,6 @@
 "use client";
 
+import { PlusIcon } from "@heroicons/react/16/solid";
 import { 
     ArrowRightEndOnRectangleIcon,
     Bars3Icon,
@@ -15,16 +16,15 @@ import {
     UserPlusIcon,
     ViewColumnsIcon, 
     XMarkIcon} from "@heroicons/react/20/solid";
-import { Community, User } from "@prisma/client";
+import { Community } from "@prisma/client";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react";
 
-import { inter } from "../fonts";
 import { createUserMembershipRecord, deleteUserMembershipRecord, getAllUserMembershipRecords } from "../../lib/data";
-import { PlusIcon } from "@heroicons/react/16/solid";
+import { inter } from "../fonts";
 import Alert, { AlertSubtitle, AlertTitle } from "./new_alert";
 
 export function NavSideItems() {
@@ -285,6 +285,7 @@ export function CommunityInfobar( { community }: { community: Community } ) {
      * I'm aware this isn't the best code ever, but I couldn't figure out any other way for now and I wanted to wrap this up.
      */
 
+    // eslint-disable-next-line no-unused-vars
     const [userMemberships, setUserMemberships] = useState<any[]>();
     const [isMember, setIsMember] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
@@ -320,7 +321,7 @@ export function CommunityInfobar( { community }: { community: Community } ) {
         try {
             setIsLoading(true);
             // @ts-ignore
-            const newMembershipRecord = await createUserMembershipRecord({ userID: session?.user.id, communityID: community.id }); 
+            await createUserMembershipRecord({ userID: session?.user.id, communityID: community.id }); 
             setIsMember(true);  
             setIsLoading(false);
         } catch {
@@ -334,7 +335,7 @@ export function CommunityInfobar( { community }: { community: Community } ) {
         try {
             setIsLoading(true);
             // @ts-ignore
-            const deleteMembershipRecord = await deleteUserMembershipRecord({ userID: session?.user.id, communityID: community.id })
+            await deleteUserMembershipRecord({ userID: session?.user.id, communityID: community.id })
             setIsMember(false);           
             setIsLoading(false); 
         } catch (error) {

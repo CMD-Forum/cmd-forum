@@ -1,7 +1,5 @@
 "use server";
 
-import { Prisma } from "@prisma/client";
-
 import { prisma } from "@/app/(general)/lib/db";
 
 export async function ChangeAccountUsername( { userID, newUsername } : { userID: string, newUsername: string }) {
@@ -13,7 +11,7 @@ export async function ChangeAccountUsername( { userID, newUsername } : { userID:
         });
 
         if ( user ) {
-            const updatedUser = await prisma.user.update({
+            await prisma.user.update({
                 where: {
                     id: userID,
                 },
@@ -43,13 +41,8 @@ export async function ChangeAccountDescription( { userID, description } : { user
             },
         });
 
-        console.log("finding user");
-
         if ( user ) {
-
-            console.log("found user");
-
-            const updatedUser = await prisma.user.update({
+            await prisma.user.update({
                 where: {
                     id: userID,
                 },
@@ -58,13 +51,9 @@ export async function ChangeAccountDescription( { userID, description } : { user
                 },
             });
 
-            console.log("updated user");
-
             return { success: "Successfully updated description." }
-
         }
 
-        console.log("user not found");
         return { error: "Couldn't change description, please try again later."}
 
     } catch ( error ) {
@@ -84,22 +73,20 @@ export async function DeleteAccount( { userID } : { userID: string }) {
         });
 
         if ( user ) {
-
-            const deletedPosts = await prisma.post.delete({
+            await prisma.post.delete({
                 // @ts-ignore
                 where: {
                     author: { id: userID },
                 },
             });
 
-            const deletedUser = await prisma.user.delete({
+            await prisma.user.delete({
                 where: {
                     id: userID,
                 },
             });
 
             return { success: "Successfully deleted account." }
-
         }
 
         return { error: "Couldn't delete account, please try again later."}
@@ -107,5 +94,4 @@ export async function DeleteAccount( { userID } : { userID: string }) {
     } catch ( error ) {
         return { error: "Couldn't change description, please try again later."}
     }
-
 }

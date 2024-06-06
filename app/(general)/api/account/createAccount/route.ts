@@ -72,6 +72,7 @@ export async function POST(req: Request) {
                 password: hashedPassword
             }
         });
+        // eslint-disable-next-line no-unused-vars
         const { password: newUserPassword, ...rest } = newUser;
 
         return NextResponse.json({ user: newUser, message: "Account has been created"}, { status: 201 });

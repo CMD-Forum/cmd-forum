@@ -59,7 +59,7 @@ export default function CreateCommunityForm() {
         
         try {
             const community = await createCommunity(communityData); 
-            const newMembershipRecord = await createUserMembershipRecord({ userID: session.user.id, communityID: community.id });    
+            await createUserMembershipRecord({ userID: session.user.id, communityID: community.id });    
             setIsLoading(false); 
             setSuccess(true);
         } catch ( error ) {

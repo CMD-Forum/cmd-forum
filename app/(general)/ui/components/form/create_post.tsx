@@ -36,10 +36,10 @@ function ErrorMessage(props: { message: string }) {
 
 export default function CreatePostForm() {
 
+    // eslint-disable-next-line no-unused-vars
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<false | true | null>(null);
     const [com_err, setCom_Err] = useState<string>();
-    const [create_err, setCreate_Err] = useState<false | true | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [content, setContent]= useState("");
 
@@ -112,12 +112,6 @@ export default function CreatePostForm() {
             {success && (
                 <Alert type="success">
                     <AlertTitle>Your post was successfully created.</AlertTitle>
-                </Alert>
-            )}
-
-            {create_err && (
-                <Alert type="error">
-                    <AlertTitle>Your post could not be created, please try again later.</AlertTitle>
                 </Alert>
             )}
 
