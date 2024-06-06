@@ -3,7 +3,6 @@
 import { ArchiveBoxXMarkIcon, ArrowRightEndOnRectangleIcon, BookmarkIcon, Cog6ToothIcon, EllipsisVerticalIcon, MegaphoneIcon, ShareIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
 
-import Bottomdrawer, { BottomdrawerBody, BottomdrawerHeader } from "../components/bottom_drawer";
 import LargeDropdown from "../components/large_dropdown";
 import Menu, { MenuButton, MenuCustom, MenuLink, MenuShare, MenuUser } from "../components/menu/menu";
 import Modal from "../components/modal";
@@ -159,18 +158,6 @@ export default function DeveloperPage() {
                             <Modal.Title>This feature is unavailable.</Modal.Title>
                             <Modal.Subtitle>Sorry, this feature is currently unavailable.</Modal.Subtitle>
                         </Modal>
-
-                    </LargeDropdown>                    
-                </div>
-
-                <div className="flex flex-col gap-2 mt-4 w-full">
-                    <LargeDropdown title={"Bottomsheets"}>
-
-                        <h2 className="header-5 w-full mb-4">Example TBD</h2>
-                        <Bottomdrawer>
-                            <BottomdrawerHeader>Header</BottomdrawerHeader>
-                            <BottomdrawerBody>hi</BottomdrawerBody>
-                        </Bottomdrawer>
 
                     </LargeDropdown>                    
                 </div>
