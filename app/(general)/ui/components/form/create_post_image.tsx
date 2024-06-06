@@ -88,7 +88,7 @@ export default function CreateImagePostForm() {
         }
 
       } else {
-        setCom_Err("Sorry, something went wrong.");           
+        setCom_Err("That community doesn't exist. Make sure you spelled it correctly.");           
         setIsLoading(false);
       }
   
@@ -123,7 +123,7 @@ export default function CreateImagePostForm() {
                 </Alert>
             )}
 
-            <div className="flex gap-1 font-medium">Community<p className="text-[#fca5a5]">*</p></div>
+            <div className="flex gap-1 subtitle">Community<p className="text-[#fca5a5]">*</p></div>
             <input
                 {...form.register('community')}
                 placeholder="general"
@@ -137,7 +137,7 @@ export default function CreateImagePostForm() {
 
             {/* */}
 
-            <div className="flex gap-1 font-medium">Title<p className="text-[#fca5a5]">*</p></div>
+            <div className="flex gap-1 subtitle">Title<p className="text-[#fca5a5]">*</p></div>
             <input
                 {...form.register('title')}
                 placeholder="Look at my amazing code!"
@@ -151,7 +151,7 @@ export default function CreateImagePostForm() {
 
             {/* */}
 
-            <div className="flex gap-1 font-medium">
+            <div className="flex gap-1 subtitle">
                 Image
                 <p className="text-[#fca5a5]">*</p>
             </div>

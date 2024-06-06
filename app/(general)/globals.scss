@@ -49,7 +49,7 @@ body {
 
 // Accessibility
 
-a {
+a, button {
   @apply outline-none #{!important};
   @apply focus-visible:outline-2 #{!important};
   @apply focus-visible:outline-white #{!important};

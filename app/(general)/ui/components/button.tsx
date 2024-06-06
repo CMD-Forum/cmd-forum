@@ -1,16 +1,15 @@
 "use client";
 
-import { BookmarkIcon } from "@heroicons/react/16/solid";
+import { BookmarkIcon, BookOpenIcon, PlusIcon, ShieldCheckIcon } from "@heroicons/react/16/solid";
 import { BookmarkIcon as BookmarkIconOutline } from "@heroicons/react/24/outline";
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { Community } from "@prisma/client";
+import Link from "next/link";
+import { MouseEventHandler, useEffect, useState } from "react";
 
 export function SavePostButton({ userID, postID }: { userID: string, postID: string }) {
 
     const [saved, setSaved] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true); 
-
-    const { data: session } = useSession();
 
     useEffect(() => {
         setIsLoading(true); 

@@ -68,7 +68,7 @@ export default function CreateCommunityForm() {
         }
       } else {
         setIsLoading(false);
-        setError("Looks like that name has been taken.");
+        setError("Sorry, that name has been taken.");
       }
     };
   
@@ -89,7 +89,7 @@ export default function CreateCommunityForm() {
                 </Alert>
             )}
 
-            <div className="flex gap-1 font-medium">Community Name<p className="text-[#fca5a5]">*</p></div>
+            <div className="flex gap-1 subtitle">Community Name<p className="text-[#fca5a5]">*</p></div>
             <input
                 {...form.register('name')}
                 placeholder="general"
@@ -103,7 +103,7 @@ export default function CreateCommunityForm() {
 
             {/* */}
 
-            <div className="flex gap-1 font-medium">Description<p className="text-[#fca5a5]">*</p></div>
+            <div className="flex gap-1 subtitle">Description<p className="text-[#fca5a5]">*</p></div>
             <input
                 {...form.register('description')}
                 placeholder="Welcome to my community!"
@@ -117,7 +117,7 @@ export default function CreateCommunityForm() {
 
             {/* */}
 
-            <div className="flex gap-1 font-medium">Image<p className="text-[#fca5a5]">*</p></div>
+            <div className="flex gap-1 subtitle">Image<p className="text-[#fca5a5]">*</p></div>
             <input
                 {...form.register('image_url')}
                 placeholder="https://domainimagesaretemporary.org/images/070524"

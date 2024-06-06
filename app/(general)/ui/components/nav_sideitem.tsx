@@ -15,14 +15,17 @@ import {
     UserPlusIcon,
     ViewColumnsIcon, 
     XMarkIcon} from "@heroicons/react/20/solid";
-import { Community } from "@prisma/client";
+import { Community, User } from "@prisma/client";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link"
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { inter } from "../fonts";
+import { createUserMembershipRecord, deleteUserMembershipRecord, getAllUserMembershipRecords } from "../../lib/data";
+import { PlusIcon } from "@heroicons/react/16/solid";
+import Alert, { AlertSubtitle, AlertTitle } from "./new_alert";
 
 export function NavSideItems() {
 
@@ -195,6 +198,10 @@ export function TopbarItems() {
 
 }
 
+/**
+ * @deprecated Use `CommunityInfobar` instead.
+ */
+
 export function CommunityInfobarItems( { community }: { community: Community } ) {
 
     return (
@@ -265,7 +272,109 @@ export function CommunityInfobarItems( { community }: { community: Community } )
 
 }
 
-export function CommunityInfobarItemsFull( { community }: { community: Community } ) {
+/**
+ * ## CommunityInfobar
+ * ---
+ * Infobar of a community, shows all relevant information.
+ * @param community
+ */
+
+export function CommunityInfobar( { community }: { community: Community } ) {
+
+    /**
+     * I'm aware this isn't the best code ever, but I couldn't figure out any other way for now and I wanted to wrap this up.
+     */
+
+    const [userMemberships, setUserMemberships] = useState<any[]>();
+    const [isMember, setIsMember] = useState<boolean>(false);
+    const [error, setError] = useState<string>("");
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
+    const { data: session } = useSession();
+
+    useEffect(() => {
+        setError("");
+        setIsLoading(true);
+        async function fetchUserMembership() {
+            try {
+                if ( session?.user.id ) {
+                    const memberships = await getAllUserMembershipRecords({ userID: session?.user.id });
+                    console.log("memberships", memberships);
+                    if ( memberships ) {
+                        // @ts-ignore
+                        setUserMemberships(memberships);
+                        setIsMember(memberships.memberships.some((membership: any) => membership.community.id === community.id));
+                        setIsLoading(false);
+                    }
+                }                
+            } catch (error) {
+                console.log(error);
+                setError("We couldn't get your membership status.")
+                setIsLoading(false);
+            }
+        }
+        fetchUserMembership();
+    }, [community.id, session?.user.id])
+
+    const joinCommunity = async () => {
+        try {
+            setIsLoading(true);
+            // @ts-ignore
+            const newMembershipRecord = await createUserMembershipRecord({ userID: session?.user.id, communityID: community.id }); 
+            setIsMember(true);  
+            setIsLoading(false);
+        } catch {
+            console.log(error);
+            setError("We couldn't add you to this community right now.");
+            setIsLoading(false);
+        }
+    }
+
+    const leaveCommunity = async () => {
+        try {
+            setIsLoading(true);
+            // @ts-ignore
+            const deleteMembershipRecord = await deleteUserMembershipRecord({ userID: session?.user.id, communityID: community.id })
+            setIsMember(false);           
+            setIsLoading(false); 
+        } catch (error) {
+            console.log(error);
+            setError("We couldn't remove you from this community right now.")
+            setIsLoading(false);
+        }
+    }
+
+    if ( isLoading ) {
+        return (
+            <div>
+                <div className='flex-row gap-2 rounded-md w-full bg-transparent'>
+                    <div className='flex-col bg-card p-6 border-0 border-border lg:px-48'>
+                        <div className='flex flex-row gap-3 items-center'>
+                            <div className='bg-border rounded animate-pulse !w-[56px] !h-[56px]' />   
+                            <div className='flex flex-col gap-1'>
+                            <div className='bg-border rounded animate-pulse !w-[110px] !h-[32px]' />      
+                                <div className='bg-border rounded-md animate-pulse !w-[300px] !h-[20px]' />   
+                            </div>
+                        </div>
+
+                        <div className='flex flex-row gap-3 items-center mt-2'>
+                            <div className='flex flex-row gap-3'>
+                                <div className='bg-border rounded-md animate-pulse !w-[248px] !h-[20px]' />   
+                            </div>
+                        </div>
+
+                        { error && <Alert type="error" className="mt-4"><AlertTitle>Oops, something went wrong!</AlertTitle><AlertSubtitle>{ error }</AlertSubtitle></Alert> }
+
+                        <div className='flex flex-row gap-2 mt-4 mb-4'>
+                            <div className='bg-border rounded-md animate-pulse !w-[125px] !h-[38px]' />   
+                            <div className='bg-border rounded-md animate-pulse !w-[125px] !h-[38px]' />   
+                            <div className='bg-border rounded-md animate-pulse !w-[125px] !h-[38px]' />    
+                        </div>
+                    </div>
+                </div>  
+            </div>
+        );
+    }
 
     return (
         <div>
@@ -274,7 +383,7 @@ export function CommunityInfobarItemsFull( { community }: { community: Community
                     <div className='flex flex-row gap-3 items-center'>
                         <img src={community.image} className='h-[56px] rounded' alt={`${community.display_name}'s Community Image`} />
                         <div className='flex flex-col'>
-                            <h1 className='header-2'>{community.display_name}</h1>   
+                            <h1 className='header-2'>{community.name}</h1>   
                             <h2 className='subtitle'>{community.description}</h2>
                         </div>
                     </div>
@@ -303,7 +412,25 @@ export function CommunityInfobarItemsFull( { community }: { community: Community
                         </div>
                     </div>
 
-                    <div className='flex flex-row gap-2 mt-3 mb-3'>
+                    { error && <Alert type="error" className="mt-4"><AlertTitle>Oops, something went wrong!</AlertTitle><AlertSubtitle>{ error }</AlertSubtitle></Alert> }
+
+                    <div className='flex flex-row gap-2 mt-4 mb-4'>
+                        {/* @ts-ignore */}
+                        {/*{ userMemberships && userMemberships.memberships.map((membership) => {
+                            return <button key={membership.community.id} className={`navlink`}><img src={membership.community.image} alt={membership.community.display_name} className="w-5 h-5 rounded" />{membership.community.name}</button> 
+                        })}*/}
+                        { isMember 
+                        ?
+                            <button className='navlink justify-center items-center' data-navlink-enabled="true" onClick={() => leaveCommunity()}>
+                                <PlusIcon className="font-medium h-5 w-5" />
+                                <p className='flex items-center h-full'>Joined</p>
+                            </button> 
+                        :
+                            <button className='navlink justify-center items-center' onClick={() => joinCommunity()}>
+                                <PlusIcon className="font-medium h-5 w-5" />
+                                <p className='flex items-center h-full'>Join</p>
+                            </button> 
+                        }
                         <Link className='navlink justify-center items-center' href={`/c/${community.name}/info`}><BookOpenIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Information</p></Link>
                         <Link className='navlink justify-center items-center' href={`/c/${community.name}/moderation`}><ShieldCheckIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Moderation</p></Link>    
                     </div>

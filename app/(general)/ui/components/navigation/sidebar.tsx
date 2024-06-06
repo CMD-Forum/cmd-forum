@@ -13,8 +13,13 @@ import ProfileImage from "../account/ProfileImage";
 import Menu, { MenuLink, MenuUser } from "../menu/menu";
 import LogoutButton from "../signoutButton";
 
-export default function Sidebar() {
+/**
+ * ## Sidebar
+ * ---
+ * Sidebar of the website.
+ */
 
+export default function Sidebar() {
 
     const [expanded, setExpanded] = useState<boolean>(true);
     const [userMemberships, setUserMemberships] = useState<any[]>();
@@ -26,11 +31,9 @@ export default function Sidebar() {
         async function fetchUserMembership() {
             if ( session?.user.id ) {
                 const memberships = await getAllUserMembershipRecords({ userID: session?.user.id });
-                console.log('memberships:', memberships);
                 if ( memberships ) {
                     memberships.memberships.map((membership) => {
-                        const communityDisplayName = membership.community.display_name;
-                        console.log(communityDisplayName); // This will log the display_name of each community to the console
+                        const communityDisplayName = membership.community.name;
                     });                    
                 }
                 // @ts-ignore
@@ -83,10 +86,10 @@ export default function Sidebar() {
 
                                     <div className="flex flex-col gap-1">
                                         <p className={`subtitle flex gap-1 whitespace-nowrap overflow-hidden w-[200px] overflow-ellipsis ${expanded ? "" : "hidden"}`}><MapPinIcon className="!w-5 !h-5" />Joined Communites</p>
-                                        <div className="mt-2 gap-1">
+                                        <div className="flex flex-col mt-2 gap-1">
                                             {/* @ts-ignore */}
                                             { userMemberships && userMemberships.memberships.map((membership) => {
-                                                return <Link key={membership.community.id} className={`navlink-sidebar ${expanded ? "" : "max-w-fit"} ${pathname === `/c/${membership.community.name}` ? "after-active" : null}`} href={`/c/${membership.community.name}`}><img src={membership.community.image} alt={membership.community.display_name} className="w-5 h-5 rounded" /><span className={`${expanded ? "flex" : "hidden"}`}>{membership.community.display_name}</span></Link> 
+                                                return <Link key={membership.community.id} className={`navlink-sidebar ${expanded ? "" : "max-w-fit"} ${pathname === `/c/${membership.community.name}` ? "after-active" : null}`} href={`/c/${membership.community.name}`}><img src={membership.community.image} alt={membership.community.name} className="w-5 h-5 rounded" /><span className={`${expanded ? "flex" : "hidden"}`}>{membership.community.name}</span></Link> 
                                             })}
                                         </div>
                                     </div>
@@ -172,10 +175,10 @@ export default function Sidebar() {
 
                                     <div className="flex flex-col gap-1">
                                         <p className={`subtitle flex gap-1 whitespace-nowrap overflow-hidden w-[200px] overflow-ellipsis ${expanded ? "" : "hidden"}`}><MapPinIcon className="!w-5 !h-5" />Joined Communites</p>
-                                        <div className="mt-2 gap-1">
+                                        <div className="flex flex-col mt-2 gap-1">
                                             {/* @ts-ignore */}
                                             { userMemberships && userMemberships.memberships.map((membership) => {
-                                                return <Link key={membership.community.id} className={`navlink-sidebar ${expanded ? "" : "max-w-fit"} ${pathname === `/c/${membership.community.name}` ? "after-active" : null}`} href={`/c/${membership.community.name}`}><img src={membership.community.image} alt={membership.community.display_name} className="w-5 h-5 rounded" /><span className={`${expanded ? "flex" : "hidden"}`}>{membership.community.display_name}</span></Link> 
+                                                return <Link key={membership.community.id} className={`navlink-sidebar ${expanded ? "" : "max-w-fit"} ${pathname === `/c/${membership.community.name}` ? "after-active" : null}`} href={`/c/${membership.community.name}`}><img src={membership.community.image} alt={membership.community.name} className="w-5 h-5 rounded" /><span className={`${expanded ? "flex" : "hidden"}`}>{membership.community.name}</span></Link> 
                                             })}
                                         </div>
                                     </div>                      

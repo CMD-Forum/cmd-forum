@@ -268,6 +268,7 @@ export async function getAllUserMembershipRecords({ userID }: { userID: string }
         return userMemberships;          
     } catch ( error ) {
         console.error(error);
+        return false;
     }
 }
 
@@ -289,6 +290,24 @@ export async function createUserMembershipRecord({ userID, communityID }: { user
         return updatedAuthor;          
     } catch ( error ) {
         console.error(error);
+        return false;
+    }
+
+}
+
+export async function deleteUserMembershipRecord({ userID, communityID }: { userID: string, communityID: string }) {
+
+    try {
+        const updatedRecord = await prisma.communityMembership.deleteMany({
+            where: {
+                userId: userID,
+                communityId: communityID
+            },
+        });     
+        return updatedRecord;          
+    } catch ( error ) {
+        console.error(error);
+        return false;
     }
 
 }
