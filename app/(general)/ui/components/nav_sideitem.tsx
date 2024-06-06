@@ -426,10 +426,7 @@ export function CommunityInfobar( { community }: { community: Community } ) {
                                 <p className='flex items-center h-full'>{ isMember ? "Joined" : "Join"}</p>
                             </button> 
                         :
-                            <button className='navlink justify-center items-center' disabled={true}> {/* TO-DO: Make toast appear prompting to login. */}
-                                <PlusIcon className="font-medium h-5 w-5" />
-                                <p className='flex items-center h-full'>Join</p>
-                            </button> 
+                            null
                         }
                         <Link className='navlink justify-center items-center' href={`/c/${community.name}/info`}><BookOpenIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Information</p></Link>
                         <Link className='navlink justify-center items-center' href={`/c/${community.name}/moderation`}><ShieldCheckIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Moderation</p></Link>    
