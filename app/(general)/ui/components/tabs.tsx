@@ -17,9 +17,9 @@ export default function CreateTabs() {
 
         <div className="flex flex-col md:flex-row gap-8 w-full justify-center">
             <div className="flex flex-col h-full md:!w-[300px] w-full gap-2">
-                <button className={`navlink !w-full !px-2.5 !gap-2 !border-2 ${activeTab === 1 ? "navlink-full" : ""}`} onClick={() => setActiveTab(1)}><ChatBubbleBottomCenterTextIcon className={"w-5 h-5"} />Post</button>
-                <button className={`navlink !w-full !px-2.5 !gap-2 !border-2 ${activeTab === 2 ? "navlink-full" : ""}`} onClick={() => setActiveTab(2)}><PhotoIcon className={"w-5 h-5"} />Image Post</button>                
-                <button className={`navlink !w-full !px-2.5 !gap-2 !border-2 ${activeTab === 3 ? "navlink-full" : ""}`} onClick={() => setActiveTab(3)}><ViewColumnsIcon className={"w-5 h-5"} />Community</button>
+                <button className={`navlink !w-full !px-2.5 !gap-2 ${activeTab === 1 ? "!bg-white !text-black" : ""}`} onClick={() => setActiveTab(1)}><ChatBubbleBottomCenterTextIcon className={"w-5 h-5"} />Post</button>
+                <button className={`navlink !w-full !px-2.5 !gap-2 ${activeTab === 2 ? "!bg-white !text-black" : ""}`} onClick={() => setActiveTab(2)}><PhotoIcon className={"w-5 h-5"} />Image Post</button>                
+                <button className={`navlink !w-full !px-2.5 !gap-2 ${activeTab === 3 ? "!bg-white !text-black" : ""}`} onClick={() => setActiveTab(3)}><ViewColumnsIcon className={"w-5 h-5"} />Community</button>
             </div>    
 
             <div className={`${ activeTab === 1 ? "flex flex-col w-full" : "hidden" }`}>

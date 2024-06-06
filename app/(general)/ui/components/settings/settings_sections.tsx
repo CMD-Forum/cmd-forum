@@ -26,11 +26,11 @@ export function Settings_ChangeAccountUsername() {
                 <p className="subtitle hidden md:flex text-sm"></p>
 
                 { session?.user.id && 
-                    /*<Modal closeBtn={true} openBtn={true} openBtnComponent={<button className={"navlink-full"}>Change Username</button>}>
+                    <Modal closeBtn={true} openBtn={true} openBtnComponent={<button className={"navlink-full"}>Change Username</button>}>
                         <Modal.Title>Sorry, this option is unavailable.</Modal.Title>
                         <Modal.Subtitle>You cannot change your username at this moment, please try again later.</Modal.Subtitle>
-                    </Modal>*/
-                    <ChangeAccountName userID={session?.user.id} /> // Uncomment when restrictions are added.                       
+                    </Modal>
+                    // <ChangeAccountName userID={session?.user.id} /> // Uncomment when restrictions are added.                       
                 }
 
             </div>
