@@ -21,62 +21,35 @@ interface ProfileProps {
 export default function ProfileMain(user: ProfileProps) {
 
     return (
-
-        <motion.div 
-            key={1}
-            variants={variants}
-            initial="hidden"
-            animate="visible"
-            transition={{ ease: "easeInOut", duration: 0.8, type: "spring" }}
-        >
-
-            <div className='flex-row gap-2 rounded-md w-full bg-transparent'>
-                
-                <div className='flex-col'>
-
-                    <div className='flex flex-row gap-3 items-center'>
-
-                        {/* @ts-ignore */}
-                        <ProfileImage user={user} imgSize={"14"} />
-
-                        <div className='flex flex-col'>
-
-                            <h1 className='header'>{user.username}</h1>   
-                            { user.description 
-                                ?
-                                <h2 className='subtitle'>{user.description}</h2>
-                                :
-                                <div className='animate-pulse h-2 w-full bg-border' />
-                            }
-
-                        </div>
-
+        <div className='flex-row gap-2 rounded-md w-full bg-transparent'>
+            <div className='flex-col'>
+                <div className='flex flex-row gap-3 items-center'>
+                    {/* @ts-ignore */}
+                    <ProfileImage user={user} imgSize={"14"} />
+                    <div className='flex flex-col'>
+                        <h1 className='header'>{user.username}</h1>   
+                        { user.description 
+                            ?
+                            <h2 className='subtitle'>{user.description}</h2>
+                            :
+                            <div className='animate-pulse h-2 w-full bg-border' />
+                        }
                     </div>
-
-                    <div className='flex flex-row gap-3 items-center mt-2'>
-
-                        <div className='flex flex-row gap-3'>
-
-                            <div className='flex flex-row gap-1'>
-                                <CalendarDaysIcon className='w-[20px]' />
-                                <p className='text-sm'>{user.createdAt.toLocaleDateString()}</p>  
-                            </div>
-
-                            <div className='flex flex-row gap-1'>
-                                <PencilSquareIcon className='w-[20px]' />
-                                <p className='text-sm'>{user.postCount}</p>
-                            </div>
-
-                        </div>     
-
-                    </div>
-
                 </div>
 
-            </div>  
-
-        </motion.div>
-
+                <div className='flex flex-row gap-3 items-center mt-2'>
+                    <div className='flex flex-row gap-3'>
+                        <div className='flex flex-row gap-1'>
+                                <CalendarDaysIcon className='w-[20px]' />
+                            <p className='text-sm'>{user.createdAt.toLocaleDateString()}</p>  
+                        </div>
+                        <div className='flex flex-row gap-1'>
+                                <PencilSquareIcon className='w-[20px]' />
+                            <p className='text-sm'>{user.postCount}</p>
+                        </div>
+                    </div>     
+                </div>
+            </div>
+        </div>  
     );
-
 }

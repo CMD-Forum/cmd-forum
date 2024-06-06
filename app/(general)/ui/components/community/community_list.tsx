@@ -7,6 +7,7 @@ import { useEffect,useState } from 'react';
 import { getAllCommunitys } from '@/app/(general)/lib/data';
 
 import { CardCommunity } from './community';
+import { CardCommunitySkeleton } from '../../skeletons/Community';
 
 export function CommunityList() {
     const [loading, setIsLoading] = useState<boolean>(true);
@@ -42,16 +43,16 @@ export function CommunityList() {
     if ( loading ) {
         return (
             <div className='flex flex-col gap-4 mt-4'>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>    
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>   
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>       
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse'></div>        
+                <CardCommunitySkeleton />
+                <CardCommunitySkeleton />
+                <CardCommunitySkeleton />
+                <CardCommunitySkeleton />
+                <CardCommunitySkeleton />
+                <CardCommunitySkeleton />
+                <CardCommunitySkeleton />
+                <CardCommunitySkeleton />
+                <CardCommunitySkeleton />
+                <CardCommunitySkeleton />
             </div>
         );
     }

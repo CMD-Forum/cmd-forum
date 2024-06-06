@@ -78,6 +78,42 @@ export async function getCommunityByDisplayName( display_name: string ) {
 
 }
 
+// getPost
+
+export async function getPost({ postID }: { postID: string }) {
+
+    const fetchedPost = await prisma.post.findUnique({
+        where: {
+          id: postID,
+        },
+        include: {
+          community: {
+            select: {
+              id: true,
+              display_name: true,
+              name: true,
+              image: true,
+              public: true,
+              description: true,
+            },
+          },
+          author: {
+            select: {
+              id: true,
+              username: true,
+              description: true,
+              image: true,
+              createdAt: true,
+              updatedAt: true,
+            },
+          },
+        },
+      });
+
+    return fetchedPost;
+
+}
+
 // createPost
 
 interface createPostProps {
@@ -308,6 +344,20 @@ export async function deleteUserMembershipRecord({ userID, communityID }: { user
         return false;
     }
 
+}
+
+export async function countCommunityMembers({ communityID }: { communityID: string }) {
+    try {
+        const communityMemberships = await prisma.communityMembership.count({
+            where: {
+                communityId: communityID,
+            },
+        });     
+        return communityMemberships;          
+    } catch ( error ) {
+        console.error(error);
+        return undefined;
+    }
 }
 
 // Testing Purposes

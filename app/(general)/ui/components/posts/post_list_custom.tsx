@@ -8,6 +8,8 @@ import { useEffect,useState } from 'react';
 import { CardPost } from '@/app/(general)/ui/components/posts/post';
 import { Post } from '@/types/types';
 
+import { CardPostSkeleton } from '../../skeletons/Post';
+
 /**
  * PostListByUser
  * Lists all posts by a specific user.
@@ -98,16 +100,16 @@ export default function PostListByUser( { username }: { username: string } ) {
     if ( isLoading ) {
         return (
             <div className='flex flex-col gap-4 mt-4'>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>    
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>    
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>   
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>         
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />           
             </div>
         );
     }
@@ -247,16 +249,16 @@ export function PostListByCommunity( { communityID }: { communityID: string } ) 
     if ( isLoading ) {
         return (
             <div className='flex flex-col gap-4 mt-4'>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>    
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>    
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>   
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>         
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
             </div>
         );
     }
@@ -406,16 +408,16 @@ export function SavedPostListByUserID( { userID }: { userID: string } ) {
     if ( isLoading ) {
         return (
             <div className='flex flex-col gap-4 mt-4'>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>    
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>    
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>   
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>         
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />     
             </div>
         );
     }

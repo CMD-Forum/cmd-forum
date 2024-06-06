@@ -21,24 +21,28 @@ import LogoutButton from "../signoutButton";
 
 export default function Sidebar() {
 
-    const [expanded, setExpanded] = useState<boolean>(true);
+    const [expanded, setExpanded] = useState<boolean>(false);
     const [userMemberships, setUserMemberships] = useState<any[]>();
+    const [isLoading, setIsLoading] = useState(true);
     const pathname = usePathname();
 
     const { data: session } = useSession();
 
     useEffect(() => {
         async function fetchUserMembership() {
+            setIsLoading(true);
             if ( session?.user.id ) {
                 const memberships = await getAllUserMembershipRecords({ userID: session?.user.id });
                 if ( memberships ) {
                     memberships.memberships.map((membership) => {
                         // eslint-disable-next-line no-unused-vars
                         const communityDisplayName = membership.community.name;
-                    });                    
+                    });     
+                    setIsLoading(false);               
                 }
                 // @ts-ignore
-                setUserMemberships(memberships);                
+                setUserMemberships(memberships);   
+                setIsLoading(false);             
             }
         }
 
@@ -57,9 +61,9 @@ export default function Sidebar() {
                     
                     <motion.div 
                         className={`bg-card ${expanded ? "z-[9999999] lg:z-[9999999]" : "-z-[50] md:z-[9999999]" } p-4 fixed md:sticky top-0 h-screen overflow-y-auto hide-scrollbar overflow-x-hidden`}
-                        initial={{ width: expanded ? 300 : 74}}
-                        animate={{ width: expanded ? 300 : 74}}
-                        exit={{ width: expanded ? 300 : 74 }}
+                        initial={{ width: expanded ? 300 : 74 | 74}}
+                        animate={{ width: expanded ? 300 : 74 | 74}}
+                        exit={{ width: expanded ? 300 : 74 | 74 }}
                         transition={{ ease: "easeOut", duration: 0.2 }}
                         role="navigation"
                         aria-label="Sidebar"
@@ -87,12 +91,20 @@ export default function Sidebar() {
 
                                     <div className="flex flex-col gap-1">
                                         <p className={`subtitle flex gap-1 whitespace-nowrap overflow-hidden w-[200px] overflow-ellipsis ${expanded ? "" : "hidden"}`}><MapPinIcon className="!w-5 !h-5" />Joined Communites</p>
-                                        <div className="flex flex-col mt-2 gap-1">
-                                            {/* @ts-ignore */}
-                                            { userMemberships && userMemberships.memberships.map((membership) => {
-                                                return <Link key={membership.community.id} className={`navlink-sidebar ${expanded ? "" : "max-w-fit"} ${pathname === `/c/${membership.community.name}` ? "after-active" : null}`} href={`/c/${membership.community.name}`}><img src={membership.community.image} alt={membership.community.name} className="w-5 h-5 rounded" /><span className={`${expanded ? "flex" : "hidden"}`}>{membership.community.name}</span></Link> 
-                                            })}
-                                        </div>
+                                        { isLoading ?
+                                            <div className="flex flex-col mt-2 gap-1">
+                                                <div className='bg-border rounded-md animate-pulse !w-[40px] !h-[40px]' />  
+                                                <div className='bg-border rounded-md animate-pulse !w-[40px] !h-[40px]' />  
+                                                <div className='bg-border rounded-md animate-pulse !w-[40px] !h-[40px]' />  
+                                            </div>
+                                        :
+                                            <div className="flex flex-col mt-2 gap-1">
+                                                {/* @ts-ignore */}
+                                                { userMemberships && userMemberships.memberships.map((membership) => {
+                                                    return <Link key={membership.community.id} className={`navlink-sidebar ${expanded ? "" : "max-w-fit"} ${pathname === `/c/${membership.community.name}` ? "after-active" : null}`} href={`/c/${membership.community.name}`}><img src={membership.community.image} alt={membership.community.name} className="w-5 h-5 rounded" /><span className={`${expanded ? "flex" : "hidden"}`}>{membership.community.name}</span></Link> 
+                                                })}
+                                            </div>                                            
+                                        }
                                     </div>
 
                                     <hr className="mt-4 mb-4"/>

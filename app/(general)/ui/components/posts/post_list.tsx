@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react';
 
 import { CardPost } from '@/app/(general)/ui/components/posts/post';
 
+import { CardPostSkeleton } from '../../skeletons/Post';
+
 export default function PostList() {
 
     const [page, setPage] = useState(0);
@@ -84,16 +86,16 @@ export default function PostList() {
     if ( isLoading ) {
         return (
             <div className='flex flex-col gap-4 mt-4'>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>    
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>    
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>   
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>
-                <div className='flex w-full relative group transition-all bg-border h-[174px] rounded-md px-5 py-5 animate-pulse border-0'></div>         
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />
+                <CardPostSkeleton />    
             </div>
         );
     }

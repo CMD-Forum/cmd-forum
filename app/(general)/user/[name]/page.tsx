@@ -23,7 +23,6 @@ export default async function UserPage({ params }: { params: { name: string } })
     })
 
     if ( user ) {
-
         const user_post_count = await prisma.post.count({
             where: {
                 authorId: user.id
@@ -31,39 +30,28 @@ export default async function UserPage({ params }: { params: { name: string } })
         })        
 
         return (
-
-            <main className="flex min-h-screen flex-col w-full">
-
-                <div className="error flex flex-col w-full">
-      
-                  <div className="flex flex-col border-0 border-border p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48 bg-card mt-8 md:mt-0">
-      
-                    <ProfileMain 
-                        username={user.username} 
-                        image={user.image} 
-                        description={user.description} 
-                        createdAt={user.createdAt} 
-                        postCount={user_post_count} 
-                    />        
-      
-                  </div>
-      
-                  <div className='flex flex-col px-6 lg:py-12 lg:px-48 mt-6'>
-                    <PostListByUser username={user.username} /> 
-                  </div>
-      
-                </div>
-      
-            </main>
-
+          <main className="flex min-h-screen flex-col w-full">
+            <div className="error flex flex-col w-full">
+              <div className="flex flex-col border-0 border-border p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48 bg-card mt-8 md:mt-0">
+                <ProfileMain 
+                  username={user.username} 
+                  image={user.image} 
+                  description={user.description} 
+                  createdAt={user.createdAt} 
+                  postCount={user_post_count} 
+                />        
+              </div>
+              <div className='flex flex-col px-6 lg:py-12 lg:px-48 mt-6'>
+                <PostListByUser username={user.username} /> 
+              </div>
+            </div>
+          </main>
         )
 
     } else if ( ! user || user === null || user === false ) {
-
         return (
-            <Error404 />
+          <Error404 />
         );
-
     }
 
 }

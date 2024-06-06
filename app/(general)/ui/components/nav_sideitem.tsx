@@ -23,9 +23,10 @@ import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react";
 
-import { createUserMembershipRecord, deleteUserMembershipRecord, getAllUserMembershipRecords } from "../../lib/data";
+import { countCommunityMembers, createUserMembershipRecord, deleteUserMembershipRecord, getAllUserMembershipRecords } from "../../lib/data";
 import { inter } from "../fonts";
 import Alert, { AlertSubtitle, AlertTitle } from "./new_alert";
+import { CommunityInfobarSkeleton } from "../skeletons/Community";
 
 export function NavSideItems() {
 
@@ -288,6 +289,7 @@ export function CommunityInfobar( { community }: { community: Community } ) {
     // eslint-disable-next-line no-unused-vars
     const [userMemberships, setUserMemberships] = useState<any[]>();
     const [isMember, setIsMember] = useState<boolean>(false);
+    const [memberCount, setMemberCount] = useState<number>();
     const [error, setError] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -300,10 +302,11 @@ export function CommunityInfobar( { community }: { community: Community } ) {
             try {
                 if ( session?.user.id ) {
                     const memberships = await getAllUserMembershipRecords({ userID: session?.user.id });
-                    console.log("memberships", memberships);
+                    const membership_number = await countCommunityMembers({ communityID: community.id });
                     if ( memberships ) {
                         // @ts-ignore
                         setUserMemberships(memberships);
+                        setMemberCount(membership_number);
                         setIsMember(memberships.memberships.some((membership: any) => membership.community.id === community.id));
                         setIsLoading(false);
                     }
@@ -312,7 +315,7 @@ export function CommunityInfobar( { community }: { community: Community } ) {
                 }                
             } 
             catch (error) {
-                console.log(error);
+                console.error(error);
                 setError("We couldn't get your membership status.")
                 setIsLoading(false);
             }
@@ -350,33 +353,7 @@ export function CommunityInfobar( { community }: { community: Community } ) {
 
     if ( isLoading ) {
         return (
-            <div>
-                <div className='flex-row gap-2 rounded-md w-full bg-transparent'>
-                    <div className='flex-col bg-card p-6 border-0 border-border lg:px-48'>
-                        <div className='flex flex-row gap-3 items-center'>
-                            <div className='bg-border rounded animate-pulse !w-[56px] !h-[56px]' />   
-                            <div className='flex flex-col gap-1'>
-                            <div className='bg-border rounded animate-pulse !w-[110px] !h-[32px]' />      
-                                <div className='bg-border rounded-md animate-pulse !w-[300px] !h-[20px]' />   
-                            </div>
-                        </div>
-
-                        <div className='flex flex-row gap-3 items-center mt-2'>
-                            <div className='flex flex-row gap-3'>
-                                <div className='bg-border rounded-md animate-pulse !w-[248px] !h-[20px]' />   
-                            </div>
-                        </div>
-
-                        { error && <Alert type="error" className="mt-4"><AlertTitle>Oops, something went wrong!</AlertTitle><AlertSubtitle>{ error }</AlertSubtitle></Alert> }
-
-                        <div className='flex flex-row gap-2 mt-4 mb-4'>
-                            <div className='bg-border rounded-md animate-pulse !w-[125px] !h-[38px]' />   
-                            <div className='bg-border rounded-md animate-pulse !w-[125px] !h-[38px]' />   
-                            <div className='bg-border rounded-md animate-pulse !w-[125px] !h-[38px]' />    
-                        </div>
-                    </div>
-                </div>  
-            </div>
+            <CommunityInfobarSkeleton />
         );
     }
 
@@ -395,23 +372,23 @@ export function CommunityInfobar( { community }: { community: Community } ) {
                     <div className='flex flex-row gap-3 items-center mt-2'>
                         <div className='flex flex-row gap-3'>
                             <div className='flex flex-row gap-1'>
-                                <CalendarDaysIcon className='w-[20px]' />
-                                <p className='text-sm'>{community.createdAt.toLocaleDateString()}</p>  
+                                <CalendarDaysIcon className='w-[20px] text-gray-300' />
+                                <p className='subtitle'>{community.createdAt.toLocaleDateString()}</p>  
                             </div>
                             
                             <div className='flex flex-row gap-1'>
-                                <UserIcon className='w-[20px]' />
-                                <p className='text-sm'>---</p>
+                                <UserIcon className='w-[20px] text-gray-300' />
+                                <p className='subtitle'>{memberCount || "..."}</p>
                             </div>
 
                             <div className='flex flex-row gap-1'>
-                                <PencilSquareIcon className='w-[20px]' />
-                                <p className='text-sm'>---</p>
+                                <PencilSquareIcon className='w-[20px] text-gray-300' />
+                                <p className='subtitle'>---</p>
                             </div>
 
                             <div className='flex flex-row gap-1'>
-                                <ChatBubbleBottomCenterTextIcon className='w-[20px]' />
-                                <p className='text-sm'>---</p>
+                                <ChatBubbleBottomCenterTextIcon className='w-[20px] text-gray-300' />
+                                <p className='subtitle'>---</p>
                             </div>
                         </div>
                     </div>
