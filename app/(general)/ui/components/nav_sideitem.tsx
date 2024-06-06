@@ -307,8 +307,11 @@ export function CommunityInfobar( { community }: { community: Community } ) {
                         setIsMember(memberships.memberships.some((membership: any) => membership.community.id === community.id));
                         setIsLoading(false);
                     }
+                } else {
+                    setIsLoading(false);
                 }                
-            } catch (error) {
+            } 
+            catch (error) {
                 console.log(error);
                 setError("We couldn't get your membership status.")
                 setIsLoading(false);
@@ -382,7 +385,7 @@ export function CommunityInfobar( { community }: { community: Community } ) {
             <div className='flex-row gap-2 rounded-md w-full bg-transparent'>
                 <div className='flex-col bg-card p-6 border-0 border-border lg:px-48'>
                     <div className='flex flex-row gap-3 items-center'>
-                        <img src={community.image} className='h-[56px] rounded' alt={`${community.display_name}'s Community Image`} />
+                        <img src={community.image} className='h-[56px] rounded' alt={`${community.name}'s Community Image`} />
                         <div className='flex flex-col'>
                             <h1 className='header-2'>{community.name}</h1>   
                             <h2 className='subtitle'>{community.description}</h2>
@@ -416,18 +419,14 @@ export function CommunityInfobar( { community }: { community: Community } ) {
                     { error && <Alert type="error" className="mt-4"><AlertTitle>Oops, something went wrong!</AlertTitle><AlertSubtitle>{ error }</AlertSubtitle></Alert> }
 
                     <div className='flex flex-row gap-2 mt-4 mb-4'>
-                        {/* @ts-ignore */}
-                        {/*{ userMemberships && userMemberships.memberships.map((membership) => {
-                            return <button key={membership.community.id} className={`navlink`}><img src={membership.community.image} alt={membership.community.display_name} className="w-5 h-5 rounded" />{membership.community.name}</button> 
-                        })}*/}
-                        { isMember 
+                        { session?.user.id 
                         ?
-                            <button className='navlink justify-center items-center' data-navlink-enabled="true" onClick={() => leaveCommunity()}>
+                            <button className='navlink justify-center items-center' data-navlink-enabled={isMember ? "true" : "false"} onClick={isMember ? () => leaveCommunity() : () => joinCommunity()}>
                                 <PlusIcon className="font-medium h-5 w-5" />
-                                <p className='flex items-center h-full'>Joined</p>
+                                <p className='flex items-center h-full'>{ isMember ? "Joined" : "Join"}</p>
                             </button> 
                         :
-                            <button className='navlink justify-center items-center' onClick={() => joinCommunity()}>
+                            <button className='navlink justify-center items-center' disabled={true}> {/* TO-DO: Make toast appear prompting to login. */}
                                 <PlusIcon className="font-medium h-5 w-5" />
                                 <p className='flex items-center h-full'>Join</p>
                             </button> 
