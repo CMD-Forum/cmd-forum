@@ -8,6 +8,7 @@
 * **deps:** changes `bcrypt` dependency to `bcryptjs` ([7ee9e20](https://github.com/CMD-Forum/cmd-forum/commit/7ee9e20e705dabaaa25b8ccaae692cd86496b57b))
 * **deps:** fixes dependency issues ([59cc242](https://github.com/CMD-Forum/cmd-forum/commit/59cc2424130ef2cb5be80d35475a5930d3b359ac))
 * **deps:** fixes prisma being undefined in the moderation page, closes [#23](https://github.com/CMD-Forum/cmd-forum/issues/23) ([d4e79a8](https://github.com/CMD-Forum/cmd-forum/commit/d4e79a892adbd2dd2fa4a53cced657ca6ed5a940))
+* **eslint:** fix remaining eslint warnings ([b214c60](https://github.com/CMD-Forum/cmd-forum/commit/b214c60c87a49c13b814af1ec83bd26717c0c778))
 * **layout, aria:** removes unused modal root div ([24c84b3](https://github.com/CMD-Forum/cmd-forum/commit/24c84b3cc3e0e13e161d780e33ca2f73b12532a9))
 * **posts:** fixes more tagline issues ([c282228](https://github.com/CMD-Forum/cmd-forum/commit/c2822287bf64ad78a48fc9baa4864b0eb7512571))
 * **posts:** fixes post tagline issue ([de65eec](https://github.com/CMD-Forum/cmd-forum/commit/de65eec5d26a46f0dfc4b12a58f1adc5a90c173a))
