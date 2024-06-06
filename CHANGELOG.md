@@ -37,6 +37,7 @@
 * **aria:** adds aria labels and roles to sidebar ([a26d9ee](https://github.com/CMD-Forum/cmd-forum/commit/a26d9eedcd8b381e1e87d58c337511b39c143223))
 * **communities:** adds community rules ([0cd0c43](https://github.com/CMD-Forum/cmd-forum/commit/0cd0c43b0ec8a08e5027f5f7fd53b5d738d8ab5f))
 * **deps:** add conventional-changelog ([f3a58d6](https://github.com/CMD-Forum/cmd-forum/commit/f3a58d65149a46e19f99ec19d7a895fe53d18d48))
+* join and leave communities ([4360c10](https://github.com/CMD-Forum/cmd-forum/commit/4360c108d47df61a9e70381d8426f0a041c5e29c))
 * **ui:** add show password button to login & signup ([98fc15e](https://github.com/CMD-Forum/cmd-forum/commit/98fc15ec9c19b51bf0f52aa0fe375019c0331b40))
 * **ui:** add unimplemented page for respective features ([25ec4fc](https://github.com/CMD-Forum/cmd-forum/commit/25ec4fc32cb0a15ecc523d34328eb115cc1a73f5))
 * **ui:** adds new page for theme testing ([5a13239](https://github.com/CMD-Forum/cmd-forum/commit/5a13239bf9c02d28230dc56def97829aa19fe91a))
