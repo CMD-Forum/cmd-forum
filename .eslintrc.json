@@ -1,9 +1,24 @@
 {
   "extends": [
-    "next/core-web-vitals",
-    "prettier"
+    "eslint:recommended",
+    "next/core-web-vitals"
+  ],
+  "plugins": [
+    "deprecation",
+    "simple-import-sort"
   ],
   "rules": {
-    "@next/next/no-img-element": "off"
+    "@next/next/no-img-element": "off",
+    "deprecation/deprecation": "warn",
+    "no-unused-vars": "warn",
+    "no-extra-semi": "warn",
+    "simple-import-sort/imports": "warn",
+    "simple-import-sort/exports": "warn"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
   }
 }

@@ -1,8 +1,9 @@
-import { prisma } from '@/app/(general)/lib/db';
 import { NextResponse } from 'next/server';
 import xss from 'xss';
 
-export async function POST(req: Request, res: Response) {
+import { prisma } from '@/app/(general)/lib/db';
+
+export async function POST(req: Request) {
 
     try {
 
@@ -24,8 +25,6 @@ export async function POST(req: Request, res: Response) {
             content: sanitizedContent,
             tagline: sanitizedTagline,
             public: true, // default value
-            downvotes: 0, // default value
-            upvotes: 0, // default value
             imageurl: sanitizedImageurl,
             imagealt: sanitizedImagealt,
 
@@ -49,9 +48,7 @@ export async function POST(req: Request, res: Response) {
         }
 
         const post = await prisma.post.create({
-
             data,
-
         });
 
         return NextResponse.json(post, { status: 201 });

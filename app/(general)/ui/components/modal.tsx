@@ -1,11 +1,23 @@
 "use client";
 
-import React, { MouseEventHandler, useEffect, useState } from "react";
-import { AnimatePresence, motion } from 'framer-motion';
 import { XMarkIcon } from "@heroicons/react/24/solid";
+import { AnimatePresence, motion } from 'framer-motion';
+import React, { MouseEventHandler, useEffect, useState } from "react";
 import { createPortal } from 'react-dom';
 
-export default function Modal({ children, btnText, btnClassName, btnType = "navlink", btnDisabled, closeBtn, closeBtnType }: { children: React.ReactNode, btnText: string, btnClassName?: string, btnType?: string, btnDisabled?: boolean, closeBtn?: boolean, closeBtnType?: "navlink" | "navlink-full" | "navlink-destructive" | "navlink-success" | "navlink-sidebar"| "navlink-small" }) {
+const Modal = ({ 
+    children,
+    openBtn,
+    openBtnComponent,
+    closeBtn, 
+    closeBtnComponent,
+}: { 
+    children: React.ReactNode, 
+    openBtn?: boolean, 
+    openBtnComponent?: React.ReactElement,
+    closeBtn?: boolean, 
+    closeBtnComponent?: React.ReactElement,
+}) => {
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [isMounted, setIsMounted] = useState<boolean>(false);
@@ -34,7 +46,21 @@ export default function Modal({ children, btnText, btnClassName, btnType = "navl
     return isMounted ? (
 
             <>
-                <button className={`${btnType} ${btnClassName}`} onClick={() => setIsOpen(true)} disabled={btnDisabled}>{ btnText }</button>
+                { openBtnComponent && openBtn === true 
+                    ? 
+                        React.cloneElement(openBtnComponent, {
+                            onClick: () => setIsOpen(true)
+                        })
+                    : 
+                        null 
+                }
+
+                { ! openBtnComponent && openBtn === true 
+                    ?
+                        <button onClick={() => setIsOpen(true)} className="navlink-full justify-center">Open</button>
+                    :
+                        null
+                }
                     
                 {createPortal(
                 
@@ -67,7 +93,7 @@ export default function Modal({ children, btnText, btnClassName, btnType = "navl
 
                                         {title} 
 
-                                        <div className="mb-2" />   
+                                        <div className="mb-1" />   
                                         
                                         {subtitle}
 
@@ -76,8 +102,25 @@ export default function Modal({ children, btnText, btnClassName, btnType = "navl
                                     </div>
 
                                     <div className="flex flex-col md:!flex-row gap-2 bg-card px-6 py-3 justify-end border-t-1 border-border">
-                                        {button}    
-                                        { closeBtn ? <button className={`${closeBtnType ? closeBtnType : "navlink-full"} !w-full md:!w-fit justify-center transition-all`} onClick={() => setIsOpen(false)}>Cancel</button> : null }
+
+                                        {button} 
+
+                                        { closeBtnComponent && closeBtn === true 
+                                            ? 
+                                            React.cloneElement(closeBtnComponent, {
+                                                onClick: () => setIsOpen(false)
+                                            })
+                                            : 
+                                            null 
+                                        }
+
+                                        { ! closeBtnComponent && closeBtn === true 
+                                            ?
+                                            <button onClick={() => setIsOpen(false)} className="navlink-full justify-center !w-full md:!w-fit">Cancel</button>
+                                            :
+                                            null
+                                        }
+                                        
                                     </div>
                                     
                                     
@@ -111,7 +154,7 @@ Modal.Title = Title;
 
 const Subtitle = ({ children, className = "", ...other }: { children: React.ReactNode, className?: string }) => (
     
-    <p className={`pb-4 subtitle text-center md:text-left ${className}`} {...other}>{ children }</p>
+    <p className={`pb-4 subtitle text-center md:text-left text-sm ${className}`} {...other}>{ children }</p>
 
 )
 
@@ -123,8 +166,8 @@ Modal.Subtitle = Subtitle;
 const Button = ({ children, className = "", type, loadingVariable, onClick, spinnerColor, ...other }: { children: React.ReactNode, className?: string, type: "navlink" | "navlink-full" | "navlink-destructive" | "navlink-success" | "navlink-sidebar"| "navlink-small", loadingVariable?: any, spinnerColor: "white" | "black", onClick?: MouseEventHandler<HTMLButtonElement> }) => (
     
     <button className={`${type} ${className} !w-full md:!w-fit justify-center transition-all`} onClick={onClick} {...other}>
-        { loadingVariable === false ? children : null }
-        { loadingVariable === true ? <img src={`/spinner_${spinnerColor}.svg`} alt="Loading..." className="spinner"/>  : null }
+        { loadingVariable === true ? <img src={`/spinner_${spinnerColor}.svg`} alt="Loading..." className="spinner"/>  : children }
+        { ! loadingVariable ? null : children }
     </button>
 
 )
@@ -144,3 +187,5 @@ const Custom = ({ children, className }: { children: React.ReactNode, className?
 
 Custom.displayName = "Custom";
 Modal.Custom = Custom;
+
+export default Modal;

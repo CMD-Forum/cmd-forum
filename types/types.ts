@@ -33,7 +33,7 @@ export interface PostAuthor {
     /**
      * The authors profile image source.
      */
-    image: string | undefined;
+    image: string | null;
 
     /**
      * The authors profile description.
@@ -62,8 +62,14 @@ export interface PostCommunity {
 
     /**
      * The display name of the community.
+     * @deprecated
      */
     display_name: string;
+
+    /**
+     * The description of the community.
+     */
+    description: string;
 
     /**
      * The image of the community.
@@ -141,7 +147,7 @@ export interface Post {
     /**
      * The tagline of the post.
      */
-    tagline: string;
+    tagline?: string; // Only optional to prevent errors, do not use.
 
     /**
      * The URL of the posts image, may be undefined or null.
@@ -166,12 +172,12 @@ export interface Post {
     /**
      * The number of downvotes the post has.
      */
-    downvotes: number;
+    //downvotes: number;
 
     /**
      * The number of upvotes the post has.
      */
-    upvotes: number;
+    //upvotes: number;
 
     /**
      * The ID of the posts community, used for relations in the database.

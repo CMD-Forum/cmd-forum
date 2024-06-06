@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MouseEvent, MouseEventHandler, useState } from "react";
+import { MouseEventHandler, useState } from "react";
 
 export default function Switch({ onEnabled }: { onEnabled: MouseEventHandler<HTMLButtonElement> | undefined }) {
 

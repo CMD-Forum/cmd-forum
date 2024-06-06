@@ -1,59 +1,17 @@
 import Link from "next/link";
+
 import { prisma } from "../../../lib/db";
+import ProfileImage from "../account/ProfileImage";
 
 export async function CommunityAdministrators({ communityId }: { communityId: string }) {
 
     const community = await prisma.community.findUnique({
-            where: {
-                id: communityId,
-            }
-    })
-
-    if ( community ) {
-
-        if (Array.isArray(community.admin_ids) && community.admin_ids.length <= 0) {
-            return (
-                <div className="p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48">
-                    <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'>
-                        <p className='md:!header-2 header-3'>We couldn&apos;t find any administrators.</p>
-                        <p className='text-center !text-white font-medium antialiased w-full'>This shouldn&apos;t happen, try reloading the page.</p>
-                    </div>            
-                </div>
-            );
+        where: {
+            id: communityId,
         }
+    });
 
-        return (
-            <div>
-                {Array.isArray(community.admin_ids) && community.admin_ids.map(async (admin_id) => {
-
-                    const user = await prisma.user.findUnique({
-                        where: {
-                            id: admin_id,
-                        }
-                    })
-
-                    console.log("User:", user);
-
-                    if ( user ) {
-                        return (
-                            <div key={admin_id} className="flex flex-row gap-4 w-full">
-                                <div className="bg-card border-1 border-border p-4 rounded-md flex flex-row gap-4 items-center w-full">
-                                    <img src={user.image} className="w-6 h-6 rounded-sm" alt={`Profile Picture of ${user.username}`} />
-                                    <Link href={`/user/${user.username}`} className="hover:text-gray-300 transition-all">{user?.username}</Link>   
-                                </div>     
-                            </div>    
-                        )                            
-                    } else {
-                        return (
-                            <p key={admin_id}>Sorry, this admin couldn&apos;t be displayed.</p>
-                        );
-                    }
-
-                })}
-            </div>
-        );
-
-    } else if ( ! community ) {
+    if ( ! community ) {
         return (
             <div className="p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48">
                 <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'>
@@ -64,4 +22,45 @@ export async function CommunityAdministrators({ communityId }: { communityId: st
         );
     }
 
+    const admins = await prisma.communityAdminship.findMany({ where: { communityId: communityId }});
+
+    if ( ! admins ) {
+        return (
+            <div className="p-2 pt-12 lg:pb-12 lg:p-12 lg:px-48">
+                <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'>
+                    <p className='md:!header-2 header-4 !text-center'>We couldn&apos;t find any administrators.</p>
+                    <p className='subtitle !text-center'>This shouldn&apos;t happen, try reloading the page.</p>
+                </div>            
+            </div>            
+        );
+    } else if ( admins ) {
+        return (
+            <div>
+                {admins.map(async (admin) => {
+
+                    const user = await prisma.user.findUnique({
+                        where: {
+                            id: admin.userId,
+                        },
+                    });
+
+                    if ( user ) {
+                        return (
+                            <div key={user.id} className="flex flex-row gap-4 w-full">
+                                <div className="bg-card border-0 border-border p-3 rounded-md flex flex-row gap-3 items-center w-full">
+                                    <ProfileImage user={user} imgSize={"5"} />
+                                    <Link href={`/user/${user.username}`} className="transition-all subtitle hover:!text-white">{user?.username}</Link>   
+                                </div>     
+                            </div>    
+                        )                            
+                    } else {
+                        return (
+                            <p key={admin.userId} className="subtitle">Sorry, this admin couldn&apos;t be displayed.</p>
+                        );
+                    }
+
+                })}
+            </div>
+        );
+    }
 }

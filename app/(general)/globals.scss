@@ -35,15 +35,29 @@ body {
 } /*/
 
 @layer utilities {
-
   .word-break-all {
     word-break: break-all;
   }
-
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 
-.navlink {
+// Accessibility
 
+a, button {
+  @apply outline-none #{!important};
+  @apply focus-visible:outline-2 #{!important};
+  @apply focus-visible:outline-white #{!important};
+}
+
+// Main
+
+.navlink {
   @apply font-normal;
   @apply text-sm;
   @apply text-white;
@@ -51,68 +65,87 @@ body {
   @apply transition-all;
   @apply bg-transparent;
   @apply hover:bg-border;
+  @apply focus:bg-border;  
   @apply px-3;
   @apply py-2;
-  @apply border-[1px];
+  @apply border-1;
   @apply border-border;
+  @apply hover:border-border-light;
+  @apply focus:border-border-light;
   @apply rounded-md;
   @apply flex;
   @apply gap-1.5;
   @apply items-center;
   @apply w-fit;
   @apply outline-none;
-
+  @apply focus-visible:border-1;
+  @apply focus-visible:border-border-light;
+  @apply focus-visible:bg-border;
 }
 
-.navlink:disabled {
-
-  @apply text-gray-400;
-  @apply hover:bg-transparent;
-  @apply cursor-not-allowed;
-
+.navlink.raised {
+  @apply shadow-lg;
 }
 
-.navlink-ghost {
-
+.navlink-emphasis {
   @extend .navlink;
   @apply bg-transparent;
   @apply hover:bg-border;
-  @apply border-0;
+  @apply hover:border-white;
+  @apply focus:border-white;
+  @apply font-medium;
+  @apply text-gray-300;
+  @apply hover:text-white;
+  @apply focus:text-white;
+  @apply border-2;
+  @apply outline-0;
+  @apply focus-visible:outline-0;
+}
 
+.navlink:disabled {
+  @apply text-gray-400;
+  @apply hover:bg-transparent;
+  @apply cursor-not-allowed;
+  @apply border-border #{!important};
+}
+
+.navlink[data-navlink-enabled="true"] {
+  @apply border-border-light;
+  @apply bg-border;
+}
+
+.navlink-ghost {
+  @extend .navlink;
+  @apply bg-transparent;
+  @apply hover:bg-border;
+  @apply focus:bg-border;
+  @apply border-0;
 }
 
 .navlink-full {
-
   @extend .navlink;
   @apply bg-white;
   @apply text-black;
   @apply hover:bg-neutral-300;
   @apply focus:bg-neutral-300;
   @apply border-0;
-
 }
 
 .navlink-full.icon {
-
   @apply p-2;
-
 }
 
 .navlink-full:disabled {
-
-  @apply bg-neutral-500;
-  @apply hover:bg-neutral-500;
+  @apply bg-neutral-400;
+  @apply hover:bg-neutral-400;
   @apply hover:cursor-not-allowed;
-  @apply border-neutral-500;
+  @apply border-neutral-400;
   @apply text-black;
-
 }
 
 .navlink-small {
-
   @extend .navlink;
   @apply h-[30px];
-
 }
 
 .navlink-destructive {
@@ -125,6 +158,14 @@ body {
   @apply transition-all;
   @apply text-white #{!important};
 
+}
+
+.navlink-destructive:disabled {
+  @apply bg-red-800;
+  @apply hover:bg-red-800;
+  @apply hover:cursor-not-allowed;
+  @apply border-red-800;
+  @apply text-white;
 }
 
 .navlink-success {
@@ -145,13 +186,39 @@ body {
   @apply border-0;
   @apply w-full;
   @apply p-2.5;
+  @extend .subtitle;
+  @apply hover:text-white #{!important};
+  @apply hover:border-0;
+  @apply focus:border-0;
+  @apply border-transparent;
+  @apply relative;
 
 }
 
 .navlink-sidebar.active {
 
   @apply bg-border;
+  @apply text-white #{!important};
+  @apply border-1 #{!important};
+  @apply border-border-light #{!important};
 
+}
+
+.navlink-sidebar.after-active {
+  @apply text-white #{!important};  
+  @apply ring-0 #{!important};
+  @apply bg-border #{!important};
+}
+
+.navlink-sidebar.after-active::after {
+  content: "";
+  width: 2px;
+  height: 20px;
+  background-color: white;
+  position: absolute;
+  left: -4px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
 }
 
 .topbar-link {
@@ -179,10 +246,10 @@ body {
 .topbar-link.active::after {
   content: "";
   width: 100%;
-  height: 2px;
+  height: 3px;
   background-color: white;
   position: absolute;
-  bottom: -11px;
+  bottom: -13px;
   left: 0;
   border-radius: 6px;
   transition: all;
@@ -219,15 +286,16 @@ body {
 
 .generic_field {
 
-  @apply bg-transparent;
+  @apply bg-background;
   @apply rounded-md;
   @apply h-9;
   @apply px-2;
   @apply outline-none;
-  @apply ring-border;
-  @apply ring-2;
+  @apply border-1;
+  @apply border-border;
+  @apply focus:border-border-light;
+  @apply ring-border-light;
   @apply focus:ring-2;
-  @apply focus:ring-white #{!important};
   @apply transition-all;
   @extend .subtitle;
 
@@ -235,7 +303,8 @@ body {
 
 .generic_field.errored {
 
-  @apply ring-red-500;
+  @apply ring-2;
+  @apply ring-red-300;
 
 }
 
@@ -392,7 +461,6 @@ body {
 
 .md-editor {
   @apply rounded-md #{!important};
-  @apply z-0;
 }
 
 .md-editor-toolbar-warp {
@@ -420,6 +488,18 @@ body {
 
 .md-editor-preview {
   @apply bg-transparent #{!important};
+}
+
+.cm-editor {
+  @apply bg-transparent;
+}
+
+.cm-gutters {
+  @apply bg-transparent #{!important};
+}
+
+.cm-activeLine {
+  @apply bg-border-light #{!important};
 }
 
 // hr
@@ -462,7 +542,6 @@ hr {
   @apply font-inter #{!important}; 
   @apply text-white #{!important};
   @apply font-bold #{!important}; 
-  @apply antialiased #{!important};
 
 }
 
@@ -472,7 +551,6 @@ hr {
   @apply font-inter #{!important};
   @apply text-white #{!important};
   @apply font-bold #{!important}; 
-  @apply antialiased #{!important};
 
 }
 
@@ -482,7 +560,6 @@ hr {
   @apply font-inter #{!important};
   @apply text-white #{!important};
   @apply font-semibold #{!important}; 
-  @apply antialiased #{!important};
 
 }
 
@@ -492,7 +569,6 @@ hr {
   @apply font-inter #{!important};
   @apply text-white #{!important};
   @apply font-semibold #{!important}; 
-  @apply antialiased #{!important};
 
 }
 
@@ -500,9 +576,8 @@ hr {
 
   @apply text-lg #{!important}; 
   @apply font-inter #{!important};
-  @apply text-white #{!important};
-  @apply font-medium #{!important}; 
-  @apply antialiased #{!important};
+  @apply text-gray-300; 
+  @apply font-bold; 
 
 }
 
@@ -512,16 +587,13 @@ hr {
   @apply font-inter #{!important};
   @apply text-white #{!important};
   @apply font-medium #{!important}; 
-  @apply antialiased #{!important};
 
 }
 
 .subtitle {
-
-  @apply text-gray-300 #{!important};
+  @apply text-gray-300;
   @apply font-medium #{!important};
-  @apply antialiased #{!important};
-
+  @apply text-sm;  
 }
 
 // Heroicon

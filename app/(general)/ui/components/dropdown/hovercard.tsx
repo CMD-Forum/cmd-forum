@@ -1,87 +1,75 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, cubicBezier, motion } from "framer-motion";
 import React from "react";
 import { useState } from "react";
 
-export default function Dropdown({ children, headerText, headerIcon, className, headerClassName }: { children: React.ReactNode, headerText?: string | React.ReactNode, headerIcon: React.ReactNode, className?: string, headerClassName?: string }) {
+/**
+ * ## Hovercard
+ * ---
+ * @param trigger The component that triggers the menu.
+ * @param children Children to be passed.
+ * @param [className] Optional, className(s) to be passed.
+ * @example
+ *  <Menu
+        trigger={<button className='navlink !px-2'>Menu</button>}
+    >
+        <MenuLink text={"Item a"} icon={null} link={`/example-a`} />
+        <MenuLink text={"Item b"} icon={null} link={`/example-b`} />
+        <hr className='mt-1 !mb-1'/>
+        <MenuLink text={"Item c"} icon={null} link={`/example-c`} />
+    </Menu> 
+ */
+
+export default function Hovercard({ children, className, trigger }: { children: React.ReactNode, className?: string, trigger: React.ReactNode }) {
 
     const [open, setIsOpen] = useState<boolean>(false);
 
+    const easing = cubicBezier(0,0,0,1);
+
     return (
-
         <>
-
-                <div className="relative w-fit" onMouseLeave={() => setIsOpen(false)}>
-
-                        <div className='ml-auto flex gap-4 subtitle'>
-
-                            <button 
-                                className={`${headerClassName} ${headerIcon ? "!px-2" : "!border-0 "} hover:underline`}
-                                onMouseEnter={() => setIsOpen(true)}
-                            >
-
-                            { headerIcon ?
-
-                                // @ts-ignore
-                                React.cloneElement(headerIcon, {
-                                    className: "w-5 h-5",
-                                })
-                                :
-                                null
-                            
-                            }      
-                            { headerText ? headerText : null }
-                      
-                            </button>
-
-                        </div>
-
-                    <AnimatePresence>
-                        <>
-                            <div className="absolute w-full bg-card h-2" />
-                            { open &&
-                                <motion.div 
-                                    className={`bg-card ${className} border-border border-1 rounded-md w-max h-max !z-50 group min-w-52 shadow-xl absolute`}
-                                    initial={{
-                                        y: '0px',
-                                        opacity: '0%',
-                                        display: 'hidden',
-                                    }}
-                                    animate={{
-                                        y: open ? '5px' : '0px',
-                                        opacity: open ? '100%' : '0%',
-                                        display: open ? '' : 'hidden'
-                                    }}
-                                    exit={{
-                                        y: '0px',
-                                        opacity: '0%',
-                                        display: 'hidden',
-                                    }}
-                                    transition={{
-                                        duration: 0.12,
-                                    }}
-                                    onMouseEnter={() => setIsOpen(true)}
-                                    onMouseLeave={() => setIsOpen(false)}
-                                >
-                                    
-                                    <>
-                                        { children }           
-                                    </>
-                                    
-
-                                </motion.div>  
-                            }                        
-                        </>
-
-                    </AnimatePresence>
-
+            <div className="relative w-fit" onMouseLeave={() => setIsOpen(false)}>
+                <div className='ml-auto flex gap-4 subtitle'>
+                    {/* @ts-ignore */}
+                    {React.cloneElement(trigger, {
+                        onMouseEnter: () => setIsOpen(true)
+                    })}
                 </div>
-            
-     
+
+                <AnimatePresence>
+                    <>
+                        <div className="absolute w-full bg-card h-2" />
+                        { open &&
+                            <motion.div 
+                                className={`bg-card ${className} border-border border-1 rounded-md w-max h-max !z-50 group min-w-52 shadow-sm absolute`}
+                                initial={{
+                                    y: -6,
+                                    display: 'hidden',
+                                }}
+                                animate={{
+                                    y: open ? 4 : 0,
+                                    display: open ? '' : 'hidden'
+                                }}
+                                exit={{
+                                    y: -6,
+                                    display: 'hidden',
+                                }}
+                                transition={{
+                                    duration: 0.4,
+                                    ease: easing
+                                }}
+                                onMouseEnter={() => setIsOpen(true)}
+                                onMouseLeave={() => setIsOpen(false)}
+                            >   
+                                <>
+                                    { children }           
+                                </>
+                            </motion.div>  
+                        }                        
+                    </>
+                </AnimatePresence>
+            </div> 
         </>
-
     );
-
 }
-

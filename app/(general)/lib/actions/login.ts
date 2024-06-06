@@ -1,11 +1,12 @@
 
 
-import * as z from "zod";
 import { AuthError } from "next-auth";
-
 import { signIn } from "next-auth/react";
-import { LoginSchema } from "../schemas";
+import * as z from "zod";
+
 import { defaultLoginRedirect } from "@/routes";
+
+import { LoginSchema } from "../schemas";
 
 export async function login(values: z.infer<typeof LoginSchema>,) {
 
@@ -19,7 +20,7 @@ export async function login(values: z.infer<typeof LoginSchema>,) {
 
             return { error: "Invalid fields!" };
 
-        };
+        }
 
         const { email, password } = validatedFields.data;
 
@@ -54,6 +55,6 @@ export async function login(values: z.infer<typeof LoginSchema>,) {
 
             throw error;
 
-        };
+        }
 
 }

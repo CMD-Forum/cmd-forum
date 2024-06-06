@@ -1,13 +1,14 @@
+import { NextResponse } from "next/server";
+
 import { prisma } from "@/app/(general)/lib/db";
-import { NextRequest, NextResponse } from "next/server";
 
-export async function GET( req: NextRequest ) {
+export async function GET() {
 
-    try {;
+    try {
 
-        const post_count = await prisma.post.count();     
+        const postCount = await prisma.post.count();     
               
-        return NextResponse.json(post_count, { status: 200 })
+        return NextResponse.json(postCount, { status: 200 })
 
     } catch (error) {
 

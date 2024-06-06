@@ -1,32 +1,30 @@
 "use client";
 
-import React, { useState } from "react";
-import * as z from "zod";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod" // Form Validation
-import Alert from "../new_alert";
 import { useSession } from "next-auth/react";
-import { createCommunity, getCommunityByName } from "@/app/(general)/lib/data";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+
+import { createCommunity, createUserMembershipRecord, getCommunityByName } from "@/app/(general)/lib/data";
 import { CreateCommunitySchema } from "@/app/(general)/lib/schemas";
 
-function ErrorMessage(props: { message: string }) {
+import Alert, { AlertTitle } from "../new_alert";
 
-    return <p className="dark:text-red-300 text-sm">{props.message}</p>;
-    
+function ErrorMessage(props: { message: string }) {
+    return <p className="text-red-300 text-sm">{props.message}</p>;
 }
 
 export default function CreateCommunityForm() {
 
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<boolean | null>(null);
-    const [com_err, setCom_Err] = useState<boolean | null>(null);
-    const [create_err, setCreate_Err] = useState<boolean | null>(null);
     const [isLoading, setIsLoading] = useState(false);
 
     const form = useForm<z.infer<typeof CreateCommunitySchema>>({
       resolver: zodResolver(CreateCommunitySchema),
       defaultValues: {
-        community_name: '',
+        name: '',
         description: '',
         image_url: '',
       },
@@ -35,54 +33,43 @@ export default function CreateCommunityForm() {
     const { data: session } = useSession();
 
     if ( ! session ) {
-
         return (
-            <Alert type={"error"} title={"Hmm..."} description={"Oops, something went wrong. Try logging in again."} />
+            <Alert type={"error"}>
+                <AlertTitle>Sorry, this page couldn&apos;t be displayed.</AlertTitle>
+            </Alert>
         );
-
     } 
 
     const OnSubmit = async (values: z.infer<typeof CreateCommunitySchema>) => {
 
       setIsLoading(true);
-      setCom_Err(false);
+      setError(null);
       setSuccess(false);
   
-      const existingCommunity = await getCommunityByName(values.community_name)
+      const existingCommunity = await getCommunityByName(values.name);
   
-      if ( ! existingCommunity ) {
+      if ( ! existingCommunity && session.user.id ) {
   
         const communityData = {
-
-            community_name: values.community_name,
+            name: values.name,
             description: values.description,
             image: values.image_url,
-            admin_ids: [session.user.id]
-  
+            creatorUserID: session.user.id
         };
         
         try {
-
-            // @ts-ignore
             const community = await createCommunity(communityData); 
+            await createUserMembershipRecord({ userID: session.user.id, communityID: community.id });    
             setIsLoading(false); 
             setSuccess(true);
-             
         } catch ( error ) {
-
-            setCom_Err(true);
             setIsLoading(false);
-
+            setError("Something went wrong, please try again later.");
         }
-        
-
       } else {
-  
-        setCom_Err(true);           
         setIsLoading(false);
-  
+        setError("Sorry, that name has been taken.");
       }
-  
     };
   
     return (
@@ -90,38 +77,33 @@ export default function CreateCommunityForm() {
         <form className="flex flex-col gap-2 bg-transparent rounded-lg !w-full" onSubmit={form.handleSubmit(OnSubmit)}>
 
             {success && (
-
-                <Alert type="success" title="Community Created" description="Your community was created successfully." />
-
+                <Alert type="success">
+                    <AlertTitle>Community was successfully created.</AlertTitle>
+                </Alert>
             )}
 
-            {create_err && (
-
-                <Alert type="error" title="Community Creation Failed" description="Sorry, your community could not be created. Please try again later." />
-
+            {error && (
+                // @ts-ignore
+                <Alert type="error">
+                    <AlertTitle>{error}</AlertTitle>
+                </Alert>
             )}
 
-            {com_err && (
-                <Alert type="error" title="Community Creation Failed" description="Sorry, a community with that name already exists." />
-            )}
-
-            <div className="flex gap-1 font-medium">Community Name<p className="text-[#fca5a5]">*</p></div>
+            <div className="flex gap-1 subtitle">Community Name<p className="text-[#fca5a5]">*</p></div>
             <input
-                {...form.register('community_name')}
+                {...form.register('name')}
                 placeholder="general"
-                className={`generic_field ${form.formState.errors.community_name ? "errored" : ""}`}
+                className={`generic_field ${form.formState.errors.name ? "errored" : ""}`}
             />
 
-            {form.formState.errors.community_name && (
-
+            {form.formState.errors.name && (
                 // @ts-expect-error
-                <ErrorMessage message={form.formState.errors.community_name.message} />
-
+                <ErrorMessage message={form.formState.errors.name.message} />
             )}
 
             {/* */}
 
-            <div className="flex gap-1 font-medium">Description<p className="text-[#fca5a5]">*</p></div>
+            <div className="flex gap-1 subtitle">Description<p className="text-[#fca5a5]">*</p></div>
             <input
                 {...form.register('description')}
                 placeholder="Welcome to my community!"
@@ -129,40 +111,30 @@ export default function CreateCommunityForm() {
             />
 
             {form.formState.errors.description && (
-
                 // @ts-expect-error
                 <ErrorMessage message={form.formState.errors.description.message} />
-
             )}
 
             {/* */}
 
-            <div className="flex gap-1 font-medium">Image<p className="text-[#fca5a5]">*</p></div>
+            <div className="flex gap-1 subtitle">Image<p className="text-[#fca5a5]">*</p></div>
             <input
                 {...form.register('image_url')}
-                placeholder="https://www.imgur.com/testurl"
+                placeholder="https://domainimagesaretemporary.org/images/070524"
                 className={`generic_field ${form.formState.errors.image_url ? "errored" : ""}`}
             />
 
             {form.formState.errors.image_url && (
-
-                // @ts-expect-error
+                // @ts-ignore
                 <ErrorMessage message={form.formState.errors.image_url.message} />
-
             )}
 
             {/* */}
 
             <button type="submit" className="navlink-full !w-full sm:!w-fit justify-center min-w-[62px]">
-                
-                {/* eslint-disable-next-line @next/next/no-img-element*/}
-                {isLoading ? <img src="/spinner.svg" alt="Submitting..." className="spinner"/>  : 'Create Community' }
-                
+                {isLoading && <img src="/spinner_black.svg" alt="Submitting..." className="spinner"/> } 
+                Create Community 
             </button>
-
-            {/* */}
-
-            {error && <Alert type="alert" title="Creation Failed" description="Please check all details are correct." />}
 
         </form>
 

@@ -1,6 +1,9 @@
 "use client";
 
+import { PlusIcon } from "@heroicons/react/16/solid";
 import { 
+    ArrowRightEndOnRectangleIcon,
+    Bars3Icon,
     BookOpenIcon, 
     CalendarDaysIcon, 
     ChatBubbleBottomCenterTextIcon, 
@@ -10,19 +13,20 @@ import {
     PencilSquareIcon, 
     ShieldCheckIcon, 
     UserIcon, 
+    UserPlusIcon,
     ViewColumnsIcon, 
-    Bars3Icon,
-    XMarkIcon,
-    ArrowRightEndOnRectangleIcon,
-    UserPlusIcon
-} from "@heroicons/react/20/solid";
+    XMarkIcon} from "@heroicons/react/20/solid";
+import { Community } from "@prisma/client";
+import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link"
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
-import { inter } from "../fonts";
 import { useSession } from "next-auth/react"
-import { Community } from "@prisma/client";
+import { useEffect, useState } from "react";
+
+import { countCommunityMembers, createUserMembershipRecord, deleteUserMembershipRecord, getAllUserMembershipRecords } from "../../lib/data";
+import { inter } from "../fonts";
+import Alert, { AlertSubtitle, AlertTitle } from "./new_alert";
+import { CommunityInfobarSkeleton } from "../skeletons/Community";
 
 export function NavSideItems() {
 
@@ -56,7 +60,7 @@ export function NavSideItems() {
                 key={"sidebar_firstmotiondiv"}
             >
                 <motion.div 
-                    className="bg-card fixed top-0 z-40 w-[300px] px-4 py-2 h-full flex flex-col overflow-scroll gap-1"
+                    className="bg-card-light fixed top-0 z-40 w-[300px] px-4 py-2 h-full flex flex-col overflow-scroll gap-1"
                     animate={{
                         x: expanded ? "0px" : "-300px",
                     }}
@@ -68,7 +72,7 @@ export function NavSideItems() {
                 >
                 
                     <div className="w-full h-fit flex flex-row-reverse mt-1 mb-4">
-                        <button className={`navlink-sidebar  z-[100] !mb-0 !mt-0 !w-fit !border-[1px] !border-border`} onClick={() => toggleDrawer()}><XMarkIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /></button>
+                        <button className={`navlink-sidebar z-[100] !mb-0 !mt-0 !w-fit !border-[1px] !border-border`} onClick={() => toggleDrawer()}><XMarkIcon className="font-medium h-5 w-5 facebookTheme:h-4 facebookTheme:w-4" /></button>
                         <h1 className={`${inter.className} font-extrabold text-3xl mr-auto flex items-center hover:text-gray-300 transition-all cursor-pointer`}>CMD/&gt;</h1>
                     </div>
 
@@ -195,6 +199,10 @@ export function TopbarItems() {
 
 }
 
+/**
+ * @deprecated Use `CommunityInfobar` instead.
+ */
+
 export function CommunityInfobarItems( { community }: { community: Community } ) {
 
     return (
@@ -263,4 +271,145 @@ export function CommunityInfobarItems( { community }: { community: Community } )
 
     );
 
+}
+
+/**
+ * ## CommunityInfobar
+ * ---
+ * Infobar of a community, shows all relevant information.
+ * @param community
+ */
+
+export function CommunityInfobar( { community }: { community: Community } ) {
+
+    /**
+     * I'm aware this isn't the best code ever, but I couldn't figure out any other way for now and I wanted to wrap this up.
+     */
+
+    // eslint-disable-next-line no-unused-vars
+    const [userMemberships, setUserMemberships] = useState<any[]>();
+    const [isMember, setIsMember] = useState<boolean>(false);
+    const [memberCount, setMemberCount] = useState<number>();
+    const [error, setError] = useState<string>("");
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
+    const { data: session } = useSession();
+
+    useEffect(() => {
+        setError("");
+        setIsLoading(true);
+        async function fetchUserMembership() {
+            try {
+                if ( session?.user.id ) {
+                    const memberships = await getAllUserMembershipRecords({ userID: session?.user.id });
+                    const membership_number = await countCommunityMembers({ communityID: community.id });
+                    if ( memberships ) {
+                        // @ts-ignore
+                        setUserMemberships(memberships);
+                        setMemberCount(membership_number);
+                        setIsMember(memberships.memberships.some((membership: any) => membership.community.id === community.id));
+                        setIsLoading(false);
+                    }
+                } else {
+                    setIsLoading(false);
+                }                
+            } 
+            catch (error) {
+                console.error(error);
+                setError("We couldn't get your membership status.")
+                setIsLoading(false);
+            }
+        }
+        fetchUserMembership();
+    }, [community.id, session?.user.id])
+
+    const joinCommunity = async () => {
+        try {
+            setIsLoading(true);
+            // @ts-ignore
+            await createUserMembershipRecord({ userID: session?.user.id, communityID: community.id }); 
+            setIsMember(true);  
+            setIsLoading(false);
+        } catch {
+            console.log(error);
+            setError("We couldn't add you to this community right now.");
+            setIsLoading(false);
+        }
+    }
+
+    const leaveCommunity = async () => {
+        try {
+            setIsLoading(true);
+            // @ts-ignore
+            await deleteUserMembershipRecord({ userID: session?.user.id, communityID: community.id })
+            setIsMember(false);           
+            setIsLoading(false); 
+        } catch (error) {
+            console.log(error);
+            setError("We couldn't remove you from this community right now.")
+            setIsLoading(false);
+        }
+    }
+
+    if ( isLoading ) {
+        return (
+            <CommunityInfobarSkeleton />
+        );
+    }
+
+    return (
+        <div>
+            <div className='flex-row gap-2 rounded-md w-full bg-transparent'>
+                <div className='flex-col bg-card p-6 border-0 border-border lg:px-48'>
+                    <div className='flex flex-row gap-3 items-center'>
+                        <img src={community.image} className='h-[56px] rounded' alt={`${community.name}'s Community Image`} />
+                        <div className='flex flex-col'>
+                            <h1 className='header-2'>{community.name}</h1>   
+                            <h2 className='subtitle'>{community.description}</h2>
+                        </div>
+                    </div>
+
+                    <div className='flex flex-row gap-3 items-center mt-2'>
+                        <div className='flex flex-row gap-3'>
+                            <div className='flex flex-row gap-1'>
+                                <CalendarDaysIcon className='w-[20px] text-gray-300' />
+                                <p className='subtitle'>{community.createdAt.toLocaleDateString()}</p>  
+                            </div>
+                            
+                            <div className='flex flex-row gap-1'>
+                                <UserIcon className='w-[20px] text-gray-300' />
+                                <p className='subtitle'>{memberCount || "..."}</p>
+                            </div>
+
+                            <div className='flex flex-row gap-1'>
+                                <PencilSquareIcon className='w-[20px] text-gray-300' />
+                                <p className='subtitle'>---</p>
+                            </div>
+
+                            <div className='flex flex-row gap-1'>
+                                <ChatBubbleBottomCenterTextIcon className='w-[20px] text-gray-300' />
+                                <p className='subtitle'>---</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    { error && <Alert type="error" className="mt-4"><AlertTitle>Oops, something went wrong!</AlertTitle><AlertSubtitle>{ error }</AlertSubtitle></Alert> }
+
+                    <div className='flex flex-row gap-2 mt-4 mb-4'>
+                        { session?.user.id 
+                        ?
+                            <button className='navlink justify-center items-center' data-navlink-enabled={isMember ? "true" : "false"} onClick={isMember ? () => leaveCommunity() : () => joinCommunity()}>
+                                <PlusIcon className="font-medium h-5 w-5" />
+                                <p className='flex items-center h-full'>{ isMember ? "Joined" : "Join"}</p>
+                            </button> 
+                        :
+                            null
+                        }
+                        <Link className='navlink justify-center items-center' href={`/c/${community.name}/info`}><BookOpenIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Information</p></Link>
+                        <Link className='navlink justify-center items-center' href={`/c/${community.name}/moderation`}><ShieldCheckIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Moderation</p></Link>    
+                    </div>
+                </div>
+            </div>  
+        </div>
+    );
 }

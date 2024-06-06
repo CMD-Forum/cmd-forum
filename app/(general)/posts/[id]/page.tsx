@@ -1,80 +1,64 @@
-import { prisma } from '@/app/(general)/lib/db';
-import Framermotion_workaround from './framermotion_workaround';
-import { Error404 } from '../../ui/error404';
+"use client";
+
+import { Post } from "@prisma/client";
+import { useEffect,useState } from 'react';
+
+import { getPost } from "../../lib/data";
 import { FullPost } from '../../ui/components/posts/post';
+import { Error404 } from "../../ui/error404";
+import { FullPostSkeleton } from "../../ui/skeletons/Post";
 
-export default async function PostView({ params }: { params: { id: string } }) {
+export default function PostView({ params }: { params: { id: string } }) {
 
-  if ( ! params.id ) {
+  const [post, setPost] = useState<Post>();
+  const [loading, setLoading] = useState(true);
 
-    return (
+  useEffect(() => {
+    async function fetchPost() {
 
-      <Error404 />
+      setLoading(true);
 
-    );
-
-  }
-
-  const post = await prisma.post.findUnique({
-    where: {
-      id: params.id
-    },
-    include: {
-      community: {
-        select: {
-          id: true,
-          display_name: true,
-          name: true,
-          image: true,
-          public: true,
-        }
-      },
-      author: {
-        select: {
-          id: true,
-          username: true,
-          description: true,
-          image: true,
-          createdAt: true,
-          updatedAt: true,
-        }
+      if ( ! params.id) {
+        setLoading(false);
+        return <Error404 />;
       }
+
+      const fetchedPost = await getPost({ postID: params.id });
+
+      if ( ! fetchedPost) {
+        setLoading(false);
+        return <Error404 />;
+      }
+
+      setPost(fetchedPost);
+      setLoading(false);
     }
-  })
 
-  if ( ! post ) {
-
-    return (
-
-      <Error404 />
-
-    );
-
-  }
+    fetchPost();
+  }, [params.id]);
 
   return (
-
-    <div className='mt-6 lg:pb-12 lg:px-44 !pt-0'>
-
-      <FullPost
-        id={post.id}
-        title={post.title} 
-        author={post.author} 
-        community={post.community} 
-        upvotes={post.upvotes} 
-        downvotes={post.downvotes} 
-        createdAt={post.createdAt} 
-        updatedAt={post.updatedAt}
-        public={post.public}
-        tagline={post.tagline} 
-        content={post.content}
-        imageurl={post.imageurl}
-        imagealt={post.imagealt}
-      />
-
+    <div className='mt-14 lg:pb-12 lg:px-44 !pt-0 md:mt-6'>
+      {loading ? (
+        <FullPostSkeleton />
+      ) : post ? (
+        <FullPost
+          id={post.id}
+          title={post.title}
+          // @ts-ignore
+          author={post.author}
+          // @ts-ignore
+          community={post.community}
+          createdAt={post.createdAt}
+          updatedAt={post.updatedAt}
+          public={post.public}
+          content={post.content}
+          imageurl={post.imageurl}
+          imagealt={post.imagealt}
+        />
+      ) : (
+        <Error404 />
+      )}
     </div>
-    
-
-  )
-
+  );
 }

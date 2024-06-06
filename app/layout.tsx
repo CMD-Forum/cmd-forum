@@ -1,12 +1,16 @@
-import type { Metadata, Viewport } from 'next'
-import { Inter, IBM_Plex_Mono } from 'next/font/google'
-import './(general)/globals.scss'
-import { Navigation, Sidebar, Footer } from '@/app/(general)/ui/navigation'
-import { SessionProvider } from 'next-auth/react'
-import { auth } from '@/auth'
+import './(general)/globals.scss';
+
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import type { Metadata, Viewport } from 'next';
+import { IBM_Plex_Mono,Inter } from 'next/font/google';
+import { SessionProvider } from 'next-auth/react';
 import NextTopLoader from 'nextjs-toploader';
-import { SpeedInsights } from "@vercel/speed-insights/next"
-import { SWRProvider } from '../swr-provider'
+import React from 'react';
+
+import { Footer } from '@/app/(general)/ui/components/navigation/footer';
+import { auth } from '@/auth';
+
+import Sidebar from './(general)/ui/components/navigation/sidebar';
 
 const inter = Inter({ subsets: ['latin'] });
 const ibm_plex_mono = IBM_Plex_Mono({ subsets: ["latin"], weight: "400", variable: "--font-ibm_plex_mono" })
@@ -18,8 +22,8 @@ const metadataBaseUrl = process.env.NODE_ENV === 'production'
 
 const APP_NAME = "CMD/>";
 const APP_DEFAULT_TITLE = "CMD/>";
-const APP_TITLE_TEMPLATE = "CMD/>";
-const APP_DESCRIPTION = "CMD/> Forum Site";
+const APP_TITLE_TEMPLATE = "%s";
+const APP_DESCRIPTION = "Command Forum Site";
 
 export const metadata: Metadata = {
   metadataBase: metadataBaseUrl ? new URL(metadataBaseUrl) : new URL("https://cmd-forum.vercel.app/"),
@@ -62,23 +66,18 @@ export const viewport: Viewport = {
 };
 
 export default async function RootLayout({
-
   children,
-
 }: {
-
   children: React.ReactNode
-
 }) {
 
   const session = await auth();
 
   return (
 
-    <SWRProvider>
-      <SessionProvider session={session}>
+    <SessionProvider session={session}>
 
-          <html lang="en" className={`defaultTheme ${inter.className} ${ibm_plex_mono.variable}`} style={{ colorScheme: "dark" }}>
+          <html lang="en" className={`defaultTheme bg-background ${inter.className} ${ibm_plex_mono.variable}`} style={{ colorScheme: "dark" }}>
 
             <SpeedInsights />
 
@@ -97,37 +96,36 @@ export default async function RootLayout({
                 zIndex={999999}
               />
 
-              <div id='modal-root'>
+                {/*<div className='hidden md:flex'>
+                  <Banner 
+                    message={"This is a development version of Command - things may be unfinished or broken."} 
+                    fixedAtTop={false} 
+                    learnMoreEnabled={true}
+                    learnMoreLink={"/ui/dev/development_message"}
+                  />                  
+                </div>*/}
 
-                <Navigation />
+                {/*<Navigation />*/}
 
-                  <div className='flex h-full m-auto bg-background'>
+                  <div className='flex h-full bg-background'>
 
-                    <Sidebar />        
+                    <Sidebar />     
 
-                    <div className='flex flex-col justify-center w-full !pt-0 m-auto'>
-
+                    <div className='flex flex-col w-full !pt-0'>
                       <div>
-
                         {children}    
-
                       </div>
-
                     </div>
 
                   </div>
 
                 <Footer />
 
-              </div>
-
             </body>
 
           </html>
 
-      </SessionProvider>      
-    </SWRProvider>
-
+      </SessionProvider>
 
   )
 }

@@ -6,14 +6,15 @@
 
 */
 
-import { env } from "process";
-
 export const privateRoutes: string[] = [
     "/account",
     "/account/settings",
     "/account/:path",
     "/create",
-    "/create/:path"
+    "/create/:path",
+    "/posts/saved",
+    "/ui/:path",
+    "/ui/dev"
 ]
 
 /**
@@ -28,6 +29,17 @@ export const authRoutes: string[] = [
     "/login",
     "/signup",
     "/auth"
+]
+
+/**
+
+* Array of routes that should not be accessible to logged in users.
+* @type {string[]}
+
+*/
+
+export const publicOnlyRoutes: string[] = [
+    "/",
 ]
 
 /**

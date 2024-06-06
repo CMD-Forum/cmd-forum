@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 
 const Account = () => {
 
-    const { data: session, update } = useSession();
+    const { data: session } = useSession();
     const router = useRouter();
 
     router.push(`/user/${session?.user.username}`);

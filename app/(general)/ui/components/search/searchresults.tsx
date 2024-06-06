@@ -1,18 +1,16 @@
 import { prisma } from "@/app/(general)/lib/db";
+
 import { CardPost } from "../posts/post";
 
 interface SearchResultProps {
-
     query: string;
     currentPage: number;
     type: string;
-
 }
 
 export default async function SearchResults(search: SearchResultProps) {
 
     let results
-    let result_community
 
     const formattedQuery = search.query
         .split(' ')
@@ -39,19 +37,14 @@ export default async function SearchResults(search: SearchResultProps) {
         results = await prisma.post.findMany({
 
             orderBy: {
-
                 _relevance: {
                     fields: ['title', 'content'],
                     search: formattedQuery,
                     sort: 'desc'
                 }
-
             },
-
             where: {
-
                 OR: [
-
                     {
                         title: {
                             contains: formattedQuery,
@@ -71,18 +64,12 @@ export default async function SearchResults(search: SearchResultProps) {
                                 mode: "insensitive",
                             },
                         },
-                    }
-                    
+                    }    
                 ]
-
             },
-
             include: {
-
                 author: {
-
                     select: {
-
                         id: true,
                         name: true,
                         username: true,
@@ -90,23 +77,17 @@ export default async function SearchResults(search: SearchResultProps) {
                         updatedAt: true,
                         image: true,
                         description: true,
-
                     }
-
                 },
-
                 community: {
-
                     select: {
-
                         id: true,
                         name: true,
                         display_name: true,
                         image: true,
-                        public: true
-
+                        public: true,
+                        description: true,
                     }
-
                 }
             }
         });
@@ -121,17 +102,13 @@ export default async function SearchResults(search: SearchResultProps) {
                         <CardPost 
                             id={result.id}
                             title={result.title}
-                            upvotes={result.upvotes}
-                            downvotes={result.downvotes}
                             createdAt={result.createdAt}
                             updatedAt={result.updatedAt}
                             content={result.content}
                             imageurl={result.imageurl}
                             imagealt={result.imagealt}
                             public={result.public}
-                            tagline={result.tagline}
                             community={result.community}
-                            // @ts-ignore
                             author={result.author}
                         />
                         <div className="!mt-4 !mb-4 w-full" />

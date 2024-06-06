@@ -45,7 +45,7 @@ export const UpdateDescriptionSchema = z.object({
 
 export const CreateCommunitySchema = z.object({
     
-    community_name: z
+    name: z
         .string()
         .min(2, "All communitys have to be 2 characters or over.")
         .max(20, "All communitys have a maximum of 20 characters."),

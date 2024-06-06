@@ -1,7 +1,8 @@
-import { prisma } from '@/app/(general)/lib/db';
+import { hash } from 'bcryptjs';
 import { NextResponse } from 'next/server';
-import { hash } from 'bcrypt';
 import * as z from 'zod';
+
+import { prisma } from '@/app/(general)/lib/db';
 
 // Input validation schema
 
@@ -71,6 +72,7 @@ export async function POST(req: Request) {
                 password: hashedPassword
             }
         });
+        // eslint-disable-next-line no-unused-vars
         const { password: newUserPassword, ...rest } = newUser;
 
         return NextResponse.json({ user: newUser, message: "Account has been created"}, { status: 201 });

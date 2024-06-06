@@ -1,7 +1,7 @@
 "use client";
 
-import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
+import { usePathname, useRouter,useSearchParams } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 
 export default function SearchBar() {

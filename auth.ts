@@ -5,17 +5,18 @@
  */
 
 // import authConfig from "./auth.config" // See line 2 of top comment.
-import { prisma } from "./app/(general)/lib/db";
 import { PrismaAdapter } from "@auth/prisma-adapter";
+import { UserRole } from "@prisma/client";
+import bcrypt from "bcryptjs";
 import NextAuth, { type DefaultSession } from "next-auth"
 import Credentials from "next-auth/providers/credentials";
-import { LoginSchema } from "./app/(general)/lib/schemas";
-import { getUserByEmail, getUserById } from "./app/(general)/lib/data";
-import bcrypt from "bcryptjs";
-import { UserRole } from "@prisma/client";
-
 // Providers
 import GitHub from "next-auth/providers/github";
+import Passkey from "next-auth/providers/passkey"
+
+import { getUserByEmail, getUserById } from "./app/(general)/lib/data";
+import { prisma } from "./app/(general)/lib/db";
+import { LoginSchema } from "./app/(general)/lib/schemas";
 // import Resend from "next-auth/providers/resend"
 
 // Main
@@ -37,7 +38,7 @@ interface NextAuthUserWithStringId extends ExtendedUser {
 export const inDevEnvironment = !!process && process.env.NODE_ENV === 'development';
 
 export const {
-  handlers: { GET, POST },
+  handlers,
   auth,
   signIn,
   signOut,
@@ -60,6 +61,7 @@ export const {
     //@ts-ignore
     adapter: PrismaAdapter(prisma),
     session: { strategy: "jwt" },
+    experimental: { enableWebAuthn: true },
     callbacks: {
 
         async signIn({ user }) {
@@ -84,28 +86,24 @@ export const {
                 session.user.id = token.sub;    
             }
 
-            if (session.user && token.role ) {
-                session.user.role = token.role as UserRole;
-            }
+            if (session.user && token.role )
+            session.user.role = token.role as UserRole;
+            
 
-            if (session.user && token.picture) {
-                session.user.profile_image = token.picture;
-            }
+            if (session.user && token.picture) 
+            session.user.profile_image = token.picture;
 
-            if (session.user && token.username) {
-                // @ts-ignore
-                session.user.username = token.username;
-            }
+            if (session.user && token.username)
+            // @ts-ignore
+            session.user.username = token.username;
 
-            if (session.user && token.description) { 
-                // @ts-ignore
-                session.user.description = token.description;
-            }
+            if (session.user && token.description)
+            // @ts-ignore
+            session.user.description = token.description;
 
-            if (session.user && token.usernameLastUpdated) { 
-                // @ts-ignore
-                session.user.usernameLastUpdated = token.usernameLastUpdated;
-            }
+            if (session.user && token.usernameLastUpdated) 
+            // @ts-ignore
+            session.user.usernameLastUpdated = token.usernameLastUpdated;
             
             return session;
         },
@@ -115,18 +113,16 @@ export const {
             if (user) token.user = user
             if (profile) token.profile = profile
 
-            if ( ! token.sub) {
-                return token;
-            }
+            if ( ! token.sub )
+            return token;
 
             const existingUser = await getUserById(token.sub);
 
-            if ( ! existingUser ) {
-                return token;
-            }
+            if ( ! existingUser )
+            return token;
 
             token.role = existingUser.role;
-            token.picture = existingUser.image;
+            token.image = existingUser.image;
             token.username = existingUser.username;
             token.description = existingUser.description;
             token.usernameLastUpdated = existingUser.usernameLastUpdate;
@@ -149,6 +145,7 @@ export const {
             } as unknown as NextAuthUserWithStringId;
           },
       }),
+      Passkey,
       Credentials({
           // @ts-ignore: See above ts-ignore. Will fix at some point (never).
           async authorize(credentials) {
