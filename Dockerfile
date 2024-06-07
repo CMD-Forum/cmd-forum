@@ -29,9 +29,6 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/prisma ./prisma/
 
-RUN npx prisma db push && \
-    npx prisma migrate dev
-
 COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 
 USER nextjs
@@ -40,7 +37,7 @@ EXPOSE 3000
 
 ENV PORT 3000
 
-ENTRYPOINT ["npm", "start"]
+ENTRYPOINT ["npm", "docker:startup"]
 
 LABEL org.opencontainers.image.source=https://github.com/CMD-Forum/cmd-forum
 LABEL org.opencontainers.image.description="Container image for Command Forum."

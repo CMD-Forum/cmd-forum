@@ -6,6 +6,7 @@
     "dev": "next dev --experimental-https --turbo",
     "build": "next build",
     "build:docker": "docker build --platform linux/amd64 -t cmd-forum .",
+    "docker:startup": "next start && npx prisma migrate dev",
     "start": "next start",
     "lint": "next lint",
     "migrate": "dotenv -e .env -- npx prisma migrate dev --name init",
