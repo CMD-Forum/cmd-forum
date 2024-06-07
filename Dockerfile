@@ -29,6 +29,9 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/prisma ./prisma/
 
+RUN npx prisma db push && \
+    npx prisma migrate dev
+
 COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 
 USER nextjs
