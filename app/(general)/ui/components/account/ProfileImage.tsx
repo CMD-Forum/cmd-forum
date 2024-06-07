@@ -14,19 +14,21 @@ import { PostAuthor } from "@/types/types";
 
 export default function ProfileImage({ user, imgSize = "8" }: { user: User | PostAuthor, imgSize?: string }) {
 
+    const size = `${0.25 * Number(imgSize)}rem`; // One unit in Tailwind is equal to 0.25rem, so we just multiply 0.25 by the imgSize.
+
     if ( user ) {
         if ( user.image ) {
             return (
-                <img className={`!w-${imgSize} !h-${imgSize} rounded`} src={user.image} alt={`Profile Image of @${user.username}`} />
+                <img style={{width: size, height: size}} className={`rounded`} src={user.image} alt={`Profile Image of @${user.username}`} />
             );
         } else if ( ! user.image ) {
             return (
-                <img className={`!w-${imgSize} !h-${imgSize} rounded`} src={"/ProfileImage.svg"} alt={`Profile Image of @${user.username}`} />
+                <img style={{width: size, height: size}} className={`rounded`} src={"/ProfileImage.svg"} alt={`Profile Image of @${user.username}`} />
             );            
         }    
     } else {
         return (
-            <img className={`!w-${imgSize} !h-${imgSize} rounded`} src={"/ProfileImage.svg"} alt={`Profile Image couldn't be loaded`} />
+            <img style={{width: size, height: size}} className={`rounded`} src={"/ProfileImage.svg"} alt={`Profile Image couldn't be loaded`} />
         );
     }
 
