@@ -2,6 +2,7 @@ FROM node:18-alpine AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json package-lock.json ./
+COPY prisma ./prisma/
 RUN npm install
 
 FROM node:18-alpine AS builder
@@ -26,6 +27,7 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/public ./public
 
 COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/prisma ./prisma/
 
 COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 
