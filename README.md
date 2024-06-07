@@ -120,7 +120,7 @@ There are two ways to setup a Docker Container, either by a command or by Docker
 The command below will start a Docker Container using a `.env` file in the same directory. Make sure this file is present, or the container will fail to start. If you want to change the port it is accessible on, change the first `3000` after `-p` to your desired port.
 
 ```bash
-docker create --env-file .env -p 3000:3000 ghcr.io/CMD-Forum/cmd-forum-docker:latest # Just 'cmd-forum-docker' if you have a local image.
+docker create --env-file .env -p 3000:3000 ghcr.io/cmd-forum/cmd-forum:master # Just 'cmd-forum' if you have a local image.
 ```
 
 #### Docker Compose
@@ -134,11 +134,17 @@ name: "cmd-forum"
 services:
   cmd_forum:
     container_name: cmd-forum
-    image: ghcr.io/CMD-Forum/cmd-forum-docker:latest # Just 'cmd-forum-docker' if you have a local image.
+    image: ghcr.io/cmd-forum/cmd-forum:master # Just 'cmd-forum' if you have a local image.
     env_file:
-      - .env # Load .env, change if required.
+      - .env # Load .env, change if required. 
+             # Do not specify DATABASE_URL in here if using the container db, instead specify it below.
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres?schema=public # Change to fit your login details
+      # Optionally, put all of the `.env` here and skip using the file. Make sure to remove the `env_file` section if doing so.
     ports:
-      - 3002:3000 # Change the 3002 if you want a different port.
+      - 3000:3000 # Change the first 3000 if you want a different port.
+    links:
+      - "db:database"
   db: # Optional, but here as an example of how to setup a database.
     container_name: db
     image: postgres
@@ -150,10 +156,13 @@ services:
       - 5432:5432 # Change the first 5432 if you want a different port.
     volumes:
       - ./db:/var/lib/postgresql/data 
-    restart: unless-stopped 
+    restart: unless-stopped
 ```
 
-When you're finished with the file, make sure you have your `.env` file in the same directory. Open a terminal in the same directory and run `docker compose up`. This will start a database and CMD. Make sure your `.env` has the correct database value.
+When you're finished with the file, make sure you have your `.env` file in the same directory. Open a terminal in the same directory and run `docker compose up -d`. This will start a database and CMD.
+
+>[!NOTE]
+> If you'd prefer to watch what your container is doing in the terminal you started it in, remove the `-d`.
 
 ## Credits
 
