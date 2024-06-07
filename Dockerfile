@@ -37,7 +37,7 @@ EXPOSE 3000
 
 ENV PORT 3000
 
-ENTRYPOINT ["npm", "run docker:startup"]
+ENTRYPOINT ["npm", "start"]
 
 LABEL org.opencontainers.image.source=https://github.com/CMD-Forum/cmd-forum
 LABEL org.opencontainers.image.description="Container image for Command Forum."
