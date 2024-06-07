@@ -123,6 +123,13 @@ The command below will start a Docker Container using a `.env` file in the same 
 docker create --env-file .env -p 3000:3000 ghcr.io/cmd-forum/cmd-forum:master # Just 'cmd-forum' if you have a local image.
 ```
 
+Next, execute the following commands in order in the container:
+
+```bash
+npx prisma migrate dev
+npx prisma db seed
+```
+
 #### Docker Compose
 
 First, make a folder and create a file named `docker-compose.yml` inside. Make sure you have file extensions enabled, and it isn't saved as `docker-compose.yml.txt`.
@@ -159,7 +166,12 @@ services:
     restart: unless-stopped
 ```
 
-When you're finished with the file, make sure you have your `.env` file in the same directory. Open a terminal in the same directory and run `docker compose up -d`. This will start a database and CMD.
+When you're finished with the file, make sure you have your `.env` file in the same directory. Open a terminal in the same directory and run `docker compose up -d`. This will start a database and CMD. Next, execute the following commands in order in the container:
+
+```bash
+npx prisma migrate dev
+npx prisma db seed
+```
 
 >[!NOTE]
 > If you'd prefer to watch what your container is doing in the terminal you started it in, remove the `-d`.

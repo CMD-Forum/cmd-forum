@@ -17,16 +17,16 @@ export default function ProfileImage({ user, imgSize = "8" }: { user: User | Pos
     if ( user ) {
         if ( user.image ) {
             return (
-                <img className={`w-${imgSize} h-${imgSize} rounded`} src={user.image} alt={`Profile Image of @${user.username}`} />
+                <img className={`!w-${imgSize} !h-${imgSize} rounded`} src={user.image} alt={`Profile Image of @${user.username}`} />
             );
         } else if ( ! user.image ) {
             return (
-                <img className={`w-${imgSize} h-${imgSize} rounded`} src={"/ProfileImage.svg"} alt={`Profile Image of @${user.username}`} />
+                <img className={`!w-${imgSize} !h-${imgSize} rounded`} src={"/ProfileImage.svg"} alt={`Profile Image of @${user.username}`} />
             );            
         }    
     } else {
         return (
-            <img className={`w-${imgSize} h-${imgSize} rounded`} src={"/ProfileImage.svg"} alt={`Profile Image couldn't be loaded`} />
+            <img className={`!w-${imgSize} !h-${imgSize} rounded`} src={"/ProfileImage.svg"} alt={`Profile Image couldn't be loaded`} />
         );
     }
 
