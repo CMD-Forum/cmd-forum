@@ -10,7 +10,7 @@
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/CMD-Forum/cmd-forum?style=flat-square&logo=github)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/t/CMD-Forum/cmd-forum?style=flat-square&logo=github)
 ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/CMD-Forum/cmd-forum/total?style=flat-square&logo=github)
-![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/CMD-Forum/cmd-forum)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/CMD-Forum/cmd-forum?style=flat-square)
 
 <h3 align="center">Forum site built in React</h3>
 
