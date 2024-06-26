@@ -121,14 +121,13 @@ export function CardPost( post: Post ) {
 
                 {/*<p className='subtitle'>{post.tagline}</p>*/}
 
-                { session &&
+                { session.user?.id &&
                     <div className='flex flex-row mt-4 justify-between'>
                         <div className='flex flex-row gap-2'>
                             <button className='navlink !px-2 mr-auto' aria-label='Upvote'><ChevronUpIcon className='w-5 h-5' /></button>
                             <button className='navlink !px-2 mr-auto' aria-label='Downvote'><ChevronDownIcon className='w-5 h-5' /></button>
                             {/*<Link className='navlink-emphasis !px-2 md:!px-3 mr-auto' href={`/posts/${post.id}`}><ChatBubbleLeftEllipsisIcon className='w-5 h-5' /><span className='hidden md:flex'>Comments</span></Link>*/}                        
-                            {/* @ts-ignore */}
-                            <SavePostButton btnText={"Save"} userID={session.user.id} postID={post.id} />
+                            <SavePostButton userID={session.user.id} postID={post.id} />
                         </div>
 
                         <Menu
@@ -207,11 +206,8 @@ export function FullPost( post: Post ) {
     const session = useSession();
 
     return (
-
-            <div className="rounded-md flex w-full bg-transparent h-fit facebookTheme:rounded-none px-5 py-5">
-
+        <div className="rounded-md flex w-full bg-transparent h-fit facebookTheme:rounded-none px-5 py-5">
                 <div className="flex w-full bg-transparent h-fit flex-col">
-
                     <div className="text-sm relative md:bg-card md:p-6 rounded-md">
 
                         {/*<BackButtonNormal className={"absolute right-0 !hidden md:!flex"} />*/}
@@ -252,7 +248,6 @@ export function FullPost( post: Post ) {
                     
                     <div className='md:bg-card w-full h-fit md:p-6 rounded-md mt-2 md:mt-6'>
                         {post.imageurl ?
-
                             <div className="relative rounded-md mt-2 mb-4 max-h-96 overflow-hidden">
                                 <div 
                                     style={{ 
@@ -263,13 +258,9 @@ export function FullPost( post: Post ) {
                                 />
                                 <img src={post.imageurl} alt={post.imagealt!} className="relative m-auto max-h-96" />
                             </div>
-
                         :
-
                             null
-
                         }
-
                         <div className='markdown-body'>
                             <MarkdownPreview source={post.content} rehypePlugins={[rehypeSanitize]} />
                         </div>                        
@@ -278,15 +269,10 @@ export function FullPost( post: Post ) {
                     { session?.user && 
                         <div className='flex flex-row gap-2 md:bg-card w-full h-fit md:p-6 rounded-md mt-2 md:mt-6'>
                             <button className='navlink' disabled onClick={() => { throw new Error("Feature Unimplemented") }}><ChatBubbleLeftEllipsisIcon className="w-5 h-5" aria-label='Submit Comment' />Submit Comment</button>
-                            {/* @ts-ignore */}
-                            <SavePostButton userID={session.user.id} postID={post.id} />
+                            <SavePostButton userID={session.user?.id} postID={post.id} />
                         </div>                    
                     }
-
                 </div>
-
-            </div>
-
+        </div>
     )
-
 }
