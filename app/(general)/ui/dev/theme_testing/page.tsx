@@ -4,7 +4,7 @@ import { Metadata } from 'next';
 import Menu, { MenuLink } from "../../components/menu/menu";
  
 export const metadata: Metadata = {
-  title: 'Theme Testing - CMD',
+  title: 'Theme Testing',
 };
 
 export default function ThemeTestingPage() {

@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import SettingsTabs from "@/app/(general)/ui/components/account/SettingsTabs";
  
 export const metadata: Metadata = {
-  title: 'Settings - CMD',
+  title: 'Settings',
 };
 
 export default async function SettingsPage() {

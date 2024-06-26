@@ -22,7 +22,7 @@ const metadataBaseUrl = process.env.NODE_ENV === 'production'
 
 const APP_NAME = "Command";
 const APP_DEFAULT_TITLE = "Command";
-const APP_TITLE_TEMPLATE = "%s";
+const APP_TITLE_TEMPLATE = "%s - Command";
 const APP_DESCRIPTION = "Command is a forum site for people to share news, interests or anything they can think of.";
 
 export const metadata: Metadata = {

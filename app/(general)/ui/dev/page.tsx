@@ -14,7 +14,7 @@ export default function DeveloperPage() {
 
     return (
 
-        <div className="">
+        <div>
                 <div className="flex flex-col border-0 border-border p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48 bg-card mt-8 md:mt-0">
                     <h1 className="header">Design Page</h1>
                     <p className={`subtitle sm:hidden`}>List of all UI items in Command.</p>

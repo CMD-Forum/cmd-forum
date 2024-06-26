@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import SupportList from "../ui/components/support/support_list";
  
 export const metadata: Metadata = {
-  title: 'Support - CMD',
+  title: 'Support',
 };
 
 const support = async () => {

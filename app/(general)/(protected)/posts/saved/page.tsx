@@ -6,7 +6,7 @@ import { getAuth } from '@/app/(general)/lib/auth';
 import { SavedPostListByUserID } from '@/app/(general)/ui/components/posts/post_list_custom';
  
 export const metadata: Metadata = {
-  title: 'Saved Posts - CMD',
+  title: 'Saved Posts',
 };
 
 export default async function HomePage() {
