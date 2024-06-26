@@ -1,13 +1,13 @@
 /* eslint-disable no-unreachable */
-import { hash } from "@node-rs/argon2";
+// import { hash } from "@node-rs/argon2";
 import { NextResponse } from 'next/server';
-import * as z from 'zod';
+// import * as z from 'zod';
 
-import { prisma } from '@/app/(general)/lib/db';
+// import { prisma } from '@/app/(general)/lib/db';
 
 // Input validation schema
 
-const userSchema = z.
+/*const userSchema = z.
 
     object({
         username: z
@@ -23,14 +23,14 @@ const userSchema = z.
             .string()
             .min(1, "Password is required.")
             .min(8, "Password must have 8 characters.")
-    })
+    })*/
 
-export async function POST(req: Request) {
+export async function POST(/*req: Request*/) {
     try {
 
         return NextResponse.json({ message: "Sorry, this API is currently unavailable." }, { status: 503 })
 
-        const body = await req.json();
+        /*const body = await req.json();
         const { email, username, password } = userSchema.parse(body);
 
         const EmailExists = await prisma.user.findUnique({
@@ -65,12 +65,10 @@ export async function POST(req: Request) {
         // eslint-disable-next-line no-unused-vars
         const { password_hash: newUserPassword, ...rest } = newUser;
 
-        return NextResponse.json({ user: newUser, message: "Account has been created"}, { status: 201 });
+        return NextResponse.json({ user: newUser, message: "Account has been created"}, { status: 201 });*/
 
     } catch(error) {
-        
         console.error(error);
         return NextResponse.json({ message: "Internal Server Error, check your formatting and that all required fields are present."}, { status: 500 });
-    
     }
 }
