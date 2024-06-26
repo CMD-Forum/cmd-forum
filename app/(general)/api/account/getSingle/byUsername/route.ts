@@ -24,25 +24,19 @@ export async function POST(req: Request) {
                 username: username,
             },
             omit: {
-                password: true,
+                password_hash: true,
                 email: true,
             }
         });
 
         if ( UserDetails ) {
-
             return NextResponse.json({ UserDetails }, { status: 201 });
-
         } else if ( ! UserDetails ) {
-
             return NextResponse.json({ message: "User was not found." }, { status: 404 });
-
         }
 
     } catch(error) {
-        
         console.error(error);
         return NextResponse.json({ message: "Internal Server Error, check your formatting and that all required fields are present."}, { status: 500 });
-    
     }
 }
