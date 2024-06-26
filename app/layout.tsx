@@ -11,6 +11,8 @@ import { Footer } from '@/app/(general)/ui/components/navigation/footer';
 
 import { getAuth } from './(general)/lib/auth';
 import Sidebar from './(general)/ui/components/navigation/sidebar';
+import { enableMaintenanceBanner } from '@/flags';
+import Link from 'next/link';
 
 const inter = Inter({ subsets: ['latin'] });
 const ibm_plex_mono = IBM_Plex_Mono({ subsets: ["latin"], weight: "400", variable: "--font-ibm_plex_mono" })
@@ -72,6 +74,7 @@ export default async function RootLayout({
 }) {
 
   const session = await getAuth();
+  const maintenanceBannerEnabled = await enableMaintenanceBanner();
 
   return (
     <SessionProvider value={session}>
@@ -87,14 +90,13 @@ export default async function RootLayout({
                 height={1}
                 zIndex={999999}
               />
-                {/*<div className='hidden md:flex'>
-                  <Banner 
-                    message={"This is a development version of Command - things may be unfinished or broken."} 
-                    fixedAtTop={false} 
-                    learnMoreEnabled={true}
-                    learnMoreLink={"/ui/dev/development_message"}
-                  />                  
-                </div>*/}
+                { maintenanceBannerEnabled ?
+                  <div className='flex items-center justify-center bg-border p-4'>
+                    <p>Command is currently undergoing maintenance, service disruptions may occur.</p>
+                  </div>
+                  :
+                  null
+                }               
                 {/*<Navigation />*/}
                   <div className='flex h-full bg-background'>
                     <Sidebar />     

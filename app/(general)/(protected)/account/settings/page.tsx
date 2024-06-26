@@ -1,12 +1,17 @@
 import { Metadata } from 'next';
 
 import SettingsTabs from "@/app/(general)/ui/components/account/SettingsTabs";
+import Alert, { AlertSubtitle, AlertTitle } from '@/app/(general)/ui/components/new_alert';
+import { enableSettings } from '@/flags';
  
 export const metadata: Metadata = {
   title: 'Settings',
 };
 
 export default async function SettingsPage() {
+
+    const settingsEnabled = await enableSettings();
+
     return (
         <>
             <div className="flex flex-col border-0 border-border p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48 bg-card mt-8 md:mt-0">
@@ -15,7 +20,14 @@ export default async function SettingsPage() {
             </div>
 
             <div className="flex flex-col p-6 md:pt-12 lg:pb-12 lg:p-12 lg:px-48">
-                <SettingsTabs />
+                { settingsEnabled ? 
+                    <SettingsTabs />
+                    :
+                    <Alert type={"alert"} className="mb-4" closeBtn={false}>
+                        <AlertTitle>Settings are unavailable.</AlertTitle>
+                        <AlertSubtitle>Sorry, settings haven&apos;t been implemented yet.</AlertSubtitle>
+                    </Alert>
+                }
             </div>
         </>
     )

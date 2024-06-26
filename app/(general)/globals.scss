@@ -55,6 +55,10 @@ a, button {
   @apply focus-visible:outline-white #{!important};
 }
 
+p {
+  @extend .subtitle;
+}
+
 // Main
 
 .navlink {

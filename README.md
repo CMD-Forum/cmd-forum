@@ -40,13 +40,13 @@ To setup your .env file, you'll need to change a few things.
 | Variable             | Change To                                                                | Notes                                                         |
 | -------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------- |
 | DATABASE_URL         | Your database connection string                                          | N/A                                                           |
-| AUTH_SECRET          | Random, secure string. AuthJS recommends using `openssl rand -base64 32` to generate it | Don't share with anybody, as this is meant to be secret.  |
 | GITHUB_CLIENT_ID     | Your GitHub Client ID (For Local Development)                            | See your GitHub developer settings for this.                         |
 | GITHUB_CLIENT_SECRET | Your GitHub Client Secret (For Local Development)                        | You should have this stored, as GitHub only shows it once.    |
 | GITHUB_CLIENT_ID_PROD     | Your GitHub Client ID (When deploying to production)                | See your GitHub developer settings for this.                         |
 | GITHUB_CLIENT_SECRET_PROD | Your GitHub Client Secret (When deploying to production)            | You should have this stored, as GitHub only shows it once.    |
 | NEXT_PUBLIC_METADATA_BASE_URL_DEV | Your local development URL (most likely <https://localhost:3000>) | Used for the metadata. |
 | NEXT_PUBLIC_METADATA_BASE_URL_PROD | Your production URL (where you'll deploy CMD/> to) | N/A |
+| FLAGS_SECRET | Output of `node -e "console.log(crypto.randomBytes(32).toString('base64url'))"` | Used by Vercel for Feature Flags, not needed if you don't use Vercel or don't want these. |
 
 ### Setup your database
 
@@ -79,7 +79,7 @@ This will start a HTTPS development server. HTTPS is required for authentication
 > If you don't want HTTPS, remove `--experimental-https` from the command.
 
 > [!NOTE]
-> CMD/> uses Vercel Speed Insights, if you don't want this you'll have to remove ``<SpeedInsights />`` from under the HTML tag in `layout.tsx`.
+> CMD/> uses Vercel Speed Insights, if you don't want this you'll have to remove `<SpeedInsights />` from under the HTML tag in `layout.tsx`.
 
 ## Getting Started w/ Docker
 
@@ -101,8 +101,6 @@ To setup your .env file, you'll need to change a few things.
 | Variable             | Change To                                                                | Notes                                                         |
 | -------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------- |
 | DATABASE_URL         | Your database connection string                                          | N/A                                                           |
-| AUTH_SECRET          | Random, secure string. AuthJS recommends using `openssl rand -base64 32` to generate it | Don't share with anybody, as this is meant to be secret.  |
-| AUTH_TRUST_HOST      | `false` if using HTTPS, `true` if using HTTP                             | Required for AuthJS to work over HTTP Connections. Not recommended to use due to security. |
 | GITHUB_CLIENT_ID_PROD     | Your GitHub Client ID (see your developer settings)                      | See your developer settings for this.                         |
 | GITHUB_CLIENT_SECRET_PROD | Your GitHub Client Secret                                                | You should have this stored, as GitHub only shows it once.    |
 | NEXT_PUBLIC_METADATA_BASE_URL_DEV | Your local development URL (most likely <https://localhost:3000>) | Used for the metadata. |
