@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { prisma } from "@/app/(general)/lib/db";
 
-export async function GET( req: NextRequest ) {
+export async function POST( req: NextRequest ) {
 
     try {
 
