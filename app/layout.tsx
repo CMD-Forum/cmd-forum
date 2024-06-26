@@ -20,10 +20,10 @@ const metadataBaseUrl = process.env.NODE_ENV === 'production'
   ? process.env.NEXT_PUBLIC_METADATA_BASE_URL_PROD 
   : process.env.NEXT_PUBLIC_METADATA_BASE_URL_DEV;
 
-const APP_NAME = "CMD/>";
-const APP_DEFAULT_TITLE = "CMD/>";
+const APP_NAME = "Command";
+const APP_DEFAULT_TITLE = "Command";
 const APP_TITLE_TEMPLATE = "%s";
-const APP_DESCRIPTION = "Command Forum Site";
+const APP_DESCRIPTION = "Command is a forum site for people to share news, interests or anything they can think of.";
 
 export const metadata: Metadata = {
   metadataBase: metadataBaseUrl ? new URL(metadataBaseUrl) : new URL("https://cmd-forum.vercel.app/"),
