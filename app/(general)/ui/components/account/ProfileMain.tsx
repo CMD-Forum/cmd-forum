@@ -1,14 +1,8 @@
 "use client";
 
 import { CalendarDaysIcon, PencilSquareIcon } from "@heroicons/react/20/solid";
-import { motion } from "framer-motion";
 
 import ProfileImage from "./ProfileImage";
-  
-const variants = {
-    hidden: { opacity: 0, y: -20 },
-    visible: { opacity: 1, y: 0 },
-};
 
 interface ProfileProps {
     username: string;

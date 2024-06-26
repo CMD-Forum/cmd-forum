@@ -2,14 +2,13 @@ import { PlusIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import React from 'react';
 
-import { auth } from '@/auth';
-
+import { getAuth } from '../lib/auth';
 import { BottombarItems, NavSideItems, TopbarItems } from './components/nav_sideitem';
 import { inter } from './fonts';
 
 export async function Navigation() {
 
-  const session = await auth();
+  const session = await getAuth();
 
   return (
 

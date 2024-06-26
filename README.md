@@ -1,7 +1,6 @@
 
 <h1 align="center">CMD Forum</h1>
 
-
 ![CMD Forum](/public/main_bgcmd.png)
 
 <!--[GitHub Created At](https://img.shields.io/github/created-at/CMD-Forum/cmd-forum?style=flat-square&logo=github&color=blue)-->
@@ -10,13 +9,18 @@
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/CMD-Forum/cmd-forum?style=flat-square&logo=github)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/t/CMD-Forum/cmd-forum?style=flat-square&logo=github)
 ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/CMD-Forum/cmd-forum/total?style=flat-square&logo=github)
-![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/CMD-Forum/cmd-forum)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/CMD-Forum/cmd-forum?style=flat-square&logo=github)
 
 <h3 align="center">Forum site built in React</h3>
 
 ---
 
 ## Getting Started w/ Local Installation
+
+### Prerequisites
+
+- Node.js >=19 (Crypto needs to be available)
+- NPM
 
 ### Create a GitHub OAuth App
 
@@ -51,8 +55,9 @@ To setup your .env file, you'll need to change a few things.
 > should include all required information, such as the URL, username and password.
 
 To fully setup your database, run the following commands in order:
-  - `npx prisma db push`
-  - `npx prisma generate` (stop the NextJS server before running this if already started)
+
+- `npx prisma db push`
+- `npx prisma generate` (stop the NextJS server before running this if already started)
 
 If all goes well, your database should have all required tables and fields. Prisma should give an error if something goes wrong, however it shouldn't.
 
@@ -190,49 +195,50 @@ npx prisma db seed
 
 Here is a list of all packages used:
 
-  -  @auth/prisma-adapter
-  -  @floating-ui/react
-  -  @heroicons/react
-  -  @hookform/resolvers
-  -  @next/eslint-plugin-next
-  -  @prisma/client
-  -  @uiw/react-markdown-editor
-  -  @uiw/react-markdown-preview
-  -  @vercel/speed-insights
-  -  bcryptjs
-  -  conventional-changelog-cli
-  -  dotenv-cli
-  -  framer-motion
-  -  next
-  -  next-auth
-  -  next-dev-https
-  -  nextjs-toploader
-  -  prisma-docs-generator
-  -  prompts
-  -  react
-  -  react-dom
-  -  react-hook-form
-  -  react-icons
-  -  rehype-sanitize
-  -  sass
-  -  use-debounce
-  -  xss
-  -  zod
+- @floating-ui/react
+- @heroicons/react
+- @hookform/resolvers
+- @lucia-auth/adapter-prisma
+- @next/eslint-plugin-next
+- @node-rs/argon2
+- @prisma/client
+- @uiw/react-markdown-editor
+- @uiw/react-markdown-preview
+- @vercel/speed-insights
+- conventional-changelog-cli
+- dotenv-cli
+- framer-motion
+- lucia
+- next
+- next-auth
+- next-dev-https
+- nextjs-toploader
+- oslo
+- prisma-docs-generator
+- prompts
+- react
+- react-dom
+- react-hook-form
+- react-icons
+- rehype-sanitize
+- sass
+- use-debounce
+- xss
+- zod
 
-  -  @types/bcryptjs
-  -  @types/node
-  -  @types/react
-  -  @types/react-dom
-  -  @typescript-eslint/parser
-  -  autoprefixer
-  -  eslint
-  -  eslint-config-next
-  -  eslint-plugin-deprecation
-  -  eslint-plugin-simple-import-sort
-  -  postcss
-  -  prisma
-  -  tailwindcss
-  -  tailwindcss-themer
-  -  ts-node
-  -  typescript
-  -  webpack
+- @types/node
+- @types/react
+- @types/react-dom
+- @typescript-eslint/parser
+- autoprefixer
+- eslint
+- eslint-config-next
+- eslint-plugin-deprecation
+- eslint-plugin-simple-import-sort
+- postcss
+- prisma
+- tailwindcss
+- tailwindcss-themer
+- ts-node
+- typescript
+- webpack

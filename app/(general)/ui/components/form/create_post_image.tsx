@@ -2,12 +2,12 @@
 
 import { zodResolver } from "@hookform/resolvers/zod" // Form Validation
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import { createPost, getCommunityByName } from "@/app/(general)/lib/data";
+import { useSession } from "@/app/(general)/lib/sessioncontext";
 
 import Alert, { AlertSubtitle, AlertTitle } from "../new_alert";
 
@@ -26,9 +26,7 @@ const FormSchema = z.object({
 })
 
 function ErrorMessage(props: { message: string }) {
-
     return <p className="text-red-300 text-sm">{props.message}</p>;
-    
 }
 
 export default function CreateImagePostForm() {
@@ -48,14 +46,16 @@ export default function CreateImagePostForm() {
       },
     });
 
-    const { data: session } = useSession();
+    const session = useSession();
     const router = useRouter();
 
     if ( ! session ) {
         return (
-            <ErrorMessage message="Oops, something went wrong. Try logging in again." />
+            <Alert type={"error"} closeBtn={false}>
+                <AlertTitle>It looks like you&apos;re not logged in, please login.</AlertTitle>
+            </Alert>
         );
-    } 
+    }
 
     const OnSubmit = async (values: z.infer<typeof FormSchema>) => {
 
@@ -72,7 +72,7 @@ export default function CreateImagePostForm() {
           communityId: post_community.id,
           content: "",
           imageurl: values.image_url,
-          authorId: session.user.id,
+          authorId: session.user?.id,
         };
         
         try {

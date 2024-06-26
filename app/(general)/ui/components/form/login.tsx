@@ -1,57 +1,23 @@
 "use client";
 
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/16/solid";
-import { zodResolver } from "@hookform/resolvers/zod" // Form Validation
 import Link from "next/link";
-import { useSearchParams } from 'next/navigation'
 import React, { useState } from "react";
-import { useTransition } from "react";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+import { useFormState, useFormStatus } from "react-dom";
 
 import { login } from "@/app/(general)/lib/actions/login";
-import { LoginSchema } from "@/app/(general)/lib/schemas";
 
 import Alert, { AlertSubtitle, AlertTitle } from "../new_alert";
 import { OAuthButtons } from "./oauth/OAuthButtons";
 
-function ErrorMessage(props: { message: string }) {
-    return <p className="text-red-300 text-sm">{props.message}</p>;
-}
-
 export default function LoginForm() {
 
-    const [isPending, startTransition] = useTransition();
-    const [error, setError] = useState<string | undefined>("");
-    const [success, setSuccess] = useState<string | undefined>("");
     const [showPassword, setShowPassword] = useState<boolean>(false);
-
-    const form = useForm<z.infer<typeof LoginSchema>>({
-        resolver: zodResolver(LoginSchema),
-        defaultValues: {
-            email: '',
-            password: '',
-        },
-    });
-
-    const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-        setError("");
-        setSuccess("");
-        startTransition(() => {
-            login(values)
-                .then((data) => {
-                    setError(data?.error);
-                    // setSuccess(data?.success);
-                })
-        });
-    };
-
-    const searchParams = useSearchParams();
-    const query_error = searchParams.get('error');
+    const [state, formAction] = useFormState(login, null);
 
     return ( 
 
-        <form className="flex flex-col rounded-lg w-[100%] md:w-[50%] max-w-[600px]" onSubmit={form.handleSubmit(onSubmit)}>
+        <form className="flex flex-col rounded-lg w-[100%] md:w-[50%] max-w-[600px]" action={formAction}>
 
             <div className="bg-card p-12 flex flex-col gap-2 rounded-t-md">
                 <div className="flex flex-col">
@@ -59,70 +25,41 @@ export default function LoginForm() {
                     <p className={`subtitle mb-2`}>Login to your existing CMD account, or use a third party provider.</p>                    
                 </div>
 
-                {/* */}
-
-                {query_error === "OAuthCallbackError" ? <Alert type="error"><AlertTitle>Authentication Failed</AlertTitle><AlertSubtitle>The external provider cancelled the login, please try again.</AlertSubtitle></Alert> : null }
-                {query_error === "OAuthSigninError" ? <Alert type="error"><AlertTitle>Authentication Failed</AlertTitle><AlertSubtitle>The login failed for an unknown reason, please try again.</AlertSubtitle></Alert> : null }
-                {query_error === "AdapterError" ? <Alert type="error"><AlertTitle>Authentication Failed</AlertTitle><AlertSubtitle>The database is currently experiencing issues, please try again later.</AlertSubtitle></Alert> : null }
-                {query_error === "CredentialsSignin" ? <Alert type="error"><AlertTitle>Authentication Failed</AlertTitle><AlertSubtitle>The username or password is incorrect.</AlertSubtitle></Alert> : null }
-                {query_error === "AuthorizedCallbackError" ? <Alert type="error"><AlertTitle>Authentication Failed</AlertTitle><AlertSubtitle>The account does not exist or has not verified their email.</AlertSubtitle></Alert> : null }
-                {query_error === "OAuthAccountNotLinked" ? <Alert type="error"><AlertTitle>Authentication Failed</AlertTitle><AlertSubtitle>The email of your external account is already associated with an account that exists on Command.</AlertSubtitle></Alert> : null }
-
-                {success ? (
-                    <Alert type='notice'>
-                        <AlertTitle>{success}</AlertTitle>
-                    </Alert>
-                ): (
-                    <pre></pre>
-                )}
-
-                {error ? (
-                    <Alert type='error'>
-                        <AlertTitle>{error}</AlertTitle>
-                    </Alert>
-                ): (
-                    <pre></pre>
-                )}
+                {state &&
+                    <Alert type="error" closeBtn={false}>
+                        <AlertTitle>Oops, something went wrong.</AlertTitle>
+                        <AlertSubtitle>{state.error}</AlertSubtitle>
+                    </Alert>                
+                }
 
                 {/* */}
 
-                <div className="subtitle flex gap-1">Email<p className="text-[#fca5a5]">*</p></div>
+                <label className="subtitle flex gap-1" htmlFor="username">Username</label>
                 <input
-                    {...form.register('email')}
-                    disabled={isPending}
-                    className={`generic_field ${form.formState.errors.email ? "errored" : ""}`}
+                    className={`generic_field`}
+                    id="username"
+                    name="username"
                 />
 
-                {form.formState.errors.email && (
-                    // @ts-ignore
-                    <ErrorMessage message={form.formState.errors.email.message} />
-                )}
-
                 {/* */}
 
-                <div className="subtitle flex gap-1">Password<p className="text-[#fca5a5]">*</p></div>
+                <label className="subtitle flex gap-1" htmlFor="password">Password</label>
                 <div className="relative">
                     <input
                         type={showPassword ? "text" : "password"}
-                        {...form.register('password')}
-                        disabled={isPending}
-                        className={`generic_field ${form.formState.errors.email ? "errored" : ""} w-full`}
+                        className={`generic_field w-full`}
+                        id="password"
+                        name="password"
                     />
                     <button onClick={() => setShowPassword(!showPassword)} type={"button"} className="absolute right-1 top-[3px] border-1 border-border hover:border-border-light hover:bg-border focus:border-border-light focus:bg-border rounded-md transition-all px-1 py-1 outline-none" aria-label={"Show the Password Field"}>{ showPassword ? <EyeSlashIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" /> }</button>              
                 </div>
-
-                {form.formState.errors.password && (
-                    // @ts-ignore
-                    <ErrorMessage message={form.formState.errors.password.message} />
-                )}
 
                 <Link href={"/forgot-password"} className="text-sm text-gray-300 hover:underline cursor-pointer w-fit mb-4">Forgot your password?</Link>  
 
                 {/* */}
 
-                <button disabled={!form.formState.isValid || isPending} type="submit" className="navlink-full !w-full h-[36px] justify-center min-w-[62px]">     
-                    {isPending ? <img src="/spinner.svg" alt="Loading..." className="spinner"/>  : 'Login' }
-                </button>
+                <SubmitButton />
+
                 {/* */}       
 
                 <div className="flex flex-col gap-1 mt-4">
@@ -139,9 +76,16 @@ export default function LoginForm() {
                 </div>      
                 <p className="text-center mt-4 text-sm text-gray-300">By logging in to CMD, you agree to the terms and conditions.</p>         
             </div>
-
-        </form>
-    
+        </form>  
     );
-    
+}
+
+function SubmitButton() {
+    const { pending } = useFormStatus();
+
+    return (
+        <button disabled={pending} className="navlink-full !w-full h-[36px] justify-center">
+            {pending ? <><img src="/spinner_black.svg" alt="Signing Up..." className="spinner"/>Logging In</>  : 'Login' }
+        </button>        
+    );
 }

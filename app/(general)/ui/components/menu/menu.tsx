@@ -14,9 +14,10 @@ import {
 import { cubicBezier, motion } from "framer-motion";
 import type { Route } from 'next';
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 import React, { MouseEventHandler } from "react";
 import { useState } from "react";
+
+import { useSession } from "@/app/(general)/lib/sessioncontext";
 
 /**
  * ## Menu
@@ -180,18 +181,18 @@ export const MenuItem = ({ text, icon }: { text: string, icon: React.ReactElemen
 
 export const MenuUser = () => {
 
-    const { data: session } = useSession();
+    const session = useSession();
 
     if ( session ) {
         return (
             <Link 
-                href={`/user/${session.user.username}`} 
+                href={`/user/${session.user?.username}`} 
                 className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden hover:!text-white rounded-md"
             >
                 <div className="flex flex-col max-w-48">
-                    <span className="subtitle text-white !text-[15px]">{session?.user.username}</span>
+                    <span className="subtitle text-white !text-[15px]">{session.user?.username}</span>
                     <div className="overflow-hidden text-ellipsis max-w-48">
-                        <span className="subtitle !text-[13px]">{session?.user.email}</span>      
+                        <span className="subtitle !text-[13px]">{session.user?.email || null}</span>      
                     </div>                    
                 </div>
             </Link>

@@ -1,13 +1,13 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod" // Form Validation
-import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import { createCommunity, createUserMembershipRecord, getCommunityByName } from "@/app/(general)/lib/data";
 import { CreateCommunitySchema } from "@/app/(general)/lib/schemas";
+import { useSession } from "@/app/(general)/lib/sessioncontext";
 
 import Alert, { AlertTitle } from "../new_alert";
 
@@ -30,15 +30,15 @@ export default function CreateCommunityForm() {
       },
     });
 
-    const { data: session } = useSession();
+    const session = useSession();
 
     if ( ! session ) {
         return (
-            <Alert type={"error"}>
-                <AlertTitle>Sorry, this page couldn&apos;t be displayed.</AlertTitle>
+            <Alert type={"error"} closeBtn={false}>
+                <AlertTitle>It looks like you&apos;re not logged in, please login.</AlertTitle>
             </Alert>
         );
-    } 
+    }
 
     const OnSubmit = async (values: z.infer<typeof CreateCommunitySchema>) => {
 
@@ -48,7 +48,7 @@ export default function CreateCommunityForm() {
   
       const existingCommunity = await getCommunityByName(values.name);
   
-      if ( ! existingCommunity && session.user.id ) {
+      if ( ! existingCommunity && session.user?.id ) {
   
         const communityData = {
             name: values.name,

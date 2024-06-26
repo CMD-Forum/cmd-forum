@@ -1,16 +1,13 @@
 "use client"
 
-import { signOut } from "next-auth/react"
 import React from "react";
 
+import { logout } from "../../lib/logout";
+
 export default function LogoutButton({ className, children }: { className: string, children: React.ReactNode }) {
-
-    const onClick = () => {
-        signOut();
-    }
-
     return (
-        <button onClick={onClick} className={className}>{children}</button>    
+        <form action={logout}>
+            <button className={className} type="submit">{children}</button>        
+        </form>
     );
-
 } 

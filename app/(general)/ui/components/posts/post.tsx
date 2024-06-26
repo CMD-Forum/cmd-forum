@@ -4,9 +4,9 @@ import { ArchiveBoxXMarkIcon, ChatBubbleLeftEllipsisIcon, ChevronDownIcon, Chevr
 import { EllipsisVerticalIcon, ShareIcon } from '@heroicons/react/24/solid';
 import MarkdownPreview from '@uiw/react-markdown-preview';
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
 import rehypeSanitize from 'rehype-sanitize';
 
+import { useSession } from "@/app/(general)/lib/sessioncontext";
 import { Post } from '@/types/types';
 
 import ProfileImage from '../account/ProfileImage';
@@ -58,7 +58,7 @@ export function CardPost( post: Post ) {
     const url = `${process.env.NEXT_PUBLIC_CURRENT_URL}posts/${post.id}`;
     const title = "CMD/>";
 
-    const { data: session } = useSession();
+    const session = useSession();
 
     return (
 
@@ -142,7 +142,7 @@ export function CardPost( post: Post ) {
                             { session 
                             ?
                                 <>
-                                    { session.user.id === post.authorId 
+                                    { session.user?.id === post.authorId 
                                     ?
                                     <>
                                         <hr className='mt-1 !mb-1'/>
@@ -204,7 +204,7 @@ export function FullPost( post: Post ) {
 
     // const rehypePlugins = [rehypeSanitize];
 
-    const { data: session } = useSession();
+    const session = useSession();
 
     return (
 

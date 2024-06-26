@@ -3,13 +3,13 @@ import './(general)/globals.scss';
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from 'next';
 import { IBM_Plex_Mono,Inter } from 'next/font/google';
-import { SessionProvider } from 'next-auth/react';
 import NextTopLoader from 'nextjs-toploader';
 import React from 'react';
 
+import { SessionProvider } from '@/app/(general)/lib/sessioncontext';
 import { Footer } from '@/app/(general)/ui/components/navigation/footer';
-import { auth } from '@/auth';
 
+import { getAuth } from './(general)/lib/auth';
 import Sidebar from './(general)/ui/components/navigation/sidebar';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -71,31 +71,22 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
 
-  const session = await auth();
+  const session = await getAuth();
 
   return (
-
-    <SessionProvider session={session}>
-
+    <SessionProvider value={session}>
           <html lang="en" className={`defaultTheme bg-background ${inter.className} ${ibm_plex_mono.variable}`} style={{ colorScheme: "dark" }}>
-
             <SpeedInsights />
-
             <head>
-
               <link rel='shortcut icon' href='/images/favicon/favicon.ico' />
-
             </head>
-
             <body id='body' className='bg-background text-white overflow-scroll overflow-x-hidden h-vh relative'>
-
               <NextTopLoader
                 color='#FFFFFF'
                 showSpinner={false}
                 height={1}
                 zIndex={999999}
               />
-
                 {/*<div className='hidden md:flex'>
                   <Banner 
                     message={"This is a development version of Command - things may be unfinished or broken."} 
@@ -104,28 +95,18 @@ export default async function RootLayout({
                     learnMoreLink={"/ui/dev/development_message"}
                   />                  
                 </div>*/}
-
                 {/*<Navigation />*/}
-
                   <div className='flex h-full bg-background'>
-
                     <Sidebar />     
-
                     <div className='flex flex-col w-full !pt-0'>
                       <div>
                         {children}    
                       </div>
                     </div>
-
                   </div>
-
                 <Footer />
-
             </body>
-
           </html>
-
       </SessionProvider>
-
   )
 }

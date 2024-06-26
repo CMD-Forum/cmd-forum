@@ -1,4 +1,5 @@
-import { hash } from 'bcryptjs';
+/* eslint-disable no-unreachable */
+import { hash } from "@node-rs/argon2";
 import { NextResponse } from 'next/server';
 import * as z from 'zod';
 
@@ -9,43 +10,28 @@ import { prisma } from '@/app/(general)/lib/db';
 const userSchema = z.
 
     object({
-
         username: z
-        
             .string()
             .min(2, {
-
                 message: "Your username must be at least 2 characters."
-
             }),
-
-        name: z
-        
-            .string()
-            .min(2, {
-
-                message: "Your name must be at least 2 characters."
-
-            }),
-
         email: z
-
             .string()
             .min(1, "Email is required.")
             .email("Your email must be in a valid format."),
-
         password: z
-
             .string()
             .min(1, "Password is required.")
             .min(8, "Password must have 8 characters.")
-
     })
 
 export async function POST(req: Request) {
     try {
+
+        return NextResponse.json({ message: "Sorry, this API is currently unavailable." }, { status: 503 })
+
         const body = await req.json();
-        const { name, email, username, password } = userSchema.parse(body);
+        const { email, username, password } = userSchema.parse(body);
 
         const EmailExists = await prisma.user.findUnique({
             where: { email: email }
@@ -63,17 +49,21 @@ export async function POST(req: Request) {
             return NextResponse.json({ user: null, message: "Username is associated with an existing account"}, { status: 409 })
         }
 
-        const hashedPassword = await hash(password, 10);
+        const hashedPassword = await hash(password, {
+            memoryCost: 19456,
+            timeCost: 2,
+            outputLen: 32,
+            parallelism: 1
+        });
         const newUser = await prisma.user.create({
             data: {
-                name,
                 username,
                 email,
-                password: hashedPassword
+                password_hash: hashedPassword
             }
         });
         // eslint-disable-next-line no-unused-vars
-        const { password: newUserPassword, ...rest } = newUser;
+        const { password_hash: newUserPassword, ...rest } = newUser;
 
         return NextResponse.json({ user: newUser, message: "Account has been created"}, { status: 201 });
 

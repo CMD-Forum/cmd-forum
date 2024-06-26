@@ -2,14 +2,15 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+
+import { useSession } from "@/app/(general)/lib/sessioncontext";
 
 export function Landing() {
 
-    const { data: session } = useSession();
+    const session = useSession();
     const router = useRouter();  
     
-    if ( session ) {
+    if ( session.user ) {
         router.push("/posts")
     }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useSession } from "@/app/(general)/lib/sessioncontext";
 
 import Modal from "../modal";
 import { ChangeAccountDescription, ChangeAccountName } from "./settings_actions";
@@ -9,7 +9,7 @@ import { ChangeAccountDescription, ChangeAccountName } from "./settings_actions"
 
 export function Settings_ChangeAccountUsername() {
 
-    const { data: session } = useSession();
+    const session = useSession();
 
     return (
         <div className='flex flex-col border-1 border-border rounded-md pt-6'>
@@ -25,7 +25,7 @@ export function Settings_ChangeAccountUsername() {
 
                 <p className="subtitle hidden md:flex text-sm"></p>
 
-                { session?.user.id && 
+                { session.user?.id && 
                     <Modal closeBtn={true} openBtn={true} openBtnComponent={<button className={"navlink-full"}>Change Username</button>}>
                         <Modal.Title>Sorry, this option is unavailable.</Modal.Title>
                         <Modal.Subtitle>You cannot change your username at this moment, please try again later.</Modal.Subtitle>
@@ -42,7 +42,7 @@ export function Settings_ChangeAccountUsername() {
 
 export function Settings_ChangeDescription() {
 
-    const { data: session } = useSession();
+    const session = useSession();
 
     return (
         <div className='flex flex-col border-1 border-border rounded-md pt-6'>
@@ -58,7 +58,7 @@ export function Settings_ChangeDescription() {
 
                 <p className="subtitle hidden md:flex text-sm"></p>
 
-                { session?.user.id && 
+                { session.user?.id && 
                     /*<Modal closeBtn={true} openBtn={true} openBtnComponent={<button className={"navlink-full"}>Change Description</button>}>
                         <Modal.Title>Sorry, this option is unavailable.</Modal.Title>
                         <Modal.Subtitle>You cannot change your description at this moment, please try again later.</Modal.Subtitle>
@@ -77,7 +77,7 @@ export function Settings_ChangeDescription() {
 
 export function Settings_DeleteAccount() {
 
-    const { data: session } = useSession();
+    const session = useSession();
 
     return (
         <div className='flex flex-col border-1 border-border rounded-md pt-6'>
@@ -93,7 +93,7 @@ export function Settings_DeleteAccount() {
 
                 <p className="subtitle hidden md:flex text-sm">If you&apos;re sure you want to, click the button.</p>
 
-                { session?.user.id && 
+                { session.user?.id && 
                     <Modal closeBtn={true} openBtn={true} openBtnComponent={<button className={"navlink-destructive"}>Delete Account</button>}>
                         <Modal.Title>Sorry, this option is unavailable.</Modal.Title>
                         <Modal.Subtitle>You cannot manually delete your account at this moment. Please contact us if you absolutely need your account deleted.</Modal.Subtitle>
@@ -112,7 +112,7 @@ export function Settings_DeleteAccount() {
 
 export function Settings_Setup2FA() {
 
-    const { data: session } = useSession();
+    const session = useSession();
 
     return (
         <div className='flex flex-col border-1 border-border rounded-md pt-6'>
@@ -128,7 +128,7 @@ export function Settings_Setup2FA() {
 
                 <p className="subtitle hidden md:flex text-sm"></p>
 
-                { session?.user.id && 
+                { session.user?.id && 
                     <Modal closeBtn={true} openBtn={true} openBtnComponent={<button className={"navlink-full"}>Setup 2FA</button>}>
                         <Modal.Title>Sorry, this option is unavailable.</Modal.Title>
                         <Modal.Subtitle>You cannot setup Two-Factor Authentication at this moment.</Modal.Subtitle>

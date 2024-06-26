@@ -23,8 +23,8 @@ export default function HomePage() {
             </div>
 
             <div className='flex flex-col px-6 lg:py-12 lg:px-48 mt-6 mb-6'>
-              <Alert type={"notice"} style={"subtle"} className={"mb-4"}>
-                <AlertTitle>Notice to all users.</AlertTitle>
+              <Alert type={"alert"} style={"subtle"} className={"mb-4"}>
+                <AlertTitle>Here be dragons!</AlertTitle>
                 <AlertSubtitle>This is a development version of Command - some things may not work as expected or may be unfinished.</AlertSubtitle>
               </Alert>
               

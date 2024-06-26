@@ -1,13 +1,13 @@
 "use client";
 
 import { AdjustmentsHorizontalIcon, ArrowRightEndOnRectangleIcon, ArrowRightStartOnRectangleIcon, Bars2Icon, BookmarkIcon, ChevronDownIcon,ChevronLeftIcon, ChevronRightIcon, HomeIcon, MagnifyingGlassIcon, MapPinIcon, PlusIcon, UserCircleIcon, UserIcon, UserPlusIcon, ViewColumnsIcon } from "@heroicons/react/16/solid";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 import { getAllUserMembershipRecords } from "@/app/(general)/lib/data";
+import { useSession } from "@/app/(general)/lib/sessioncontext";
 
 import ProfileImage from "../account/ProfileImage";
 import Menu, { MenuLink, MenuUser } from "../menu/menu";
@@ -26,13 +26,13 @@ export default function Sidebar() {
     const [isLoading, setIsLoading] = useState(true);
     const pathname = usePathname();
 
-    const { data: session } = useSession();
+    const { user } = useSession();
 
     useEffect(() => {
         async function fetchUserMembership() {
             setIsLoading(true);
-            if ( session?.user.id ) {
-                const memberships = await getAllUserMembershipRecords({ userID: session?.user.id });
+            if ( user?.id ) {
+                const memberships = await getAllUserMembershipRecords({ userID: user.id });
                 if ( memberships ) {
                     memberships.memberships.map((membership) => {
                         // eslint-disable-next-line no-unused-vars
@@ -47,12 +47,11 @@ export default function Sidebar() {
         }
 
         fetchUserMembership();
-    }, [session?.user.id])
+    }, [user?.id])
 
     return (
         <>
-            <AnimatePresence>
-                <div className="hidden md:flex">
+                <nav className="hidden md:flex" role="navigation">
                     <>
                         <div className="flex flex-row justify-between top-0 w-full h-fit p-3 fixed bg-card-light z-[50] md:hidden overflow-auto">
                             <button className="navlink !px-2 !py-2 z-[100] ml-2 !w-fit " onClick={() => setExpanded(!expanded)}><Bars2Icon className="w-4 h-4" /></button>    
@@ -84,35 +83,40 @@ export default function Sidebar() {
 
                             <Link className={`navlink-sidebar ${expanded ? "" : "max-w-fit"} ${pathname === "/create" ? "after-active" : null}`} href={"/create"}><PlusIcon className="w-5 h-5" /><span className={`${expanded ? "flex" : "hidden"}`}>Create</span></Link>
 
-                            { session ? 
+                            { user ? 
                                 <>
 
                                     <hr className="mt-4 mb-4"/>
 
-                                    <div className="flex flex-col gap-1">
-                                        <p className={`subtitle flex gap-1 whitespace-nowrap overflow-hidden w-[200px] overflow-ellipsis ${expanded ? "" : "hidden"}`}><MapPinIcon className="!w-5 !h-5" />Joined Communites</p>
-                                        { isLoading ?
-                                            <div className="flex flex-col mt-2 gap-1">
-                                                <div className='bg-border rounded-md animate-pulse !w-[40px] !h-[40px]' />  
-                                                <div className='bg-border rounded-md animate-pulse !w-[40px] !h-[40px]' />  
-                                                <div className='bg-border rounded-md animate-pulse !w-[40px] !h-[40px]' />  
+                                    {/* @ts-ignore */}
+                                    { userMemberships && userMemberships.memberships.length > 0 ? 
+                                        <>
+                                            <div className="flex flex-col gap-1">
+                                                { isLoading ?
+                                                    <div className="flex flex-col gap-1">
+                                                        <div className='bg-border rounded-md animate-pulse !w-[40px] !h-[40px]' />  
+                                                        <div className='bg-border rounded-md animate-pulse !w-[40px] !h-[40px]' />  
+                                                        <div className='bg-border rounded-md animate-pulse !w-[40px] !h-[40px]' />  
+                                                    </div>
+                                                :
+                                                    <div className="flex flex-col gap-1">
+                                                        {/* @ts-ignore */}
+                                                        { userMemberships && userMemberships.memberships.map((membership) => {
+                                                            return <Link key={membership.community.id} className={`navlink-sidebar ${expanded ? "" : "max-w-fit"} ${pathname === `/c/${membership.community.name}` ? "after-active" : null}`} href={`/c/${membership.community.name}`}><img src={membership.community.image} alt={membership.community.name} className="w-5 h-5 rounded" /><span className={`${expanded ? "flex" : "hidden"}`}>{membership.community.name}</span></Link> 
+                                                        })}
+                                                    </div>                               
+                                                }
                                             </div>
-                                        :
-                                            <div className="flex flex-col mt-2 gap-1">
-                                                {/* @ts-ignore */}
-                                                { userMemberships && userMemberships.memberships.map((membership) => {
-                                                    return <Link key={membership.community.id} className={`navlink-sidebar ${expanded ? "" : "max-w-fit"} ${pathname === `/c/${membership.community.name}` ? "after-active" : null}`} href={`/c/${membership.community.name}`}><img src={membership.community.image} alt={membership.community.name} className="w-5 h-5 rounded" /><span className={`${expanded ? "flex" : "hidden"}`}>{membership.community.name}</span></Link> 
-                                                })}
-                                            </div>                                            
-                                        }
-                                    </div>
 
-                                    <hr className="mt-4 mb-4"/>
+                                            <hr className="mt-4 mb-4"/>                                    
+                                        </>
+                                    :
+                                        null
+                                    }
 
-                                    <div className="flex flex-col gap-1 overflow-x-hidden">
-                                        <p className={`subtitle flex gap-1 whitespace-nowrap overflow-hidden w-[200px] overflow-ellipsis ${expanded ? "" : "hidden"}`}><UserIcon className="!w-5 !h-5" />Your Account</p>
-                                        <div className="flex flex-col gap-1 mt-2">
-                                            <Link className={`navlink-sidebar ${expanded ? "" : "max-w-fit"} ${pathname === `/user/${session.user.username}` ? "after-active" : null}`} href={`/user/${session.user.username}`}><UserCircleIcon className="w-5 h-5" /><span className={`${expanded ? "flex" : "hidden"}`}>Profile</span></Link> 
+                                    <div className="flex flex-col overflow-x-hidden">
+                                        <div className="flex flex-col gap-1">
+                                            <Link className={`navlink-sidebar ${expanded ? "" : "max-w-fit"} ${pathname === `/user/${user.username}` ? "after-active" : null}`} href={`/user/${user.username}`}><UserCircleIcon className="w-5 h-5" /><span className={`${expanded ? "flex" : "hidden"}`}>Profile</span></Link> 
                                             <Link className={`navlink-sidebar ${expanded ? "" : "max-w-fit"} ${pathname === `/posts/saved` ? "after-active" : null}`} href={`/posts/saved`}><BookmarkIcon className="w-5 h-5" /><span className={`${expanded ? "flex" : "hidden"}`}>Saved Posts</span></Link> 
                                             <Link className={`navlink-sidebar ${expanded ? "" : "max-w-fit"} ${pathname === `/account/settings` ? "after-active" : null}`} href={`/account/settings`}><AdjustmentsHorizontalIcon className="w-5 h-5" /><span className={`${expanded ? "flex" : "hidden"}`}>Settings</span></Link> 
                                             <LogoutButton className={"navlink-sidebar"}><ArrowRightStartOnRectangleIcon className="w-5 h-5" /><span className={`${expanded ? "flex" : "hidden"}`}>Logout</span></LogoutButton>
@@ -135,15 +139,15 @@ export default function Sidebar() {
 
                         </div>  
                     </motion.div>                     
-                </div>
+                </nav>
 
-                <div className="flex md:hidden">
+                <nav className="flex md:hidden" role="navigation">
                     <>
-                        <div className="flex flex-row justify-between top-0 w-full h-fit p-3 fixed bg-card-light z-[50] md:hidden">
-                            <button className="navlink !px-2 !py-2 z-[100] ml-2 !w-fit " onClick={() => setExpanded(!expanded)}><Bars2Icon className="w-4 h-4" /></button>  
-                            { session?.user && 
+                        <div className="flex flex-row top-0 w-screen min-w-0 h-fit p-3 fixed bg-card-light z-[50] md:hidden justify-between">
+                            <button className="navlink !px-2 !py-2 z-[100] ml-2 !w-fit" onClick={() => setExpanded(!expanded)}><Bars2Icon className="w-4 h-4" /></button>  
+                            { user && 
                                 // @ts-ignore
-                                <Menu trigger={<button className="navlink"><ProfileImage user={session.user} imgSize={"5"} /><ChevronDownIcon className="w-4 h-4" /></button>}>
+                                <Menu trigger={<button className="navlink"><ProfileImage user={user} imgSize={"5"} /><ChevronDownIcon className="w-4 h-4" /></button>}>
                                     <MenuUser />
                                     <hr className='mt-1 mb-1' />
                                     <MenuLink text={"Saved Posts"} icon={<BookmarkIcon />} link={"/posts/saved"} />
@@ -164,7 +168,7 @@ export default function Sidebar() {
                         role="navigation"
                         aria-label="Sidebar"
                     >
-                        <div className="sticky top-4 overflow-y-auto">
+                        <div className="sticky top-4 overflow-y-scroll">
                             <div className={`flex flex-row items-center justify-between`}>
                                 <Link className={`z-50 ml-0 mr-0 flex font-extrabold text-2xl hover:text-gray-300 transition-all whitespace-nowrap overflow-hidden w-[100px] overflow-ellipsis`} href={"/"}>CMD/&gt;</Link>
                                 <button className="navlink !px-2 !py-2" onClick={() => setExpanded(!expanded)} aria-label={ expanded ? "Close Sidebar" : "Open Sidebar"}>{ expanded ? <ChevronLeftIcon className="w-5 h-5" /> : <ChevronRightIcon className="w-5 h-5" /> }</button>
@@ -180,21 +184,34 @@ export default function Sidebar() {
 
                             <Link className={`navlink-sidebar ${pathname === "/create" ? "after-active" : null}`} href={"/create"}><PlusIcon className="w-5 h-5" /><span>Create</span></Link>
 
-                            { session ? 
+                            { user ? 
 
                                 <>
-                                
                                     <hr className="mt-4 mb-4"/>
 
-                                    <div className="flex flex-col gap-1">
-                                        <p className={`subtitle flex gap-1 whitespace-nowrap overflow-hidden w-[200px] overflow-ellipsis ${expanded ? "" : "hidden"}`}><MapPinIcon className="!w-5 !h-5" />Joined Communites</p>
-                                        <div className="flex flex-col mt-2 gap-1">
-                                            {/* @ts-ignore */}
-                                            { userMemberships && userMemberships.memberships.map((membership) => {
-                                                return <Link key={membership.community.id} className={`navlink-sidebar ${expanded ? "" : "max-w-fit"} ${pathname === `/c/${membership.community.name}` ? "after-active" : null}`} href={`/c/${membership.community.name}`}><img src={membership.community.image} alt={membership.community.name} className="w-5 h-5 rounded" /><span className={`${expanded ? "flex" : "hidden"}`}>{membership.community.name}</span></Link> 
-                                            })}
-                                        </div>
-                                    </div>                      
+                                    {/* @ts-ignore */}
+                                    { userMemberships && userMemberships.memberships.length > 0 ? 
+                                        <>
+                                            <div className="flex flex-col gap-1">
+                                                { isLoading ?
+                                                    <div className="flex flex-col gap-1">
+                                                        <div className='bg-border rounded-md animate-pulse !w-[40px] !h-[40px]' />  
+                                                        <div className='bg-border rounded-md animate-pulse !w-[40px] !h-[40px]' />  
+                                                        <div className='bg-border rounded-md animate-pulse !w-[40px] !h-[40px]' />  
+                                                    </div>
+                                                :
+                                                    <div className="flex flex-col gap-1">
+                                                        {/* @ts-ignore */}
+                                                        { userMemberships && userMemberships.memberships.map((membership) => {
+                                                            return <Link key={membership.community.id} className={`navlink-sidebar ${expanded ? "" : "max-w-fit"} ${pathname === `/c/${membership.community.name}` ? "after-active" : null}`} href={`/c/${membership.community.name}`}><img src={membership.community.image} alt={membership.community.name} className="w-5 h-5 rounded" /><span className={`${expanded ? "flex" : "hidden"}`}>{membership.community.name}</span></Link> 
+                                                        })}
+                                                    </div>                               
+                                                }
+                                            </div>                              
+                                        </>
+                                    :
+                                        null
+                                    }                 
                                 </>
                                 :
                                 <>
@@ -212,8 +229,7 @@ export default function Sidebar() {
 
                         </div>  
                     </motion.div>                     
-                </div>
-            </AnimatePresence>        
+                </nav>        
         </>
     );
 }
