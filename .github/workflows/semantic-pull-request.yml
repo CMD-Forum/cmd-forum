@@ -14,23 +14,24 @@ jobs:
       statuses: write
     runs-on: ubuntu-latest
     steps:
-      - uses: amannn/action-semantic-pull-request@v5.5.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - with:
-          types:
-            feat
-            fix
-            chore
-            refactor
-            docs
-            style
-            test
-            perf
-            ci
-            build
-            revert
-          requireScope: false
-          ignoreLabels:
-            bot
-            ignore-semantic-pull-request
+        - name: semantic-pr
+          uses: amannn/action-semantic-pull-request@v5.5.2
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+            types:
+              feat
+              fix
+              chore
+              refactor
+              docs
+              style
+              test
+              perf
+              ci
+              build
+              revert
+            requireScope: false
+            ignoreLabels:
+              bot
+              ignore-semantic-pull-request
