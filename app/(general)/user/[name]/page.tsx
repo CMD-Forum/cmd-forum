@@ -10,7 +10,7 @@ export async function generateMetadata(
   { params }: { params: { name: string } },
 ): Promise<Metadata> {
   return {
-    title: params.name ? `@${params.name} - CMD` : "CMD/>",
+    title: params.name ? `@${params.name}` : "",
   }
 }
 

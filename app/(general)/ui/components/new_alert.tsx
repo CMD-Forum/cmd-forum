@@ -64,7 +64,7 @@ export default function Alert({
                 <div className="flex flex-col h-fit">
                     { children }       
                 </div>      
-                { closeBtn && <button className="navlink-ghost !px-1 !py-1 !w-5 !h-5 ml-auto !text-gray-300 hover:!text-white focus:!text-white" type="button" onClick={() => setVisible(false)}><XMarkIcon className="w-5 h-5" /></button> }
+                { closeBtn && <button className="navlink-ghost !px-1 !py-1 !w-5 !h-5 ml-auto !text-gray-300 hover:!text-white focus:!text-white" type="button" onClick={() => setVisible(false)} aria-label="Close Alert"><XMarkIcon className="w-5 h-5" /></button> }
             </div>  
              
         </div>

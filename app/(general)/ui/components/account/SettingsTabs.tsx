@@ -3,7 +3,7 @@
 import { ChatBubbleBottomCenterTextIcon, LockClosedIcon, PaintBrushIcon, UserIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 
-import Alert, { AlertTitle } from "../new_alert";
+import Alert, { AlertSubtitle, AlertTitle } from "../new_alert";
 import AccountSettings, { AppearanceSettings, PostSettings, SecuritySettings } from "../settings/settings";
 
 export default function SettingsTabs() {
@@ -20,21 +20,34 @@ export default function SettingsTabs() {
             </div>   
 
             <div className={`${ activeTab === 1 ? "flex flex-col w-full" : "hidden" }`}>
-                <Alert type={"notice"} className="mb-4">
-                    <AlertTitle>Settings are currently unavailable.</AlertTitle>
+                <Alert type={"alert"} className="mb-4" closeBtn={false}>
+                    <AlertTitle>Settings are partially unavailable.</AlertTitle>
+                    <AlertSubtitle>Most settings are unavailable as they have yet to be properly implemented.</AlertSubtitle>
                 </Alert>
                 <AccountSettings />
             </div>
 
             <div className={`${ activeTab === 2 ? "flex flex-col w-full" : "hidden" }`}>
+                <Alert type={"alert"} className="mb-4" closeBtn={false}>
+                    <AlertTitle>Settings are partially unavailable.</AlertTitle>
+                    <AlertSubtitle>Most settings are unavailable as they have yet to be properly implemented.</AlertSubtitle>
+                </Alert>
                 <PostSettings />
             </div>
 
             <div className={`${ activeTab === 3 ? "flex flex-col w-full" : "hidden"}`}>
+                <Alert type={"alert"} className="mb-4" closeBtn={false}>
+                    <AlertTitle>Settings are partially unavailable.</AlertTitle>
+                    <AlertSubtitle>Most settings are unavailable as they have yet to be properly implemented.</AlertSubtitle>
+                </Alert>
                 <AppearanceSettings />
             </div>
 
             <div className={`${ activeTab === 4 ? "flex flex-col w-full" : "hidden"}`}>
+                <Alert type={"alert"} className="mb-4" closeBtn={false}>
+                    <AlertTitle>Settings are partially unavailable.</AlertTitle>
+                    <AlertSubtitle>Most settings are unavailable as they have yet to be properly implemented.</AlertSubtitle>
+                </Alert>
                 <SecuritySettings />
             </div>
 

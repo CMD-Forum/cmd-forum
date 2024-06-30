@@ -1,9 +1,9 @@
 import { prisma } from "@/app/(general)/lib/db";
 
-import { CardPost, FullPost } from "../../components/posts/post";
-import { CardPostSkeleton, FullPostSkeleton } from "../../skeletons/Post";
 import ProfileMain from "../../components/account/ProfileMain";
+import { CardPost, FullPost } from "../../components/posts/post";
 import { ProfileMainSkeleton } from "../../skeletons/Account";
+import { CardPostSkeleton, FullPostSkeleton } from "../../skeletons/Post";
 
 export default async function SkeletonPage() {
 

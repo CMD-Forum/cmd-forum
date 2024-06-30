@@ -7,6 +7,27 @@ export const LoginSchema = z.object({
 
 })
 
+export const SignupSchema = z.
+    object({
+        username: z
+            .string()
+            .min(2, {
+                message: "Your username must be at least 2 characters."
+            })
+            .max(25, {
+                message: "Your username must be no longer than 25 characters."
+            })
+            .regex(/^[a-z0-9_-]+$/, "Your username must only contains letters, numbers, underscores, hyphens and be lowercase."),
+        email: z      
+            .string()
+            .min(1, "Email is required.")
+            .email("Your email must be in a valid format."),
+        password: z
+            .string()
+            .min(1, "Password is required.")
+            .min(8, "Password must have 8 characters"),
+    })
+
 export const UpdateUsernameSchema = z.object({
 
     userID: z.string(),

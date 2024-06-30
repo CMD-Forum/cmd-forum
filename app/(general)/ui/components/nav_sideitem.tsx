@@ -20,19 +20,20 @@ import { Community } from "@prisma/client";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link"
 import { usePathname } from "next/navigation";
-import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react";
+
+import { useSession } from "@/app/(general)/lib/sessioncontext";
 
 import { countCommunityMembers, createUserMembershipRecord, deleteUserMembershipRecord, getAllUserMembershipRecords } from "../../lib/data";
 import { inter } from "../fonts";
-import Alert, { AlertSubtitle, AlertTitle } from "./new_alert";
 import { CommunityInfobarSkeleton } from "../skeletons/Community";
+import Alert, { AlertSubtitle, AlertTitle } from "./new_alert";
 
 export function NavSideItems() {
 
     const pathname = usePathname();
     const [expanded, setExpanded] = useState(false);
-    const { data: session } = useSession();
+    const session = useSession();
 
     const toggleDrawer = () => {
         if ( expanded === true ) {
@@ -116,11 +117,11 @@ export function NavSideItems() {
 
                     <div className="mt-auto flex flex-col mb-2">
                         <Link 
-                            className={`navlink-ghost !w-full ${pathname === `/user/${session.user.username}` ? "active" : null}`} 
-                            href={`/user/${session.user.username}`} 
+                            className={`navlink-ghost !w-full ${pathname === `/user/${session.user?.username}` ? "active" : null}`} 
+                            href={`/user/${session.user?.username}`} 
                             prefetch={true}>
-                            { session.user.image ? <img className="w-5 h-5 mr-1 rounded" src={session.user.image} alt={"Your profile image."} /> : <UserIcon className="w-5 h-5 mr-1" /> }
-                            {session.user.username}
+                            { session.user?.image ? <img className="w-5 h-5 mr-1 rounded" src={session.user?.image} alt={"Your profile image."} /> : <UserIcon className="w-5 h-5 mr-1" /> }
+                            {session.user?.username}
                         </Link>
                     </div>
                     
@@ -177,7 +178,7 @@ export function BottombarItems() {
 export function TopbarItems() {
 
     const pathname = usePathname();
-    const { data: session } = useSession();
+    const session = useSession();
 
     return (
 
@@ -293,15 +294,15 @@ export function CommunityInfobar( { community }: { community: Community } ) {
     const [error, setError] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    const { data: session } = useSession();
+    const session = useSession();
 
     useEffect(() => {
         setError("");
         setIsLoading(true);
         async function fetchUserMembership() {
             try {
-                if ( session?.user.id ) {
-                    const memberships = await getAllUserMembershipRecords({ userID: session?.user.id });
+                if ( session.user?.id ) {
+                    const memberships = await getAllUserMembershipRecords({ userID: session.user?.id });
                     const membership_number = await countCommunityMembers({ communityID: community.id });
                     if ( memberships ) {
                         // @ts-ignore
@@ -321,7 +322,7 @@ export function CommunityInfobar( { community }: { community: Community } ) {
             }
         }
         fetchUserMembership();
-    }, [community.id, session?.user.id])
+    }, [community.id, session.user?.id])
 
     const joinCommunity = async () => {
         try {
@@ -396,17 +397,17 @@ export function CommunityInfobar( { community }: { community: Community } ) {
                     { error && <Alert type="error" className="mt-4"><AlertTitle>Oops, something went wrong!</AlertTitle><AlertSubtitle>{ error }</AlertSubtitle></Alert> }
 
                     <div className='flex flex-row gap-2 mt-4 mb-4'>
-                        { session?.user.id 
+                        { session.user?.id 
                         ?
-                            <button className='navlink justify-center items-center' data-navlink-enabled={isMember ? "true" : "false"} onClick={isMember ? () => leaveCommunity() : () => joinCommunity()}>
+                            <button className='navlink justify-center items-center !px-2 md:!px-3' data-navlink-enabled={isMember ? "true" : "false"} onClick={isMember ? () => leaveCommunity() : () => joinCommunity()}>
                                 <PlusIcon className="font-medium h-5 w-5" />
-                                <p className='flex items-center h-full'>{ isMember ? "Joined" : "Join"}</p>
+                                <p className='items-center h-full hidden md:flex'>{ isMember ? "Joined" : "Join"}</p>
                             </button> 
                         :
                             null
                         }
-                        <Link className='navlink justify-center items-center' href={`/c/${community.name}/info`}><BookOpenIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Information</p></Link>
-                        <Link className='navlink justify-center items-center' href={`/c/${community.name}/moderation`}><ShieldCheckIcon className="font-medium h-5 w-5" /><p className='flex items-center h-full'>Moderation</p></Link>    
+                        <Link className='navlink justify-center items-center !px-2 md:!px-3' href={`/c/${community.name}/info`}><BookOpenIcon className="font-medium h-5 w-5" /><p className='items-center h-full hidden md:flex'>Information</p></Link>
+                        <Link className='navlink justify-center items-center !px-2 md:!px-3' href={`/c/${community.name}/moderation`}><ShieldCheckIcon className="font-medium h-5 w-5" /><p className='items-center h-full hidden md:flex'>Moderation</p></Link>    
                     </div>
                 </div>
             </div>  

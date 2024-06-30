@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Link from "next/link";
  
 export const metadata: Metadata = {
-  title: 'About - CMD',
+  title: 'About',
 };
 
 export default function AboutPage() {

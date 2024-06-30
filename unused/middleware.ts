@@ -1,10 +1,4 @@
-import NextAuth from "next-auth";
-
-import authConfig from "@/auth.config";
-
-const { auth } = NextAuth(authConfig);
-
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import {
     apiAuthPrefix,
@@ -14,11 +8,12 @@ import {
     publicOnlyRoutes
 } from "@/routes"
 
-// @ts-ignore
-export default auth((req) => {
+import { getAuth } from "../app/(general)/lib/auth";
 
-    const { nextUrl } = req;
-    const isLoggedIn = !!req.auth;
+export async function middleware(request: NextRequest) {
+
+    const { nextUrl } = request
+    const isLoggedIn = !!getAuth();
 
     const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
     const isPrivateRoute = privateRoutes.includes(nextUrl.pathname);
@@ -45,20 +40,10 @@ export default auth((req) => {
         return Response.redirect(new URL("/posts", nextUrl));
     }
 
-    /*if ( nextUrl.pathname === "/ui/dev" ) { // Broken, will fix later - 11/05/24.
-        if ( req.auth ) 
-        if ( req.auth?.user.role !== "ADMIN" ) {
-            return Response.redirect(new URL("/404", nextUrl));
-        };
-    }; */
-
     if ( nextUrl.pathname === "/" ) {
         return Response.redirect(new URL("/posts", nextUrl));
     }
-
-    return NextResponse.next();
-
-})
+}
 
 export const config = {
     matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],

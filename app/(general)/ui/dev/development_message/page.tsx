@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import LargeDropdown from "../../components/large_dropdown";
  
 export const metadata: Metadata = {
-  title: 'Development Message - CMD',
+  title: 'Development Message',
 };
 
 export default function DevelopmentMessage() {

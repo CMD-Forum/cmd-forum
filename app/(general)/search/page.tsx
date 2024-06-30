@@ -7,7 +7,7 @@ import SearchBar from '../ui/components/search/searchbar';
 import SearchResults from '../ui/components/search/searchresults';
  
 export const metadata: Metadata = {
-  title: 'Search - CMD',
+  title: 'Search',
 };
 
 export default function Search({
