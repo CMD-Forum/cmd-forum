@@ -22,7 +22,7 @@ module.exports = {
         'card': '#0E0E0E',
         'card-light': 'hsl(0, 0%, 7%)',
         'border': 'hsl(60, 2%, 10%)',
-        'border-light': 'hsl(60, 2%, 19%)',
+        'border-light': 'hsl(60 2% 19% / 0.6)',
         'accent-blue': 'hsl(215, 93%, 58%)',
       },
       borderWidth: {

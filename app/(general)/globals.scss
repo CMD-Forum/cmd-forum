@@ -59,6 +59,20 @@ p {
   @extend .subtitle;
 }
 
+code {
+  @apply font-IBM_PLEX_MONO;
+  @apply text-sm;
+}
+
+.code-block {
+  @apply font-IBM_PLEX_MONO;
+  @apply text-sm;
+  @apply text-gray-300;
+  @apply p-4;
+  @apply bg-card;
+  @apply rounded-md;
+}
+
 // Main
 
 .navlink {
@@ -67,15 +81,15 @@ p {
   @apply text-white;
   @apply decoration-2; 
   @apply transition-all;
-  @apply bg-transparent;
+  @apply bg-card;
   @apply hover:bg-border;
-  @apply focus:bg-border;  
+  @apply active:bg-card;  
   @apply px-3;
   @apply py-2;
   @apply border-1;
   @apply border-border;
   @apply hover:border-border-light;
-  @apply focus:border-border-light;
+  @apply active:border-border-light;
   @apply rounded-md;
   @apply flex;
   @apply gap-1.5;
@@ -108,7 +122,7 @@ p {
 
 .navlink:disabled {
   @apply text-gray-400;
-  @apply hover:bg-transparent;
+  @apply bg-card;
   @apply cursor-not-allowed;
   @apply border-border #{!important};
 }
@@ -126,12 +140,16 @@ p {
   @apply border-0;
 }
 
+.navlink-ghost:disabled {
+  @apply hover:bg-card;
+}
+
 .navlink-full {
   @extend .navlink;
   @apply bg-white;
   @apply text-black;
   @apply hover:bg-neutral-300;
-  @apply focus:bg-neutral-300;
+  @apply active:bg-neutral-400;
   @apply border-0;
 }
 
@@ -147,21 +165,19 @@ p {
   @apply text-black;
 }
 
-.navlink-small {
-  @extend .navlink;
-  @apply h-[30px];
+.navlink.small, .navlink-full.small, .navlink-destructive.small, .navlink-emphasis.small, .navlink-ghost.navlink.small {
+  @apply py-1.5;
+  @apply px-2.5;
 }
 
 .navlink-destructive {
-
   @extend .navlink;
-  @apply bg-red-700;
+  @apply bg-red-500;
   @apply hover:bg-red-600;
-  @apply focus:bg-red-600;
+  @apply active:bg-red-700;
   @apply border-0;
   @apply transition-all;
   @apply text-white #{!important};
-
 }
 
 .navlink-destructive:disabled {
@@ -169,16 +185,7 @@ p {
   @apply hover:bg-red-800;
   @apply hover:cursor-not-allowed;
   @apply border-red-800;
-  @apply text-white;
-}
-
-.navlink-success {
-
-  @extend .navlink-full;
-  @apply bg-green-600;
-  @apply hover:bg-green-700;
-  @apply text-white;
-
+  @apply text-gray-400 #{!important};
 }
 
 .navlink-sidebar {

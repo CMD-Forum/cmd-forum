@@ -2,8 +2,9 @@
 
 import { verify } from "@node-rs/argon2";
 import { Prisma } from "@prisma/client";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { userAgent } from "next/server";
 
 import { lucia } from "../auth";
 import { prisma } from "../db";
@@ -13,6 +14,12 @@ export async function login(state: any, formData: FormData) {
 
     // await new Promise(resolve => setTimeout(resolve, 1000))
     // console.log({ formData });
+
+    const headersList = headers();
+
+    const userAgentStructure = {headers: headersList}
+    const agent = userAgent(userAgentStructure)
+    console.log(agent);
 
     if (formData === undefined) {
         return { error: "Sorry, the form failed to submit." }
@@ -45,7 +52,20 @@ export async function login(state: any, formData: FormData) {
             return { error: "Incorrect username or password." }
         }
 
-        const session = await lucia.createSession(user.id, {});
+        const session = await lucia.createSession(user.id, {
+            ip_address: headersList.get('x-real-ip') || headersList.get('x-forwarded-for') || "Unknown",
+            userAgent: headersList.get('user-agent') || "Unknown",
+            isBot: agent.isBot || false,
+            browser: agent.browser,
+            browserName: agent.browser.name || "Unknown",
+            browserVersion: agent.browser.version || "Unknown",
+            deviceModel: agent.device.model || "Unknown",
+            deviceType: agent.device.type || "Unknown",
+            deviceVendor: agent.device.vendor || "Unknown",
+            osName: agent.os.name || "Unknown",
+            osVersion: agent.os.version || "Unknown",
+            fresh: false
+        });
         const sessionCookie = lucia.createSessionCookie(session.id);
         cookies().set(
             sessionCookie.name,
@@ -81,6 +101,7 @@ export async function login(state: any, formData: FormData) {
         }
         // Validation Errors
         if (error instanceof Prisma.PrismaClientValidationError) {
+            logError("Prisma Engine is reporting that it has experienced the following error: \n" + error)
             return { error: "The database is experiencing issues, please try again later." }
         }
     }

@@ -29,3 +29,13 @@ export async function logout(): Promise<ActionResult> {
 	cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 	redirect("/login");
 }
+
+export async function action_invalidateSession( sessionID: string, redirectURL?: string ): Promise<ActionResult> {
+	await lucia.invalidateSession( sessionID )
+	redirect(redirectURL || "/");
+}
+
+export async function action_invalidateAllSessions( userID: string, redirectURL?: string ): Promise<ActionResult> {
+	await lucia.invalidateUserSessions( userID )
+	redirect(redirectURL || "/");
+}

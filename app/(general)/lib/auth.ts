@@ -27,6 +27,22 @@ export const lucia = new Lucia(adapter, {
 			role: attributes.role,
 			githubId: attributes.github_id,
 		};
+	},
+	getSessionAttributes: (attributes) => {
+		return {
+			ip_address: attributes.ip_address,
+			fresh: attributes.fresh,
+			userAgent: attributes.userAgent,
+			isBot: attributes.isBot,
+			browser: attributes.browser,
+			browserName: attributes.browserName,
+			browserVersion: attributes.browserVersion,
+			deviceModel: attributes.deviceModel,
+			deviceType: attributes.deviceType,
+			deviceVendor: attributes.deviceVendor,
+			osName: attributes.osName,
+			osVersion: attributes.osVersion
+		};
 	}
 });
 
@@ -40,6 +56,21 @@ declare module "lucia" {
 	interface Register {
 		Lucia: typeof lucia;
         DatabaseUserAttributes: DatabaseUserAttributes;
+		DatabaseSessionAttributes: DatabaseSessionAttributes;
+	}
+	interface DatabaseSessionAttributes {
+		ip_address: string;
+		fresh: boolean;
+		userAgent: string;
+		isBot: boolean;
+		browser: any;
+		browserName: string;
+		browserVersion: string;
+		deviceModel: string;
+		deviceType: string;
+		deviceVendor: string;
+		osName: string;
+		osVersion: string;
 	}
 }
 

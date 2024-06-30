@@ -158,7 +158,7 @@ export const MenuButton = ({ text, icon, onClick, destructive }: { text: string,
 
 }
 
-export const MenuItem = ({ text, icon }: { text: string, icon: React.ReactElement | null }) => {
+export const MenuItem = ({ text, icon }: { text: string, icon?: React.ReactElement | null }) => {
 
     return (
         <div 

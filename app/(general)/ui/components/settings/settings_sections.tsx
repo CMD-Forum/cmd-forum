@@ -4,6 +4,7 @@ import { useSession } from "@/app/(general)/lib/sessioncontext";
 
 import Modal from "../modal";
 import { ChangeAccountDescription, ChangeAccountName } from "./settings_actions";
+import Link from "next/link";
 
 // Account ////////////////////
 
@@ -135,6 +136,35 @@ export function Settings_Setup2FA() {
                     </Modal>
                     // <DeleteAccountModal userID={session.user.id} username={session.user.username} /> // Uncomment when restrictions are added and this actually works.  
                 }
+
+            </div>
+
+        </div>
+    );
+
+}
+
+// ManageSessions
+
+export function Settings_GotoSessions() {
+
+    const session = useSession();
+
+    return (
+        <div className='flex flex-col border-1 border-border rounded-md pt-6'>
+
+            <div className="px-6">
+                <h3 className='font-bold text-xl'>Sessions</h3>     
+                <p className='subtitle text-sm'>View and delete all active sessions.</p>
+            </div>
+
+            <div className="w-full border-t-1 border-border mt-6 flex" />   
+            
+            <div className='flex flex-col bg-card md:flex-row py-3 px-6 justify-between gap-3 items-center w-full'>
+
+                <p className="subtitle hidden md:flex text-sm"></p>
+
+                <Link href={"/account/settings/sessions"} aria-label="Go to Sessions" className="navlink-full">Go to Sessions</Link>
 
             </div>
 

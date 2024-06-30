@@ -3,7 +3,7 @@
 import { useSession } from "@/app/(general)/lib/sessioncontext";
 
 import ProfileImage from "../account/ProfileImage";
-import { Settings_ChangeAccountUsername, Settings_ChangeDescription, Settings_DeleteAccount, Settings_Setup2FA } from "./settings_sections";
+import { Settings_ChangeAccountUsername, Settings_ChangeDescription, Settings_DeleteAccount, Settings_GotoSessions, Settings_Setup2FA } from "./settings_sections";
 
 export default function AccountSettings() {
 
@@ -131,6 +131,8 @@ export function SecuritySettings() {
                 {/* */}
 
                 <Settings_Setup2FA />
+
+                <Settings_GotoSessions />
 
             </div>
         </div>
