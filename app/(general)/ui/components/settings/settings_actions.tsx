@@ -10,10 +10,10 @@ import { ChangeAccountDescription as FuncChangeAccountDescription,ChangeAccountU
 import { DeleteAccountSchema, UpdateDescriptionSchema, UpdateUsernameSchema } from "@/app/(general)/lib/schemas";
 
 import { inter } from "../../fonts";
-import Modal from "../modal";
+import Dialog from "../dialog/dialog";
 
 /**
- * Modal prompt with an input to change the specified accounts username.
+ * Dialog prompt with an input to change the specified accounts username.
  * @param userID The ID of the user to change.
  * @param btnType The type of the button, can also take any `className`.
  */
@@ -60,27 +60,30 @@ export function ChangeAccountName({ userID } : { userID: string }) {
     };
 
     return (
-        <Modal closeBtn={true} openBtn={true} openBtnComponent={<button className={"navlink-full"}>Change Username</button>}>
-            <Modal.Title>Change Your Username</Modal.Title>
-            <Modal.Subtitle>If you want to change your username, you can do it below.</Modal.Subtitle>
+        <Dialog>
+            <Dialog.Trigger><button className={"navlink-full"}>Change Username</button></Dialog.Trigger>
+            <Dialog.Content>
+                <Dialog.Title>Change Your Username</Dialog.Title>
+                <Dialog.Subtitle>If you want to change your username, you can do it below.</Dialog.Subtitle>
 
-            <Modal.Custom>
                 <input className={"generic_field w-full mb-2 hidden"} disabled={true} placeholder={userID}></input>
                 <input className={"generic_field w-full mb-2"} {...register('username')} placeholder={"New Username"}></input>
-            </Modal.Custom>
 
-            <Modal.Custom>{errors.username && <p className={`text-center md:!text-left subtitle`}>{errors.username.message}</p>}</Modal.Custom>
-            <Modal.Custom>{success && <p className={`text-center md:!text-left subtitle`}>{success}</p>}</Modal.Custom>
-            <Modal.Custom>{error && <p className={`text-center md:!text-left subtitle`}>{error}</p>}</Modal.Custom>
+                {errors.username && <p className={`text-center md:!text-left subtitle`}>{errors.username.message}</p>}
+                {success && <p className={`text-center md:!text-left subtitle`}>{success}</p>}
+                {error && <p className={`text-center md:!text-left subtitle`}>{error}</p>}
 
-            <Modal.Button type={"navlink-full"} loadingVariable={loading} className={""} onClick={handleSubmit(onSubmit)} spinnerColor={"black"}>Change your name</Modal.Button> 
-        </Modal>
+                <Dialog.ButtonContainer>
+                    <button className={"navlink-full"} onClick={handleSubmit(onSubmit)}>Change your name</button>
+                </Dialog.ButtonContainer>
+            </Dialog.Content>
+        </Dialog>
     );
 
 }
 
 /**
- * Modal prompt with an input to change the specified accounts description.
+ * Dialog prompt with an input to change the specified accounts description.
  * @param userID The ID of the user to change.
  * @param btnType The type of the button, can also take any `className`.
  */
@@ -128,37 +131,33 @@ export function ChangeAccountDescription({ userID } : { userID: string }) {
     };
 
     return (
-        <Modal 
-            closeBtn={true} 
-            openBtn={true} 
-            openBtnComponent={<button className={"navlink-full"}>Change Description</button>}
-        >
-            <Modal.Title>Change Your Description</Modal.Title>
-            <Modal.Subtitle>If you want to change your description, you can do it below.</Modal.Subtitle>
+        <Dialog>
+            <Dialog.Trigger><button className={"navlink-full"}>Change Description</button></Dialog.Trigger>
+            <Dialog.Content>
+                <Dialog.Title>Change Your Description</Dialog.Title>
+                <Dialog.Subtitle>If you want to change your description, you can do it below.</Dialog.Subtitle>
 
-            <Modal.Custom>
                 <input className={"generic_field w-full mb-2 hidden"} {...UpdateDescriptionForm.register('userID')} disabled={true} placeholder={userID}></input>
                 <input className={"generic_field w-full mb-2"} {...UpdateDescriptionForm.register('description')} placeholder={"New Description"}></input>
-            </Modal.Custom>
 
-            <Modal.Custom>{UpdateDescriptionForm.formState.errors.description && <p className={`text-center md:!text-left subtitle`}>{UpdateDescriptionForm.formState.errors.description.message}</p>}</Modal.Custom>
-            <Modal.Custom>{success && <p className={`text-center md:!text-left subtitle`}>{success}</p>}</Modal.Custom>
-            <Modal.Custom>{error && <p className={`text-center md:!text-left subtitle`}>{error}</p>}</Modal.Custom>
-
-            <Modal.Button type="navlink-full" loadingVariable={loading} spinnerColor="black" onClick={handleSubmit(onSubmit)}>Change Description</Modal.Button> 
-        </Modal>            
-
+                {UpdateDescriptionForm.formState.errors.description && <p className={`text-center md:!text-left subtitle`}>{UpdateDescriptionForm.formState.errors.description.message}</p>}
+                {success && <p className={`text-center md:!text-left subtitle`}>{success}</p>}
+                {error && <p className={`text-center md:!text-left subtitle`}>{error}</p>}
+                <Dialog.ButtonContainer>
+                    <button className="navlink-full" onClick={handleSubmit(onSubmit)}>Change Description</button>    
+                </Dialog.ButtonContainer>
+            </Dialog.Content>
+        </Dialog>
     );
-
 }
 
 /**
- * Modal prompt that asks if the user wants to delete their account.
+ * Dialog prompt that asks if the user wants to delete their account.
  * @param userID The ID of the user to change.
  * @param btnType The type of the button, can also take any `className`.
  */
 
-export function DeleteAccountModal({ userID, username } : { userID: string, username: string }) {
+export function DeleteAccountDialog({ userID, username } : { userID: string, username: string }) {
 
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
@@ -199,22 +198,25 @@ export function DeleteAccountModal({ userID, username } : { userID: string, user
     };
 
     return (
-        <Modal closeBtn={true} openBtn={true} openBtnComponent={<button className={"navlink-destructive"}>Delete Account</button>}>
-            <Modal.Title>Delete Your Account</Modal.Title>
-            <Modal.Subtitle>If you want to delete your account, you can do it below. Type <code className={`bg-black px-2 py-1 rounded border-1 border-border text-sm ${inter.className}`}>{username}</code> below to confirm your decision.</Modal.Subtitle>
+        <Dialog>
+            <Dialog.Trigger><button className={"navlink-destructive"}>Delete Account</button></Dialog.Trigger>
+            <Dialog.Content>
+                <Dialog.Title>Delete Your Account</Dialog.Title>
+                <Dialog.Subtitle>If you want to delete your account, you can do it below. Type <code className={`bg-black px-2 py-1 rounded border-1 border-border text-sm ${inter.className}`}>{username}</code> below to confirm your decision.</Dialog.Subtitle>
 
-            <Modal.Custom>
                 <input className={"generic_field w-full mb-2 hidden"} disabled={true} placeholder={userID}></input>
                 <input className={"generic_field w-full mb-2 hidden"} disabled={true} {...register('username')} placeholder={username}></input>
                 <input className={"generic_field w-full mb-4"} {...register('confirmUsername')} placeholder={"johndoe"}></input>
-            </Modal.Custom>
 
-            <Modal.Custom>{errors.username && <p className={`text-center w-full md:text-left text-gray-300`}>{errors.username.message}</p>}</Modal.Custom>
-            <Modal.Custom><p className={`${success ? "flex" : "hidden"} text-center w-full md:text-left text-gray-300`}>{success}</p></Modal.Custom>
-            <Modal.Custom><p className={`${error ? "flex" : "hidden"} text-center w-full md:text-left text-gray-300`}>{error}</p></Modal.Custom>
+                {errors.username && <p className={`text-center w-full md:text-left text-gray-300`}>{errors.username.message}</p>}
+                <p className={`${success ? "flex" : "hidden"} text-center w-full md:text-left text-gray-300`}>{success}</p>
+                <p className={`${error ? "flex" : "hidden"} text-center w-full md:text-left text-gray-300`}>{error}</p>
 
-            <Modal.Button type={"navlink-destructive"} loadingVariable={loading} className={""} onClick={handleSubmit(onSubmit)} spinnerColor="white">Delete your account</Modal.Button> 
-        </Modal>
+                <Dialog.ButtonContainer>
+                    <button className={"navlink-destructive"} onClick={handleSubmit(onSubmit)}>Delete your account</button>
+                </Dialog.ButtonContainer>                     
+            </Dialog.Content>
+        </Dialog>
     );
 
 }

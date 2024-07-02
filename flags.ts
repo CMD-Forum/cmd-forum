@@ -12,7 +12,7 @@ export const enableSettings = flag({
 
 export const enableHomepage = flag({
     key: 'enable-homepage',
-    decide: () => false,
+    decide: () => true,
 });
 
 export const enableMaintenanceBanner = flag({

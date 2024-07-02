@@ -1,16 +1,19 @@
 "use client";
 
-import { ArchiveBoxXMarkIcon, ArrowRightEndOnRectangleIcon, BookmarkIcon, Cog6ToothIcon, EllipsisVerticalIcon, MegaphoneIcon, ShareIcon } from "@heroicons/react/16/solid";
+import { ArchiveBoxXMarkIcon, ArrowRightEndOnRectangleIcon, BookmarkIcon, ChevronUpIcon, Cog6ToothIcon, EllipsisVerticalIcon, MegaphoneIcon, ShareIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
+import { useState } from "react";
 
+import { DialogButton, DialogHeadings, DialogSubtitle, DialogTitle } from "../components/dialog/dialog";
+import Dialog from "../components/dialog/dialog";
 import LargeDropdown from "../components/large_dropdown";
 import Menu, { MenuButton, MenuCustom, MenuLink, MenuShare, MenuUser } from "../components/menu/menu";
-import Modal from "../components/modal";
 import Alert, { AlertSubtitle, AlertTitle } from "../components/new_alert";
 import LogoutButton from "../components/signoutButton";
-import ComIDBtn, { ComMemBtn } from "./test";
 
 export default function DeveloperPage() {
+
+    const [open, setOpen] = useState(false);
 
     return (
 
@@ -230,9 +233,9 @@ export default function DeveloperPage() {
                 </div>
 
                 <div className="flex flex-col gap-2 mt-4 w-full">
-                    <LargeDropdown title={"Modals"}>
+                    <LargeDropdown title={"Dialogs"}>
 
-                        <p className="mb-2">Modal</p>
+                        <p className="mb-2">Dialog</p>
                         <div className="code-block mb-4">
                             children: React.ReactNode;<br />
                             openBtn?: boolean;<br />
@@ -241,21 +244,21 @@ export default function DeveloperPage() {
                             closeBtnComponent?: React.ReactElement;
                         </div>
 
-                        <p className="mb-2">Modal.Title</p>
+                        <p className="mb-2">DialogTitle</p>
                         <div className="code-block mb-4">
                             children: React.ReactNode;<br />
                             className?: string;<br />
                             ...other
                         </div>
 
-                        <p className="mb-2">Modal.Subtitle</p>
+                        <p className="mb-2">DialogSubtitle</p>
                         <div className="code-block mb-4">
                             children: React.ReactNode;<br />
                             className?: string;<br />
                             ...other
                         </div>
 
-                        <p className="mb-2">Modal.Button</p>
+                        <p className="mb-2">DialogButton</p>
                         <div className="code-block mb-4">
                             children: React.ReactNode;<br />
                             className?: string;<br />
@@ -267,48 +270,49 @@ export default function DeveloperPage() {
                         </div>
 
                         <h2 className="header-5 w-full mb-4">Confirmation Dialog</h2>
-                        <Modal 
-                            closeBtn={false} 
-                            closeBtnComponent={<button className="navlink">Close</button>} 
-                            openBtn={true} 
-                            openBtnComponent={<button className={"navlink-full"}>Confirmation Dialog</button>}
-                        >
-                            <Modal.Title>Are you sure?</Modal.Title>
-                            <Modal.Subtitle>If you&apos;re sure you want to do this, click yes.</Modal.Subtitle>
-                            <Modal.Button type={"navlink-full"} className={""} spinnerColor={"black"}>Yes</Modal.Button> 
-                        </Modal>
+                        <Dialog>
+                            <Dialog.Trigger><button className="navlink">open</button></Dialog.Trigger>
+                            <Dialog.Content>
+                                <DialogTitle>Are you sure?</DialogTitle>
+                                <DialogSubtitle>If you&apos;re sure you want to do this, click yes.</DialogSubtitle>    
+                                <Dialog.ButtonContainer>
+                                    <DialogButton type={"navlink-full"} className={""} spinnerColor={"black"}>Yes</DialogButton> 
+                                </Dialog.ButtonContainer>                            
+                            </Dialog.Content>
+                        </Dialog>
 
                         <h2 className="header-5 w-full mb-4 mt-4">Confirmation Dialog w/ Close</h2>
-                        <Modal 
-                            closeBtn={true} 
-                            closeBtnComponent={<button className={"navlink"}>Close</button>} 
-                            openBtn={true} 
-                            openBtnComponent={<button className={"navlink-full"}>Confirmation Dialog</button>}
-                        >
-                            <Modal.Title>Are you sure?</Modal.Title>
-                            <Modal.Subtitle>If you&apos;re sure you want to do this, click yes.</Modal.Subtitle>
-                            <Modal.Button type={"navlink-full"} className={""} spinnerColor={"black"}>Yes</Modal.Button> 
-                        </Modal>
+                        
+                        <Dialog>
+                            <Dialog.Trigger><button className="navlink-destructive">Delete Post</button></Dialog.Trigger>
+                            <Dialog.Content>
+                                <DialogTitle>Delete this post?</DialogTitle>
+                                <DialogSubtitle>If you&apos;re sure you want to delete your post, click yes.</DialogSubtitle>
+                                <Dialog.ButtonContainer>
+                                    <Dialog.CloseButton><button className="navlink">Cancel</button></Dialog.CloseButton>
+                                    <button className="navlink-destructive">Yes</button>
+                                </Dialog.ButtonContainer>                                
+                            </Dialog.Content>
+                        </Dialog>
 
                         <h2 className="header-5 w-full mb-4 mt-4">Notice Dialog</h2>
-                        <Modal 
-                            closeBtn={true} 
-                            closeBtnComponent={<button className={"navlink-full"}>Close</button>} 
-                            openBtn={true} 
-                            openBtnComponent={<button className={"navlink-full"}>Notice Dialog</button>}
-                        >
-                            <Modal.Title>This feature is unavailable.</Modal.Title>
-                            <Modal.Subtitle>Sorry, this feature is currently unavailable.</Modal.Subtitle>
-                        </Modal>
+                        <Dialog>
+                            <Dialog.Trigger><button className="navlink"><ChevronUpIcon className="w-5 h-5" />Upvote</button></Dialog.Trigger>
+                            <Dialog.Content>
+                                <Dialog.Title>This feature is unavailable.</Dialog.Title>
+                                <Dialog.Subtitle>Sorry, this feature is currently unavailable.</Dialog.Subtitle>   
+                                <Dialog.ButtonContainer>
+                                    <Dialog.CloseButton><button className="navlink-full">Close</button></Dialog.CloseButton>
+                                </Dialog.ButtonContainer>
+                            </Dialog.Content>
+                        </Dialog>
 
                     </LargeDropdown>                    
                 </div>
 
                 <div className="flex flex-col gap-2 mt-4 w-full">
                     <LargeDropdown title={"Posts"}>
-
                         <h2 className="header-5 w-full mb-4">Card Post (TBD)</h2>
-
                     </LargeDropdown>                    
                 </div>
 

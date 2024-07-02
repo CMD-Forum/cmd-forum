@@ -2,10 +2,10 @@
 
 import { Session } from "lucia";
 import React from "react";
+import { FaChrome, FaFirefoxBrowser } from "react-icons/fa6";
 
 import { action_invalidateAllSessions, action_invalidateSession } from "@/app/(general)/lib/logout";
 import { useSession } from "@/app/(general)/lib/sessioncontext";
-import { FaChrome, FaFirefoxBrowser } from "react-icons/fa6";
 
 export default function ActiveSessions( { sessions }: { sessions: Array<Session> } ) {
 

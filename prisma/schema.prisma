@@ -111,7 +111,6 @@ model Session {
   fresh          Boolean  @default(true)
   userAgent      String   @default("Unknown")
 	isBot          Boolean  @default(false)
-  browser        Json
 	browserName    String   @default("Unknown")
 	browserVersion String   @default("Unknown")
 	deviceModel    String   @default("Unknown")

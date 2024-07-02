@@ -25,6 +25,7 @@ export default async function SessionPage() {
             </div>
 
             <div className="flex flex-col p-6 md:pt-12 lg:pb-12 lg:p-12 lg:px-48">
+                {/* @ts-ignore */}
                 <ActiveSessions sessions={sessions} />
             </div>
         </>

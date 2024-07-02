@@ -96,9 +96,6 @@ code {
   @apply items-center;
   @apply w-fit;
   @apply outline-none;
-  @apply focus-visible:border-1;
-  @apply focus-visible:border-border-light;
-  @apply focus-visible:bg-border;
 }
 
 .navlink.raised {
