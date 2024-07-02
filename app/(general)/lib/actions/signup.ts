@@ -3,8 +3,9 @@
 import { hash } from "@node-rs/argon2";
 import { Prisma } from "@prisma/client";
 import { generateIdFromEntropySize } from "lucia";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { userAgent } from "next/server";
 
 import { lucia } from "../auth";
 import { prisma } from "../db";
@@ -21,6 +22,11 @@ export async function signup(state: any, formData: FormData) {
 
     // await new Promise(resolve => setTimeout(resolve, 1000))
     // console.log({ formData });
+
+    const headersList = headers();
+
+    const userAgentStructure = {headers: headersList}
+    const agent = userAgent(userAgentStructure)
 
     if (formData === undefined) {
         return { error: "Sorry, the form failed to submit." }
@@ -102,7 +108,20 @@ export async function signup(state: any, formData: FormData) {
         }
     }
 
-    const session = await lucia.createSession(userId, {});
+    const session = await lucia.createSession(userId, {
+        ip_address: headersList.get('x-real-ip') || headersList.get('x-forwarded-for') || "Unknown",
+        userAgent: headersList.get('user-agent') || "Unknown",
+        isBot: agent.isBot || false,
+        browser: agent.browser,
+        browserName: agent.browser.name || "Unknown",
+        browserVersion: agent.browser.version || "Unknown",
+        deviceModel: agent.device.model || "Unknown",
+        deviceType: agent.device.type || "Unknown",
+        deviceVendor: agent.device.vendor || "Unknown",
+        osName: agent.os.name || "Unknown",
+        osVersion: agent.os.version || "Unknown",
+        fresh: false
+    });
 	const sessionCookie = lucia.createSessionCookie(session.id);
 	cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 	return redirect("/posts"); // Make onboarding flow on signup?
