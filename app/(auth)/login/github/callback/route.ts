@@ -1,10 +1,10 @@
 import { OAuth2RequestError } from "arctic";
 import { generateIdFromEntropySize } from "lucia";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
+import { userAgent } from "next/server";
 
 import { github, lucia } from "@/app/(general)/lib/auth";
 import { prisma } from "@/app/(general)/lib/db";
-import { redirect } from "next/navigation";
 
 export async function GET(request: Request): Promise<Response> {
 	const url = new URL(request.url);
@@ -16,6 +16,11 @@ export async function GET(request: Request): Promise<Response> {
 			status: 400
 		});
 	}
+
+	const headersList = headers();
+
+    const userAgentStructure = {headers: headersList}
+    const agent = userAgent(userAgentStructure)
 
 	try {
 		const tokens = await github.validateAuthorizationCode(code);
@@ -52,7 +57,20 @@ export async function GET(request: Request): Promise<Response> {
 		const existingUser = await prisma.user.findUnique({ where: { github_id: githubUser.id } });
 
 		if (existingUser) {
-			const session = await lucia.createSession(existingUser.id, {});
+			const session = await lucia.createSession(existingUser.id, {
+				ip_address: headersList.get('x-real-ip') || headersList.get('x-forwarded-for') || "Unknown",
+				userAgent: headersList.get('user-agent') || "Unknown",
+				isBot: agent.isBot || false,
+				browser: agent.browser,
+				browserName: agent.browser.name || "Unknown",
+				browserVersion: agent.browser.version || "Unknown",
+				deviceModel: agent.device.model || "Unknown",
+				deviceType: agent.device.type || "Unknown",
+				deviceVendor: agent.device.vendor || "Unknown",
+				osName: agent.os.name || "Unknown",
+				osVersion: agent.os.version || "Unknown",
+				fresh: false
+			});
 			const sessionCookie = lucia.createSessionCookie(session.id);
 			cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 			return new Response(null, {
@@ -77,7 +95,20 @@ export async function GET(request: Request): Promise<Response> {
             }
 		});
 
-		const session = await lucia.createSession(userId, {});
+		const session = await lucia.createSession(userId, {
+			ip_address: headersList.get('x-real-ip') || headersList.get('x-forwarded-for') || "Unknown",
+			userAgent: headersList.get('user-agent') || "Unknown",
+			isBot: agent.isBot || false,
+			browser: agent.browser,
+			browserName: agent.browser.name || "Unknown",
+			browserVersion: agent.browser.version || "Unknown",
+			deviceModel: agent.device.model || "Unknown",
+			deviceType: agent.device.type || "Unknown",
+			deviceVendor: agent.device.vendor || "Unknown",
+			osName: agent.os.name || "Unknown",
+			osVersion: agent.os.version || "Unknown",
+			fresh: false
+		});
 		const sessionCookie = lucia.createSessionCookie(session.id);
 		cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 		return new Response(null, {
