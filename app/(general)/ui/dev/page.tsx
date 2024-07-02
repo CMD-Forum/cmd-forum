@@ -4,7 +4,6 @@ import { ArchiveBoxXMarkIcon, ArrowRightEndOnRectangleIcon, BookmarkIcon, Chevro
 import Link from "next/link";
 import { useState } from "react";
 
-import { DialogButton, DialogHeadings, DialogSubtitle, DialogTitle } from "../components/dialog/dialog";
 import Dialog from "../components/dialog/dialog";
 import LargeDropdown from "../components/large_dropdown";
 import Menu, { MenuButton, MenuCustom, MenuLink, MenuShare, MenuUser } from "../components/menu/menu";
@@ -273,10 +272,10 @@ export default function DeveloperPage() {
                         <Dialog>
                             <Dialog.Trigger><button className="navlink">open</button></Dialog.Trigger>
                             <Dialog.Content>
-                                <DialogTitle>Are you sure?</DialogTitle>
-                                <DialogSubtitle>If you&apos;re sure you want to do this, click yes.</DialogSubtitle>    
+                                <Dialog.Title>Are you sure?</Dialog.Title>
+                                <Dialog.Subtitle>If you&apos;re sure you want to do this, click yes.</Dialog.Subtitle>    
                                 <Dialog.ButtonContainer>
-                                    <DialogButton type={"navlink-full"} className={""} spinnerColor={"black"}>Yes</DialogButton> 
+                                    <button className={"navlink-full"}>Yes</button> 
                                 </Dialog.ButtonContainer>                            
                             </Dialog.Content>
                         </Dialog>
@@ -286,8 +285,8 @@ export default function DeveloperPage() {
                         <Dialog>
                             <Dialog.Trigger><button className="navlink-destructive">Delete Post</button></Dialog.Trigger>
                             <Dialog.Content>
-                                <DialogTitle>Delete this post?</DialogTitle>
-                                <DialogSubtitle>If you&apos;re sure you want to delete your post, click yes.</DialogSubtitle>
+                                <Dialog.Title>Delete this post?</Dialog.Title>
+                                <Dialog.Subtitle>If you&apos;re sure you want to delete your post, click yes.</Dialog.Subtitle>
                                 <Dialog.ButtonContainer>
                                     <Dialog.CloseButton><button className="navlink">Cancel</button></Dialog.CloseButton>
                                     <button className="navlink-destructive">Yes</button>
