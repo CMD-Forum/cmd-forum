@@ -18,7 +18,7 @@ export function Footer() {
         <div className='w-full mt-auto p-12 lg:p-16 lg:px-48 px-8 bg-card z-50 border-0 gap-12 lg:gap-32 flex flex-col lg:flex-row'>
   
           <div className='flex flex-col gap-4 max-w-96'>
-            <Link className={`flex ${inter.className} font-extrabold text-4xl w-fit`} href="/"><p>CMD/&gt;</p></Link> 
+            <Link className={`font-extrabold text-3xl`} href="/">Command</Link> 
             {/*<div>
               <p className='header-4'>Subscribe to the Newsletter</p>   
               <p className='subtitle text-sm'>Get the most interesting posts delivered to your inbox weekly.</p>
