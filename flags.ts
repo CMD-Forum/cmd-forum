@@ -1,21 +1,21 @@
 import { unstable_flag as flag } from '@vercel/flags/next';
  
 export const showDevelopmentWarning = flag({
-  key: 'show-development-warning',
+  key: 'showDevelopmentWarning',
   decide: () => true,
 });
 
 export const enableSettings = flag({
-    key: 'enable-settings',
+    key: 'enableSettings',
     decide: () => true,
 });
 
 export const enableHomepage = flag({
-    key: 'enable-homepage',
+    key: 'enableHomepage',
     decide: () => false,
 });
 
 export const enableMaintenanceBanner = flag({
-    key: 'enable-maintenance-banner',
+    key: 'enableMaintenanceBanner',
     decide: () => false,
 });
