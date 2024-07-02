@@ -72,7 +72,7 @@ export function Settings_ChangeDescription() {
                         <DialogTitle>Sorry, this option is unavailable.</DialogTitle>
                         <DialogSubtitle>You cannot change your description at this moment, please try again later.</DialogSubtitle>
                     </Dialog>*/
-                    <ChangeAccountDescription userID={session.user.id} /> // Uncomment when restrictions are added and this actually works.  
+                    <ChangeAccountDescription userID={session.user.id} />
                 }
 
                 {/* <Switch onEnabled={() => console.log("enabled")} /> */}

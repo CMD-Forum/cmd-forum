@@ -84,7 +84,7 @@ export function DialogContent({
                 <AnimatePresence mode="wait">
                     {isOpen &&
                         <motion.div 
-                            className='fixed w-dvw h-dvh inset-0 flex items-center justify-center z-[9999999999999999999999] bg-semitransparent px-6'
+                            className='fixed w-dvw h-dvh inset-0 flex items-center justify-center z-[9999999999999999999999] bg-semitransparent px-6 overflow-hidden'
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
@@ -104,7 +104,7 @@ export function DialogContent({
                                     <XMarkIcon className="w-5 h-5 flex text-gray-300 hover:text-white cursor-pointer transition-all"></XMarkIcon>        
                                 </button>
 
-                                <div className="p-6">
+                                <div className="">
                                     {/* @ts-ignore */}
                                     <DialogContext.Provider value={{ isOpen, setIsOpen, isMounted }}>
                                         { children }    
@@ -120,6 +120,8 @@ export function DialogContent({
     ) : null;
 }
 
+Dialog.Content = DialogContent
+
 /**
  * ## DialogTitle
  * ---
@@ -130,7 +132,7 @@ export function DialogContent({
 
 export function DialogTitle ({ children, className = "", ...other }: { children: React.ReactNode, className?: string }) {
     return (
-        <h2 className={`header-3 max-w-full text-wrap ${className ? className : null}`} {...other}>{ children }</h2>    
+        <h2 className={`header-3 max-w-full text-wrap px-6 pt-6 ${className ? className : null}`} {...other}>{ children }</h2>    
     );
 }
 
@@ -146,7 +148,7 @@ Dialog.Title = DialogTitle
 
 export function DialogSubtitle ({ children, className = "", ...other }: { children: React.ReactNode, className?: string }) {
     return (
-        <p className={`pb-4 subtitle text-sm ${className}`} {...other}>{ children }</p>    
+        <p className={`subtitle text-sm px-6 pb-6 ${className}`} {...other}>{ children }</p>    
     );
 }
 
@@ -202,7 +204,7 @@ Dialog.Button = DialogButton
 
 export function DialogButtonContainer ({ children }: { children: React.ReactNode }) {
     return (
-        <div className={`flex justify-end gap-2`}>
+        <div className={`flex justify-end gap-2 px-6 py-4 border-t-1 border-border bg-card`}>
             { children }
         </div>
     );
@@ -211,40 +213,22 @@ export function DialogButtonContainer ({ children }: { children: React.ReactNode
 Dialog.ButtonContainer = DialogButtonContainer
 
 /**
- * ## DialogHeadings
+ * ## DialogBody
  * ---
- * Wrapper for the `DialogTitle` and `DialogSubtitle` component.
- * @param children
- * @param className Optional, but there if you want to use it.
- */
-
-export function DialogHeadings ({ children, className }: { children: React.ReactNode, className?: string }) {
-    return (
-        <div className={`flex flex-col gap-1 mb-2 ${className}`}>
-            { children }
-        </div>        
-    );
-}
-
-Dialog.Headings = DialogHeadings
-
-/**
- * ## DialogContent
- * ---
- * Wrapper for anything in the `Dialog` component.
+ * Wrapper for the `Dialog` component.
  * @param children
  * @param className Optional, but there if you want to use it.
  */
 
 export function DialogBody ({ children, className }: { children: React.ReactNode, className?: string }) {
     return (
-        <div className={`${className}`}>
+        <div className={`px-6 pb-6 ${className}`}>
             { children }
         </div>        
     );
 }
 
-Dialog.Content = DialogContent
+Dialog.DialogBody = DialogBody
 
 /**
  * ## DialogCloseButton

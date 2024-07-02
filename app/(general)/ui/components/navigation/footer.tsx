@@ -6,7 +6,7 @@ import { inter } from "../../fonts";
 /**
  * ## Footer
  * ---
- * Footer of the website. Should serve no use outside of being in the layout.
+ * Footer of the website.
  */
 
 export function Footer() {
@@ -55,15 +55,15 @@ export function Footer() {
   
         </div> 
   
-        <div className='flex flex-row w-full p-8 px-8 lg:px-48 bg-card-light justify-between'>
-            <div className="flex flex-row gap-6">
-                <p className='subtitle !text-sm'>© {currentYear} Command.</p>  
+        <div className='flex flex-col md:flex-row w-full p-8 px-8 lg:px-48 bg-card-light justify-between'>
+            <div className="flex flex-col md:flex-row gap-3 mb-3 md:mb-0">
+                <p className='subtitle !text-sm'>© {currentYear} Command, Inc.</p>  
                 <Link className="subtitle !text-sm hover:underline" href={"/about#terms"}>Terms</Link> 
                 <Link className="subtitle !text-sm hover:underline" href={"/about#privacy"}>Privacy</Link> 
                 <Link className="subtitle !text-sm hover:underline" href={"/sitemap"}>Sitemap</Link>
                 <Link className="subtitle !text-sm hover:underline" href={"/about#donate"}>Donate</Link>           
             </div>
-            <div className='flex flex-row gap-4'>
+            <div className='flex flex-row gap-3'>
                 <Link href={"https://github.com/CMD-Forum/cmd-forum"}><FaGithub className='w-6 h-6 text-gray-300 hover:text-white transition-all cursor-pointer' /></Link>
                 <Link href={"#"}><FaGooglePlay className='w-6 h-6 text-gray-300 hover:text-white transition-all cursor-pointer' /></Link>
                 <Link href={"#"}><FaAppStore className='w-6 h-6 text-gray-300 hover:text-white transition-all cursor-pointer' /></Link>

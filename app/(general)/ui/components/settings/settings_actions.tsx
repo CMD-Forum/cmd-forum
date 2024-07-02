@@ -137,8 +137,10 @@ export function ChangeAccountDescription({ userID } : { userID: string }) {
                 <Dialog.Title>Change Your Description</Dialog.Title>
                 <Dialog.Subtitle>If you want to change your description, you can do it below.</Dialog.Subtitle>
 
-                <input className={"generic_field w-full mb-2 hidden"} {...UpdateDescriptionForm.register('userID')} disabled={true} placeholder={userID}></input>
-                <input className={"generic_field w-full mb-2"} {...UpdateDescriptionForm.register('description')} placeholder={"New Description"}></input>
+                <Dialog.DialogBody>
+                    <input className={"generic_field w-full hidden"} {...UpdateDescriptionForm.register('userID')} disabled={true} placeholder={userID}></input>
+                    <input className={"generic_field w-full"} {...UpdateDescriptionForm.register('description')} placeholder={"New Description"}></input>
+                </Dialog.DialogBody>
 
                 {UpdateDescriptionForm.formState.errors.description && <p className={`text-center md:!text-left subtitle`}>{UpdateDescriptionForm.formState.errors.description.message}</p>}
                 {success && <p className={`text-center md:!text-left subtitle`}>{success}</p>}

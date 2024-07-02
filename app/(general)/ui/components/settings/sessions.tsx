@@ -6,6 +6,7 @@ import { FaChrome, FaFirefoxBrowser } from "react-icons/fa6";
 
 import { action_invalidateAllSessions, action_invalidateSession } from "@/app/(general)/lib/logout";
 import { useSession } from "@/app/(general)/lib/sessioncontext";
+import Dialog from "../dialog/dialog";
 
 export default function ActiveSessions( { sessions }: { sessions: Array<Session> } ) {
 
@@ -29,7 +30,7 @@ export default function ActiveSessions( { sessions }: { sessions: Array<Session>
                                 { isActiveSession ? <div className="flex gap-2 items-center"><span className="w-2 h-2 bg-green-300 rounded-full inline-block"></span><p className="!font-bold session-active-text !text-green-300">Current Session</p></div> : null }
                                 {/*<p><b>ID: </b>{session.id}</p>*/}
                                 <p suppressHydrationWarning><b>Expires: </b>{session.expiresAt.toLocaleDateString()}</p>
-                                { session.browserName 
+                                { session.browserName !== "Unknown"
                                 ? 
                                     <p className="flex gap-1 items-center">
                                         <b>Device Info: </b>
@@ -41,7 +42,7 @@ export default function ActiveSessions( { sessions }: { sessions: Array<Session>
                                         <p>{ session.osName ? session.osName + ' ' + session.osVersion : null }</p>
                                     </p> 
                                 : 
-                                    null 
+                                    <p><b>Device Info: </b>Unknown</p>
                                 }
                                 
                                 {/*{ session.userAgent ? <p><b>User Agent: </b>{session.userAgent}</p> : null }*/}
@@ -60,8 +61,18 @@ export default function ActiveSessions( { sessions }: { sessions: Array<Session>
             </div>*/}
 
             <div className="p-6 bg-card">
-                {/* @ts-ignore */}
-                <form action={() => action_invalidateAllSessions(currentSession.user.id)}><button className="navlink-destructive">Logout all sessions</button></form>
+                <Dialog>
+                    <Dialog.Trigger><button className="navlink-destructive">Logout all sessions</button></Dialog.Trigger>
+                    <Dialog.Content>
+                        <Dialog.Title>Logout all sessions?</Dialog.Title>
+                        <Dialog.Subtitle>This will sign you out of all devices and require to log back in again.</Dialog.Subtitle>
+                        <Dialog.ButtonContainer>
+                            <Dialog.CloseButton><button className="navlink">Cancel</button></Dialog.CloseButton>
+                            {/* @ts-ignore */}
+                            <form action={() => action_invalidateAllSessions(currentSession.user.id)}><button className="navlink-destructive">Logout</button></form> 
+                        </Dialog.ButtonContainer>
+                    </Dialog.Content>
+                </Dialog>
             </div>
 
         </div>
