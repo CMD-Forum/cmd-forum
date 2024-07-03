@@ -34,9 +34,7 @@ export default function PostList() {
     }    
 
     try {        
-
         useEffect(() => {
-
             setIsLoading(true),
             fetch("/api/posts/getAll/", {
                 method: 'POST',
@@ -49,30 +47,13 @@ export default function PostList() {
                 return res.json();
             })
             .then((data) => {
-                setPosts(data);
-            });
-
-            // Post Count
-
-            fetch("/api/posts/getAll/count/", {
-                method: 'GET',
-                headers:{
-                    "Content-Type": "application/json"
-                },
-            })
-            .then((res) => {
-                return res.json();
-            })
-            .then((data) => {
-                setTotalPosts(data);
+                setPosts(data.posts);
+                setTotalPosts(data.postCount);
                 setTotalPages(Math.ceil(totalPosts / 10))
                 setIsLoading(false);
-            });  
-
+            });
         }, [page, totalPosts]);    
-
     } catch ( error ) {
-
         return (
             <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'>
                 <p className='text-center text-gray-300 font-medium antialiased w-full'>Sorry, an error occurred.</p>
