@@ -51,8 +51,17 @@ body {
 
 a, button {
   @apply outline-none #{!important};
-  @apply focus-visible:outline-2 #{!important};
-  @apply focus-visible:outline-white #{!important};
+  @apply focus-visible:ring-2 #{!important};
+  @apply focus-visible:ring-offset-2 #{!important};
+  @apply focus-visible:ring-offset-background #{!important};
+  @apply rounded-sm;
+}
+
+.no-ring {
+  @apply ring-0 #{!important};
+  @apply ring-offset-0 #{!important};
+  @apply focus-visible:ring-0 #{!important};
+  @apply focus-visible:ring-offset-0 #{!important};
 }
 
 p {
@@ -90,6 +99,9 @@ code {
   @apply border-border;
   @apply hover:border-border-light;
   @apply active:border-border-light;
+  @apply focus:ring-2;
+  @apply ring-offset-2;
+  @apply ring-offset-background;
   @apply rounded-md;
   @apply flex;
   @apply gap-1.5;
@@ -127,6 +139,9 @@ code {
 .navlink[data-navlink-enabled="true"] {
   @apply border-border-light;
   @apply bg-border;
+  @apply ring-2;
+  @apply ring-offset-2;
+  @apply ring-offset-background;
 }
 
 .navlink-ghost {
@@ -186,7 +201,6 @@ code {
 }
 
 .navlink-sidebar {
-
   @extend .navlink;
   @apply h-fit;
   @apply w-full;
@@ -198,18 +212,18 @@ code {
   @apply hover:text-white #{!important};
   @apply hover:border-0;
   @apply focus:border-0;
+  @apply active:bg-border;
+  @apply ring-0 #{!important};
+  @apply ring-offset-0 #{!important};
   @apply border-transparent;
   @apply relative;
-
 }
 
 .navlink-sidebar.active {
-
   @apply bg-border;
   @apply text-white #{!important};
   @apply border-1 #{!important};
   @apply border-border-light #{!important};
-
 }
 
 .navlink-sidebar.after-active {
@@ -230,7 +244,6 @@ code {
 }
 
 .topbar-link {
-
   @apply text-sm;
   @apply hover:text-white #{!important};
   @apply transition-all;
@@ -241,14 +254,11 @@ code {
   @apply py-2;
   @apply rounded-md;
   @extend .subtitle;
-
 }
 
 .topbar-link.active {
-
   @apply text-white #{!important};
   @apply bg-border;
-
 }
 
 .topbar-link.active::after {
@@ -264,56 +274,45 @@ code {
 }
 
 .dropdown-menu {
-
   max-height: 0;
   overflow: hidden;
   transition: all 0.3s ease-out;
-
 }
 
 .dropdown-menu.open {
-    
   max-height: 200px;
   transition: all 0.3s ease-in;
-
 }
 
 
 .link_bg-t-full {
-
   @extend .navlink;
   width: 100% !important;
-
 }
 
 .pos-unset {
-
   position: unset !important;
-
 }
 
-.generic_field {
-
+textarea,
+input {
   @apply bg-background;
   @apply rounded-md;
   @apply h-9;
   @apply px-2;
-  @apply outline-none;
+  @apply outline-none #{!important};
   @apply border-1;
   @apply border-border;
-  @apply focus:border-border-light;
-  @apply ring-border-light;
   @apply focus:ring-2;
+  @apply ring-offset-2;
+  @apply ring-offset-background;
   @apply transition-all;
   @extend .subtitle;
-
 }
 
 .generic_field.errored {
-
   @apply ring-2;
   @apply ring-red-300;
-
 }
 
 .generic_field:disabled {

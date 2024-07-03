@@ -70,7 +70,7 @@ export default function Sidebar() {
                         <div className="sticky top-4 overflow-y-auto overflow-x-hidden">
                             <div className={`flex flex-row items-center ${expanded ? "justify-between" : "justify-center"} `}>
                                 { expanded ? <Link className={`z-50 ml-0 mr-0 flex font-extrabold text-2xl hover:text-gray-300 transition-all whitespace-nowrap overflow-hidden w-fit overflow-ellipsis`} href={"/"}>Command</Link> : null }
-                                <button className="navlink !px-2 !py-2" onClick={() => setExpanded(!expanded)} aria-label={ expanded ? "Close Sidebar" : "Open Sidebar"}>{ expanded ? <ChevronLeftIcon className="w-5 h-5" /> : <ChevronRightIcon className="w-5 h-5" /> }</button>
+                                <button className="navlink !px-2 !py-2 no-ring" onClick={() => setExpanded(!expanded)} aria-label={ expanded ? "Close Sidebar" : "Open Sidebar"}>{ expanded ? <ChevronLeftIcon className="w-5 h-5" /> : <ChevronRightIcon className="w-5 h-5" /> }</button>
                             </div>
                             <hr className="mt-4 mb-4"/>
                             <div className="flex flex-col gap-1">
