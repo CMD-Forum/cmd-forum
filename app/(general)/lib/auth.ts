@@ -34,7 +34,6 @@ export const lucia = new Lucia(adapter, {
 			fresh: attributes.fresh,
 			userAgent: attributes.userAgent,
 			isBot: attributes.isBot,
-			browser: attributes.browser,
 			browserName: attributes.browserName,
 			browserVersion: attributes.browserVersion,
 			deviceModel: attributes.deviceModel,
@@ -63,7 +62,6 @@ declare module "lucia" {
 		fresh: boolean;
 		userAgent: string;
 		isBot: boolean;
-		browser: any;
 		browserName: string;
 		browserVersion: string;
 		deviceModel: string;

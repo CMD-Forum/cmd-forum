@@ -13,6 +13,8 @@
     "migrate:dev": "dotenv -e .env.local -- npx prisma migrate dev --name init",
     "dbpush": "dotenv -e .env -- npx prisma db push",
     "dbpush:dev": "dotenv -e .env.local -- npx prisma db push",
+    "seed": "dotenv -e .env -- npx prisma db seed",
+    "seed:dev": "dotenv -e .env.local -- npx prisma db seed",
     "studio": "dotenv -e .env -- npx prisma studio",
     "studio:dev": "dotenv -e .env.local -- npx prisma studio",
     "postinstall": "npx prisma generate",

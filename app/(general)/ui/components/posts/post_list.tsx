@@ -65,7 +65,7 @@ export default function PostList() {
             })
             .then((data) => {
                 setTotalPosts(data);
-                setTotalPages(totalPosts / 10)
+                setTotalPages(Math.ceil(totalPosts / 10))
                 setIsLoading(false);
             });  
 
@@ -113,9 +113,7 @@ export default function PostList() {
 
     return (
         <div className='flex flex-col gap-4'>
-
             {Array.isArray(posts) && posts.map((post) => {
-        
                 return (
                     <div 
                       key={post.id}
@@ -134,15 +132,14 @@ export default function PostList() {
                         communityId={post.community.id}
                         author={post.author}
                         community={post.community}
- 
                       />
                     </div>
-
                   );
             })}
-            <div className='flex gap-4'>
+            <div className='flex gap-4 items-center'>
                 <button onClick={() => lastPage()} className='navlink !px-2' disabled={ page === 0 ? true : false } aria-label='Last Page'><ArrowLeftIcon className='w-5 h-5' /></button>  
-                <button onClick={() => nextPage()} className='navlink !px-2' disabled={ pageForwardAllowed === false ? true : false } aria-label='Next Page'><ArrowRightIcon className='w-5 h-5' /></button>            
+                <p className='subtitle h-fit'>{ page + 1 } of { totalPages }</p>
+                <button onClick={() => nextPage()} className='navlink !px-2' disabled={ !pageForwardAllowed || page === totalPages - 1 } aria-label='Next Page'><ArrowRightIcon className='w-5 h-5' /></button>            
             </div>
         </div>
     );
