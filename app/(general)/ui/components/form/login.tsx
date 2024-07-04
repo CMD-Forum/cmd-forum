@@ -17,12 +17,12 @@ export default function LoginForm() {
 
     return ( 
 
-        <form className="flex flex-col rounded-lg w-[100%] md:w-[50%] max-w-[600px]" action={formAction}>
+        <form className="flex flex-col rounded w-[100%] lg:w-[50%] max-w-[600px]" action={formAction}>
 
-            <div className="bg-card p-12 flex flex-col gap-2 rounded-t-md">
+            <div className="bg-card p-6 lg:p-12 flex flex-col gap-2 rounded-t">
                 <div className="flex flex-col">
-                    <h2 className="!text-2xl md:text-3xl font-inter font-bold text-white">Login to CMD</h2>
-                    <p className={`subtitle mb-2`}>Login to your existing CMD account, or use a third party provider.</p>                    
+                    <h2 className="!text-2xl md:text-3xl font-inter font-bold text-white">Login to Command</h2>
+                    <p className={`subtitle mb-2`}>Login to your existing Command account, or use a third party provider.</p>                    
                 </div>
 
                 {state &&
@@ -34,7 +34,7 @@ export default function LoginForm() {
 
                 {/* */}
 
-                <label className="subtitle flex gap-1" htmlFor="username">Username</label>
+                <label className="subtitle flex gap-1 w-fit" htmlFor="username">Username</label>
                 <input
                     className={`generic_field`}
                     id="username"
@@ -43,7 +43,7 @@ export default function LoginForm() {
 
                 {/* */}
 
-                <label className="subtitle flex gap-1" htmlFor="password">Password</label>
+                <label className="subtitle flex gap-1 w-fit" htmlFor="password">Password</label>
                 <div className="relative">
                     <input
                         type={showPassword ? "text" : "password"}
@@ -70,11 +70,11 @@ export default function LoginForm() {
 
             <hr className="!mt-0 !mb-0 !p-0" />
 
-            <div className="bg-card-light p-12 rounded-b-md">
+            <div className="bg-card-light p-12 rounded-b">
                 <div className="flex flex-col gap-2">
                     <OAuthButtons width_full={true} />
                 </div>      
-                <p className="text-center mt-4 text-sm text-gray-300">By logging in to CMD, you agree to the terms and conditions.</p>         
+                <p className="text-center mt-4 text-sm text-gray-300">By logging in to Command, you agree to the site rules.</p>         
             </div>
         </form>  
     );
