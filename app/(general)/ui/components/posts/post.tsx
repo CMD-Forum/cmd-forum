@@ -145,30 +145,30 @@ export function CardPost( post: Post ) {
                                 <SavePostButton userID={session.user.id} postID={post.id} />
                             </div>
 
-                            <Menu
-                                trigger={<button className='navlink !px-2' aria-label='More Options'><EllipsisVerticalIcon className='w-5 h-5' /></button>}
-                            >
-                                {/* @ts-ignore */}
-                                <MenuLink text={post.author.username} icon={<ProfileImage user={post.author} imgSize={"5"} />} link={`/user/${post.author.username}`}></MenuLink>
-                                <MenuLink text={post.community.name} icon={<img src={post.community.image} alt={post.community.name}></img>} link={`/c/${post.community.name}`}></MenuLink>
-                                <hr className='mt-1 !mb-1'/>
-                                <MenuShare icon={<ShareIcon />} text={text} title={title} url={url} />
-                                { session 
-                                ?
-                                    <>
-                                        { session.user?.id === post.authorId 
-                                        ?
+                            <Menu>
+                                <Menu.Trigger><button className='navlink !px-2' aria-label='More Options'><EllipsisVerticalIcon className='w-5 h-5' /></button></Menu.Trigger>
+                                <Menu.Content>
+                                    <MenuLink text={post.author.username} icon={<ProfileImage user={post.author} imgSize={"5"} />} link={`/user/${post.author.username}`}></MenuLink>
+                                    <MenuLink text={post.community.name} icon={<img src={post.community.image} alt={post.community.name}></img>} link={`/c/${post.community.name}`}></MenuLink>
+                                    <hr className='mt-1 !mb-1'/>
+                                    <MenuShare icon={<ShareIcon />} text={text} title={title} url={url} />
+                                    { session 
+                                    ?
                                         <>
-                                            <hr className='mt-1 !mb-1'/>
-                                            <MenuButton icon={<ArchiveBoxXMarkIcon />} text={"Delete"} onClick={() => setDeleteDialogOpen(true)} destructive={true} />                                 
+                                            { session.user?.id === post.authorId 
+                                            ?
+                                            <>
+                                                <hr className='mt-1 !mb-1'/>
+                                                <MenuButton icon={<ArchiveBoxXMarkIcon />} text={"Delete"} onClick={() => setDeleteDialogOpen(true)} destructive={true} />                                 
+                                            </>
+                                            :
+                                            null
+                                            }                           
                                         </>
-                                        :
+                                    :
                                         null
-                                        }                           
-                                    </>
-                                :
-                                    null
-                                }
+                                    }                                    
+                                </Menu.Content>
                             </Menu>                         
                         </div>                    
                     </>

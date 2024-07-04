@@ -6,7 +6,7 @@ import { useState } from "react";
 
 import Dialog from "../components/dialog/dialog";
 import LargeDropdown from "../components/large_dropdown";
-import Menu, { MenuButton, MenuCustom, MenuLink, MenuShare, MenuUser } from "../components/menu/menu";
+import Menu, { MenuButton, MenuContent, MenuCustom, MenuLink, MenuShare, MenuUser } from "../components/menu/menu";
 import Alert, { AlertSubtitle, AlertTitle } from "../components/new_alert";
 import LogoutButton from "../components/signoutButton";
 
@@ -198,27 +198,27 @@ export default function DeveloperPage() {
                         </div>
 
                         <h2 className="header-5 w-full mb-4">Example: User Menu</h2>
-                        <Menu 
-                            trigger={<button className="navlink">Click Me</button>}
-                        >
-                            <MenuUser />
-                            <hr className='mt-1 mb-1' />
-                            <MenuLink text={"Saved Posts"} icon={<BookmarkIcon />} link={"/posts/saved"} />
-                            <hr className='mt-1 mb-1' />
-                            <MenuLink text={"Settings"} icon={<Cog6ToothIcon />} link={"/account/settings"} />
-                            <LogoutButton className={"hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm subtitle hover:!text-white rounded"}><ArrowRightEndOnRectangleIcon className='w-5 h-5' />Logout</LogoutButton>
-                            <hr className='mt-1 mb-1' />
-                            <MenuCustom className={"hover:bg-card"}>
-                                <div className='flex flex-col gap-1 items-center w-full'>
-                                    <Link className='label cursor-pointer hover:!text-white !text-xs subtitle' href={"https://github.com/CMD-Forum/cmd-forum"}><MegaphoneIcon className='w-4 h-4'/>New Update - Alpha 1.3</Link>              
-                                </div>
-                            </MenuCustom>
+                        <Menu>
+                            <Menu.Trigger><button className="navlink">Click Me</button></Menu.Trigger>
+                            <Menu.Content>
+                                <MenuUser />
+                                <hr className='mt-1 mb-1' />
+                                <MenuLink text={"Saved Posts"} icon={<BookmarkIcon />} link={"/posts/saved"} />
+                                <hr className='mt-1 mb-1' />
+                                <MenuLink text={"Settings"} icon={<Cog6ToothIcon />} link={"/account/settings"} />
+                                <LogoutButton className={"hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm subtitle hover:!text-white rounded"}><ArrowRightEndOnRectangleIcon className='w-5 h-5' />Logout</LogoutButton>
+                                <hr className='mt-1 mb-1' />
+                                <MenuCustom className={"hover:bg-card"}>
+                                    <div className='flex flex-col gap-1 items-center w-full'>
+                                        <Link className='label cursor-pointer hover:!text-white !text-xs subtitle' href={"https://github.com/CMD-Forum/cmd-forum"}><MegaphoneIcon className='w-4 h-4'/>New Update - Alpha 1.3</Link>              
+                                    </div>
+                                </MenuCustom>                                
+                            </Menu.Content>
                         </Menu>
 
                         <h2 className="header-5 w-full mb-4 mt-4">Example: Post Menu</h2>
-                        <Menu 
-                            trigger={<button className="navlink !px-2"><EllipsisVerticalIcon className="w-5 h-5" /></button>}
-                        >
+                        <Menu>
+                            <Menu.Trigger><button className="navlink !px-2"><EllipsisVerticalIcon className="w-5 h-5" /></button></Menu.Trigger>
                             <MenuLink text={"User"} icon={<img src={"/images/favicon/favicon.svg"} alt={""}></img>} link={`/user`}></MenuLink>
                             <MenuLink text={"General"} icon={<img src={"/images/favicon/favicon.svg"} alt={""}></img>} link={`/c`}></MenuLink>
                             <hr className='mt-1 !mb-1'/>

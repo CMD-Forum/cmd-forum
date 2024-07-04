@@ -89,14 +89,6 @@ export function DialogContent({
                 // @ts-ignore
                 setIsOpen(false);
             }
-            if (event.key === 'Tab') { // This is broken, do not know how to fix.
-                event.preventDefault();
-                if (document.getElementById('dialog-container')) {
-                    // @ts-ignore
-                    document.getElementById('dialog-container').focus();    
-                    console.log("tab pressed")
-                }
-            }
         };
     
         document.addEventListener('keydown', handleKeyDown);
@@ -299,12 +291,15 @@ export function DialogTrigger ({
     children: React.ReactNode,
 }) {
     const context = useContext(DialogContext);
-
     return (
-        <>
-            {/* @ts-ignore */}
-            <div onClick={() => context.setIsOpen(true)}>{ children }</div> 
-        </>
+        React.cloneElement(
+            // @ts-ignore
+            children,
+            {
+                // @ts-ignore
+                onClick: () => context.setIsOpen(true)
+            }
+        )
     );        
 }
 

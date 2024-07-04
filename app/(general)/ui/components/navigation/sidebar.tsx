@@ -145,14 +145,17 @@ export default function Sidebar() {
                         <div className="flex flex-row top-0 w-screen min-w-0 h-fit p-3 fixed bg-card-light z-[50] md:hidden justify-between">
                             <button className="navlink !px-2 !py-2 z-[100] ml-2 !w-fit" onClick={() => setExpanded(!expanded)} aria-label="Toggle Sidebar"><Bars2Icon className="w-4 h-4" /></button>  
                             { user && 
-                                // @ts-ignore
-                                <Menu trigger={<button className="navlink" aria-label="Toggle Account Dropdown"><ProfileImage user={user} imgSize={"5"} /><ChevronDownIcon className="w-4 h-4" /></button>}>
-                                    <MenuUser />
-                                    <hr className='mt-1 mb-1' />
-                                    <MenuLink text={"Saved Posts"} icon={<BookmarkIcon />} link={"/posts/saved"} />
-                                    <hr className='mt-1 mb-1' />
-                                    <MenuLink text={"Settings"} icon={<AdjustmentsHorizontalIcon />} link={"/account/settings"} />
-                                    <LogoutButton className={"hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm subtitle hover:!text-white rounded-md"}><ArrowRightEndOnRectangleIcon className='w-5 h-5' />Logout</LogoutButton>
+                                <Menu>
+                                    {/* @ts-ignore */}
+                                    <Menu.Trigger><button className="navlink" aria-label="Toggle Account Dropdown"><ProfileImage user={user} imgSize={"5"} /><ChevronDownIcon className="w-4 h-4" /></button></Menu.Trigger>
+                                    <Menu.Content>
+                                        <MenuUser />
+                                        <hr className='mt-1 mb-1' />
+                                        <MenuLink text={"Saved Posts"} icon={<BookmarkIcon />} link={"/posts/saved"} />
+                                        <hr className='mt-1 mb-1' />
+                                        <MenuLink text={"Settings"} icon={<AdjustmentsHorizontalIcon />} link={"/account/settings"} />
+                                        <LogoutButton className={"hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm subtitle hover:!text-white rounded"}><ArrowRightEndOnRectangleIcon className='w-5 h-5' />Logout</LogoutButton>                                        
+                                    </Menu.Content>
                                 </Menu>                            
                             }  
                         </div>

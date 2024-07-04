@@ -2,7 +2,7 @@ import { ArrowTrendingUpIcon, BoltIcon, ChartBarIcon, MagnifyingGlassIcon, PlusI
 import { Metadata } from 'next';
 import Link from 'next/link';
 
-import Menu, { MenuLink } from '../ui/components/menu/menu';
+import Menu, { MenuContent, MenuLink, MenuTrigger } from '../ui/components/menu/menu';
 import SearchBar from '../ui/components/search/searchbar';
 import SearchResults from '../ui/components/search/searchresults';
  
@@ -37,10 +37,13 @@ export default function Search({
             <div className='px-6 flex flex-col md:flex-row gap-2 max-w-[70rem] xl:w-[70rem] xl:m-auto mt-6 xl:mt-6'>
                 <SearchBar />   
                 <div className='flex flex-row gap-2'>
-                    <Menu defaultPlacement={"bottom-start"} trigger={<button className='navlink'><ChartBarIcon className='w-5 h-5' />Sort</button>}>
-                        <MenuLink text='Relevance' link={"/"} icon={<MagnifyingGlassIcon />} />
-                        <MenuLink text='Hot' link={"/"} icon={<BoltIcon />} />
-                        <MenuLink text='Rising' link={"/"} icon={<ArrowTrendingUpIcon />} />
+                    <Menu defaultPlacement={"bottom-start"}>
+                        <MenuTrigger><button className='navlink'><ChartBarIcon className='w-5 h-5' />Sort</button></MenuTrigger>
+                        <MenuContent>
+                            <MenuLink text='Relevance' link={"/"} icon={<MagnifyingGlassIcon />} />
+                            <MenuLink text='Hot' link={"/"} icon={<BoltIcon />} />
+                            <MenuLink text='Rising' link={"/"} icon={<ArrowTrendingUpIcon />} />                            
+                        </MenuContent>
                     </Menu>
                     <Link className={"navlink-full"} href={"/create"}><PlusIcon className={"w-5 h-5"} />Create</Link>                    
                 </div>             
@@ -56,7 +59,7 @@ export default function Search({
                     </>
 
                 :
-                    <h1 className="subtitle w-fit m-auto mb-6">Either you&apos;ve reached the end, or you haven&apos;t searched yet.</h1>
+                    <h1 className="subtitle w-fit m-auto mb-6 px-6 text-center">Either you&apos;ve reached the end, or you haven&apos;t searched yet.</h1>
                 }
             </div>
 
