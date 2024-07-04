@@ -13,6 +13,8 @@ import ProfileImage from '../account/ProfileImage';
 import { SavePostButton } from '../button';
 import Hovercard from '../dropdown/hovercard';
 import Menu, { MenuButton, MenuLink, MenuShare } from '../menu/menu';
+import Dialog, { DialogContent } from '../dialog/dialog';
+import { useState } from 'react';
 
 /**
  * Horizontal card display of the given post.
@@ -59,6 +61,8 @@ export function CardPost( post: Post ) {
     const title = "CMD/>";
 
     const session = useSession();
+
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
 
     return (
 
@@ -122,42 +126,53 @@ export function CardPost( post: Post ) {
                 {/*<p className='subtitle'>{post.tagline}</p>*/}
 
                 { session.user?.id &&
-                    <div className='flex flex-row mt-4 justify-between'>
-                        <div className='flex flex-row gap-2'>
-                            <button className='navlink !px-2 mr-auto' aria-label='Upvote'><ChevronUpIcon className='w-5 h-5' /></button>
-                            <button className='navlink !px-2 mr-auto' aria-label='Downvote'><ChevronDownIcon className='w-5 h-5' /></button>
-                            {/*<Link className='navlink-emphasis !px-2 md:!px-3 mr-auto' href={`/posts/${post.id}`}><ChatBubbleLeftEllipsisIcon className='w-5 h-5' /><span className='hidden md:flex'>Comments</span></Link>*/}                        
-                            <SavePostButton userID={session.user.id} postID={post.id} />
-                        </div>
+                    <>
+                        <Dialog.Controlled isOpen={deleteDialogOpen} setIsOpen={setDeleteDialogOpen}>
+                            <DialogContent>
+                                <Dialog.Title>Delete this post? (Unimplemented)</Dialog.Title>
+                                <Dialog.Subtitle>This action cannot be reversed, choose wisely.</Dialog.Subtitle>
+                                <Dialog.ButtonContainer>
+                                    <Dialog.CloseButton><button className='navlink'>Close</button></Dialog.CloseButton>
+                                    <button className='navlink-destructive' disabled>Delete</button>
+                                </Dialog.ButtonContainer>
+                            </DialogContent>
+                        </Dialog.Controlled>
+                        <div className='flex flex-row mt-4 justify-between'>
+                            <div className='flex flex-row gap-2'>
+                                <button className='navlink !px-2 mr-auto' aria-label='Upvote'><ChevronUpIcon className='w-5 h-5' /></button>
+                                <button className='navlink !px-2 mr-auto' aria-label='Downvote'><ChevronDownIcon className='w-5 h-5' /></button>
+                                {/*<Link className='navlink-emphasis !px-2 md:!px-3 mr-auto' href={`/posts/${post.id}`}><ChatBubbleLeftEllipsisIcon className='w-5 h-5' /><span className='hidden md:flex'>Comments</span></Link>*/}                        
+                                <SavePostButton userID={session.user.id} postID={post.id} />
+                            </div>
 
-                        <Menu
-                            trigger={<button className='navlink !px-2' aria-label='More Options'><EllipsisVerticalIcon className='w-5 h-5' /></button>}
-                        >
-                            {/* @ts-ignore */}
-                            <MenuLink text={post.author.username} icon={<ProfileImage user={post.author} imgSize={"5"} />} link={`/user/${post.author.username}`}></MenuLink>
-                            <MenuLink text={post.community.name} icon={<img src={post.community.image} alt={post.community.name}></img>} link={`/c/${post.community.name}`}></MenuLink>
-                            <hr className='mt-1 !mb-1'/>
-                            <MenuShare icon={<ShareIcon />} text={text} title={title} url={url} />
-                            { session 
-                            ?
-                                <>
-                                    { session.user?.id === post.authorId 
-                                    ?
+                            <Menu
+                                trigger={<button className='navlink !px-2' aria-label='More Options'><EllipsisVerticalIcon className='w-5 h-5' /></button>}
+                            >
+                                {/* @ts-ignore */}
+                                <MenuLink text={post.author.username} icon={<ProfileImage user={post.author} imgSize={"5"} />} link={`/user/${post.author.username}`}></MenuLink>
+                                <MenuLink text={post.community.name} icon={<img src={post.community.image} alt={post.community.name}></img>} link={`/c/${post.community.name}`}></MenuLink>
+                                <hr className='mt-1 !mb-1'/>
+                                <MenuShare icon={<ShareIcon />} text={text} title={title} url={url} />
+                                { session 
+                                ?
                                     <>
-                                        <hr className='mt-1 !mb-1'/>
-                                        <MenuButton icon={<ArchiveBoxXMarkIcon />} text={"Delete"} onClick={() => console.log("delete post")} destructive={true} />                                 
+                                        { session.user?.id === post.authorId 
+                                        ?
+                                        <>
+                                            <hr className='mt-1 !mb-1'/>
+                                            <MenuButton icon={<ArchiveBoxXMarkIcon />} text={"Delete"} onClick={() => setDeleteDialogOpen(true)} destructive={true} />                                 
+                                        </>
+                                        :
+                                        null
+                                        }                           
                                     </>
-                                    :
+                                :
                                     null
-                                    }                           
-                                </>
-                            :
-                                null
-                            }
-                        </Menu>                         
-                    </div>
-                }                  
-
+                                }
+                            </Menu>                         
+                        </div>                    
+                    </>
+                }
             </div>
         </div>
     )

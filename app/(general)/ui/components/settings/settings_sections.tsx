@@ -4,7 +4,6 @@ import Link from "next/link";
 
 import { useSession } from "@/app/(general)/lib/sessioncontext";
 
-import { DialogSubtitle, DialogTitle } from "../dialog/dialog";
 import Dialog from "../dialog/dialog";
 import { ChangeAccountDescription /*, ChangeAccountName */ } from "./settings_actions";
 

@@ -29,6 +29,34 @@ export default function Dialog({
     );
 }
 
+
+/**
+ * ## Dialog
+ * ---
+ * Component that overlays the screen with a message.
+ * @param children
+ */
+
+export function ControlledDialog({
+    children,
+    isOpen,
+    setIsOpen
+}: {
+    children: React.ReactNode;
+    isOpen: boolean;
+    setIsOpen: any;
+}) {
+    const [isMounted, setIsMounted] = useState<boolean>(false);
+    return (
+        // @ts-ignore
+        <DialogContext.Provider value={{ isOpen, setIsOpen, isMounted, setIsMounted }}>
+            {children}
+        </DialogContext.Provider>
+    );
+}
+
+Dialog.Controlled = ControlledDialog
+
 /**
  * ## DialogContent
  * ---
@@ -84,7 +112,7 @@ export function DialogContent({
                 <AnimatePresence mode="wait">
                     {isOpen &&
                         <motion.div 
-                            className='fixed w-dvw h-dvh inset-0 flex items-center justify-center z-[9999999999999999999999] bg-semitransparent px-6 overflow-hidden'
+                            className='fixed w-dvw h-dvh inset-0 flex items-center justify-center z-[9999999999999999999999] bg-semitransparent backdrop-blur-sm px-6 overflow-hidden'
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
@@ -100,7 +128,7 @@ export function DialogContent({
                                 tabIndex={0}
                             >
                                 {/* @ts-ignore */}
-                                <button className="w-fit h-fit absolute top-2 right-2 focus:ring-2 ring-white rounded-md p-1 transition-all" onClick={() => setIsOpen(false)}>
+                                <button className="w-fit h-fit absolute top-2 right-2 focus:ring-2 ring-offset-2 ring-offset-semitransparent rounded-md p-1 transition-all" onClick={() => setIsOpen(false)}>
                                     <XMarkIcon className="w-5 h-5 flex text-gray-300 hover:text-white cursor-pointer transition-all"></XMarkIcon>        
                                 </button>
 
