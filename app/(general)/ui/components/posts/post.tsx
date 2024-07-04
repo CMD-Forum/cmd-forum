@@ -4,6 +4,7 @@ import { ArchiveBoxXMarkIcon, ChatBubbleLeftEllipsisIcon, ChevronDownIcon, Chevr
 import { EllipsisVerticalIcon, ShareIcon } from '@heroicons/react/24/solid';
 import MarkdownPreview from '@uiw/react-markdown-preview';
 import Link from 'next/link';
+import { useState } from 'react';
 import rehypeSanitize from 'rehype-sanitize';
 
 import { useSession } from "@/app/(general)/lib/sessioncontext";
@@ -11,10 +12,9 @@ import { Post } from '@/types/types';
 
 import ProfileImage from '../account/ProfileImage';
 import { SavePostButton } from '../button';
+import Dialog from '../dialog/dialog';
 import Hovercard from '../dropdown/hovercard';
 import Menu, { MenuButton, MenuLink, MenuShare } from '../menu/menu';
-import Dialog, { DialogContent } from '../dialog/dialog';
-import { useState } from 'react';
 
 /**
  * Horizontal card display of the given post.
@@ -128,14 +128,14 @@ export function CardPost( post: Post ) {
                 { session.user?.id &&
                     <>
                         <Dialog.Controlled isOpen={deleteDialogOpen} setIsOpen={setDeleteDialogOpen}>
-                            <DialogContent>
+                            <Dialog.Content>
                                 <Dialog.Title>Delete this post? (Unimplemented)</Dialog.Title>
                                 <Dialog.Subtitle>This action cannot be reversed, choose wisely.</Dialog.Subtitle>
                                 <Dialog.ButtonContainer>
                                     <Dialog.CloseButton><button className='navlink'>Close</button></Dialog.CloseButton>
                                     <button className='navlink-destructive' disabled>Delete</button>
                                 </Dialog.ButtonContainer>
-                            </DialogContent>
+                            </Dialog.Content>
                         </Dialog.Controlled>
                         <div className='flex flex-row mt-4 justify-between'>
                             <div className='flex flex-row gap-2'>
