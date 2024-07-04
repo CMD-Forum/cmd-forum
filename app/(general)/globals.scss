@@ -90,15 +90,15 @@ code {
   @apply text-white;
   @apply decoration-2; 
   @apply transition-all;
-  @apply bg-card;
+  @apply bg-card-light;
   @apply hover:bg-border;
   @apply active:bg-card;  
   @apply px-3;
   @apply py-2;
   @apply border-1;
   @apply border-border;
-  @apply hover:border-border-light;
-  @apply active:border-border-light;
+  @apply hover:border-border;
+  @apply active:border-border;
   @apply focus:ring-2;
   @apply ring-offset-2;
   @apply ring-offset-background;

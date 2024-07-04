@@ -48,8 +48,18 @@ export default function ActiveSessions( { sessions }: { sessions: Array<Session>
                                 {/*{ session.userAgent ? <p><b>User Agent: </b>{session.userAgent}</p> : null }*/}
                             </div>
                             <div className="flex items-center">
-                                {/* @ts-ignore */}
-                                <form action={() => action_invalidateSession(session.id, "/account/settings/sessions")}><button className="navlink">Logout</button></form>
+                                <Dialog>
+                                    <Dialog.Trigger><button className="navlink">Logout</button></Dialog.Trigger>
+                                    <Dialog.Content>
+                                        <Dialog.Title>Logout this session?</Dialog.Title>
+                                        <Dialog.Subtitle>This will sign out the device and require it to login again.</Dialog.Subtitle>
+                                        <Dialog.ButtonContainer>
+                                            <Dialog.CloseButton><button className="navlink">Cancel</button></Dialog.CloseButton>
+                                            {/* @ts-ignore */}
+                                            <form action={() => action_invalidateSession(session.id, '/account/settings/sessions')} className="flex items-center"><button className="navlink-destructive">Logout</button></form> 
+                                        </Dialog.ButtonContainer>
+                                    </Dialog.Content>
+                                </Dialog>
                             </div>
                         </div>
                     );
@@ -65,11 +75,11 @@ export default function ActiveSessions( { sessions }: { sessions: Array<Session>
                     <Dialog.Trigger><button className="navlink-destructive">Logout all sessions</button></Dialog.Trigger>
                     <Dialog.Content>
                         <Dialog.Title>Logout all sessions?</Dialog.Title>
-                        <Dialog.Subtitle>This will sign you out of all devices and require to log back in again.</Dialog.Subtitle>
+                        <Dialog.Subtitle>This will sign you out of all devices and require them to login again.</Dialog.Subtitle>
                         <Dialog.ButtonContainer>
                             <Dialog.CloseButton><button className="navlink">Cancel</button></Dialog.CloseButton>
                             {/* @ts-ignore */}
-                            <form action={() => action_invalidateAllSessions(currentSession.user.id)}><button className="navlink-destructive">Logout</button></form> 
+                            <form action={() => action_invalidateAllSessions(currentSession.user.id)} className="flex items-center"><button className="navlink-destructive">Logout</button></form> 
                         </Dialog.ButtonContainer>
                     </Dialog.Content>
                 </Dialog>

@@ -5,6 +5,7 @@ const DialogContext = React.createContext({
     setIsOpen: () => {},
     isMounted: false,
     setIsMounted: () => {},
+    closeButton: false,
 });
 
 if (process.env.NODE_ENV !== 'production') {

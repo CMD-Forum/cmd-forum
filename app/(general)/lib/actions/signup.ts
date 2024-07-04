@@ -112,7 +112,6 @@ export async function signup(state: any, formData: FormData) {
         ip_address: headersList.get('x-real-ip') || headersList.get('x-forwarded-for') || "Unknown",
         userAgent: headersList.get('user-agent') || "Unknown",
         isBot: agent.isBot || false,
-        browser: agent.browser,
         browserName: agent.browser.name || "Unknown",
         browserVersion: agent.browser.version || "Unknown",
         deviceModel: agent.device.model || "Unknown",

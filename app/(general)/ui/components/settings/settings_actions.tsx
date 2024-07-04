@@ -131,7 +131,7 @@ export function ChangeAccountDescription({ userID } : { userID: string }) {
     };
 
     return (
-        <Dialog>
+        <Dialog closeButton={true}>
             <Dialog.Trigger><button className={"navlink-full"}>Change Description</button></Dialog.Trigger>
             <Dialog.Content>
                 <Dialog.Title>Change Your Description</Dialog.Title>
