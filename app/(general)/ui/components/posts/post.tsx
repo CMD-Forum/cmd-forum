@@ -80,15 +80,7 @@ export function CardPost( post: Post ) {
                     <div className='flex flex-col'>
                         <div className='flex flex-row gap-2 items-center justify-center'>
                             <div className='flex flex-col'>
-                                <Hovercard trigger={<button className='subtitle'>c/{post.community.name}</button>}>
-                                    <div className='flex flex-row gap-4 p-4 w-full max-w-[350px]'>
-                                        <img className='w-8 h-8 rounded' src={post.community.image} alt='' />
-                                        <div className='flex flex-col'>
-                                            <Link href={`/c/${post.community.name}`} className='hover:underline w-fit subtitle'>c/{post.community.name}</Link>     
-                                            <p className='subtitle'>{post.community.description}</p>             
-                                        </div>
-                                    </div>
-                                </Hovercard>
+                                <Link href={`/c/${post.community.name}`} className='subtitle hover:underline'>c/{post.community.name}</Link>
                                 { ! post.author ?
 
                                     <>
@@ -102,16 +94,7 @@ export function CardPost( post: Post ) {
                                     :
 
                                     <div className='hidden md:flex flex-row gap-2'>  
-                                        <Hovercard trigger={<button className="subtitle text-sm">@{post.author.username}</button>}>
-                                            <div className='flex flex-row gap-4 p-4 w-full max-w-[350px]'>
-                                                {/* @ts-ignore */}
-                                                <ProfileImage user={post.author} />
-                                                <div className='flex flex-col'>
-                                                    <Link href={`/user/${post.author.username}`} className='hover:underline w-fit subtitle'>@{post.author.username}</Link>     
-                                                    <p className='subtitle'>{post.author.description}</p>             
-                                                </div>
-                                            </div>
-                                        </Hovercard>
+                                        <Link href={`/user/${post.author.username}`} className='subtitle hover:underline'>@{post.author.username}</Link>
                                         <p className='hidden sm:flex subtitle'>•</p> 
                                         <p className='hidden sm:flex subtitle'>{post.createdAt.toLocaleString()}</p>                         
                                     </div>
