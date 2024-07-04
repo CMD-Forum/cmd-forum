@@ -210,9 +210,9 @@ export function CommunityInfobarItems( { community }: { community: Community } )
 
         <div>
 
-            <div className='flex-row gap-2 rounded-md w-full bg-transparent'>
+            <div className='flex-row gap-2 rounded w-full bg-transparent'>
                 
-                <div className='flex-col bg-card p-6 border-1 border-border rounded-md'>
+                <div className='flex-col bg-card p-6 border-1 border-border rounded'>
 
                     <div className='flex flex-row gap-3 items-center'>
 
@@ -360,7 +360,7 @@ export function CommunityInfobar( { community }: { community: Community } ) {
 
     return (
         <div>
-            <div className='flex-row gap-2 rounded-md w-full bg-transparent'>
+            <div className='flex-row gap-2 rounded w-full bg-transparent'>
                 <div className='flex-col bg-card p-6 border-0 border-border lg:px-48'>
                     <div className='flex flex-row gap-3 items-center'>
                         <img src={community.image} className='h-[56px] rounded' alt={`${community.name}'s Community Image`} />

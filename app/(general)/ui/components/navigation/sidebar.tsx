@@ -94,9 +94,9 @@ export default function Sidebar() {
                                             <div className="flex flex-col gap-1">
                                                 { isLoading ?
                                                     <div className="flex flex-col gap-1">
-                                                        <div className='bg-border rounded-md animate-pulse !w-[40px] !h-[40px]' />  
-                                                        <div className='bg-border rounded-md animate-pulse !w-[40px] !h-[40px]' />  
-                                                        <div className='bg-border rounded-md animate-pulse !w-[40px] !h-[40px]' />  
+                                                        <div className='bg-border rounded animate-pulse !w-[40px] !h-[40px]' />  
+                                                        <div className='bg-border rounded animate-pulse !w-[40px] !h-[40px]' />  
+                                                        <div className='bg-border rounded animate-pulse !w-[40px] !h-[40px]' />  
                                                     </div>
                                                 :
                                                     <div className="flex flex-col gap-1">
@@ -197,9 +197,9 @@ export default function Sidebar() {
                                             <div className="flex flex-col gap-1">
                                                 { isLoading ?
                                                     <div className="flex flex-col gap-1">
-                                                        <div className='bg-border rounded-md animate-pulse !w-[40px] !h-[40px]' />  
-                                                        <div className='bg-border rounded-md animate-pulse !w-[40px] !h-[40px]' />  
-                                                        <div className='bg-border rounded-md animate-pulse !w-[40px] !h-[40px]' />  
+                                                        <div className='bg-border rounded animate-pulse !w-[40px] !h-[40px]' />  
+                                                        <div className='bg-border rounded animate-pulse !w-[40px] !h-[40px]' />  
+                                                        <div className='bg-border rounded animate-pulse !w-[40px] !h-[40px]' />  
                                                     </div>
                                                 :
                                                     <div className="flex flex-col gap-1">

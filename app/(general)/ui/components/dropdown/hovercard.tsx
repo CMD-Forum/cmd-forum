@@ -42,7 +42,7 @@ export default function Hovercard({ children, className, trigger }: { children: 
                         <div className="absolute w-full bg-card h-2" />
                         { open &&
                             <div 
-                                className={`bg-card ${className} border-border border-1 rounded-md w-max h-max !z-50 group min-w-52 shadow-md absolute mt-1`}
+                                className={`bg-card ${className} border-border border-1 rounded w-max h-max !z-50 group min-w-52 shadow-md absolute mt-1`}
                                 onMouseEnter={() => setIsOpen(true)}
                                 onMouseLeave={() => setIsOpen(false)}
                             >   

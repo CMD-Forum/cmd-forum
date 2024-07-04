@@ -13,7 +13,7 @@ export default function ActiveSessions( { sessions }: { sessions: Array<Session>
     const currentSession = useSession();
 
     return (
-        <div className='flex flex-col border-1 border-border rounded-md'>
+        <div className='flex flex-col border-1 border-border rounded'>
 
             <div className="p-6 bg-card">
                 <h3 className='font-bold text-xl'>Active Sessions</h3>     

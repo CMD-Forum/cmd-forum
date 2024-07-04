@@ -79,7 +79,7 @@ code {
   @apply text-gray-300;
   @apply p-4;
   @apply bg-card;
-  @apply rounded-md;
+  @apply rounded;
 }
 
 // Main
@@ -102,7 +102,7 @@ code {
   @apply focus:ring-2;
   @apply ring-offset-2;
   @apply ring-offset-background;
-  @apply rounded-md;
+  @apply rounded;
   @apply flex;
   @apply gap-1.5;
   @apply items-center;
@@ -252,7 +252,7 @@ code {
   @apply relative;
   @apply px-3;
   @apply py-2;
-  @apply rounded-md;
+  @apply rounded;
   @extend .subtitle;
 }
 
@@ -297,7 +297,7 @@ code {
 textarea,
 input {
   @apply bg-background;
-  @apply rounded-md;
+  @apply rounded;
   @apply h-9;
   @apply px-2;
   @apply outline-none #{!important};
@@ -459,7 +459,7 @@ input {
 }
 
 .wmde-markdown img {
-  @apply rounded-md #{!important};
+  @apply rounded #{!important};
 }
 
 .markdown-alert-title {
@@ -467,7 +467,7 @@ input {
 }
 
 .md-editor {
-  @apply rounded-md #{!important};
+  @apply rounded #{!important};
 }
 
 .md-editor-toolbar-warp {
@@ -522,14 +522,14 @@ hr {
 .markdown-body {
 
   @apply bg-transparent #{!important};
-  @apply rounded-md;
-  @apply *:rounded-md;
+  @apply rounded;
+  @apply *:rounded;
 
 }
 
 .markdown-body > p > img {
 
-  @apply rounded-md;
+  @apply rounded;
 
 }
 

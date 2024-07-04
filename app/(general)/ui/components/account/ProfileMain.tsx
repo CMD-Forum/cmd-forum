@@ -15,7 +15,7 @@ interface ProfileProps {
 export default function ProfileMain(user: ProfileProps) {
 
     return (
-        <div className='flex-row gap-2 rounded-md w-full bg-transparent'>
+        <div className='flex-row gap-2 rounded w-full bg-transparent'>
             <div className='flex-col'>
                 <div className='flex flex-row gap-3 items-center'>
                     {/* @ts-ignore */}

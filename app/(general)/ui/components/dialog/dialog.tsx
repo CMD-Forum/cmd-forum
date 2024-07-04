@@ -115,12 +115,12 @@ export function DialogContent({
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
                                 transition={{ ease: "linear", duration: 0.1 }}
-                                className={`bg-background rounded-md text-wrap h-fit !min-w-0 max-w-[425px] border-border border-1 flex flex-col`}
+                                className={`bg-background rounded text-wrap h-fit !min-w-0 max-w-[425px] border-border border-1 flex flex-col`}
                                 id="dialog-container"
                                 tabIndex={0}
                             >
                                 {/* @ts-ignore */}
-                                <button className="w-fit h-fit absolute top-2 right-2 focus:ring-2 ring-offset-2 ring-offset-semitransparent rounded-md p-1 transition-all" onClick={() => setIsOpen(false)}>
+                                <button className="w-fit h-fit absolute top-2 right-2 focus:ring-2 ring-offset-2 ring-offset-semitransparent rounded p-1 transition-all" onClick={() => setIsOpen(false)}>
                                     <XMarkIcon className="w-5 h-5 flex text-gray-300 hover:text-white cursor-pointer transition-all"></XMarkIcon>        
                                 </button>
 

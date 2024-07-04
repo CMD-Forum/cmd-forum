@@ -88,7 +88,7 @@ export default function PostListByUser( { username }: { username: string } ) {
 
     } catch ( error ) {
         return (
-            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'>
+            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded px-5 py-5'>
                 <p className='text-center text-gray-300 font-medium antialiased w-full'>Sorry, an error occurred.</p>
                 <div className='flex gap-4 w-full items-center justify-center mt-4'>
                     <button className='navlink' onClick={() => router.refresh()} type='button'>Reload</button>
@@ -116,7 +116,7 @@ export default function PostListByUser( { username }: { username: string } ) {
 
     if ( totalPages <= 0 ) { // Tried `if ( ! posts )` but that didn't work for some reason.
         return (
-            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'>
+            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded px-5 py-5'>
                 <p className='text-center text-gray-300 font-medium antialiased w-full'>Looks like there&apos;s no posts here.</p>
                 <div className='flex gap-4 w-full items-center justify-center mt-4'>
                     <Link className='navlink' href={"/"}>Home</Link>
@@ -237,7 +237,7 @@ export function PostListByCommunity( { communityID }: { communityID: string } ) 
 
     } catch ( error ) {
         return (
-            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'>
+            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded px-5 py-5'>
                 <p className='text-center text-gray-300 font-medium antialiased w-full'>Sorry, an error occurred.</p>
                 <div className='flex gap-4 w-full items-center justify-center mt-4'>
                     <button className='navlink' onClick={() => router.refresh()} type='button'>Reload</button>
@@ -265,7 +265,7 @@ export function PostListByCommunity( { communityID }: { communityID: string } ) 
 
     if ( totalPages <= 0 ) { // Tried `if ( ! posts )` but that didn't work for some reason.
         return (
-            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'>
+            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded px-5 py-5'>
                 <p className='text-center text-gray-300 font-medium antialiased w-full'>Looks like there&apos;s no posts here.</p>
                 <div className='flex gap-4 w-full items-center justify-center mt-4'>
                     <Link className='navlink' href={"/"}>Home</Link>
@@ -396,7 +396,7 @@ export function SavedPostListByUserID( { userID }: { userID: string } ) {
 
     if ( error ) {
         return (
-            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'>
+            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded px-5 py-5'>
                 <p className='text-center text-gray-300 font-medium antialiased w-full'>Sorry, an error occurred.</p>
                 <div className='flex gap-4 w-full items-center justify-center mt-4'>
                     <button className='navlink' onClick={() => router.refresh()} type='button'>Reload</button>
@@ -424,7 +424,7 @@ export function SavedPostListByUserID( { userID }: { userID: string } ) {
 
     if ( totalPages <= 0 ) { // Tried `if ( ! posts )` but that didn't work for some reason.
         return (
-            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'>
+            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded px-5 py-5'>
                 <p className='text-center text-gray-300 font-medium antialiased w-full'>Looks like there&apos;s no posts here.</p>
                 <div className='flex gap-4 w-full items-center justify-center mt-4'>
                     <Link className='navlink' href={"/"}>Home</Link>

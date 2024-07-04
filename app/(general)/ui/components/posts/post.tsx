@@ -66,13 +66,13 @@ export function CardPost( post: Post ) {
 
     return (
 
-        <div className="flex flex-col sm:flex-row w-full items-center gap-4 relative group transition-all bg-card border-0 border-border group-hover/title:!border-white h-fit rounded-md px-6 py-6">
+        <div className="flex flex-col sm:flex-row w-full items-center gap-4 relative group transition-all bg-card border-0 border-border group-hover/title:!border-white h-fit rounded px-6 py-6">
 
             {post.imageurl 
                 ?
-                <img rel='preload' src={post.imageurl} alt={post.imagealt!} className={`rounded-md ${session ? "sm:!max-w-[146px] sm:!min-w-[146px] sm:!h-[146px] sm:!w-[146px]" : "sm:!max-w-[104px] sm:!min-w-[104px] sm:!h-[104px] sm:!w-[104px]" } m-auto overflow-hidden bg-cover`} />
+                <img rel='preload' src={post.imageurl} alt={post.imagealt!} className={`rounded ${session ? "sm:!max-w-[146px] sm:!min-w-[146px] sm:!h-[146px] sm:!w-[146px]" : "sm:!max-w-[104px] sm:!min-w-[104px] sm:!h-[104px] sm:!w-[104px]" } m-auto overflow-hidden bg-cover`} />
                 :
-                <img rel='preload' src={"/text_post_icon.webp"} alt={"This post has no image."} className={`rounded-md hidden sm:flex ${session ? "sm:!max-w-[146px] sm:!min-w-[146px] sm:!h-[146px] sm:!w-[146px]" : "sm:!max-w-[104px] sm:!min-w-[104px] sm:!h-[104px] sm:!w-[104px]" } m-auto overflow-hidden bg-cover`} />
+                <img rel='preload' src={"/text_post_icon.webp"} alt={"This post has no image."} className={`rounded hidden sm:flex ${session ? "sm:!max-w-[146px] sm:!min-w-[146px] sm:!h-[146px] sm:!w-[146px]" : "sm:!max-w-[104px] sm:!min-w-[104px] sm:!h-[104px] sm:!w-[104px]" } m-auto overflow-hidden bg-cover`} />
             }
 
             <div className="flex w-full bg-transparent h-fit flex-col">
@@ -80,19 +80,14 @@ export function CardPost( post: Post ) {
                     <div className='flex flex-col'>
                         <div className='flex flex-row gap-2 items-center justify-center'>
                             <div className='flex flex-col'>
-                                <Link href={`/c/${post.community.name}`} className='subtitle hover:underline'>c/{post.community.name}</Link>
+                                <Link href={`/c/${post.community.name}`} className='subtitle hover:underline w-fit'>c/{post.community.name}</Link>
                                 { ! post.author ?
-
-                                    <>
-                                        <div>
-                                            <h2 className='hover:underline flex gap-1 subtitle'>[deleted]</h2> 
-                                            <p className='subtitle'>•</p> 
-                                            <p className='subtitle'>{post.createdAt.toLocaleString()}</p>
-                                        </div>                                       
-                                    </>
-
+                                    <div>
+                                        <h2 className='hover:underline flex gap-1 subtitle'>[deleted]</h2> 
+                                        <p className='subtitle'>•</p> 
+                                        <p className='subtitle'>{post.createdAt.toLocaleString()}</p>
+                                    </div>
                                     :
-
                                     <div className='hidden md:flex flex-row gap-2'>  
                                         <Link href={`/user/${post.author.username}`} className='subtitle hover:underline'>@{post.author.username}</Link>
                                         <p className='hidden sm:flex subtitle'>•</p> 
@@ -204,9 +199,9 @@ export function FullPost( post: Post ) {
     const session = useSession();
 
     return (
-        <div className="rounded-md flex w-full bg-transparent h-fit facebookTheme:rounded-none px-5 py-5">
+        <div className="rounded flex w-full bg-transparent h-fit facebookTheme:rounded-none px-5 py-5">
                 <div className="flex w-full bg-transparent h-fit flex-col">
-                    <div className="text-sm relative md:bg-card md:p-6 rounded-md">
+                    <div className="text-sm relative md:bg-card md:p-6 rounded">
 
                         {/*<BackButtonNormal className={"absolute right-0 !hidden md:!flex"} />*/}
 
@@ -244,9 +239,9 @@ export function FullPost( post: Post ) {
                         
                     </div>
                     
-                    <div className='md:bg-card w-full h-fit md:p-6 rounded-md mt-2 md:mt-6'>
+                    <div className='md:bg-card w-full h-fit md:p-6 rounded mt-2 md:mt-6'>
                         {post.imageurl ?
-                            <div className="relative rounded-md mt-2 mb-4 max-h-96 overflow-hidden">
+                            <div className="relative rounded mt-2 mb-4 max-h-96 overflow-hidden">
                                 <div 
                                     style={{ 
                                         backgroundImage: `url(${post.imageurl})`,
@@ -265,7 +260,7 @@ export function FullPost( post: Post ) {
                     </div>
 
                     { session?.user && 
-                        <div className='flex flex-row gap-2 md:bg-card w-full h-fit md:p-6 rounded-md mt-2 md:mt-6'>
+                        <div className='flex flex-row gap-2 md:bg-card w-full h-fit md:p-6 rounded mt-2 md:mt-6'>
                             <button className='navlink' disabled onClick={() => { throw new Error("Feature Unimplemented") }}><ChatBubbleLeftEllipsisIcon className="w-5 h-5" aria-label='Submit Comment' />Submit Comment</button>
                             <SavePostButton userID={session.user?.id} postID={post.id} />
                         </div>                    

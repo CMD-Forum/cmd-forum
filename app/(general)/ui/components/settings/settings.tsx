@@ -11,9 +11,9 @@ export default function AccountSettings() {
 
     return (
         <div className='mb-4 w-full'>
-            <div className='rounded-md flex flex-col gap-4 w-full'>
-                <div className="p-6 border-1 border-border rounded-md w-full">
-                    <div className='flex-row gap-2 rounded-md w-full bg-transparent'>
+            <div className='rounded flex flex-col gap-4 w-full'>
+                <div className="p-6 border-1 border-border rounded w-full">
+                    <div className='flex-row gap-2 rounded w-full bg-transparent'>
                         <div className='flex-col w-full'>
                             <div className='flex flex-row gap-3 items-center w-full relative'>
                                 {/* @ts-ignore */}
@@ -54,9 +54,9 @@ export default function AccountSettings() {
 export function AppearanceSettings() {
     return (
         <div className='mb-4 w-full'>
-            <div className='rounded-md flex flex-col gap-4 w-full'>
-                <div className="p-6 border-1 border-border rounded-md w-full">
-                    <div className='flex-row gap-2 rounded-md w-full bg-transparent'>             
+            <div className='rounded flex flex-col gap-4 w-full'>
+                <div className="p-6 border-1 border-border rounded w-full">
+                    <div className='flex-row gap-2 rounded w-full bg-transparent'>             
                         <div className='flex-col w-full'>
                             <div className='flex flex-row gap-3 items-center w-full relative'>
                                 <div className='flex flex-col w-full'>
@@ -83,9 +83,9 @@ export function AppearanceSettings() {
 export function PostSettings() {
     return (
         <div className='mb-4 w-full'>
-            <div className='rounded-md flex flex-col gap-4 w-full'>
-                <div className="p-6 border-1 border-border rounded-md w-full">
-                    <div className='flex-row gap-2 rounded-md w-full bg-transparent'>             
+            <div className='rounded flex flex-col gap-4 w-full'>
+                <div className="p-6 border-1 border-border rounded w-full">
+                    <div className='flex-row gap-2 rounded w-full bg-transparent'>             
                         <div className='flex-col w-full'>
                             <div className='flex flex-row gap-3 items-center w-full relative'>
                                 <div className='flex flex-col w-full'>
@@ -113,9 +113,9 @@ export function SecuritySettings() {
 
     return (
         <div className='mb-4 w-full'>
-            <div className='rounded-md flex flex-col gap-4 w-full'>
-                <div className="p-6 border-1 border-border rounded-md w-full">
-                    <div className='flex-row gap-2 rounded-md w-full bg-transparent'>
+            <div className='rounded flex flex-col gap-4 w-full'>
+                <div className="p-6 border-1 border-border rounded w-full">
+                    <div className='flex-row gap-2 rounded w-full bg-transparent'>
                         <div className='flex-col w-full'>
                             <div className='flex flex-row gap-3 items-center w-full relative'>
                                 <div className='flex flex-col w-full'>
