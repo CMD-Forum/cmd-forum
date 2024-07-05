@@ -8,11 +8,10 @@ import React from 'react';
 
 import { SessionProvider } from '@/app/(general)/lib/sessioncontext';
 import { Footer } from '@/app/(general)/ui/components/navigation/footer';
+import { enableMaintenanceBanner } from '@/flags';
 
 import { getAuth } from './(general)/lib/auth';
 import Sidebar from './(general)/ui/components/navigation/sidebar';
-import { enableMaintenanceBanner } from '@/flags';
-import Link from 'next/link';
 
 const inter = Inter({ subsets: ['latin'] });
 const ibm_plex_mono = IBM_Plex_Mono({ subsets: ["latin"], weight: "400", variable: "--font-ibm_plex_mono" })
@@ -78,6 +77,7 @@ export default async function RootLayout({
 
   return (
     <SessionProvider value={session}>
+      {/* @ts-ignore */}
           <html lang="en" className={`defaultTheme bg-background ${inter.className} ${ibm_plex_mono.variable}`} style={{ colorScheme: "dark" }}>
             <SpeedInsights />
             <head>

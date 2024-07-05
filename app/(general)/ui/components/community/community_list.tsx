@@ -6,8 +6,8 @@ import { useEffect,useState } from 'react';
 
 import { getAllCommunitys } from '@/app/(general)/lib/data';
 
-import { CardCommunity } from './community';
 import { CardCommunitySkeleton } from '../../skeletons/Community';
+import { CardCommunity } from './community';
 
 export function CommunityList() {
     const [loading, setIsLoading] = useState<boolean>(true);
