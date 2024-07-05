@@ -6,7 +6,7 @@ import { inter } from "../../fonts";
 /**
  * ## Footer
  * ---
- * Footer of the website. Should serve no use outside of being in the layout.
+ * Footer of the website.
  */
 
 export function Footer() {
@@ -18,7 +18,7 @@ export function Footer() {
         <div className='w-full mt-auto p-12 lg:p-16 lg:px-48 px-8 bg-card z-50 border-0 gap-12 lg:gap-32 flex flex-col lg:flex-row'>
   
           <div className='flex flex-col gap-4 max-w-96'>
-            <Link className={`flex ${inter.className} font-extrabold text-4xl w-fit`} href="/"><p>CMD/&gt;</p></Link> 
+            <Link className={`font-extrabold text-3xl`} href="/">Command</Link> 
             {/*<div>
               <p className='header-4'>Subscribe to the Newsletter</p>   
               <p className='subtitle text-sm'>Get the most interesting posts delivered to your inbox weekly.</p>
@@ -55,15 +55,15 @@ export function Footer() {
   
         </div> 
   
-        <div className='flex flex-row w-full p-8 px-8 lg:px-48 bg-card-light justify-between'>
-            <div className="flex flex-row gap-6">
-                <p className='subtitle !text-sm'>© {currentYear} Command.</p>  
+        <div className='flex flex-col md:flex-row w-full p-8 px-8 lg:px-48 bg-card-light justify-between'>
+            <div className="flex flex-col md:flex-row gap-3 mb-3 md:mb-0">
+                <p className='subtitle !text-sm'>© {currentYear} Command, Inc.</p>  
                 <Link className="subtitle !text-sm hover:underline" href={"/about#terms"}>Terms</Link> 
                 <Link className="subtitle !text-sm hover:underline" href={"/about#privacy"}>Privacy</Link> 
                 <Link className="subtitle !text-sm hover:underline" href={"/sitemap"}>Sitemap</Link>
                 <Link className="subtitle !text-sm hover:underline" href={"/about#donate"}>Donate</Link>           
             </div>
-            <div className='flex flex-row gap-4'>
+            <div className='flex flex-row gap-3'>
                 <Link href={"https://github.com/CMD-Forum/cmd-forum"}><FaGithub className='w-6 h-6 text-gray-300 hover:text-white transition-all cursor-pointer' /></Link>
                 <Link href={"#"}><FaGooglePlay className='w-6 h-6 text-gray-300 hover:text-white transition-all cursor-pointer' /></Link>
                 <Link href={"#"}><FaAppStore className='w-6 h-6 text-gray-300 hover:text-white transition-all cursor-pointer' /></Link>

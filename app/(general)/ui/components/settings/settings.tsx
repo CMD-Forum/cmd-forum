@@ -1,28 +1,28 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useSession } from "@/app/(general)/lib/sessioncontext";
 
 import ProfileImage from "../account/ProfileImage";
-import { Settings_ChangeAccountUsername, Settings_ChangeDescription, Settings_DeleteAccount, Settings_Setup2FA } from "./settings_sections";
+import { Settings_ChangeAccountUsername, Settings_ChangeDescription, Settings_DeleteAccount, Settings_GotoSessions, Settings_Setup2FA } from "./settings_sections";
 
 export default function AccountSettings() {
 
-    const { data: session } = useSession();
+    const session = useSession();
 
     return (
         <div className='mb-4 w-full'>
-            <div className='rounded-md flex flex-col gap-4 w-full'>
-                <div className="p-6 border-1 border-border rounded-md w-full">
-                    <div className='flex-row gap-2 rounded-md w-full bg-transparent'>
+            <div className='rounded flex flex-col gap-4 w-full'>
+                <div className="p-6 border-1 border-border rounded w-full">
+                    <div className='flex-row gap-2 rounded w-full bg-transparent'>
                         <div className='flex-col w-full'>
                             <div className='flex flex-row gap-3 items-center w-full relative'>
                                 {/* @ts-ignore */}
-                                <ProfileImage imgSize={"14"} />
+                                <ProfileImage user={session.user} imgSize={"14"} />
 
                                 <div className='flex flex-col w-full'>
-                                    <h1 className='header-2'>{session?.user.username}</h1>   
+                                    <h1 className='header-2'>{session.user?.username}</h1>   
                                     {/* @ts-ignore */}
-                                    <p className='subtitle text-sm'>{session?.user.description}</p>
+                                    <p className='subtitle text-sm'>{session.user?.description}</p>
                                 </div>
                             </div>
                         </div>
@@ -54,9 +54,9 @@ export default function AccountSettings() {
 export function AppearanceSettings() {
     return (
         <div className='mb-4 w-full'>
-            <div className='rounded-md flex flex-col gap-4 w-full'>
-                <div className="p-6 border-1 border-border rounded-md w-full">
-                    <div className='flex-row gap-2 rounded-md w-full bg-transparent'>             
+            <div className='rounded flex flex-col gap-4 w-full'>
+                <div className="p-6 border-1 border-border rounded w-full">
+                    <div className='flex-row gap-2 rounded w-full bg-transparent'>             
                         <div className='flex-col w-full'>
                             <div className='flex flex-row gap-3 items-center w-full relative'>
                                 <div className='flex flex-col w-full'>
@@ -83,9 +83,9 @@ export function AppearanceSettings() {
 export function PostSettings() {
     return (
         <div className='mb-4 w-full'>
-            <div className='rounded-md flex flex-col gap-4 w-full'>
-                <div className="p-6 border-1 border-border rounded-md w-full">
-                    <div className='flex-row gap-2 rounded-md w-full bg-transparent'>             
+            <div className='rounded flex flex-col gap-4 w-full'>
+                <div className="p-6 border-1 border-border rounded w-full">
+                    <div className='flex-row gap-2 rounded w-full bg-transparent'>             
                         <div className='flex-col w-full'>
                             <div className='flex flex-row gap-3 items-center w-full relative'>
                                 <div className='flex flex-col w-full'>
@@ -113,9 +113,9 @@ export function SecuritySettings() {
 
     return (
         <div className='mb-4 w-full'>
-            <div className='rounded-md flex flex-col gap-4 w-full'>
-                <div className="p-6 border-1 border-border rounded-md w-full">
-                    <div className='flex-row gap-2 rounded-md w-full bg-transparent'>
+            <div className='rounded flex flex-col gap-4 w-full'>
+                <div className="p-6 border-1 border-border rounded w-full">
+                    <div className='flex-row gap-2 rounded w-full bg-transparent'>
                         <div className='flex-col w-full'>
                             <div className='flex flex-row gap-3 items-center w-full relative'>
                                 <div className='flex flex-col w-full'>
@@ -131,6 +131,8 @@ export function SecuritySettings() {
                 {/* */}
 
                 <Settings_Setup2FA />
+
+                <Settings_GotoSessions />
 
             </div>
         </div>

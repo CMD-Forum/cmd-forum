@@ -51,36 +51,63 @@ body {
 
 a, button {
   @apply outline-none #{!important};
-  @apply focus-visible:outline-2 #{!important};
-  @apply focus-visible:outline-white #{!important};
+  @apply focus-visible:ring-2 #{!important};
+  @apply focus-visible:ring-offset-2 #{!important};
+  @apply focus-visible:ring-offset-background #{!important};
+  @apply rounded-sm;
+}
+
+.no-ring {
+  @apply ring-0 #{!important};
+  @apply ring-offset-0 #{!important};
+  @apply focus-visible:ring-0 #{!important};
+  @apply focus-visible:ring-offset-0 #{!important};
+}
+
+p {
+  @extend .subtitle;
+}
+
+code {
+  @apply font-IBM_PLEX_MONO;
+  @apply text-sm;
+}
+
+.code-block {
+  @apply font-IBM_PLEX_MONO;
+  @apply text-sm;
+  @apply text-gray-300;
+  @apply p-4;
+  @apply bg-card;
+  @apply rounded;
 }
 
 // Main
 
 .navlink {
-  @apply font-normal;
+  @apply font-medium;
   @apply text-sm;
   @apply text-white;
   @apply decoration-2; 
   @apply transition-all;
-  @apply bg-transparent;
+  @apply bg-card-light;
   @apply hover:bg-border;
-  @apply focus:bg-border;  
+  @apply active:bg-card;  
   @apply px-3;
   @apply py-2;
   @apply border-1;
   @apply border-border;
-  @apply hover:border-border-light;
-  @apply focus:border-border-light;
-  @apply rounded-md;
+  @apply hover:border-border;
+  @apply active:border-border;
+  @apply focus:ring-2;
+  @apply ring-offset-2;
+  @apply ring-offset-background;
+  @apply rounded;
   @apply flex;
   @apply gap-1.5;
   @apply items-center;
   @apply w-fit;
   @apply outline-none;
-  @apply focus-visible:border-1;
-  @apply focus-visible:border-border-light;
-  @apply focus-visible:bg-border;
 }
 
 .navlink.raised {
@@ -104,7 +131,7 @@ a, button {
 
 .navlink:disabled {
   @apply text-gray-400;
-  @apply hover:bg-transparent;
+  @apply bg-card;
   @apply cursor-not-allowed;
   @apply border-border #{!important};
 }
@@ -112,6 +139,9 @@ a, button {
 .navlink[data-navlink-enabled="true"] {
   @apply border-border-light;
   @apply bg-border;
+  @apply ring-2;
+  @apply ring-offset-2;
+  @apply ring-offset-background;
 }
 
 .navlink-ghost {
@@ -122,12 +152,16 @@ a, button {
   @apply border-0;
 }
 
+.navlink-ghost:disabled {
+  @apply hover:bg-card;
+}
+
 .navlink-full {
   @extend .navlink;
   @apply bg-white;
   @apply text-black;
   @apply hover:bg-neutral-300;
-  @apply focus:bg-neutral-300;
+  @apply active:bg-neutral-400;
   @apply border-0;
 }
 
@@ -143,21 +177,19 @@ a, button {
   @apply text-black;
 }
 
-.navlink-small {
-  @extend .navlink;
-  @apply h-[30px];
+.navlink.small, .navlink-full.small, .navlink-destructive.small, .navlink-emphasis.small, .navlink-ghost.navlink.small {
+  @apply py-1.5;
+  @apply px-2.5;
 }
 
 .navlink-destructive {
-
   @extend .navlink;
-  @apply bg-red-700;
+  @apply bg-red-500;
   @apply hover:bg-red-600;
-  @apply focus:bg-red-600;
+  @apply active:bg-red-700;
   @apply border-0;
   @apply transition-all;
   @apply text-white #{!important};
-
 }
 
 .navlink-destructive:disabled {
@@ -165,20 +197,10 @@ a, button {
   @apply hover:bg-red-800;
   @apply hover:cursor-not-allowed;
   @apply border-red-800;
-  @apply text-white;
-}
-
-.navlink-success {
-
-  @extend .navlink-full;
-  @apply bg-green-600;
-  @apply hover:bg-green-700;
-  @apply text-white;
-
+  @apply text-gray-400 #{!important};
 }
 
 .navlink-sidebar {
-
   @extend .navlink;
   @apply h-fit;
   @apply w-full;
@@ -190,18 +212,18 @@ a, button {
   @apply hover:text-white #{!important};
   @apply hover:border-0;
   @apply focus:border-0;
+  @apply active:bg-border;
+  @apply ring-0 #{!important};
+  @apply ring-offset-0 #{!important};
   @apply border-transparent;
   @apply relative;
-
 }
 
 .navlink-sidebar.active {
-
   @apply bg-border;
   @apply text-white #{!important};
   @apply border-1 #{!important};
   @apply border-border-light #{!important};
-
 }
 
 .navlink-sidebar.after-active {
@@ -222,7 +244,6 @@ a, button {
 }
 
 .topbar-link {
-
   @apply text-sm;
   @apply hover:text-white #{!important};
   @apply transition-all;
@@ -231,16 +252,13 @@ a, button {
   @apply relative;
   @apply px-3;
   @apply py-2;
-  @apply rounded-md;
+  @apply rounded;
   @extend .subtitle;
-
 }
 
 .topbar-link.active {
-
   @apply text-white #{!important};
   @apply bg-border;
-
 }
 
 .topbar-link.active::after {
@@ -256,56 +274,45 @@ a, button {
 }
 
 .dropdown-menu {
-
   max-height: 0;
   overflow: hidden;
   transition: all 0.3s ease-out;
-
 }
 
 .dropdown-menu.open {
-    
   max-height: 200px;
   transition: all 0.3s ease-in;
-
 }
 
 
 .link_bg-t-full {
-
   @extend .navlink;
   width: 100% !important;
-
 }
 
 .pos-unset {
-
   position: unset !important;
-
 }
 
-.generic_field {
-
+textarea,
+input {
   @apply bg-background;
-  @apply rounded-md;
+  @apply rounded;
   @apply h-9;
   @apply px-2;
-  @apply outline-none;
+  @apply outline-none #{!important};
   @apply border-1;
   @apply border-border;
-  @apply focus:border-border-light;
-  @apply ring-border-light;
   @apply focus:ring-2;
+  @apply ring-offset-2;
+  @apply ring-offset-background;
   @apply transition-all;
   @extend .subtitle;
-
 }
 
 .generic_field.errored {
-
   @apply ring-2;
   @apply ring-red-300;
-
 }
 
 .generic_field:disabled {
@@ -452,7 +459,7 @@ a, button {
 }
 
 .wmde-markdown img {
-  @apply rounded-md #{!important};
+  @apply rounded #{!important};
 }
 
 .markdown-alert-title {
@@ -460,7 +467,7 @@ a, button {
 }
 
 .md-editor {
-  @apply rounded-md #{!important};
+  @apply rounded #{!important};
 }
 
 .md-editor-toolbar-warp {
@@ -515,14 +522,14 @@ hr {
 .markdown-body {
 
   @apply bg-transparent #{!important};
-  @apply rounded-md;
-  @apply *:rounded-md;
+  @apply rounded;
+  @apply *:rounded;
 
 }
 
 .markdown-body > p > img {
 
-  @apply rounded-md;
+  @apply rounded;
 
 }
 

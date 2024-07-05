@@ -55,7 +55,7 @@ const BuildDockerImage = async () => {
     '--platform',
     'linux/amd64',
     '-t',
-    'cmd-forum-docker',
+    'cmd-forum',
     '.'
   ], { stdio: 'inherit' });
 
@@ -63,7 +63,7 @@ const BuildDockerImage = async () => {
     if (code === 0) {
       console.log('\x1b[2m%s\x1b[0m', '┌────────────────────────────────────────────────────────────────────────────┐');
       process.stdout.write('\x1b[2m│\x1b[0m');process.stdout.write('  \x1b[32m✔  Docker Build Finished\x1b[0m');process.stdout.write('                                                     \x1b[2m│\x1b[0m');console.log();
-      process.stdout.write('\x1b[2m│\x1b[0m');process.stdout.write('  Your image should now be accessible through Docker as `cmd-forum-docker`');process.stdout.write('  \x1b[2m│\x1b[0m');console.log();
+      process.stdout.write('\x1b[2m│\x1b[0m');process.stdout.write('  Your image should now be accessible through Docker as `cmd-forum`');process.stdout.write('  \x1b[2m│\x1b[0m');console.log();
       console.log('\x1b[2m%s\x1b[0m', '└────────────────────────────────────────────────────────────────────────────┘');
     } else {
       console.log('\x1b[2m%s\x1b[0m', '┌──────────────────────────────────────────────────────────────┐');

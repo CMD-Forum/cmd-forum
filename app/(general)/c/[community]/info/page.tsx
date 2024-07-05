@@ -8,7 +8,7 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const name = params.community.toLowerCase()
   return {
-    title: name ? `c/${name} - Information` : "CMD/>",
+    title: name ? `c/${name} - Information` : "",
   }
 }
 

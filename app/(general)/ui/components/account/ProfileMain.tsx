@@ -1,14 +1,8 @@
 "use client";
 
 import { CalendarDaysIcon, PencilSquareIcon } from "@heroicons/react/20/solid";
-import { motion } from "framer-motion";
 
 import ProfileImage from "./ProfileImage";
-  
-const variants = {
-    hidden: { opacity: 0, y: -20 },
-    visible: { opacity: 1, y: 0 },
-};
 
 interface ProfileProps {
     username: string;
@@ -21,7 +15,7 @@ interface ProfileProps {
 export default function ProfileMain(user: ProfileProps) {
 
     return (
-        <div className='flex-row gap-2 rounded-md w-full bg-transparent'>
+        <div className='flex-row gap-2 rounded w-full bg-transparent'>
             <div className='flex-col'>
                 <div className='flex flex-row gap-3 items-center'>
                     {/* @ts-ignore */}

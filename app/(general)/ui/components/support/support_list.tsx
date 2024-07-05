@@ -34,16 +34,16 @@ export default function SupportList() {
                 className="mb-4 animate-pulse flex flex-col gap-4"
             >
           
-                <div className="flex w-full bg-border rounded-md h-[94px]" />
-                <div className="flex w-full bg-border rounded-md h-[94px]" />
-                <div className="flex w-full bg-border rounded-md h-[94px]" />
-                <div className="flex w-full bg-border rounded-md h-[94px]" />
-                <div className="flex w-full bg-border rounded-md h-[94px]" />
-                <div className="flex w-full bg-border rounded-md h-[94px]" />
-                <div className="flex w-full bg-border rounded-md h-[94px]" />
-                <div className="flex w-full bg-border rounded-md h-[94px]" />
-                <div className="flex w-full bg-border rounded-md h-[94px]" />
-                <div className="flex w-full bg-border rounded-md h-[94px]" />
+                <div className="flex w-full bg-border rounded h-[94px]" />
+                <div className="flex w-full bg-border rounded h-[94px]" />
+                <div className="flex w-full bg-border rounded h-[94px]" />
+                <div className="flex w-full bg-border rounded h-[94px]" />
+                <div className="flex w-full bg-border rounded h-[94px]" />
+                <div className="flex w-full bg-border rounded h-[94px]" />
+                <div className="flex w-full bg-border rounded h-[94px]" />
+                <div className="flex w-full bg-border rounded h-[94px]" />
+                <div className="flex w-full bg-border rounded h-[94px]" />
+                <div className="flex w-full bg-border rounded h-[94px]" />
 
             </div>
         );
@@ -70,7 +70,7 @@ export default function SupportList() {
                           className="mb-4"
                         >
                         
-                        <Link className="flex flex-col w-full bg-card border-border border-[1px] p-5 group rounded-md transition-all" href={`/support/${article.id}`}>
+                        <Link className="flex flex-col w-full bg-card border-border border-[1px] p-5 group rounded transition-all" href={`/support/${article.id}`}>
                             <h2 className="w-fit font-sans font-semibold text-lg group-hover:text-gray-300 transition-all">{article.title}</h2>    
                             <p className="text-gray-300">{article.tagline}</p>
                         </Link>

@@ -1,15 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+
+import { useSession } from "../../lib/sessioncontext";
 
 const Account = () => {
-
-    const { data: session } = useSession();
     const router = useRouter();
-
-    router.push(`/user/${session?.user.username}`);
-
+    const session = useSession();
+    router.push(`/user/${session.user?.username}`);
 };
 
 export default Account

@@ -34,9 +34,7 @@ export default function PostList() {
     }    
 
     try {        
-
         useEffect(() => {
-
             setIsLoading(true),
             fetch("/api/posts/getAll/", {
                 method: 'POST',
@@ -49,32 +47,15 @@ export default function PostList() {
                 return res.json();
             })
             .then((data) => {
-                setPosts(data);
-            });
-
-            // Post Count
-
-            fetch("/api/posts/getAll/count/", {
-                method: 'GET',
-                headers:{
-                    "Content-Type": "application/json"
-                },
-            })
-            .then((res) => {
-                return res.json();
-            })
-            .then((data) => {
-                setTotalPosts(data);
-                setTotalPages(totalPosts / 10)
+                setPosts(data.posts);
+                setTotalPosts(data.postCount);
+                setTotalPages(Math.ceil(totalPosts / 10))
                 setIsLoading(false);
-            });  
-
+            });
         }, [page, totalPosts]);    
-
     } catch ( error ) {
-
         return (
-            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'>
+            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded px-5 py-5'>
                 <p className='text-center text-gray-300 font-medium antialiased w-full'>Sorry, an error occurred.</p>
                 {/*<div className='flex gap-4 w-full items-center justify-center mt-4'>
                     <button className='navlink' onClick={() => router.refresh()} type='button'>Reload</button>
@@ -102,7 +83,7 @@ export default function PostList() {
 
     if ( totalPosts <= 0 ) { // Tried `if ( ! posts )` but that didn't work for some reason.
         return (
-            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-md px-5 py-5'>
+            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded px-5 py-5'>
                 <p className='text-center text-gray-300 font-medium antialiased w-full'>Looks like there&apos;s no posts here.</p>
                 <div className='flex gap-4 w-full items-center justify-center mt-4'>
                     <Link className='navlink' href={"/"}>Home</Link>
@@ -113,9 +94,7 @@ export default function PostList() {
 
     return (
         <div className='flex flex-col gap-4'>
-
             {Array.isArray(posts) && posts.map((post) => {
-        
                 return (
                     <div 
                       key={post.id}
@@ -134,15 +113,14 @@ export default function PostList() {
                         communityId={post.community.id}
                         author={post.author}
                         community={post.community}
- 
                       />
                     </div>
-
                   );
             })}
-            <div className='flex gap-4'>
+            <div className='flex gap-4 items-center'>
                 <button onClick={() => lastPage()} className='navlink !px-2' disabled={ page === 0 ? true : false } aria-label='Last Page'><ArrowLeftIcon className='w-5 h-5' /></button>  
-                <button onClick={() => nextPage()} className='navlink !px-2' disabled={ pageForwardAllowed === false ? true : false } aria-label='Next Page'><ArrowRightIcon className='w-5 h-5' /></button>            
+                <p className='subtitle h-fit'>{ page + 1 } of { totalPages }</p>
+                <button onClick={() => nextPage()} className='navlink !px-2' disabled={ !pageForwardAllowed || page === totalPages - 1 } aria-label='Next Page'><ArrowRightIcon className='w-5 h-5' /></button>            
             </div>
         </div>
     );

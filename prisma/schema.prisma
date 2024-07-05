@@ -41,149 +41,85 @@ enum TwoFactorMethod {
 }
 
 model Community {
-  id             String                @id @default(cuid()) /// The CUID of the community.
-
+  id             String                @id @default(cuid()) @unique /// The CUID of the community.
   createdAt      DateTime              @default(now()) /// When the community was created.
   updatedAt      DateTime              @default(now()) @updatedAt /// When the community database entry was last updated.
-  
   name           String                @unique @default("") @db.VarChar(50) /// Name used in URL to find community, always lower case to prevent issues.
   display_name   String                @unique @default("") @db.VarChar(50) /// Name shown anywhere other than the URL, can contain upper case letters since it is not used for identification.
-  
   description    String                @default("This community doesn't have a description.") /// Description of the community.
-
   rules          String[]              @default([]) /// Rules of the community.
-  
   image          String                @default("/images/favicon/favicon.svg") /// Image that is shown for the community, defaults to the favicon.
-  
   public         Boolean               @default(true) /// If false, this community cannot be accessed and will not be shown. Currently unimplemented.
-  
   admin_ids      String[]              @default([]) /// User CUIDS of the community administrator(s).
   admins         CommunityAdminship[]
- 
   memberships    CommunityMembership[]
-  
   sidebar_md     String                @default("") /// Deprecated, do not use.
-  
   posts          Post[]                /// Relation to all posts in this community.
 }
 
 model Post {
-  id          String    @id @default(cuid()) /// The CUID of the post.
-
+  id          String    @id @default(cuid()) @unique /// The CUID of the post.
   createdAt   DateTime  @default(now()) @db.Timestamptz(3) /// When the post was created.
   updatedAt   DateTime  @default(now()) @updatedAt @db.Timestamptz(3) /// When the post database entry was last updated.
-
   title       String    @db.VarChar(255) /// The title of the post.
-
   content     String    /// The main content of the post.
-
   tagline     String?   /// The tagline of the post. Deprecated, do not use.
-
   imageurl    String?   /// If the post is an image post, this is the images URL.
   imagealt    String?   /// If the post is an image post, this is the images accessibility tag.
   public      Boolean   @default(true) /// If false, this post cannot be accessed and will not be shown. Currently unimplemented.
-
   authorId    String    /// The CUID of the posts author.
   communityId String    @default("null") /// The CUID of the posts community.
-
   upvotes     Upvotes[]
   downvotes   Downvotes[]
-
   author      User      @relation(fields: [authorId], references: [id])    
   community   Community @relation(fields: [communityId], references: [id])
 }
 
 model User {
-  id                 String      @id @default(cuid()) /// The CUID of the user.
-
-  email              String      @unique /// The user's email.
+  id                 String      @id @default(cuid()) @unique /// The CUID of the user.
+  github_id          Int?        @unique
+  email              String?     @unique /// The user's email. If possible, do not leave empty (OAuth however may not provide an email, so this has to be made "optional").
   emailVerified      DateTime?   /// When the user verified their email, currently unimplemented.
   emailLastUpdate    DateTime?   /// When the user last updated their email.
-
   username           String      @unique /// The user's username.
   usernameLastUpdate DateTime?   /// When the user last updated their username.
-
   description        String      @db.VarChar(250) @default("This user has not set their description.") /// The users description, displayed on their profile and when a user hovers over their username.
-  
-  password           String?     /// The users password, should be hashed.
-  
+  password_hash      String?     /// The user's password.
   createdAt          DateTime    @default(now()) /// When the user was created.
   updatedAt          DateTime    @updatedAt /// When the user database entry was last updated.
-  
-  name               String      /// Deprecated, do not use.
-  
+  name               String?     /// Deprecated, do not use.
   profile_image      String      @default("/images/favicon/favicon.svg") /// Deprecated, do not use.
   image              String?     /// The profile image of the user.
-  
   posts              Post[]      /// All posts made by the user.
   savedPosts         String[]    @default([]) /// Posts saved by the user.
-  
   memberships        CommunityMembership[] /// Communities the user is a member of.
   adminships         CommunityAdminship[]  /// Communities the user is an admin of.
-  
   upvotes            Upvotes[]
   downvotes          Downvotes[]
-  
   Support            Support?    @relation(fields: [supportId], references: [authorId])
   supportId          String?
-  
   role               UserRole    @default(USER) /// If the user is a normal user or a site administrator (not to be confused with a community administrator).
-  
-  accounts           Account[]
   sessions           Session[]
-  Authenticator      Authenticator[]
-
   settings           UserSettings[]
 }
 
-model Account {
-  id                 String  @id @default(cuid()) /// The CUID of the account.
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
+model Session {
+  id             String   @id
+  userId         String
+  expiresAt      DateTime
+  ip_address     String   @default("Unknown")
+  fresh          Boolean  @default(true)
+  userAgent      String   @default("Unknown")
+	isBot          Boolean  @default(false)
+	browserName    String   @default("Unknown")
+	browserVersion String   @default("Unknown")
+	deviceModel    String   @default("Unknown")
+	deviceType     String   @default("Unknown")
+	deviceVendor   String   @default("Unknown")
+	osName         String   @default("Unknown")
+	osVersion      String   @default("Unknown")
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-}
-
-model Session { /// Pretty sure this isn't used in JWT sessions but it's here anyway
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
-
-  @@unique([identifier, token])
-}
-
-model Authenticator {
-  credentialID         String  @unique
-  userId               String
-  providerAccountId    String
-  credentialPublicKey  String
-  counter              Int
-  credentialDeviceType String
-  credentialBackedUp   Boolean
-  transports           String?
-
-  user                 User    @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
-  @@id([userId, credentialID])
+  user           User     @relation(references: [id], fields: [userId], onDelete: Cascade)
 }
 
 model Support {

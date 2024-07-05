@@ -41,31 +41,15 @@ export default function Hovercard({ children, className, trigger }: { children: 
                     <>
                         <div className="absolute w-full bg-card h-2" />
                         { open &&
-                            <motion.div 
-                                className={`bg-card ${className} border-border border-1 rounded-md w-max h-max !z-50 group min-w-52 shadow-sm absolute`}
-                                initial={{
-                                    y: -6,
-                                    display: 'hidden',
-                                }}
-                                animate={{
-                                    y: open ? 4 : 0,
-                                    display: open ? '' : 'hidden'
-                                }}
-                                exit={{
-                                    y: -6,
-                                    display: 'hidden',
-                                }}
-                                transition={{
-                                    duration: 0.4,
-                                    ease: easing
-                                }}
+                            <div 
+                                className={`bg-card ${className} border-border border-1 rounded w-max h-max !z-50 group min-w-52 shadow-md absolute mt-1`}
                                 onMouseEnter={() => setIsOpen(true)}
                                 onMouseLeave={() => setIsOpen(false)}
                             >   
                                 <>
                                     { children }           
                                 </>
-                            </motion.div>  
+                            </div>  
                         }                        
                     </>
                 </AnimatePresence>

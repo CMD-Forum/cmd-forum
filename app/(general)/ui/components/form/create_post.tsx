@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod" // Form Validation
 import MarkdownEditor from '@uiw/react-markdown-editor';
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaGithub, FaMarkdown } from "react-icons/fa6";
@@ -12,6 +11,7 @@ import rehypeSanitize from "rehype-sanitize";
 import * as z from "zod";
 
 import { createPost, getCommunityByName } from "@/app/(general)/lib/data";
+import { useSession } from "@/app/(general)/lib/sessioncontext";
 
 import Alert, { AlertSubtitle, AlertTitle } from "../new_alert";
 
@@ -51,13 +51,13 @@ export default function CreatePostForm() {
       },
     });
 
-    const { data: session } = useSession();
+    const session = useSession();
     const router = useRouter();
 
     if ( ! session ) {
         return (
-            <Alert type={"error"}>
-                <AlertTitle>It looks like you&apos; not logged in, please log in.</AlertTitle>
+            <Alert type={"error"} closeBtn={false}>
+                <AlertTitle>It looks like you&apos;re not logged in, please login.</AlertTitle>
             </Alert>
         );
     }
@@ -78,7 +78,7 @@ export default function CreatePostForm() {
           content: content,
           imageurl: null,
           imagealt: null,
-          authorId: session.user.id,
+          authorId: session.user?.id,
         };
         
         try {
