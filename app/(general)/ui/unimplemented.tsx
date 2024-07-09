@@ -10,7 +10,7 @@ export function UNIMPLEMENTED() {
         <div className='flex flex-row gap-3 items-center'>
           <div className='flex flex-col w-full'>
             <h1 className='header'>Sorry, this feature is unavailable.</h1>   
-            <h2 className="text-gray-300 font-medium antialiased w-full">The requested page hasn&apos;t been implemented.</h2>
+            <h2 className="text-gray-300 font-medium antialiased w-full">The feature hasn&apos;t been implemented. Check back later.</h2>
             <div className="mt-4" />
             <div className="flex flex-row gap-2 mt-2">
               <Link className='navlink' href='/'><HomeIcon className="font-medium h-5 w-5" />Home</Link>

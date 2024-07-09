@@ -2,10 +2,10 @@
 
 import { Session } from "lucia";
 import React from "react";
-import { FaChrome, FaFirefoxBrowser } from "react-icons/fa6";
 
 import { action_invalidateAllSessions, action_invalidateSession } from "@/app/(general)/lib/logout";
 import { useSession } from "@/app/(general)/lib/sessioncontext";
+
 import Dialog from "../dialog/dialog";
 
 export default function ActiveSessions( { sessions }: { sessions: Array<Session> } ) {
@@ -13,7 +13,7 @@ export default function ActiveSessions( { sessions }: { sessions: Array<Session>
     const currentSession = useSession();
 
     return (
-        <div className='flex flex-col border-1 border-border rounded'>
+        <div className='flex flex-col border-1 border-border rounded-lg'>
 
             <div className="p-6 bg-card">
                 <h3 className='font-bold text-xl'>Active Sessions</h3>     
@@ -30,7 +30,7 @@ export default function ActiveSessions( { sessions }: { sessions: Array<Session>
                                 { isActiveSession ? <div className="flex gap-2 items-center"><span className="w-2 h-2 bg-green-300 rounded-full inline-block"></span><p className="!font-bold session-active-text !text-green-300">Current Session</p></div> : null }
                                 {/*<p><b>ID: </b>{session.id}</p>*/}
                                 <p suppressHydrationWarning><b>Expires: </b>{session.expiresAt.toLocaleDateString()}</p>
-                                { session.browserName !== "Unknown"
+                                { /*session.browserName !== "Unknown"
                                 ? 
                                     <p className="flex gap-1 items-center">
                                         <b>Device Info: </b>
@@ -43,7 +43,7 @@ export default function ActiveSessions( { sessions }: { sessions: Array<Session>
                                     </p> 
                                 : 
                                     <p><b>Device Info: </b>Unknown</p>
-                                }
+                                */}
                                 
                                 {/*{ session.userAgent ? <p><b>User Agent: </b>{session.userAgent}</p> : null }*/}
                             </div>

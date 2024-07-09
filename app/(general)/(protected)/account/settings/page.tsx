@@ -1,33 +1,22 @@
 import { Metadata } from 'next';
 
 import SettingsTabs from "@/app/(general)/ui/components/account/SettingsTabs";
-import Alert, { AlertSubtitle, AlertTitle } from '@/app/(general)/ui/components/new_alert';
-import { enableSettings } from '@/flags';
- 
+
 export const metadata: Metadata = {
   title: 'Settings',
 };
 
 export default async function SettingsPage() {
 
-    const settingsEnabled = await enableSettings();
-
     return (
         <>
-            <div className="flex flex-col border-0 border-border p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48 bg-card mt-8 md:mt-0">
+            <div className="flex flex-col border-0 border-border p-6 md:pt-12 bg-background/35 md:mt-0 lg:px-4">
                 <h1 className="header">Settings</h1>
                 <p className="text-gray-300 font-medium antialiased w-full">Manage your account settings</p>   
             </div>
 
-            <div className="flex flex-col p-6 md:pt-12 lg:pb-12 lg:p-12 lg:px-48">
-                { settingsEnabled ? 
-                    <SettingsTabs />
-                    :
-                    <Alert type={"alert"} className="mb-4" closeBtn={false}>
-                        <AlertTitle>Settings are unavailable.</AlertTitle>
-                        <AlertSubtitle>Sorry, settings haven&apos;t been implemented yet.</AlertSubtitle>
-                    </Alert>
-                }
+            <div className="flex flex-col lg:pb-12 px-4 mb-6">
+                <SettingsTabs />
             </div>
         </>
     )

@@ -38,9 +38,7 @@ export default function PostView({ params }: { params: { id: string } }) {
   }, [params.id]);
 
   return (
-    <>
-      <title>Command</title>
-      <div className='mt-14 lg:pb-12 lg:px-44 !pt-0 md:mt-6'>
+      <div className='flex flex-col lg:pb-12 px-4 mb-6'>
         {loading ? (
           <FullPostSkeleton />
         ) : post ? (
@@ -58,15 +56,14 @@ export default function PostView({ params }: { params: { id: string } }) {
               content={post.content}
               imageurl={post.imageurl}
               imagealt={post.imagealt}
+              href={post.href}
             />          
           </>
         ) : (
           <>
-            <title>404 - Command</title>
             <Error404 />
           </>
         )}
-      </div>    
-    </>
+      </div>
   );
 }

@@ -74,7 +74,7 @@ export function ChangeAccountName({ userID } : { userID: string }) {
                 {error && <p className={`text-center md:!text-left subtitle`}>{error}</p>}
 
                 <Dialog.ButtonContainer>
-                    <button className={"navlink-full"} onClick={handleSubmit(onSubmit)}>Change your name</button>
+                    <button className={"navlink-full"} onClick={handleSubmit(onSubmit)}>{loading ? <><img src="/spinner_black.svg" alt="Changing Username..." className="spinner"/>Changing Username</>  : 'Change Username' }</button>
                 </Dialog.ButtonContainer>
             </Dialog.Content>
         </Dialog>
@@ -146,7 +146,7 @@ export function ChangeAccountDescription({ userID } : { userID: string }) {
                 {success && <p className={`text-center md:!text-left subtitle`}>{success}</p>}
                 {error && <p className={`text-center md:!text-left subtitle`}>{error}</p>}
                 <Dialog.ButtonContainer>
-                    <button className="navlink-full" onClick={handleSubmit(onSubmit)}>Change Description</button>    
+                    <button className="navlink-full" onClick={handleSubmit(onSubmit)}>{loading ? <><img src="/spinner_black.svg" alt="Changing Description..." className="spinner"/>Changing Description</>  : 'Change Description' }</button>    
                 </Dialog.ButtonContainer>
             </Dialog.Content>
         </Dialog>
@@ -204,7 +204,7 @@ export function DeleteAccountDialog({ userID, username } : { userID: string, use
             <Dialog.Trigger><button className={"navlink-destructive"}>Delete Account</button></Dialog.Trigger>
             <Dialog.Content>
                 <Dialog.Title>Delete Your Account</Dialog.Title>
-                <Dialog.Subtitle>If you want to delete your account, you can do it below. Type <code className={`bg-black px-2 py-1 rounded border-1 border-border text-sm ${inter.className}`}>{username}</code> below to confirm your decision.</Dialog.Subtitle>
+                <Dialog.Subtitle>If you want to delete your account, you can do it below. Type <code className={`bg-black px-2 py-1 rounded-lg border-1 border-border text-sm ${inter.className}`}>{username}</code> below to confirm your decision.</Dialog.Subtitle>
 
                 <input className={"generic_field w-full mb-2 hidden"} disabled={true} placeholder={userID}></input>
                 <input className={"generic_field w-full mb-2 hidden"} disabled={true} {...register('username')} placeholder={username}></input>
@@ -215,7 +215,7 @@ export function DeleteAccountDialog({ userID, username } : { userID: string, use
                 <p className={`${error ? "flex" : "hidden"} text-center w-full md:text-left text-gray-300`}>{error}</p>
 
                 <Dialog.ButtonContainer>
-                    <button className={"navlink-destructive"} onClick={handleSubmit(onSubmit)}>Delete your account</button>
+                    <button className={"navlink-destructive"} onClick={handleSubmit(onSubmit)}>{loading ? <><img src="/spinner_black.svg" alt="Deleting Account..." className="spinner"/>Deleting Account</>  : 'Delete Account' }</button>
                 </Dialog.ButtonContainer>                     
             </Dialog.Content>
         </Dialog>

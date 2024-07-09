@@ -8,7 +8,7 @@ export default function LargeDropdown( { children, title, description }: { child
     const [ expanded, setExpanded ] = useState<boolean>();
 
     return (
-        <div className='flex flex-col border-1 border-border rounded pt-6'>
+        <div className='flex flex-col border-1 border-border rounded-lg pt-6'>
 
             <div className="px-6">
                 <h3 className='font-bold text-xl'>{ title }</h3>     

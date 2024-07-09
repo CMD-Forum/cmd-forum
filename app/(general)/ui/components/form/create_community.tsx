@@ -73,8 +73,7 @@ export default function CreateCommunityForm() {
     };
   
     return (
-
-        <form className="flex flex-col gap-2 bg-transparent rounded-lg !w-full" onSubmit={form.handleSubmit(OnSubmit)}>
+        <form className="flex flex-col gap-2 bg-transparent rounded-lg-lg !w-full" onSubmit={form.handleSubmit(OnSubmit)}>
 
             {success && (
                 <Alert type="success">
@@ -89,11 +88,11 @@ export default function CreateCommunityForm() {
                 </Alert>
             )}
 
-            <div className="flex gap-1 subtitle">Community Name<p className="text-[#fca5a5]">*</p></div>
+            <p className="flex gap-0.5 required">Name</p>
             <input
                 {...form.register('name')}
                 placeholder="general"
-                className={`generic_field ${form.formState.errors.name ? "errored" : ""}`}
+                className={`generic_field ${form.formState.errors.name ? "error" : ""}`}
             />
 
             {form.formState.errors.name && (
@@ -103,11 +102,11 @@ export default function CreateCommunityForm() {
 
             {/* */}
 
-            <div className="flex gap-1 subtitle">Description<p className="text-[#fca5a5]">*</p></div>
+            <p className="flex gap-0.5 subtitle required">Description</p>
             <input
                 {...form.register('description')}
                 placeholder="Welcome to my community!"
-                className={`generic_field ${form.formState.errors.description ? "errored" : ""}`}
+                className={`generic_field ${form.formState.errors.description ? "error" : ""}`}
             />
 
             {form.formState.errors.description && (
@@ -117,11 +116,11 @@ export default function CreateCommunityForm() {
 
             {/* */}
 
-            <div className="flex gap-1 subtitle">Image<p className="text-[#fca5a5]">*</p></div>
+            <p className="flex gap-0.5 subtitle required">Image</p>
             <input
                 {...form.register('image_url')}
                 placeholder="https://domainimagesaretemporary.org/images/070524"
-                className={`generic_field ${form.formState.errors.image_url ? "errored" : ""}`}
+                className={`generic_field ${form.formState.errors.image_url ? "error" : ""}`}
             />
 
             {form.formState.errors.image_url && (
@@ -129,15 +128,10 @@ export default function CreateCommunityForm() {
                 <ErrorMessage message={form.formState.errors.image_url.message} />
             )}
 
-            {/* */}
-
             <button type="submit" className="navlink-full !w-full sm:!w-fit justify-center min-w-[62px]">
                 {isLoading && <img src="/spinner_black.svg" alt="Submitting..." className="spinner"/> } 
                 Create Community 
             </button>
-
         </form>
-
     );
-
 }

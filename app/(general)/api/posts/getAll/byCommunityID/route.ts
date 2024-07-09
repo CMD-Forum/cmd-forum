@@ -49,14 +49,18 @@ export async function POST( req: Request ) {
                     }
                 }
             }
-        });        
+        });
+
+        const post_count = await prisma.post.count({
+            where: {
+                communityId: communityID
+            }
+        });
               
-        return NextResponse.json(posts, { status: 200 })
+        return NextResponse.json({ posts, post_count }, { status: 200 })
 
     } catch (error) {
-
         console.error(error);
         return NextResponse.json({ message: "Error occurred while fetching posts. Make sure you have included all fields correctly."}, { status: 500 })
-
     }
 }

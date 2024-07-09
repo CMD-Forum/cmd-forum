@@ -1,6 +1,5 @@
 "use client";
 
-import { PlusIcon } from "@heroicons/react/16/solid";
 import { 
     ArrowRightEndOnRectangleIcon,
     Bars3Icon,
@@ -20,16 +19,14 @@ import { Community } from "@prisma/client";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link"
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { useSession } from "@/app/(general)/lib/sessioncontext";
 
-import { countCommunityMembers, createUserMembershipRecord, deleteUserMembershipRecord, getAllUserMembershipRecords } from "../../lib/data";
 import { inter } from "../fonts";
-import { CommunityInfobarSkeleton } from "../skeletons/Community";
-import Alert, { AlertSubtitle, AlertTitle } from "./new_alert";
 import { JoinCommunityButton } from "./button";
 import MemberCount from "./community/memberCount";
+import PostCount from "./community/postCount";
 
 export function NavSideItems() {
 
@@ -122,7 +119,7 @@ export function NavSideItems() {
                             className={`navlink-ghost !w-full ${pathname === `/user/${session.user?.username}` ? "active" : null}`} 
                             href={`/user/${session.user?.username}`} 
                             prefetch={true}>
-                            { session.user?.image ? <img className="w-5 h-5 mr-1 rounded" src={session.user?.image} alt={"Your profile image."} /> : <UserIcon className="w-5 h-5 mr-1" /> }
+                            { session.user?.image ? <img className="w-5 h-5 mr-1 rounded-lg" src={session.user?.image} alt={"Your profile image."} /> : <UserIcon className="w-5 h-5 mr-1" /> }
                             {session.user?.username}
                         </Link>
                     </div>
@@ -184,7 +181,7 @@ export function TopbarItems() {
 
     return (
 
-        <div className='hidden lg:flex rounded-full p-1'>
+        <div className='hidden lg:flex rounded-lg-full p-1'>
 
             { session ? 
                 null
@@ -212,13 +209,13 @@ export function CommunityInfobarItems( { community }: { community: Community } )
 
         <div>
 
-            <div className='flex-row gap-2 rounded-md w-full bg-transparent'>
+            <div className='flex-row gap-2 rounded-lg-md w-full bg-transparent'>
                 
-                <div className='flex-col bg-card p-6 border-1 border-border rounded-md'>
+                <div className='flex-col bg-card p-6 border-1 border-border rounded-lg-md'>
 
                     <div className='flex flex-row gap-3 items-center'>
 
-                        <img src={community.image} className='h-[56px] rounded' alt={`${community.display_name}'s Community Image`} />
+                        <img src={community.image} className='h-[56px] rounded-lg' alt={`${community.display_name}'s Community Image`} />
 
                         <div className='flex flex-col'>
 
@@ -285,20 +282,14 @@ export function CommunityInfobarItems( { community }: { community: Community } )
 
 export function CommunityInfobar( { community }: { community: Community } ) {
 
-    /**
-     * I'm aware this isn't the best code ever, but I couldn't figure out any other way for now and I wanted to wrap this up.
-     */
-
-    // eslint-disable-next-line no-unused-vars
-
     const session = useSession();
 
     return (
         <div>
-            <div className='flex-row gap-2 rounded-md w-full bg-transparent'>
-                <div className='flex-col bg-card p-6 border-0 border-border lg:px-48'>
+            <div className='flex-row gap-2 rounded-lg-md w-full bg-transparent'>
+                <div className='flex-col bg-transparent border-0 border-border'>
                     <div className='flex flex-row gap-3 items-center'>
-                        <img src={community.image} className='h-[56px] rounded' alt={`${community.name}'s Community Image`} />
+                        <img src={community.image} className='h-[56px] rounded-lg' alt={`${community.name}'s Community Image`} />
                         <div className='flex flex-col'>
                             <h1 className='header-2'>{community.name}</h1>   
                             <h2 className='subtitle'>{community.description}</h2>
@@ -319,7 +310,7 @@ export function CommunityInfobar( { community }: { community: Community } ) {
 
                             <div className='flex flex-row gap-1 items-center'>
                                 <PencilSquareIcon className='w-[20px] text-gray-300' />
-                                <p className='subtitle'>---</p>
+                                <PostCount communityID={community.id} />
                             </div>
 
                             <div className='flex flex-row gap-1 items-center'>

@@ -6,7 +6,7 @@
 
 export function FullPostSkeleton() {
     return (
-        <div className="rounded flex w-full bg-transparent h-fit facebookTheme:rounded-none px-5 py-5">
+        <div className="rounded flex w-full bg-transparent h-fit facebookTheme:rounded-none mt-4">
             <div className="flex w-full bg-transparent h-fit flex-col">
                 <div className="text-sm relative md:bg-card md:p-6 rounded">
                     <div className='flex flex-row gap-2 items-center'>

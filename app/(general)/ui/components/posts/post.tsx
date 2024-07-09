@@ -1,20 +1,27 @@
 "use client";
 
-import { ArchiveBoxXMarkIcon, ChatBubbleLeftEllipsisIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/16/solid';
+import { ArchiveBoxXMarkIcon, ChatBubbleLeftEllipsisIcon } from '@heroicons/react/16/solid';
 import { EllipsisVerticalIcon, ShareIcon } from '@heroicons/react/24/solid';
-import MarkdownPreview from '@uiw/react-markdown-preview';
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
 import Link from 'next/link';
 import { useState } from 'react';
+import Markdown from 'react-markdown';
 import rehypeSanitize from 'rehype-sanitize';
+import remarkGfm from 'remark-gfm'
 
 import { useSession } from "@/app/(general)/lib/sessioncontext";
 import { Post } from '@/types/types';
 
 import ProfileImage from '../account/ProfileImage';
-import { SavePostButton } from '../button';
 import Dialog from '../dialog/dialog';
-import Hovercard from '../dropdown/hovercard';
 import Menu, { MenuButton, MenuLink, MenuShare } from '../menu/menu';
+import { SavePostButton } from '../posts/save_post_button';
+import { BackButtonNormal } from './back_button';
+import OpengraphDisplay from './og_display';
+import VoteButton, { SignedOutVoteButton } from './vote_button';
+
+dayjs.extend(relativeTime);
 
 /**
  * Horizontal card display of the given post.
@@ -55,55 +62,56 @@ import Menu, { MenuButton, MenuLink, MenuShare } from '../menu/menu';
  */
 
 export function CardPost( post: Post ) {
-
-    const text = post.title;
-    const url = `${process.env.NEXT_PUBLIC_CURRENT_URL}posts/${post.id}`;
-    const title = "CMD/>";
-
     const session = useSession();
-
     const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
 
     return (
 
-        <div className="flex flex-col sm:flex-row w-full items-center gap-4 relative group transition-all bg-card border-0 border-border group-hover/title:!border-white h-fit rounded px-6 py-6">
-
-            {post.imageurl 
-                ?
-                <img rel='preload' src={post.imageurl} alt={post.imagealt!} className={`rounded ${session ? "sm:!max-w-[146px] sm:!min-w-[146px] sm:!h-[146px] sm:!w-[146px]" : "sm:!max-w-[104px] sm:!min-w-[104px] sm:!h-[104px] sm:!w-[104px]" } m-auto overflow-hidden bg-cover`} />
-                :
-                <img rel='preload' src={"/text_post_icon.webp"} alt={"This post has no image."} className={`rounded hidden sm:flex ${session ? "sm:!max-w-[146px] sm:!min-w-[146px] sm:!h-[146px] sm:!w-[146px]" : "sm:!max-w-[104px] sm:!min-w-[104px] sm:!h-[104px] sm:!w-[104px]" } m-auto overflow-hidden bg-cover`} />
-            }
-
+        <div className="flex flex-col sm:flex-row w-full items-center gap-4 relative group transition-all bg-transparent hover:bg-card active:bg-card hover:cursor-pointer border-0 border-border group-hover/title:!border-white h-fit rounded-lg p-6">
             <div className="flex w-full bg-transparent h-fit flex-col">
                 <div className="text-sm z-20 w-fit flex flex-col">
                     <div className='flex flex-col'>
                         <div className='flex flex-row gap-2 items-center justify-center'>
                             <div className='flex flex-col'>
-                                <Link href={`/c/${post.community.name}`} className='subtitle hover:underline w-fit'>c/{post.community.name}</Link>
+                                <Link href={`/c/${post.community.name}`} className='subtitle hover:underline w-fit !text-xs !text-white'>c/{post.community.name}</Link>
                                 { ! post.author ?
                                     <div>
-                                        <h2 className='hover:underline flex gap-1 subtitle'>[deleted]</h2> 
-                                        <p className='subtitle'>•</p> 
-                                        <p className='subtitle'>{post.createdAt.toLocaleString()}</p>
+                                        <h2 className='hover:underline flex gap-1 subtitle !text-xs'>[deleted]</h2> 
+                                        <p className='subtitle !text-xs'>•</p> 
+                                        <p className='subtitle !text-xs' suppressHydrationWarning>{dayjs(post.createdAt).fromNow()}</p>
                                     </div>
                                     :
-                                    <div className='hidden md:flex flex-row gap-2'>  
-                                        <Link href={`/user/${post.author.username}`} className='subtitle hover:underline'>@{post.author.username}</Link>
-                                        <p className='hidden sm:flex subtitle'>•</p> 
-                                        <p className='hidden sm:flex subtitle'>{post.createdAt.toLocaleString()}</p>                         
+                                    <div className='hidden md:flex flex-row gap-1'>  
+                                        <Link href={`/user/${post.author.username}`} className='subtitle hover:underline !text-xs'>@{post.author.username}</Link>
+                                        <p className='hidden sm:flex subtitle !text-xs'>•</p> 
+                                        <p className='hidden sm:flex subtitle !text-xs' suppressHydrationWarning>{dayjs(post.createdAt).fromNow()}</p>
                                     </div>
-                                }                                                              
+                                }                                                                                                
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <Link href={`/posts/${post.id}`} className="group/title w-fit font-sans font-semibold text-[18px] md:text-lg group-hover:text-gray-300 transition-all facebookTheme:text-lg peer">{post.title}</Link>
+                <Link href={`/posts/${post.id}`} className="w-fit font-sans font-semibold text-[18px] md:text-lg transition-all">{post.title}</Link>
+
+                {post.imageurl 
+                    ?
+                    <img rel='preload' src={post.imageurl} alt={post.imagealt!} className={`rounded-lg max-h-[500px] w-full mt-2 m-auto overflow-hidden bg-cover`} />
+                    :
+                    <>
+                        {/*<img rel='preload' src={"/text_post_icon.webp"} alt={"This post has no image."} className={`rounded-lg hidden sm:flex ${session ? "sm:!max-w-[146px] sm:!min-w-[146px] sm:!h-[146px] sm:!w-[146px]" : "sm:!max-w-[104px] sm:!min-w-[104px] sm:!h-[104px] sm:!w-[104px]" } m-auto overflow-hidden bg-cover`} />*/}            
+                    </>
+                }
+
+                {post.href &&
+                    <div className='mt-2'>
+                        <OpengraphDisplay url={post.href} />
+                    </div>
+                }
 
                 {/*<p className='subtitle'>{post.tagline}</p>*/}
 
-                { session.user?.id &&
+                { true &&
                     <>
                         <Dialog.Controlled isOpen={deleteDialogOpen} setIsOpen={setDeleteDialogOpen}>
                             <Dialog.Content>
@@ -117,19 +125,25 @@ export function CardPost( post: Post ) {
                         </Dialog.Controlled>
                         <div className='flex flex-row mt-4 justify-between'>
                             <div className='flex flex-row gap-2'>
-                                <button className='navlink !px-2 mr-auto' aria-label='Upvote'><ChevronUpIcon className='w-5 h-5' /></button>
-                                <button className='navlink !px-2 mr-auto' aria-label='Downvote'><ChevronDownIcon className='w-5 h-5' /></button>
-                                {/*<Link className='navlink-emphasis !px-2 md:!px-3 mr-auto' href={`/posts/${post.id}`}><ChatBubbleLeftEllipsisIcon className='w-5 h-5' /><span className='hidden md:flex'>Comments</span></Link>*/}                        
-                                <SavePostButton userID={session.user.id} postID={post.id} />
+                                { session.user?.id 
+                                ? 
+                                    <VoteButton postID={post.id} userID={session.user?.id} />
+                                :
+                                    <SignedOutVoteButton postID={post.id} />
+                                }
+                                <Link className='navlink !px-2 md:!px-3 mr-auto' href={`/posts/${post.id}`}><ChatBubbleLeftEllipsisIcon className='w-5 h-5' /><span className='hidden md:flex'>Comments</span></Link>                       
+                                { session.user?.id && 
+                                    <SavePostButton userID={session.user.id} postID={post.id} />
+                                }
                             </div>
 
                             <Menu>
                                 <Menu.Trigger><button className='navlink !px-2' aria-label='More Options'><EllipsisVerticalIcon className='w-5 h-5' /></button></Menu.Trigger>
                                 <Menu.Content>
                                     <MenuLink text={post.author.username} icon={<ProfileImage user={post.author} imgSize={"5"} />} link={`/user/${post.author.username}`}></MenuLink>
-                                    <MenuLink text={post.community.name} icon={<img src={post.community.image} alt={post.community.name}></img>} link={`/c/${post.community.name}`}></MenuLink>
+                                    <MenuLink text={post.community.name} icon={<img src={post.community.image} alt={post.community.name} />} link={`/c/${post.community.name}`}></MenuLink>
                                     <hr className='mt-1 !mb-1'/>
-                                    <MenuShare icon={<ShareIcon />} text={text} title={title} url={url} />
+                                    <MenuShare icon={<ShareIcon />} text={post.title} title={"Command"} url={`${process.env.NEXT_PUBLIC_CURRENT_URL}posts/${post.id}`} />
                                     { session 
                                     ?
                                         <>
@@ -147,7 +161,7 @@ export function CardPost( post: Post ) {
                                         null
                                     }                                    
                                 </Menu.Content>
-                            </Menu>                         
+                            </Menu>
                         </div>                    
                     </>
                 }
@@ -194,54 +208,33 @@ export function CardPost( post: Post ) {
 
 export function FullPost( post: Post ) {
 
-    // const rehypePlugins = [rehypeSanitize];
-
     const session = useSession();
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
 
     return (
-        <div className="rounded flex w-full bg-transparent h-fit facebookTheme:rounded-none px-5 py-5">
+        <div className="rounded-lg flex w-full bg-transparent h-fit mt-4">
                 <div className="flex w-full bg-transparent h-fit flex-col">
-                    <div className="text-sm relative md:bg-card md:p-6 rounded">
-
-                        {/*<BackButtonNormal className={"absolute right-0 !hidden md:!flex"} />*/}
-
+                    <div className="text-sm relative rounded-lg">
+                        <BackButtonNormal className={"absolute right-0 !hidden md:!flex"} />
                         <div className='flex flex-row gap-2 items-center'>
-                            <img src={post.community.image} className='w-8 h-8 rounded' alt={post.community.name}></img>
+                            <img src={post.community.image} className='w-8 h-8 rounded-lg' alt={post.community.name}></img>
                             <div className='flex flex-col justify-center'>
-                                <Hovercard trigger={<button className='subtitle'>c/{post.community.name}</button>}>
-                                    <div className='flex flex-row gap-4 p-4 w-full max-w-[350px]'>
-                                        <img className='w-8 h-8 rounded' src={post.community.image} alt='' />
-                                        <div className='flex flex-col'>
-                                            <Link href={`/c/${post.community.name}`} className='hover:underline w-fit subtitle'>c/{post.community.name}</Link>     
-                                            <p className='subtitle'>{post.community.description}</p>             
-                                        </div>
-                                    </div>
-                                </Hovercard>
+                                <p>c/{post.community.name}</p>
                                 <div className="flex flex-row">
                                     <h4 className="w-fit flex gap-2">
-                                        <Hovercard trigger={<button className='subtitle'>@{post.author.username}</button>}>
-                                            <div className='flex flex-row gap-4 p-4 w-full max-w-[350px]'>
-                                                <ProfileImage user={post.author} />
-                                                <div className='flex flex-col'>
-                                                    <Link href={`/user/${post.author.username}`} className='hover:underline w-fit subtitle'>@{post.author.username}</Link>     
-                                                    <p className='subtitle'>{post.author.description}</p>             
-                                                </div>
-                                            </div>
-                                        </Hovercard>
+                                        <p className='subtitle'>@{post.author.username}</p>
                                         <p className='subtitle'>•</p> 
-                                        <p className='subtitle'>{post.createdAt.toLocaleString()}</p> 
+                                        <p className='subtitle'>{dayjs(post.createdAt).fromNow()}</p> 
                                     </h4>   
                                 </div>                                   
                             </div>                            
                         </div>
-
-                        <h1 className="header-3">{post.title}</h1>
-                        
+                        <h1 className="header-4">{post.title}</h1>
                     </div>
                     
-                    <div className='md:bg-card w-full h-fit md:p-6 rounded mt-2 md:mt-6'>
+                    <div className='w-full h-fit rounded-lg mt-2'>
                         {post.imageurl ?
-                            <div className="relative rounded mt-2 mb-4 max-h-96 overflow-hidden">
+                            <div className="relative rounded-lg mt-2 mb-4 max-h-96 overflow-hidden">
                                 <div 
                                     style={{ 
                                         backgroundImage: `url(${post.imageurl})`,
@@ -255,15 +248,62 @@ export function FullPost( post: Post ) {
                             null
                         }
                         <div className='markdown-body'>
-                            <MarkdownPreview source={post.content} rehypePlugins={[rehypeSanitize]} />
-                        </div>                        
+                            { post.content &&
+                                <Markdown rehypePlugins={[rehypeSanitize]} remarkPlugins={[remarkGfm]}>{post.content}</Markdown>
+                            }
+                        </div>
+
+                        {post.href &&
+                            <OpengraphDisplay url={post.href} />
+                        }
+
                     </div>
 
-                    { session?.user && 
-                        <div className='flex flex-row gap-2 md:bg-card w-full h-fit md:p-6 rounded mt-2 md:mt-6'>
-                            <button className='navlink' disabled onClick={() => { throw new Error("Feature Unimplemented") }}><ChatBubbleLeftEllipsisIcon className="w-5 h-5" aria-label='Submit Comment' />Submit Comment</button>
-                            <SavePostButton userID={session.user?.id} postID={post.id} />
-                        </div>                    
+                    { session?.user &&
+                        <>
+                            <Dialog.Controlled isOpen={deleteDialogOpen} setIsOpen={setDeleteDialogOpen}>
+                                <Dialog.Content>
+                                    <Dialog.Title>Delete this post? (Unimplemented)</Dialog.Title>
+                                    <Dialog.Subtitle>This action cannot be reversed, choose wisely.</Dialog.Subtitle>
+                                    <Dialog.ButtonContainer>
+                                        <Dialog.CloseButton><button className='navlink'>Close</button></Dialog.CloseButton>
+                                        <button className='navlink-destructive' disabled>Delete</button>
+                                    </Dialog.ButtonContainer>
+                                </Dialog.Content>
+                            </Dialog.Controlled>
+                            <div className='flex flex-row w-full h-fit rounded-lg mt-4 justify-between'>
+                                <div className='flex flex-row gap-2'>
+                                    <VoteButton postID={post.id} userID={session.user.id} />
+                                    <button className='navlink !px-2 lg:!px-3' disabled onClick={() => { throw new Error("Feature Unimplemented") }}><ChatBubbleLeftEllipsisIcon className="w-5 h-5" aria-label='Submit Comment' /><span className='hidden lg:flex'>Submit Comment</span></button>
+                                    <SavePostButton userID={session.user?.id} postID={post.id} />                                
+                                </div>
+                                <Menu>
+                                    <Menu.Trigger><button className='navlink !px-2' aria-label='More Options'><EllipsisVerticalIcon className='w-5 h-5' /></button></Menu.Trigger>
+                                    <Menu.Content>
+                                        <MenuLink text={post.author.username} icon={<ProfileImage user={post.author} imgSize={"5"} />} link={`/user/${post.author.username}`}></MenuLink>
+                                        <MenuLink text={post.community.name} icon={<img src={post.community.image} alt={post.community.name} />} link={`/c/${post.community.name}`}></MenuLink>
+                                        <hr className='mt-1 !mb-1'/>
+                                        <MenuShare icon={<ShareIcon />} text={post.title} title={"Command"} url={`${process.env.NEXT_PUBLIC_CURRENT_URL}posts/${post.id}`} />
+                                        { session 
+                                        ?
+                                            <>
+                                                { session.user?.id === post.authorId 
+                                                ?
+                                                <>
+                                                    <hr className='mt-1 !mb-1'/>
+                                                    <MenuButton icon={<ArchiveBoxXMarkIcon />} text={"Delete"} onClick={() => setDeleteDialogOpen(true)} destructive={true} />                                 
+                                                </>
+                                                :
+                                                null
+                                                }                           
+                                            </>
+                                        :
+                                            null
+                                        }
+                                    </Menu.Content>
+                                </Menu>
+                            </div>                        
+                        </>
                     }
                 </div>
         </div>

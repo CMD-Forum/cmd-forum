@@ -25,12 +25,12 @@ export default async function CommunityPage({ params }: { params: { community: s
 
   return (
     <main className="flex min-h-fit flex-col w-full">   
-      <div className="error flex flex-col w-full mt-14 md:mt-0">
+      <div className="flex flex-col border-0 border-border p-6 md:pt-12 bg-background/35 md:mt-0 lg:px-4">
         <CommunityInfobar 
           community={dbCommunity} 
         />      
       </div>
-      <div className='flex flex-col px-6 lg:py-12 lg:px-48 mb-6 pt-12'>
+      <div className='flex flex-col lg:pb-12 lg:px-4 mb-6 bg-background/35'>
         <PostListByCommunity communityID={dbCommunity.id} />
       </div>
     </main>

@@ -2,17 +2,14 @@
 
 import { ArchiveBoxXMarkIcon, ArrowRightEndOnRectangleIcon, BookmarkIcon, ChevronUpIcon, Cog6ToothIcon, EllipsisVerticalIcon, MegaphoneIcon, ShareIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
-import { useState } from "react";
 
 import Dialog from "../components/dialog/dialog";
 import LargeDropdown from "../components/large_dropdown";
-import Menu, { MenuButton, MenuContent, MenuCustom, MenuLink, MenuShare, MenuUser } from "../components/menu/menu";
+import Menu, { MenuButton, MenuCustom, MenuLink, MenuShare, MenuUser } from "../components/menu/menu";
 import Alert, { AlertSubtitle, AlertTitle } from "../components/new_alert";
 import LogoutButton from "../components/signoutButton";
 
 export default function DeveloperPage() {
-
-    const [open, setOpen] = useState(false);
 
     return (
 
@@ -68,13 +65,11 @@ export default function DeveloperPage() {
 
                 <div className="flex flex-col gap-2 mt-4 w-full">
                     <LargeDropdown title={"Inputs"}>
-
                         <h2 className="header-5 w-full mb-4">Normal</h2>
                         <input className={"generic_field"} placeholder="This is an input."></input> 
 
                         <h2 className="header-5 w-full mb-4 mt-4">Error</h2>
-                        <input className={"generic_field errored"} placeholder="This is an errored input."></input> 
-
+                        <input className={"generic_field error"} placeholder="This is an input with an error."></input>
                     </LargeDropdown>                    
                 </div>
 
@@ -206,7 +201,7 @@ export default function DeveloperPage() {
                                 <MenuLink text={"Saved Posts"} icon={<BookmarkIcon />} link={"/posts/saved"} />
                                 <hr className='mt-1 mb-1' />
                                 <MenuLink text={"Settings"} icon={<Cog6ToothIcon />} link={"/account/settings"} />
-                                <LogoutButton className={"hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm subtitle hover:!text-white rounded"}><ArrowRightEndOnRectangleIcon className='w-5 h-5' />Logout</LogoutButton>
+                                <LogoutButton className={"hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm subtitle hover:!text-white rounded-lg"}><ArrowRightEndOnRectangleIcon className='w-5 h-5' />Logout</LogoutButton>
                                 <hr className='mt-1 mb-1' />
                                 <MenuCustom className={"hover:bg-card"}>
                                     <div className='flex flex-col gap-1 items-center w-full'>

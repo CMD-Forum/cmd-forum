@@ -46,9 +46,11 @@ export async function POST( req: Request ) {
                     }
                 }
             }
-        });        
+        });
+
+        const postCount = await prisma.post.count();
               
-        return NextResponse.json(posts, { status: 200 })
+        return NextResponse.json({posts, postCount}, { status: 200 })
 
     } catch (error) {
 

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import xss from 'xss';
 
 import { prisma } from '@/app/(general)/lib/db';
+import { logError } from '@/app/(general)/lib/utils';
 
 export async function POST(req: Request) {
 
@@ -52,12 +53,9 @@ export async function POST(req: Request) {
         });
 
         return NextResponse.json(post, { status: 201 });
-
+        
     } catch (error) {
-
-        console.error(error);
+        logError(error);
         return NextResponse.json({ message: "Error occurred while creating post, please check your request for errors."}, { status: 500 });
-
     }
-
 }

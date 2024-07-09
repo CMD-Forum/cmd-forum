@@ -26,47 +26,33 @@ export default function Search({
     const currentPage = Number(searchParams?.page) || 1;
 
     return (
-
-      <div className="error flex flex-col w-full">
-
-            <div className="flex flex-col border-0 border-border p-6 pt-12 lg:pb-12 lg:p-12 lg:px-48 bg-card mt-8 md:mt-0">
+      <div className='min-h-dvh'>
+            <div className="flex flex-col border-0 border-border p-6 md:pt-12 bg-background/35 md:mt-0 lg:px-4">
                 <h1 className="header">Search</h1>
                 <p className="subtitle">Find that post you liked.</p>   
             </div>
-
-            <div className='px-6 flex flex-col md:flex-row gap-2 max-w-[70rem] xl:w-[70rem] xl:m-auto mt-6 xl:mt-6'>
+            <div className='flex flex-row lg:pb-12 px-4 mb-6 gap-2'>
                 <SearchBar />   
                 <div className='flex flex-row gap-2'>
                     <Menu defaultPlacement={"bottom-start"}>
-                        <MenuTrigger><button className='navlink'><ChartBarIcon className='w-5 h-5' />Sort</button></MenuTrigger>
+                        <MenuTrigger><button className='navlink !px-2 lg:!px-3'><ChartBarIcon className='w-5 h-5' /><span className='hidden lg:flex'>Sort</span></button></MenuTrigger>
                         <MenuContent>
                             <MenuLink text='Relevance' link={"/"} icon={<MagnifyingGlassIcon />} />
                             <MenuLink text='Hot' link={"/"} icon={<BoltIcon />} />
                             <MenuLink text='Rising' link={"/"} icon={<ArrowTrendingUpIcon />} />                            
                         </MenuContent>
                     </Menu>
-                    <Link className={"navlink-full"} href={"/create"}><PlusIcon className={"w-5 h-5"} />Create</Link>                    
+                    <Link className={"navlink-full !px-2 lg:!px-3"} href={"/create"}><PlusIcon className={"w-5 h-5"} /><span className='hidden lg:flex'>Create</span></Link>                    
                 </div>             
             </div>
 
-            <div className='mb-6 mt-6' />
-
             <div className='flex flex-col gap-4'>
                 {query ?
-                
-                    <>
-                        <SearchResults query={query} currentPage={currentPage} type={"post"} />                     
-                    </>
-
+                    <SearchResults query={query} currentPage={currentPage} type={"post"} />
                 :
-                    <h1 className="subtitle w-fit m-auto mb-6 px-6 text-center">Either you&apos;ve reached the end, or you haven&apos;t searched yet.</h1>
+                    null
                 }
             </div>
-
         </div>
-
-        
-
     )
-
 }

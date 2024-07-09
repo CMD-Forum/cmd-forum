@@ -64,8 +64,9 @@ model Post {
   title       String    @db.VarChar(255) /// The title of the post.
   content     String    /// The main content of the post.
   tagline     String?   /// The tagline of the post. Deprecated, do not use.
-  imageurl    String?   /// If the post is an image post, this is the images URL.
-  imagealt    String?   /// If the post is an image post, this is the images accessibility tag.
+  imageurl    String?   /// If the post is an image post, this is the image URL.
+  imagealt    String?   /// If the post is an image post, this is the image accessibility tag.
+  href        String?   /// If the post is a link post, this is the link url.
   public      Boolean   @default(true) /// If false, this post cannot be accessed and will not be shown. Currently unimplemented.
   authorId    String    /// The CUID of the posts author.
   communityId String    @default("null") /// The CUID of the posts community.

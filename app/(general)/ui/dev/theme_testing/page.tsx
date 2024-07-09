@@ -1,7 +1,7 @@
 import { ChevronDownIcon } from "@heroicons/react/16/solid";
 import { Metadata } from 'next';
 
-import Menu, { MenuLink, MenuTrigger, MenuContent } from "../../components/menu/menu";
+import Menu, { MenuContent,MenuLink, MenuTrigger } from "../../components/menu/menu";
  
 export const metadata: Metadata = {
   title: 'Theme Testing',

@@ -14,7 +14,7 @@ export function Settings_ChangeAccountUsername() {
     const session = useSession();
 
     return (
-        <div className='flex flex-col border-1 border-border rounded pt-6'>
+        <div className='flex flex-col border-1 border-border rounded-lg pt-6'>
 
             <div className="px-6">
                 <h3 className='font-bold text-xl'>Account Username</h3>     
@@ -53,7 +53,7 @@ export function Settings_ChangeDescription() {
     const session = useSession();
 
     return (
-        <div className='flex flex-col border-1 border-border rounded pt-6'>
+        <div className='flex flex-col border-1 border-border rounded-lg pt-6'>
 
             <div className="px-6">
                 <h3 className='font-bold text-xl'>Update Description</h3>     
@@ -88,7 +88,7 @@ export function Settings_DeleteAccount() {
     const session = useSession();
 
     return (
-        <div className='flex flex-col border-1 border-border rounded pt-6'>
+        <div className='flex flex-col border-1 border-border rounded-lg pt-6'>
 
             <div className="px-6">
                 <h3 className='font-bold text-xl'>Delete Account</h3>     
@@ -129,7 +129,7 @@ export function Settings_Setup2FA() {
     const session = useSession();
 
     return (
-        <div className='flex flex-col border-1 border-border rounded pt-6'>
+        <div className='flex flex-col border-1 border-border rounded-lg pt-6'>
 
             <div className="px-6">
                 <h3 className='font-bold text-xl'>Two-Factor Authentication</h3>     
@@ -166,7 +166,7 @@ export function Settings_Setup2FA() {
 
 export function Settings_GotoSessions() {
     return (
-        <div className='flex flex-col border-1 border-border rounded pt-6'>
+        <div className='flex flex-col border-1 border-border rounded-lg pt-6'>
             <div className="px-6">
                 <h3 className='font-bold text-xl'>Sessions</h3>     
                 <p className='subtitle text-sm'>View and delete all active sessions.</p>

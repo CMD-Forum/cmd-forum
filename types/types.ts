@@ -194,4 +194,234 @@ export interface Post {
      */
     community: PostCommunity;
 
+    /**
+     * If the post is a link post, then this is the URL.
+     */
+
+    href?: string | null;
+
+}
+
+/**
+ * OpenGraph
+ */
+
+/**
+ * 
+ */
+
+export type ogTwitterImage = {
+
+    /**
+     * The height of the image in pixels, e.g `"512"`.
+     */
+
+    height: string;
+    
+    /**
+    * The full URL to the image.
+    */
+    
+    url: string;
+    
+    /**
+    * The width of the image in pixels, e.g `"1024"`.
+    */
+    
+    width: string;
+
+    /**
+     * The alternate tag of the image. Used by screen readers for accessibility purposes.
+     */
+
+    alt: string;
+
+}
+
+/**
+ * 
+ */
+
+export type ogImage = {
+
+    /**
+     * The height of the image in pixels, e.g `"512"`.
+     */
+
+    height: string;
+
+    /**
+     * The file type of the image, e.g `"image/png"`.
+     */
+
+    type: string;
+
+    /**
+     * The full URL to the image.
+     */
+
+    url: string;
+
+    /**
+     * The width of the image in pixels, e.g `"1024"`.
+     */
+
+    width: string;
+
+    /**
+     * The alternate tag of the image. Used by screen readers for accessibility purposes.
+     */
+
+    alt: string;
+
+}
+
+/**
+ * 
+ */
+
+export type ogResult = {
+
+    /**
+     * Whether the data was retrieved successfully.
+     */
+
+    success: boolean;
+
+    /**
+     * Title of the webpage.
+     */
+
+    ogTitle: string;
+
+    /**
+     * Description of the webpage.
+     */
+
+    ogDescription: string;
+
+    /**
+     * Name of the entire website.
+     */
+
+    ogSiteName: string;
+
+    /**
+     * Whether the URL points to a website, music file, or video file.
+     */
+
+    ogType: string;
+
+    /**
+     * The type of card on Twitter.
+     */
+
+    twitterCard: "summary" | "summary_large_image" | "app" | "player";
+
+    /**
+     * The title on Twitter cards.
+     */
+
+    twitterTitle: string;
+
+    /**
+     * The description on Twitter cards.
+     */
+
+    twitterDescription: string;
+
+    /**
+     * Information about the OpenGraph image. See `ogImage` type.
+     */
+
+    ogImage: ogImage;
+
+    /**
+     * Information about the Twitter image. See `ogTwitterImage` type.
+     */
+
+    twitterImage: ogTwitterImage;
+
+    /**
+     * The locale of the webpage, e.g `"en"`, `"es"`, `"fr"`, etc.
+     */
+
+    ogLocale: string;
+
+    /**
+     * Path to the webpages favicon, relative to the websites root (`/`).
+     */
+
+    favicon: string;
+
+    /**
+     * The character set of the webpage, e.g `"utf-8"`.
+     */
+
+    charset: string;
+
+    /**
+     * The URL that the data is from.
+     */
+
+    requestUrl: string;
+
+}
+
+/**
+ * Result of OGS Api Request.
+ * @example
+ *  const [ogData, setOgData] = useState<og>();
+
+    useEffect(() => {
+        setIsLoading(true);
+        setError("");
+        fetch("/api/ogs", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ "url": "https://react.dev/" })
+        })
+        .then((res) => {
+            res.json().then((body) => {
+                if (res.status === 200) {
+                    setOgData(body);
+                    setIsLoading(false);
+                } else {
+                    setError("Sorry, this link couldn't be displayed.")
+                    setIsLoading(false);
+                }
+            })
+        })
+    }, [url])
+ */
+
+export type og = {
+
+    /**
+     * Whether the request succeeded or failed. Either true or false.
+     */
+
+    error: boolean;
+
+    /**
+     * See `ogResult` type.
+     */
+
+    result: ogResult;
+
+    /**
+     * *From `openGraphScraper` GitHub:*
+     * 
+     * Response from the Fetch API.
+     */
+
+    response: JSON;
+
+    /**
+     * The HTML of the webpage.
+     */
+
+    html: string;
 }

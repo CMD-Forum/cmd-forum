@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/16/solid';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/16/solid';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect,useState } from 'react';
@@ -45,26 +45,26 @@ export default function PostListByUser( { username }: { username: string } ) {
     try {
         useEffect(() => {
             setIsLoading(true),
-            fetch("/api/posts/getAll/", {
+            fetch("/api/posts/getAll/byUsername", {
                 method: 'POST',
                 headers:{
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ "page": `${page}` })
+                body: JSON.stringify({ "page": `${page}`, "username": `${username}` })
             })
             .then((res) => {
                 return res.json();
             })
             .then((data) => {
                 setPosts(data.posts);
-                setTotalPosts(data.postCount);
+                setTotalPosts(data.post_count);
                 setTotalPages(Math.ceil(totalPosts / 10))
                 setIsLoading(false);
             });
-        }, [page, totalPosts]);
+        }, [username, page, totalPosts]);
     } catch ( error ) {
         return (
-            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded px-5 py-5'>
+            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-lg px-5 py-5'>
                 <p className='text-center text-gray-300 font-medium antialiased w-full'>Sorry, an error occurred.</p>
                 <div className='flex gap-4 w-full items-center justify-center mt-4'>
                     <button className='navlink' onClick={() => router.refresh()} type='button'>Reload</button>
@@ -92,7 +92,7 @@ export default function PostListByUser( { username }: { username: string } ) {
 
     if ( totalPages <= 0 ) { // Tried `if ( ! posts )` but that didn't work for some reason.
         return (
-            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded px-5 py-5'>
+            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-lg px-5 py-5'>
                 <p className='text-center text-gray-300 font-medium antialiased w-full'>Looks like there&apos;s no posts here.</p>
                 <div className='flex gap-4 w-full items-center justify-center mt-4'>
                     <Link className='navlink' href={"/"}>Home</Link>
@@ -102,7 +102,7 @@ export default function PostListByUser( { username }: { username: string } ) {
     }
 
     return (
-        <div className='flex flex-col gap-4'>
+        <div className='flex flex-col'>
             {Array.isArray(posts) && posts.map((post: Post) => {
                 return (
                     <div 
@@ -122,15 +122,15 @@ export default function PostListByUser( { username }: { username: string } ) {
                         communityId={post.community.id}
                         author={post.author}
                         community={post.community}
- 
                       />
+                      <hr className='mx-4 mt-1/2 mb-1/2' />
                     </div>
                   );
             })}
-            <div className='flex gap-4 items-center'>
-                <button onClick={() => lastPage()} className='navlink !px-2' disabled={ page === 0 ? true : false } aria-label='Last Page'><ArrowLeftIcon className='w-5 h-5' /></button>  
-                <p className='subtitle h-fit'>{ page + 1 } of { totalPages }</p>
-                <button onClick={() => nextPage()} className='navlink !px-2' disabled={ !pageForwardAllowed || page === totalPages - 1 } aria-label='Next Page'><ArrowRightIcon className='w-5 h-5' /></button>            
+            <div className='flex gap-4 items-center px-6 mt-5'>
+                <button onClick={() => lastPage()} className='navlink !px-2' disabled={ page === 0 ? true : false } aria-label='Last Page'><ChevronLeftIcon className='w-5 h-5' /></button>  
+                <p className='subtitle h-fit'>{ page + 1 } of { totalPages || "1" }</p>
+                <button onClick={() => nextPage()} className='navlink !px-2' disabled={ !pageForwardAllowed || page === totalPages - 1 } aria-label='Next Page'><ChevronRightIcon className='w-5 h-5' /></button>            
             </div>
         </div>
     );
@@ -168,26 +168,26 @@ export function PostListByCommunity( { communityID }: { communityID: string } ) 
     try {
         useEffect(() => {
             setIsLoading(true),
-            fetch("/api/posts/getAll/", {
+            fetch("/api/posts/getAll/byCommunityID", {
                 method: 'POST',
                 headers:{
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ "page": `${page}` })
+                body: JSON.stringify({ "page": `${page}`, "communityID": `${communityID}` })
             })
             .then((res) => {
                 return res.json();
             })
             .then((data) => {
                 setPosts(data.posts);
-                setTotalPosts(data.postCount);
+                setTotalPosts(data.post_count);
                 setTotalPages(Math.ceil(totalPosts / 10))
                 setIsLoading(false);
             });
-        }, [page, totalPosts]);
+        }, [communityID, page, totalPosts]);
     } catch ( error ) {
         return (
-            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded px-5 py-5'>
+            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-lg px-5 py-5'>
                 <p className='text-center text-gray-300 font-medium antialiased w-full'>Sorry, an error occurred.</p>
                 <div className='flex gap-4 w-full items-center justify-center mt-4'>
                     <button className='navlink' onClick={() => router.refresh()} type='button'>Reload</button>
@@ -215,7 +215,7 @@ export function PostListByCommunity( { communityID }: { communityID: string } ) 
 
     if ( totalPages <= 0 ) { // Tried `if ( ! posts )` but that didn't work for some reason.
         return (
-            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded px-5 py-5'>
+            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-lg px-5 py-5'>
                 <p className='text-center text-gray-300 font-medium antialiased w-full'>Looks like there&apos;s no posts here.</p>
                 <div className='flex gap-4 w-full items-center justify-center mt-4'>
                     <Link className='navlink' href={"/"}>Home</Link>
@@ -225,7 +225,7 @@ export function PostListByCommunity( { communityID }: { communityID: string } ) 
     }
 
     return (
-        <div className='flex flex-col gap-4'>
+        <div className='flex flex-col'>
             {Array.isArray(posts) && posts.map((post) => {
                 return (
                     <div 
@@ -246,13 +246,14 @@ export function PostListByCommunity( { communityID }: { communityID: string } ) 
                         author={post.author}
                         community={post.community}
                       />
+                      <hr className='mx-4 mt-1/2 mb-1/2' />
                     </div>
                   );
             })}
-            <div className='flex gap-4 items-center'>
-                <button onClick={() => lastPage()} className='navlink !px-2' disabled={ page === 0 ? true : false } aria-label='Last Page'><ArrowLeftIcon className='w-5 h-5' /></button>  
-                <p className='subtitle h-fit'>{ page + 1 } of { totalPages }</p>
-                <button onClick={() => nextPage()} className='navlink !px-2' disabled={ !pageForwardAllowed || page === totalPages - 1 } aria-label='Next Page'><ArrowRightIcon className='w-5 h-5' /></button>            
+            <div className='flex gap-4 items-center px-6 mt-5'>
+                <button onClick={() => lastPage()} className='navlink !px-2' disabled={ page === 0 ? true : false } aria-label='Last Page'><ChevronLeftIcon className='w-5 h-5' /></button>  
+                <p className='subtitle h-fit'>{ page + 1 } of { totalPages || "1" }</p>
+                <button onClick={() => nextPage()} className='navlink !px-2' disabled={ !pageForwardAllowed || page === totalPages - 1 } aria-label='Next Page'><ChevronRightIcon className='w-5 h-5' /></button>            
             </div>
         </div>
     );
@@ -263,11 +264,9 @@ export function PostListByCommunity( { communityID }: { communityID: string } ) 
 export function SavedPostListByUserID( { userID }: { userID: string } ) {
 
     const [page, setPage] = useState(0);
-    // eslint-disable-next-line no-unused-vars
     const [totalPosts, setTotalPosts] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [pageForwardAllowed, setPageForwardAllowed] = useState<boolean>(true);
-    const [error, setError] = useState(null);
 
     const [posts, setPosts] = useState<Post>();
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -291,26 +290,26 @@ export function SavedPostListByUserID( { userID }: { userID: string } ) {
     try {
         useEffect(() => {
             setIsLoading(true),
-            fetch("/api/posts/getAll/", {
+            fetch("/api/posts/getAll/byUserID", {
                 method: 'POST',
                 headers:{
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ "page": `${page}` })
+                body: JSON.stringify({ "page": `${page}`, "userID": `${userID}` })
             })
             .then((res) => {
                 return res.json();
             })
             .then((data) => {
                 setPosts(data.posts);
-                setTotalPosts(data.postCount);
+                setTotalPosts(data.post_count);
                 setTotalPages(Math.ceil(totalPosts / 10))
                 setIsLoading(false);
             });
-        }, [page, totalPosts]);
+        }, [userID, page, totalPosts]);
     } catch ( error ) {
         return (
-            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded px-5 py-5'>
+            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-lg px-5 py-5'>
                 <p className='text-center text-gray-300 font-medium antialiased w-full'>Sorry, an error occurred.</p>
                 <div className='flex gap-4 w-full items-center justify-center mt-4'>
                     <button className='navlink' onClick={() => router.refresh()} type='button'>Reload</button>
@@ -338,7 +337,7 @@ export function SavedPostListByUserID( { userID }: { userID: string } ) {
 
     if ( totalPages <= 0 ) { // Tried `if ( ! posts )` but that didn't work for some reason.
         return (
-            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded px-5 py-5'>
+            <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-lg px-5 py-5'>
                 <p className='text-center text-gray-300 font-medium antialiased w-full'>Looks like there&apos;s no posts here.</p>
                 <div className='flex gap-4 w-full items-center justify-center mt-4'>
                     <Link className='navlink' href={"/"}>Home</Link>
@@ -348,7 +347,7 @@ export function SavedPostListByUserID( { userID }: { userID: string } ) {
     }
 
     return (
-        <div className='flex flex-col gap-4'>
+        <div className='flex flex-col'>
             {Array.isArray(posts) && posts.map((post) => {
                 return (
                     <div 
@@ -369,13 +368,14 @@ export function SavedPostListByUserID( { userID }: { userID: string } ) {
                         author={post.author}
                         community={post.community}
                       />
+                      <hr className='mx-4 mt-1/2 mb-1/2' />
                     </div>
                   );
             })}
-            <div className='flex gap-4 items-center'>
-                <button onClick={() => lastPage()} className='navlink !px-2' disabled={ page === 0 ? true : false } aria-label='Last Page'><ArrowLeftIcon className='w-5 h-5' /></button>  
-                <p className='subtitle h-fit'>{ page + 1 } of { totalPages }</p>
-                <button onClick={() => nextPage()} className='navlink !px-2' disabled={ !pageForwardAllowed || page === totalPages - 1 } aria-label='Next Page'><ArrowRightIcon className='w-5 h-5' /></button>            
+            <div className='flex gap-4 items-center px-6 mt-5'>
+                <button onClick={() => lastPage()} className='navlink !px-2' disabled={ page === 0 ? true : false } aria-label='Last Page'><ChevronLeftIcon className='w-5 h-5' /></button>  
+                <p className='subtitle h-fit'>{ page + 1 } of { totalPages || "1" }</p>
+                <button onClick={() => nextPage()} className='navlink !px-2' disabled={ !pageForwardAllowed || page === totalPages - 1 } aria-label='Next Page'><ChevronRightIcon className='w-5 h-5' /></button>            
             </div>
         </div>
     );

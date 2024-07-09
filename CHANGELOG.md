@@ -69,7 +69,7 @@
 * **ui:** added confirmation dialog before destroying sessions + layout tweaks ([9214855](https://github.com/CMD-Forum/cmd-forum/commit/921485581c4f46bc42ad16615f45ba33778d7bbc))
 * **ui:** adds new page for theme testing ([5a13239](https://github.com/CMD-Forum/cmd-forum/commit/5a13239bf9c02d28230dc56def97829aa19fe91a))
 * **ui:** adds titles to pages ([0977a0d](https://github.com/CMD-Forum/cmd-forum/commit/0977a0d15d098ed43f56fcb44f05394c5e6d762f))
-* **ui:** change `rounded-md` to `rounded` ([852015e](https://github.com/CMD-Forum/cmd-forum/commit/852015ed680c19229fbdce170fb0bc78a214a738))
+* **ui:** change `rounded-lg-md` to `rounded-lg` ([852015e](https://github.com/CMD-Forum/cmd-forum/commit/852015ed680c19229fbdce170fb0bc78a214a738))
 * **ui:** change post to use link instead of hovercard ([480c191](https://github.com/CMD-Forum/cmd-forum/commit/480c19170d18674d7f0b70d0ed38606057715bfb))
 * **ui:** changes to login and signup pages ([8b87101](https://github.com/CMD-Forum/cmd-forum/commit/8b87101ffd0a74229dad1e5c9160800bf369df47))
 * **ui:** css changes ([eae3f64](https://github.com/CMD-Forum/cmd-forum/commit/eae3f6437c4b9e24e227a7ba06d8f220d9105ca5))
