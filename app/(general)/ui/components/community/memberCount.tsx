@@ -22,6 +22,9 @@ export default function MemberCount({
                     if ( membership_number ) {
                         setMemberCount(membership_number);
                         setIsLoading(false);
+                    } else {
+                        setMemberCount("0");
+                        setIsLoading(false);
                     }
                 } else {
                     setMemberCount("---");

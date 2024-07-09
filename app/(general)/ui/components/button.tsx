@@ -5,7 +5,6 @@ import { BookmarkIcon as BookmarkIconOutline } from "@heroicons/react/24/outline
 import { useEffect, useState } from "react";
 
 import { createUserMembershipRecord, deleteUserMembershipRecord, getAllUserMembershipRecords } from "../../lib/data";
-import { useSession } from "../../lib/sessioncontext";
 
 export function SavePostButton({ 
     userID, 
@@ -15,17 +14,19 @@ export function SavePostButton({
     postID: string 
 }) {
 
+    // TO-DO: Optimize this because it makes 10 requests each page load
+
     const [saved, setSaved] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true); 
 
     useEffect(() => {
         setIsLoading(true); 
         fetch("/api/posts/checkSaved", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ "userID": `${userID}`, "postID": `${postID}` })
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ "userID": `${userID}`, "postID": `${postID}` })
         })
         .then((res) => {
             if ( res.status === 400 ) {
@@ -70,12 +71,12 @@ export function SavePostButton({
 
     if ( isLoading ) {
         return (
-            <div className="navlink animate-pulse !bg-border"><span className="text-border">Loading...</span></div>
+            <div className="navlink animate-pulse !bg-border"><span className="text-border">Save</span></div>
         );
     }
 
     return (
-        <button className={`navlink !px-2 md:!px-3 ${saved ? "!bg-border" : "" } mr-auto`} onClick={() => SavePost()} aria-label="Save Post">
+        <button className={`navlink !px-2 md:!px-3 ${saved ? "!bg-border" : "" }`} onClick={() => SavePost()} aria-label="Save Post">
             { saved ? <BookmarkIcon className="w-5 h-5" /> : <BookmarkIconOutline className='w-5 h-5' /> }
             <span className='hidden md:flex'>{ saved ? "Saved" : "Save" }</span>
         </button>
@@ -84,13 +85,14 @@ export function SavePostButton({
 
 export function JoinCommunityButton ({
     communityID,
-    userID
+    userID,
+    showLabelOnMobile = false,
 }: {
-    communityID: string
-    userID: string | undefined
+    communityID: string,
+    userID: string | undefined,
+    showLabelOnMobile?: boolean,
 }) {
 
-    const [userMemberships, setUserMemberships] = useState<any[]>();
     const [isMember, setIsMember] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -103,8 +105,6 @@ export function JoinCommunityButton ({
                 if ( userID ) {
                     const memberships = await getAllUserMembershipRecords({ userID: userID });
                     if ( memberships ) {
-                        // @ts-ignore
-                        setUserMemberships(memberships);
                         setIsMember(memberships.memberships.some((membership: any) => membership.community.id === communityID));
                         setIsLoading(false);
                     }
@@ -156,9 +156,9 @@ export function JoinCommunityButton ({
     }
 
     return userID ? (
-        <button className='navlink justify-center items-center !px-2 md:!px-3' data-navlink-enabled={isMember ? "true" : "false"} onClick={isMember ? () => leaveCommunity() : () => joinCommunity()}>
+        <button className={`navlink justify-center items-center ${showLabelOnMobile ? "" : "!px-2 md:!px-3"}`} data-navlink-enabled={isMember ? "true" : "false"} onClick={isMember ? () => leaveCommunity() : () => joinCommunity()}>
             <PlusIcon className="font-medium h-5 w-5" />
-            <p className='items-center h-full hidden md:flex'>{ isMember ? "Joined" : "Join"}</p>
+            <p className={`items-center h-full ${showLabelOnMobile ? "flex" : "hidden md:flex"}`}>{ isMember ? "Joined" : "Join"}</p>
         </button>
     ) : null;
 }

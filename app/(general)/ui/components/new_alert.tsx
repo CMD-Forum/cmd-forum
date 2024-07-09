@@ -42,7 +42,7 @@ export default function Alert({
             ${type === "alert" ? `${style === "left-accent" ? "border-l-[#fb923c]" : "" } ${style === "top-accent" ? "border-t-[#fb923c]" : "" } ${style === "subtle" ? "bg-[#fb923c]/5" : "" }` : ``}
             ${type === "success" ? `${style === "left-accent" ? "border-l-[#4ade80]" : "" } ${style === "top-accent" ? "border-t-[#4ade80]" : "" } ${style === "subtle" ? "bg-[#4ade80]/5" : "" }` : ``} 
             ${type === "error" ? `${style === "left-accent" ? "border-l-[#ef4444]" : "" } ${style === "top-accent" ? "border-t-[#ef4444]" : "" } ${style === "subtle" ? "bg-[#ef4444]/5" : "" }` : ``} 
-            rounded px-3 py-3 items-center
+            rounded-lg px-3 py-3 items-center
             ${className ? className : null}
             ${visible === true ? "" : "hidden"}
         `}

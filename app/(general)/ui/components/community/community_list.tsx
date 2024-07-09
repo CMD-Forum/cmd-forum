@@ -25,7 +25,7 @@ export function CommunityList() {
                 setIsLoading(false);                
             } catch (error) {
                 return (
-                    <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded px-5 py-5'>
+                    <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-lg px-5 py-5'>
                         <p className='text-center text-gray-300 font-medium antialiased w-full'>Sorry, an error occurred.</p>
                         <div className='flex gap-4 w-full items-center justify-center mt-4'>
                         <button className='navlink' onClick={() => router.refresh()} type='button'>Reload</button>
@@ -58,11 +58,14 @@ export function CommunityList() {
     }
 
     return (
-        <div className='flex flex-col gap-4'>
+        <div className='flex flex-col'>
             {Array.isArray(communitys) && (communitys.length > 0 ? communitys.map((community) => (
-                <CardCommunity community={community} key={community.id} />
+                <>
+                    <CardCommunity community={community} key={community.id} />
+                    <hr className='mx-4 mt-1/2 mb-1/2' />
+                </>
             )) : (
-                <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded px-5 py-5'>
+                <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-lg px-5 py-5'>
                     <p className='text-center text-gray-300 font-medium antialiased w-full'>Looks like there&apos;s no communitys yet.</p>
                     <div className='flex gap-4 w-full items-center justify-center mt-4'>
                         <button className='navlink' onClick={() => router.push("/posts")} type='button'>Go Home</button>

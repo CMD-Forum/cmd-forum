@@ -93,12 +93,9 @@ export default async function SearchResults(search: SearchResultProps) {
         });
         
         return (
-
-            <div>
-
+            <div className="flex flex-col">
                 {results && results.map((result) => (
-                        
-                    <div className="w-full px-6 lg:px-48" key={result.id}>
+                    <div key={result.id}>
                         <CardPost 
                             id={result.id}
                             title={result.title}
@@ -111,16 +108,17 @@ export default async function SearchResults(search: SearchResultProps) {
                             community={result.community}
                             author={result.author}
                         />
-                        <div className="!mt-4 !mb-4 w-full" />
+                        <hr className='mx-4 mt-1/2 mb-1/2' />
                     </div>
 
                 ))}
-
-
+                {/*<div className='flex gap-4 items-center px-6 mt-5'>
+                    <button onClick={() => lastPage()} className='navlink !px-2' disabled={ page === 0 ? true : false } aria-label='Last Page'><ChevronLeftIcon className='w-5 h-5' /></button>  
+                    <p className='subtitle h-fit'>{ page + 1 } of { totalPages || "1" }</p>
+                    <button onClick={() => nextPage()} className='navlink !px-2' disabled={ !pageForwardAllowed || page === totalPages - 1 } aria-label='Next Page'><ChevronRightIcon className='w-5 h-5' /></button>            
+                </div>*/}
             </div>
-
-        )        
-
+        )
     } else if ( search.type === "community" ) {
 
         results = await prisma.community.findMany({

@@ -89,7 +89,7 @@ export default function Dropdown({
                         >               
                             {/* This animation was an attempt of copying the Fluent UI Menubutton, I think it looks good. */}
                             <motion.div 
-                                className={`bg-card ${className ? className : ""} border-border border-1 rounded w-max h-max p-1 z-50 min-w-48 shadow-sm`}
+                                className={`bg-card ${className ? className : ""} border-border border-1 rounded-lg w-max h-max p-1 z-50 min-w-48 shadow-sm`}
                                 initial={{ opacity: 1, y: -6 }}
                                 animate={{ opacity: 1, y: 4 }}
                                 exit={{ opacity: 1, y: -6 }}
@@ -118,11 +118,11 @@ export const DropdownLink = <T extends string>({ text, icon, link }: { text: str
         <Link 
             // @ts-ignore
             href={ link } 
-            className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden hover:!text-white subtitle rounded"
+            className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden hover:!text-white subtitle rounded-lg"
         >
             { icon ? (
                 React.cloneElement(icon, {
-                    className: "!w-5 !h-5 !rounded",
+                    className: "!w-5 !h-5 !rounded-lg",
                 })
             ) : (
                 null
@@ -144,7 +144,7 @@ export const DropdownButton = ({ text, icon, onClick, destructive }: { text: str
     return (
         <button 
             onClick={onClick}
-            className={`hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden text-gray-300 hover:text-white ${destructive ? "hover:!text-red-400" : ""} rounded`}
+            className={`hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden text-gray-300 hover:text-white ${destructive ? "hover:!text-red-400" : ""} rounded-lg`}
         >
             {React.cloneElement(icon, {
                 className: "w-5 h-5",
@@ -165,7 +165,7 @@ export const DropdownItem = ({ text, icon }: { text: string, icon: React.ReactEl
 
     return (
         <div 
-            className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden text-gray-300 hover:text-white rounded"
+            className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden text-gray-300 hover:text-white rounded-lg"
         >
             { icon ? (
                 React.cloneElement(icon, {
@@ -194,7 +194,7 @@ export const DropdownUser = () => {
         return (
             <Link 
                 href={`/user/${session.user?.username}`} 
-                className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden hover:!text-white rounded"
+                className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden hover:!text-white rounded-lg"
             >
                 <div className="flex flex-col max-w-48">
                     <span className="subtitle text-white !text-[15px]">{session.user?.username}</span>
@@ -216,7 +216,7 @@ export const DropdownShare = ({ title, text, url, icon }: { title: string, text:
 
     return (
         <button 
-            className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden text-gray-300 hover:text-white rounded"
+            className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden text-gray-300 hover:text-white rounded-lg"
             onClick={async () => await navigator.share({ title: title, text: text, url: url })}
         >
             {React.cloneElement(icon, {
@@ -235,7 +235,7 @@ export const DropdownCustom = ({ children, className }: { children: React.ReactN
 
     return (
         <div 
-            className={`${className ? className : null} hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden rounded`}
+            className={`${className ? className : null} hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden rounded-lg`}
         >
             { children }
         </div>

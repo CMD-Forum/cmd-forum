@@ -1,19 +1,18 @@
 import './(general)/globals.scss';
 
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from 'next';
-import { IBM_Plex_Mono,Inter } from 'next/font/google';
+import { IBM_Plex_Mono, Inter } from 'next/font/google';
 import NextTopLoader from 'nextjs-toploader';
 import React from 'react';
 
 import { SessionProvider } from '@/app/(general)/lib/sessioncontext';
-import { Footer } from '@/app/(general)/ui/components/navigation/footer';
-import { enableMaintenanceBanner } from '@/flags';
 
 import { getAuth } from './(general)/lib/auth';
+import Infobar from './(general)/ui/components/navigation/infobar';
 import Sidebar from './(general)/ui/components/navigation/sidebar';
+import { Topbar } from './(general)/ui/components/navigation/topbar';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'], display: "swap" });
 const ibm_plex_mono = IBM_Plex_Mono({ subsets: ["latin"], weight: "400", variable: "--font-ibm_plex_mono" })
 
 const metadataBaseUrl = process.env.NODE_ENV === 'production' 
@@ -73,40 +72,40 @@ export default async function RootLayout({
 }) {
 
   const session = await getAuth();
-  const maintenanceBannerEnabled = await enableMaintenanceBanner();
 
   return (
     <SessionProvider value={session}>
       {/* @ts-ignore */}
-          <html lang="en" className={`defaultTheme bg-background ${inter.className} ${ibm_plex_mono.variable}`} style={{ colorScheme: "dark" }}>
-            <SpeedInsights />
+          <html lang="en" className={`defaultTheme bg-card ${inter.className} ${ibm_plex_mono.variable}`} style={{ colorScheme: "dark" }}>
             <head>
               <link rel='shortcut icon' href='/images/favicon/favicon.ico' />
             </head>
-            <body id='body' className='bg-background text-white overflow-scroll overflow-x-hidden h-vh relative'>
+            <body id='body' className='bg-card text-white overflow-scroll overflow-x-hidden h-vh relative'>
               <NextTopLoader
                 color='#FFFFFF'
                 showSpinner={false}
                 height={1}
                 zIndex={999999}
               />
-                { maintenanceBannerEnabled ?
+                {/*{ maintenanceBannerEnabled ?
                   <div className='flex items-center justify-center bg-border p-4'>
                     <p>Command is currently undergoing maintenance, service disruptions may occur.</p>
                   </div>
                   :
                   null
-                }               
+                }*/}
                 {/*<Navigation />*/}
-                  <div className='flex h-full bg-background'>
-                    <Sidebar />     
-                    <div className='flex flex-col w-full !pt-0'>
-                      <div>
-                        {children}    
+                <div className='flex flex-col w-full bg-background items-center justify-center'>
+                    <Topbar />
+                    <div className='flex h-full bg-background min-[1250px]:px-44 max-w-[1920px] w-full'>
+                      <Sidebar />     
+                      <div className='flex flex-col w-full !pt-0 bg-foreground'>
+                        {children}
                       </div>
+                      <Infobar />
                     </div>
-                  </div>
-                <Footer />
+                  {/*<Footer />*/}                  
+                </div>
             </body>
           </html>
       </SessionProvider>

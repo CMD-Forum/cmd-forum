@@ -26,7 +26,7 @@ export default function Dialog({
     const [isMounted, setIsMounted] = useState<boolean>(false);
     return (
         // @ts-ignore
-        <DialogContext.Provider value={{ isOpen, setIsOpen, isMounted, setIsMounted, closeButton }}>
+        <DialogContext.Provider value={{ isOpen, setIsOpen, closeButton, isMounted, setIsMounted }}>
             {children}
         </DialogContext.Provider>
     );
@@ -54,10 +54,12 @@ export function ControlledDialog({
     setIsOpen: any;
     closeButton?: boolean;
 }) {
+
     const [isMounted, setIsMounted] = useState<boolean>(false);
+
     return (
         // @ts-ignore
-        <DialogContext.Provider value={{ isOpen, setIsOpen, isMounted, setIsMounted, closeButton }}>
+        <DialogContext.Provider value={{ isOpen, setIsOpen, closeButton, isMounted, setIsMounted }}>
             {children}
         </DialogContext.Provider>
     );
@@ -78,19 +80,17 @@ export function DialogContent({
     children: React.ReactNode,
 }) {
 
-    const { isOpen, setIsOpen, isMounted, setIsMounted, closeButton } = useContext(DialogContext);
-
+    const { isOpen, setIsOpen, closeButton, isMounted, setIsMounted } = useContext(DialogContext);
+    
     useEffect(() => {
         // @ts-ignore
         setIsMounted(true);
-    }, [setIsMounted])
+    })
 
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            document.body.style.overflow = isOpen === true ? "hidden" : "scroll";
-        }
+        document.body.style.overflowY = isOpen ? "hidden" : "scroll";
     }, [isOpen]); 
-    
+
     useEffect(() => {
         const handleKeyDown = (event: any) => {
             if (event.key === 'Escape') {
@@ -112,31 +112,31 @@ export function DialogContent({
                 <AnimatePresence mode="wait">
                     {isOpen &&
                         <motion.div 
-                            className='fixed w-dvw h-dvh inset-0 flex items-center justify-center z-[9999999999999999999999] bg-semitransparent px-6 overflow-hidden'
+                            className='fixed w-screen h-screen inset-0 flex items-center justify-center z-[9999999999999999999999999999999999] bg-semitransparent px-6 overflow-hidden'
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            transition={{ ease: "linear", duration: 0.1 }}
+                            transition={{ duration: 0.2 }}
                         >
                             <motion.div
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.9 }}
-                                transition={{ type: "spring", duration: 0.2 }}
-                                className={`bg-background rounded text-wrap h-fit !min-w-0 max-w-[425px] border-border border-0 flex flex-col absolute`}
+                                transition={{ ease: "backOut", duration: 0.3 }} // Stole this off mono-svelte
+                                className={`bg-background rounded-lg text-wrap h-fit !min-w-0 max-w-[425px] border-border border-0 flex flex-col absolute`}
                                 id="dialog-container"
                                 tabIndex={0}
                             >
                                 { closeButton && 
                                     // @ts-ignore
-                                    <button className="w-fit h-fit absolute top-2 right-2 focus:ring-2 ring-offset-2 ring-offset-semitransparent rounded p-1 transition-all hover:bg-border active:bg-card" onClick={() => setIsOpen(false)}>
+                                    <button className="w-fit h-fit absolute top-2 right-2 rounded-lg p-1 transition-all hover:bg-border active:bg-card" onClick={() => setIsOpen(false)}>
                                         <XMarkIcon className="w-5 h-5 flex text-white cursor-pointer transition-all"></XMarkIcon>        
                                     </button>
                                 }
 
                                 <div className="">
                                     {/* @ts-ignore */}
-                                    <DialogContext.Provider value={{ isOpen, setIsOpen, isMounted }}>
+                                    <DialogContext.Provider value={{ isOpen, setIsOpen }}>
                                         { children }    
                                     </DialogContext.Provider>
                                 </div>
@@ -329,7 +329,8 @@ export function DialogTrigger ({
             children,
             {
                 // @ts-ignore
-                onClick: () => context.setIsOpen(true)
+                onClick: () => context.setIsOpen(true),
+                type: "button"
             }
         )
     );        

@@ -52,8 +52,6 @@ export async function GET(request: Request): Promise<Response> {
 			});
 		}
 
-
-		// Replace this with your own DB client.
 		const existingUser = await prisma.user.findUnique({ where: { github_id: githubUser.id } });
 
 		if (existingUser) {
@@ -82,7 +80,6 @@ export async function GET(request: Request): Promise<Response> {
 
 		const userId = generateIdFromEntropySize(10); // 16 characters long
 
-		// Replace this with your own DB client.
 		await prisma.user.create({
             data: {
                 id: userId,

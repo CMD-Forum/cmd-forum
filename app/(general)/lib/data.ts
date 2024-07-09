@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "./db";
+import { logError, logMessage } from "./utils";
 
 // getUserBy
 
@@ -120,10 +121,11 @@ interface createPostProps {
 
     title: string
     content: string
-    imageurl: string | null | undefined
-    imagealt: string | null | undefined
+    imageurl?: string | null | undefined
+    imagealt?: string | null | undefined
     authorId: string
     communityId: string
+    href?: string;
 
 }
 
@@ -136,7 +138,8 @@ export async function createPost( props: createPostProps ) {
             imageurl: props.imageurl,
             imagealt: props.imagealt,
             authorId: props.authorId,
-            communityId: props.communityId
+            communityId: props.communityId,
+            href: props.href
         }
     });
 
@@ -255,11 +258,10 @@ export async function getCommunityAdminIDs( { communityId }: { communityId: stri
         }
     });
 
-    if (admins) {
-        console.log("Admins:", admins.admin_ids);    
+    if (admins) { 
         return admins.admin_ids
     } else {
-        console.log("No Admins");
+        logMessage("Community has no administrators.");
     }
 
 }
@@ -278,7 +280,7 @@ export async function getAllCommunitys() {
     if (communitys) {   
         return communitys;
     } else {
-        console.log("No Communitys");
+        logMessage("No communities returned from database.");
     }
 
 }
@@ -301,7 +303,7 @@ export async function getAllUserMembershipRecords({ userID }: { userID: string }
         });     
         return userMemberships;          
     } catch ( error ) {
-        console.error(error);
+        logError(error);
         return false;
     }
 }
@@ -323,7 +325,7 @@ export async function createUserMembershipRecord({ userID, communityID }: { user
         });     
         return updatedAuthor;          
     } catch ( error ) {
-        console.error(error);
+        logError(error);
         return false;
     }
 
@@ -340,7 +342,7 @@ export async function deleteUserMembershipRecord({ userID, communityID }: { user
         });     
         return updatedRecord;          
     } catch ( error ) {
-        console.error(error);
+        logError(error);
         return false;
     }
 
@@ -355,8 +357,137 @@ export async function countCommunityMembers({ communityID }: { communityID: stri
         });     
         return communityMemberships;          
     } catch ( error ) {
-        console.error(error);
+        logError(error);
         return undefined;
+    }
+}
+
+export async function countCommunityPosts({ communityID }: { communityID: string }) {
+    try {
+        const communityPosts = await prisma.post.count({
+            where: {
+                communityId: communityID,
+            },
+        });     
+        return communityPosts;          
+    } catch ( error ) {
+        logError(error);
+        return undefined;
+    }
+}
+
+// Upvotes
+
+export async function checkIfVoted({ postID, userID }: { postID: string, userID: string }) {
+    try {
+        const upvote = await prisma.upvotes.findUnique({
+            where: {
+                upvoteID: { userID, postID }
+            }
+        })
+
+        const downvote = await prisma.downvotes.findUnique({
+            where: {
+                downvoteID: { userID, postID }
+            }
+        })
+        
+        return { upvote: upvote ? true : false, downvote: downvote ? true : false }
+    } catch ( error ) {
+        logError(error);
+        return { error: error }
+    }
+}
+
+export async function upvote({ postID, userID }: { postID: string, userID: string }) {
+    try {
+        const upvote = await prisma.upvotes.create({
+            data: {
+                userID: userID,
+                postID: postID,
+            }
+        })
+        
+        return { upvote }
+    } catch ( error ) {
+        logError(error);
+        return { error: error }
+    }
+}
+
+export async function downvote({ postID, userID }: { postID: string, userID: string }) {
+    try {
+        const downvote = await prisma.downvotes.create({
+            data: {
+                userID: userID,
+                postID: postID
+            }
+        })
+        
+        return { downvote }
+    } catch ( error ) {
+        logError(error);
+        return { error: error }
+    }
+}
+
+export async function removeUpvote({ postID, userID }: { postID: string, userID: string }) {
+    try {
+        await prisma.upvotes.delete({
+            where: {
+                upvoteID: { userID, postID }
+            }
+        })
+        
+        return { message: "Removed Successfully" }
+    } catch ( error ) {
+        logError(error);
+        return { error: error }
+    }
+}
+
+export async function removeDownvote({ postID, userID }: { postID: string, userID: string }) {
+    try {
+        await prisma.downvotes.delete({
+            where: {
+                downvoteID: { userID, postID }
+            }
+        })
+        
+        return { message: "Removed Successfully" }
+    } catch ( error ) {
+        logError(error);
+        return { error: error }
+    }
+}
+
+export async function getTotalUpvotes({ postID }: { postID: string }) {
+    try {
+        const upvotes = await prisma.upvotes.count({
+            where: {
+                postID: postID
+            }
+        })
+        
+        return upvotes
+    } catch ( error ) {
+        logError(error);
+        return { error: error }
+    }
+}
+
+export async function getTotalDownvotes({ postID }: { postID: string }) {
+    try {
+        const downvotes = await prisma.downvotes.count({
+            where: {
+                postID: postID
+            }
+        })
+        
+        return downvotes
+    } catch ( error ) {
+        logError(error);
+        return { error: error }
     }
 }
 

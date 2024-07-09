@@ -49,9 +49,22 @@ body {
 
 // Accessibility
 
+html, body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+  background: transparent;
+  width: 0px;
+  height: 0px;
+}
+
 a, button {
   @apply outline-none #{!important};
   @apply focus-visible:ring-2 #{!important};
+  @apply focus-visible:ring-white;
   @apply focus-visible:ring-offset-2 #{!important};
   @apply focus-visible:ring-offset-background #{!important};
   @apply rounded-sm;
@@ -79,7 +92,7 @@ code {
   @apply text-gray-300;
   @apply p-4;
   @apply bg-card;
-  @apply rounded;
+  @apply rounded-lg;
 }
 
 // Main
@@ -99,15 +112,13 @@ code {
   @apply border-border;
   @apply hover:border-border;
   @apply active:border-border;
-  @apply focus:ring-2;
-  @apply ring-offset-2;
-  @apply ring-offset-background;
-  @apply rounded;
+  @apply rounded-lg;
   @apply flex;
   @apply gap-1.5;
   @apply items-center;
   @apply w-fit;
   @apply outline-none;
+  @apply select-none;
 }
 
 .navlink.raised {
@@ -139,9 +150,6 @@ code {
 .navlink[data-navlink-enabled="true"] {
   @apply border-border-light;
   @apply bg-border;
-  @apply ring-2;
-  @apply ring-offset-2;
-  @apply ring-offset-background;
 }
 
 .navlink-ghost {
@@ -178,8 +186,8 @@ code {
 }
 
 .navlink.small, .navlink-full.small, .navlink-destructive.small, .navlink-emphasis.small, .navlink-ghost.navlink.small {
-  @apply py-1.5;
-  @apply px-2.5;
+  @apply py-1 #{!important};
+  @apply px-2 #{!important};
 }
 
 .navlink-destructive {
@@ -207,7 +215,8 @@ code {
   @apply bg-transparent;
   @apply border-0;
   @apply w-full;
-  @apply p-2.5;
+  @apply py-2;
+  @apply px-3;
   @extend .subtitle;
   @apply hover:text-white #{!important};
   @apply hover:border-0;
@@ -252,7 +261,7 @@ code {
   @apply relative;
   @apply px-3;
   @apply py-2;
-  @apply rounded;
+  @apply rounded-lg;
   @extend .subtitle;
 }
 
@@ -271,6 +280,21 @@ code {
   left: 0;
   border-radius: 6px;
   transition: all;
+}
+
+.topbar-item {
+  @apply text-gray-300;
+  @apply hover:text-white;
+  @apply transition-all;
+  @apply p-1.5; 
+  @apply rounded-md;
+  @apply hover:bg-card;
+
+  &.active {
+    @apply text-white;
+    @apply bg-border;
+  }
+
 }
 
 .dropdown-menu {
@@ -297,20 +321,18 @@ code {
 textarea,
 input {
   @apply bg-background;
-  @apply rounded;
+  @apply rounded-lg;
   @apply h-9;
   @apply px-2;
   @apply outline-none #{!important};
   @apply border-1;
   @apply border-border;
-  @apply focus:ring-2;
-  @apply ring-offset-2;
-  @apply ring-offset-background;
+  @apply focus:border-white;
   @apply transition-all;
   @extend .subtitle;
 }
 
-.generic_field.errored {
+.generic_field.errored, textarea.errored, .generic_field.error, textarea.error {
   @apply ring-2;
   @apply ring-red-300;
 }
@@ -320,8 +342,12 @@ input {
   @apply cursor-not-allowed;
 }
 
-.bottombar-link {
+.required::after {
+  content: "*";
+  @apply text-red-300;
+}
 
+.bottombar-link {
   @apply hover:text-gray-400;
   @apply transition-all;
   @apply flex;
@@ -335,34 +361,51 @@ input {
   @apply overflow-hidden;
   @apply font-bold;
   @apply text-zinc-400;
+}
 
+input[type="checkbox"] {
+  @apply bg-card;
+  @apply outline-none;
+  @apply border-1;
+  @apply border-border;
+  @apply w-5;
+  @apply h-5;
+  @apply rounded;
+  @apply p-0;
+  appearance: none;
+}
+
+input[type="checkbox"]:hover {
+  @apply bg-card-light;
+}
+
+input[type="checkbox"]:checked {
+  background-size: cover;
+}
+
+input[type="checkbox"]:not(:disabled):checked {
+  @apply bg-white;
+  @apply border-white;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4"><path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd" /></svg>');
 }
 
 .bottombar-link p {
-
   @apply text-xs;
-
 }
 
 .bottombar-link.active {
-
   @apply text-white;
-
 }
 
 .btn-dropdown:disabled {
-
   @apply bg-zinc-950;
   @apply hover:border-zinc-800;
   @apply cursor-not-allowed;
   @apply text-gray-300;
-
 }
 
 .spinner {
-
   @apply animate-spin;
-
 }
 
 .label {
@@ -401,14 +444,20 @@ input {
 
 // MD
 
-.wmde-markdown {
+.markdown-body, .wmde-markdown {
   @apply bg-transparent #{!important};
 }
 
-.wmde-markdown * {
+.markdown-body *, .wmde-markdown * {
   @apply font-inter;
 }
 
+.markdown-body a, .wmde-markdown a {
+  @apply underline;
+  @apply hover:no-underline;
+}
+
+.markdown-body blockquote,
 .wmde-markdown blockquote {
   @apply bg-transparent #{!important};
   @apply hover:text-white;
@@ -417,6 +466,7 @@ input {
   @extend .subtitle;
 }
 
+.markdown-body hr,
 .wmde-markdown hr {
   @apply border-border #{!important};
   @apply border-0 #{!important};
@@ -424,42 +474,170 @@ input {
   @apply h-[1px] #{!important};
 }
 
-.wmde-markdown-var {
+.markdown-body-var
+.wmde-markdown-var,
+.md-editor {
   @apply bg-card #{!important};
   @apply border-border #{!important};
   @apply border-1 #{!important};
 }
 
+.markdown-body h1,
 .wmde-markdown h1 {
   @extend .header;
+  @apply mt-2;
+  @apply mb-2;
+  @apply border-b-1;
+  @apply border-border;
+  @apply pb-1;
 }
 
+.markdown-body h2,
 .wmde-markdown h2 {
   @extend .header-2;
+  @apply mt-2;
+  @apply mb-2;
+  @apply border-b-1;
+  @apply border-border;
+  @apply pb-1;
 }
 
-.wmde-markdown h3 {
+.markdown-body h3,
+.wmde-markdown h4 {
   @extend .header-3;
+  @apply mt-2;
+  @apply mb-2;
 }
 
+.markdown-body h4,
 .wmde-markdown h4 {
   @extend .header-4;
+  @apply mt-2;
+  @apply mb-2;
 }
 
+.markdown-body h5,
 .wmde-markdown h5 {
   @extend .header-5;
+  @apply mt-2;
+  @apply mb-2;
 }
 
+.markdown-body h6,
 .wmde-markdown h6 {
   @extend .header-6;
+  @apply mt-2;
+  @apply mb-2;
 }
 
-.wmde-markdown p, li, {
+.markdown-body p, li, {
   @extend .subtitle;
 }
 
-.wmde-markdown img {
-  @apply rounded #{!important};
+.wmde-markdown p, li {
+  @extend .subtitle;
+}
+
+.markdown-body p, .wmde-markdown p {
+  @apply mb-2;
+  @extend .subtitle;
+}
+
+.markdown-body blockquote, .wmde-markdown blockquote {
+  @apply py-1;
+  @apply text-gray-300;
+  @apply border-l-2;
+  @apply border-border;
+  @apply hover:border-white;
+  @apply hover:text-white;
+  @apply px-2;
+}
+
+.markdown-body img, .wmde-markdown img {
+  @apply rounded-lg #{!important};
+}
+
+.markdown-body code,
+.markdown-body > pre > code,
+.markdown-body kbd,
+.markdown-body pre {
+  @apply font-IBM_PLEX_MONO;
+}
+
+.wmde-markdown code,
+.wmde-markdown > pre > code,
+.wmde-markdown kbd,
+.wmde-markdown pre {
+  @apply font-IBM_PLEX_MONO;
+}
+
+.markdown-body :not(pre) > code, .wmde-markdown :not(pre) > code {
+  @apply bg-card;
+  @apply border-border;
+  @apply border-1;
+  @apply px-1;
+  @apply py-0.5;
+  @apply rounded;
+  @apply mb-2;
+  @apply text-gray-300;
+  @apply text-sm;
+}
+
+.markdown-body pre, .wmde-markdown pre {
+  @apply bg-card;
+  @apply border-border;
+  @apply border-1;
+  @apply px-2;
+  @apply py-1;
+  @apply rounded;
+  @apply mb-2;
+  @apply text-gray-300;
+}
+
+.markdown-body pre > code, .wmde-markdown pre > code {
+  @apply text-xs;
+}
+
+.markdown-body kbd, .wmde-markdown kbd {
+  @apply bg-border;
+  @apply rounded;
+  @apply border-border-light;
+  @apply border-1;
+  @apply shadow-sm;
+  @apply text-gray-300;
+  @apply px-1;
+  @apply py-1;
+  @apply whitespace-nowrap;
+  @apply text-xs;
+}
+
+.markdown-body > *:first-child, .wmde-markdown > *:first-child {
+  @apply mt-0 #{!important};
+}
+
+.markdown-body > *:last-child, .wmde-markdown > *:last-child {
+  @apply mb-0 #{!important};
+}
+
+.markdown-body table, .wmde-markdown table {
+  @apply border-collapse;
+  @apply mb-2;
+  @apply text-gray-300;
+  @apply text-sm;
+}
+
+.markdown-body table th,
+.markdown-body table td,
+.wmde-markdown table th,
+.wmde-markdown table td {
+  @apply px-2;
+  @apply py-1;
+  @apply border-1;
+  @apply border-border;
+}
+
+.markdown-body table th:first-of-type, .wmde-markdown table th:first-of-type {
+  @apply rounded-tl #{!important};
 }
 
 .markdown-alert-title {
@@ -467,7 +645,7 @@ input {
 }
 
 .md-editor {
-  @apply rounded #{!important};
+  @apply rounded-lg #{!important};
 }
 
 .md-editor-toolbar-warp {
@@ -485,7 +663,7 @@ input {
   @apply w-8 #{!important};
   @apply h-8 #{!important};
   @apply p-1.5 #{!important};
-  @apply rounded #{!important};
+  @apply rounded-lg #{!important};
 }
 
 .md-editor-toolbar-warp > .md-editor-toolbar > button.active {
@@ -520,81 +698,61 @@ hr {
 }
 
 .markdown-body {
-
   @apply bg-transparent #{!important};
-  @apply rounded;
-  @apply *:rounded;
-
 }
 
 .markdown-body > p > img {
-
-  @apply rounded;
-
+  @apply rounded-lg;
 }
 
 // Loading
 
 .post-loading-text {
-
   @apply text-lg;
-
 }
 
 // Text
 
 .header {
-
   @apply text-3xl #{!important}; 
   @apply font-inter #{!important}; 
   @apply text-white #{!important};
   @apply font-bold #{!important}; 
-
 }
 
 .header-2 {
-
   @apply text-2xl #{!important}; 
   @apply font-inter #{!important};
   @apply text-white #{!important};
   @apply font-bold #{!important}; 
-
 }
 
 .header-3 {
-
   @apply text-xl #{!important}; 
   @apply font-inter #{!important};
   @apply text-white #{!important};
   @apply font-semibold #{!important}; 
-
 }
 
 .header-4 {
-
   @apply text-lg #{!important}; 
   @apply font-inter #{!important};
   @apply text-white #{!important};
   @apply font-semibold #{!important}; 
-
 }
 
 .header-5 {
-
-  @apply text-lg #{!important}; 
+  @apply text-base #{!important}; 
   @apply font-inter #{!important};
   @apply text-gray-300; 
   @apply font-bold; 
-
 }
 
 .header-6 {
-
-  @apply text-base #{!important}; 
+  @apply text-sm #{!important}; 
   @apply font-inter #{!important};
   @apply text-white #{!important};
   @apply font-medium #{!important}; 
-
 }
 
 .subtitle {

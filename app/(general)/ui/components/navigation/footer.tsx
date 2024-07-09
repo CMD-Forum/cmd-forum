@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { FaAppStore, FaGithub, FaGooglePlay } from "react-icons/fa6";
 
-import { inter } from "../../fonts";
-
 /**
  * ## Footer
  * ---

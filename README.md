@@ -46,7 +46,6 @@ To setup your .env file, you'll need to change a few things.
 | GITHUB_CLIENT_SECRET_PROD | Your GitHub Client Secret (When deploying to production)            | You should have this stored, as GitHub only shows it once.    |
 | NEXT_PUBLIC_METADATA_BASE_URL_DEV | Your local development URL (most likely <https://localhost:3000>) | Used for the metadata. |
 | NEXT_PUBLIC_METADATA_BASE_URL_PROD | Your production URL (where you'll deploy CMD/> to) | N/A |
-| FLAGS_SECRET | Output of `node -e "console.log(crypto.randomBytes(32).toString('base64url'))"` | Used by Vercel for Feature Flags, not needed if you don't use Vercel or don't want these. |
 
 ### Setup your database
 
@@ -183,11 +182,10 @@ npx prisma db seed
 
 ### Inspiration
 
-- [Reddit](https://old.reddit.com)
+- [Reddit](https://old.reddit.com) for giving me a goal to achieve (to have the features of Reddit)
 - Lemmy
-  - [Photon](https://github.com/Xyphyn/photon) especially for a lot of inspiration with the UI.
-  - Base Lemmy UI as well.
-- [Discuit](https://www.discuit.net)
+  - [Photon](https://github.com/Xyphyn/photon) for a ton of inspiration with the UI. (whoever made that is good at UI design)
+- [Discuit](https://www.discuit.net) for giving me the idea to do this in the first place.
 
 ### Packages
 
@@ -197,18 +195,17 @@ Here is a list of all packages used:
 - @heroicons/react
 - @hookform/resolvers
 - @lucia-auth/adapter-prisma
+- @next/bundle-analyzer
 - @next/eslint-plugin-next
 - @node-rs/argon2
 - @prisma/client
-- @uiw/react-markdown-editor
-- @uiw/react-markdown-preview
-- @vercel/speed-insights
+- arctic
 - conventional-changelog-cli
+- dayjs
 - dotenv-cli
 - framer-motion
 - lucia
 - next
-- next-auth
 - next-dev-https
 - nextjs-toploader
 - oslo
@@ -218,7 +215,9 @@ Here is a list of all packages used:
 - react-dom
 - react-hook-form
 - react-icons
+- react-markdown
 - rehype-sanitize
+- remark-gfm
 - sass
 - use-debounce
 - xss

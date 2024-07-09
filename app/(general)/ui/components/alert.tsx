@@ -11,7 +11,7 @@ export function AlertWarning(props: AlertProps) {
 
     return (
 
-        <div className='w-full bg-transparent border-l-8 border-orange-500 bg-opacity-50 rounded p-5 facebookTheme:p-3 facebookTheme:border-[#b3b3b3] facebookTheme:bg-white facebookTheme:rounded-none'>
+        <div className='w-full bg-transparent border-l-8 border-orange-500 bg-opacity-50 rounded-lg p-5 facebookTheme:p-3 facebookTheme:border-[#b3b3b3] facebookTheme:bg-white facebookTheme:rounded-lg-none'>
             
             <div className='flex gap-1 items-center text-orange-500'>
 
@@ -32,7 +32,7 @@ export function AlertSuccess(props: AlertProps) {
 
     return (
 
-        <div className='w-full bg-transparent border-zinc-800 border-[1px] rounded p-5 facebookTheme:p-3 facebookTheme:border-[#b3b3b3] facebookTheme:bg-white facebookTheme:rounded-none'>
+        <div className='w-full bg-transparent border-zinc-800 border-[1px] rounded-lg p-5 facebookTheme:p-3 facebookTheme:border-[#b3b3b3] facebookTheme:bg-white facebookTheme:rounded-lg-none'>
             
             <div className='flex gap-1 items-center text-green-500'>
 
@@ -53,7 +53,7 @@ export function AlertFailure(props: AlertProps) {
 
     return (
 
-        <div className='w-full bg-zinc-950 border-zinc-800 border-[1px] rounded p-5 facebookTheme:p-3 facebookTheme:border-[#b3b3b3] facebookTheme:bg-white facebookTheme:rounded-none'>
+        <div className='w-full bg-zinc-950 border-zinc-800 border-[1px] rounded-lg p-5 facebookTheme:p-3 facebookTheme:border-[#b3b3b3] facebookTheme:bg-white facebookTheme:rounded-lg-none'>
             
             <div className='flex gap-1 items-center text-red-500'>
 

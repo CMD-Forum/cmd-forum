@@ -19,7 +19,7 @@ export function getFormattedTimestamp() {
  * Logs an error to the console of where it's executed (client or server).
  */
 
-export function logError( message: string ) {
+export function logError( message: any ) {
     const timestamp = getFormattedTimestamp();
     console.error(`[${timestamp}] [ERR] ${message}`)
 }
@@ -30,7 +30,7 @@ export function logError( message: string ) {
  * Logs a warning to the console of where it's executed (client or server).
  */
 
-export function logWarning( message: string ) {
+export function logWarning( message: any ) {
     const timestamp = getFormattedTimestamp();
     console.warn(`[${timestamp}] [WRN] ${message}`)
 }
@@ -41,7 +41,7 @@ export function logWarning( message: string ) {
  * Logs a warning to the console of where it's executed (client or server).
  */
 
-export function logMessage( message: string ) {
+export function logMessage( message: any ) {
     const timestamp = getFormattedTimestamp();
     console.log(`[${timestamp}] [INF] ${message}`)
 }

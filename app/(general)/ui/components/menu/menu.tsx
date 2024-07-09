@@ -13,7 +13,7 @@ import {
     useInteractions,
     useRole,
 } from '@floating-ui/react';
-import { cubicBezier, motion } from "framer-motion";
+import { AnimatePresence, cubicBezier, motion } from "framer-motion";
 import type { Route } from 'next';
 import Link from "next/link";
 import React, { MouseEventHandler, useContext, useEffect } from "react";
@@ -21,6 +21,7 @@ import { useState } from "react";
 
 import { useSession } from "@/app/(general)/lib/sessioncontext";
 
+import Dialog from '../dialog/dialog';
 import MenuContext from './menuContext';
 
 /**
@@ -88,10 +89,6 @@ export function MenuContent({
                 // @ts-ignore
                 context.setIsOpen(false);
             }
-            if (event.key === 'ArrowDown') {
-                // @ts-ignore
-                context.refs.setFloating.getInputDOMNode().focus();
-            }
         };
     
         document.addEventListener('keydown', handleKeyDown);
@@ -99,31 +96,36 @@ export function MenuContent({
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
         };
-    }, [])
+    }, [context])
 
     return (
         <>
             {/* @ts-ignore */}
             {context.open &&
-                /* @ts-ignore */
-                <FloatingFocusManager context={context.context} modal={false}>
-                    <div 
-                        className="z-40 !max-w-fit !min-w-fit !p-0"
-                        /* @ts-ignore */
-                        ref={context.refs.setFloating}
-                        /* @ts-ignore */
-                        style={context.floatingStyles}   
-                        /* @ts-ignore */
-                        {...context.getFloatingProps()}   
-                    >               
-                        {/* This animation was an attempt of copying the Fluent UI Menubutton, I think it looks good. */}
+                <AnimatePresence>
+                    {/* @ts-ignore */}
+                    <FloatingFocusManager context={context.context} modal={false}>
                         <div 
-                            className={`bg-card ${className ? className : ""} border-border border-1 rounded w-full h-max p-1 z-50 min-w-48 shadow-md`}
-                        >
-                            { children }
+                            className="z-40 !max-w-fit !min-w-fit !p-0"
+                            /* @ts-ignore */
+                            ref={context.refs.setFloating}
+                            /* @ts-ignore */
+                            style={context.floatingStyles}   
+                            /* @ts-ignore */
+                            {...context.getFloatingProps()}   
+                        >               
+                            <motion.div 
+                                className={`bg-card ${className ? className : ""} border-border border-1 rounded-lg w-full h-max p-1 z-50 min-w-48 shadow-md`}
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.9 }}
+                                transition={{ ease: "backOut", duration: 0.2 }}
+                            >
+                                { children }
+                            </motion.div>
                         </div>
-                    </div>
-                </FloatingFocusManager>
+                    </FloatingFocusManager>                    
+                </AnimatePresence>
             }
         </>
     );
@@ -142,7 +144,7 @@ export const MenuLink = <T extends string>({ text, icon, link }: { text: string,
         <Link 
             // @ts-ignore
             href={ link } 
-            className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden hover:!text-white subtitle rounded"
+            className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden hover:!text-white subtitle rounded-lg"
         >
             { icon ? (
                 React.cloneElement(icon, {
@@ -164,7 +166,7 @@ export const MenuButton = ({ text, icon, onClick, destructive }: { text: string,
     return (
         <button 
             onClick={onClick}
-            className={`hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden text-gray-300 hover:text-white ${destructive ? "hover:!text-red-400" : ""} rounded`}
+            className={`hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden text-gray-300 hover:text-white ${destructive ? "hover:!text-red-400" : ""} rounded-lg`}
         >
             {React.cloneElement(icon, {
                 className: "w-5 h-5",
@@ -181,7 +183,7 @@ Menu.Button = MenuButton
 export const MenuItem = ({ text, icon }: { text: string, icon?: React.ReactElement | null }) => {
     return (
         <div 
-            className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden text-gray-300 hover:text-white rounded"
+            className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden text-gray-300 hover:text-white rounded-lg"
         >
             { icon ? (
                 React.cloneElement(icon, {
@@ -205,7 +207,7 @@ export const MenuUser = () => {
         return (
             <Link 
                 href={`/user/${session.user?.username}`} 
-                className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden hover:!text-white rounded"
+                className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden hover:!text-white rounded-lg"
             >
                 <div className="flex flex-col max-w-48">
                     <span className="subtitle text-white !text-[15px]">{session.user?.username}</span>
@@ -221,17 +223,42 @@ export const MenuUser = () => {
 Menu.User = MenuUser
 
 export const MenuShare = ({ title, text, url, icon }: { title: string, text: string, url: string, icon: React.ReactElement }) => {
-    return (
-        <button 
-            className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden text-gray-300 hover:text-white rounded"
-            onClick={async () => await navigator.share({ title: title, text: text, url: url })}
-        >
-            {React.cloneElement(icon, {
-                className: "w-5 h-5",
-            })}
-            Share
-        </button>
-    );
+    
+    if (navigator.share) {
+        return (
+            <button 
+                className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden text-gray-300 hover:text-white rounded-lg"
+                onClick={async () => await navigator.share({ title: title, text: text, url: url })}
+            >
+                {React.cloneElement(icon, {
+                    className: "w-5 h-5",
+                })}
+                Share
+            </button>
+        );        
+    } else {
+        return (
+            // This can cause scrolling to stop working (since the dialog might disappear because of the menu closing instead of the dialog closing)
+            <Dialog>
+                <Dialog.Trigger>
+                    <button className="hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden text-gray-300 hover:text-white rounded-lg">
+                        {React.cloneElement(icon, {
+                            className: "w-5 h-5",
+                        })}
+                        Share
+                    </button>
+                </Dialog.Trigger>
+                <Dialog.Content>
+                    <Dialog.Title>Sharing is unsupported.</Dialog.Title>
+                    <Dialog.Subtitle>Your browser does not support web sharing.</Dialog.Subtitle>
+                    <Dialog.ButtonContainer>
+                        <Dialog.CloseButton><button className='navlink'>Close</button></Dialog.CloseButton>    
+                    </Dialog.ButtonContainer>
+                </Dialog.Content>
+            </Dialog>
+        );
+    }
+
 }
 
 Menu.Share = MenuShare
@@ -239,7 +266,7 @@ Menu.Share = MenuShare
 export const MenuCustom = ({ children, className }: { children: React.ReactNode | React.ReactElement, className?: string }) => {
     return (
         <div 
-            className={`${className ? className : null} hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden rounded`}
+            className={`${className ? className : null} hover:bg-border w-full px-3 py-2 flex gap-2 items-center transition-all text-sm group-[hidden]:hidden rounded-lg`}
         >
             { children }
         </div>

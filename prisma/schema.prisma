@@ -64,8 +64,9 @@ model Post {
   title       String    @db.VarChar(255) /// The title of the post.
   content     String    /// The main content of the post.
   tagline     String?   /// The tagline of the post. Deprecated, do not use.
-  imageurl    String?   /// If the post is an image post, this is the images URL.
-  imagealt    String?   /// If the post is an image post, this is the images accessibility tag.
+  imageurl    String?   /// If the post is an image post, this is the image URL.
+  imagealt    String?   /// If the post is an image post, this is the image accessibility tag.
+  href        String?   /// If the post is a link post, this is the link url.
   public      Boolean   @default(true) /// If false, this post cannot be accessed and will not be shown. Currently unimplemented.
   authorId    String    /// The CUID of the posts author.
   communityId String    @default("null") /// The CUID of the posts community.
@@ -96,8 +97,6 @@ model User {
   adminships         CommunityAdminship[]  /// Communities the user is an admin of.
   upvotes            Upvotes[]
   downvotes          Downvotes[]
-  Support            Support?    @relation(fields: [supportId], references: [authorId])
-  supportId          String?
   role               UserRole    @default(USER) /// If the user is a normal user or a site administrator (not to be confused with a community administrator).
   sessions           Session[]
   settings           UserSettings[]
@@ -120,15 +119,6 @@ model Session {
 	osVersion      String   @default("Unknown")
 
   user           User     @relation(references: [id], fields: [userId], onDelete: Cascade)
-}
-
-model Support {
-  id        String @id @default(cuid())
-  authorId  String @unique
-  author    User[]
-  content   String @default("# Support Article \n Edit this article!")
-  title     String @default("Article has no name")
-  tagline   String @default("Article has no tagline")
 }
 
 model UserSettings {

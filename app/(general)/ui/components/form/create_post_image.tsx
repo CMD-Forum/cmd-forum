@@ -20,9 +20,11 @@ const FormSchema = z.object({
         .string()
         .min(2, "All communitys are 2 characters or over.")
         .max(20, "All communitys have a maximum of 20 characters."),
-    image_url: z
+    imageurl: z
         .string()
-        .url( { message: "Image must be a URL and start with `https://`" } )
+        .url("Image must be a URL and start with `https://`"),
+    imagealt: z
+        .string()
 })
 
 function ErrorMessage(props: { message: string }) {
@@ -42,7 +44,8 @@ export default function CreateImagePostForm() {
       defaultValues: {
         community: '',
         title: '',
-        image_url: '',
+        imageurl: '',
+        imagealt: '',
       },
     });
 
@@ -68,13 +71,13 @@ export default function CreateImagePostForm() {
       if (post_community) {
 
         const postData = {
-          title: values.title,
-          communityId: post_community.id,
-          content: "",
-          imageurl: values.image_url,
-          authorId: session.user?.id,
+            title: values.title,
+            communityId: post_community.id,
+            content: "",
+            imageurl: values.imageurl,
+            imagealt: values.imagealt,
+            authorId: session.user?.id,
         };
-        
         try {
             // @ts-ignore
             const post = await createPost(postData); 
@@ -85,17 +88,14 @@ export default function CreateImagePostForm() {
             setCom_Err("Sorry, something went wrong.");
             setIsLoading(false);
         }
-
       } else {
         setCom_Err("That community doesn't exist. Make sure you spelled it correctly.");           
         setIsLoading(false);
       }
-  
     };
-  
-    return (
 
-        <form className="flex flex-col gap-2 bg-transparent rounded-lg !w-full" onSubmit={form.handleSubmit(OnSubmit)}>
+    return (
+        <form className="flex flex-col gap-2 bg-transparent rounded-lg-lg !w-full" onSubmit={form.handleSubmit(OnSubmit)}>
 
             {com_err && (
                 <Alert type="error">
@@ -116,11 +116,11 @@ export default function CreateImagePostForm() {
                 </Alert>
             )}
 
-            <div className="flex gap-1 subtitle">Community<p className="text-[#fca5a5]">*</p></div>
+            <p className="flex gap-0.5 subtitle required">Community</p>
             <input
                 {...form.register('community')}
                 placeholder="general"
-                className={`generic_field ${form.formState.errors.community ? "errored" : ""}`}
+                className={`generic_field ${form.formState.errors.community ? "error" : ""}`}
             />
 
             {form.formState.errors.community && (
@@ -130,11 +130,11 @@ export default function CreateImagePostForm() {
 
             {/* */}
 
-            <div className="flex gap-1 subtitle">Title<p className="text-[#fca5a5]">*</p></div>
+            <p className="flex gap-0.5 subtitle required">Title</p>
             <input
                 {...form.register('title')}
                 placeholder="Look at my amazing code!"
-                className={`generic_field ${form.formState.errors.title ? "errored" : ""}`}
+                className={`generic_field ${form.formState.errors.title ? "error" : ""}`}
             />
 
             {form.formState.errors.title && (
@@ -144,41 +144,31 @@ export default function CreateImagePostForm() {
 
             {/* */}
 
-            <div className="flex gap-1 subtitle">
-                Image
-                <p className="text-[#fca5a5]">*</p>
-            </div>
+            <p className="flex gap-0.5 subtitle required">Image</p>
             <input
-                {...form.register('image_url')}
+                {...form.register('imageurl')}
                 placeholder="https://domainimagesaretemporary.org/images/070524"
-                className={`generic_field ${form.formState.errors.image_url ? "errored" : ""}`}
+                className={`generic_field ${form.formState.errors.imageurl ? "error" : ""}`}
             />
 
             {/* This will come later */}
-            {/*<div className="flex rounded border-1 border-dashed border-border w-full h-fit p-12 hover:border-border-light focus:border-border-light transition-all items-center justify-center">
+            {/*<div className="flex rounded-lg border-1 border-dashed border-border w-full h-fit p-12 hover:border-border-light focus:border-border-light transition-all items-center justify-center">
                 <div className="flex flex-col w-fit h-fit items-center justify-center">
                     <CloudArrowUpIcon className="w-10 h-10" />
                     <p className="subtitle">Drop your image here or click to upload</p>
                 </div>
             </div>*/}
 
-            {form.formState.errors.image_url && (
+            {form.formState.errors.imageurl && (
                 // @ts-expect-error
                 <ErrorMessage message={form.formState.errors.image_url.message} />
             )}
 
-            {/* */}
-
             <button type="submit" className="navlink-full !w-full sm:!w-fit justify-center min-w-[62px]">
-                
                 {/* eslint-disable-next-line @next/next/no-img-element*/}
                 {isLoading ? <img src="/spinner.svg" alt="Submitting..." className="spinner"/>  : null }
                 Submit
-                
             </button>
-
         </form>
-
     );
-
 }
