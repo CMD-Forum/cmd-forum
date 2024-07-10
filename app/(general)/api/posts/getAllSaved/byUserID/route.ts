@@ -36,9 +36,7 @@ export async function POST( req: Request ) {
                             updatedAt: true,
                             image: true,
                             description: true,
-    
-                        }
-    
+                        },
                     },
                     community: {
                         select: {
@@ -46,21 +44,23 @@ export async function POST( req: Request ) {
                             name: true,
                             display_name: true,
                             image: true,
-                            public: true
+                            public: true,
                         },
                     },
                 },
-            })    
-            return NextResponse.json( savedPosts, { status: 200 } )   
+            })
+
+            let postCount = 0;
+            for (let i = 0; i < savedPostArray.savedPosts.length; i++) {
+                if (savedPostArray.savedPosts[i]) postCount++;
+            }
+
+            return NextResponse.json({ savedPosts, postCount }, { status: 200 } )   
         }
 
-        
-
     } catch (error) {
-
         console.error(error);
         return NextResponse.json({ message: "Error occurred while fetching saved posts, please check your request for errors."}, { status: 500 });
-
     }
 
 }

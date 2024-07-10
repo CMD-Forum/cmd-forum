@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import getOGS from "../../lib/ogs";
-import { logError } from "../../lib/utils";
+import { logError, logWarning } from "../../lib/utils";
 
 export async function POST( req: Request ) {
 
@@ -23,8 +23,8 @@ export async function POST( req: Request ) {
         
     } catch (error) {
         // @ts-ignore
-        logError("OGS Request Failed: " + error.result.error + " @ " + error.result.requestUrl);
+        logWarning("OGS Request Failed: " + error.result.error + " at " + error.result.requestUrl);
         // @ts-ignore
-        return NextResponse.json({ message: "OGS Request Failed: " + error.result.error + " @ " + error.result.requestUrl }, { status: 500 })
+        return NextResponse.json({ message: "OGS Request Failed: " + error.result.error + " at " + error.result.requestUrl }, { status: 500 })
     }
 }

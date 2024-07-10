@@ -269,7 +269,7 @@ export function SavedPostListByUserID( { userID }: { userID: string } ) {
     const [pageForwardAllowed, setPageForwardAllowed] = useState<boolean>(true);
 
     const [posts, setPosts] = useState<Post>();
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     function nextPage() {
         setPageForwardAllowed(false);
@@ -285,12 +285,10 @@ export function SavedPostListByUserID( { userID }: { userID: string } ) {
         }
     }    
 
-    const router = useRouter();
- 
-    try {
+    try {        
         useEffect(() => {
             setIsLoading(true),
-            fetch("/api/posts/getAll/byUserID", {
+            fetch("/api/posts/getAllSaved/byUserID", {
                 method: 'POST',
                 headers:{
                     "Content-Type": "application/json"
@@ -301,22 +299,22 @@ export function SavedPostListByUserID( { userID }: { userID: string } ) {
                 return res.json();
             })
             .then((data) => {
-                setPosts(data.posts);
-                setTotalPosts(data.post_count);
+                setPosts(data.savedPosts);
+                setTotalPosts(data.postCount);
                 setTotalPages(Math.ceil(totalPosts / 10))
                 setIsLoading(false);
             });
-        }, [userID, page, totalPosts]);
+        }, [page, totalPosts, userID]);
     } catch ( error ) {
         return (
             <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-lg px-5 py-5'>
                 <p className='text-center text-gray-300 font-medium antialiased w-full'>Sorry, an error occurred.</p>
-                <div className='flex gap-4 w-full items-center justify-center mt-4'>
+                {/*<div className='flex gap-4 w-full items-center justify-center mt-4'>
                     <button className='navlink' onClick={() => router.refresh()} type='button'>Reload</button>
-                </div>
-            </div>   
-        );        
-    }
+                </div>*/}
+            </div>            
+        );
+    }  
 
     if ( isLoading ) {
         return (
@@ -330,12 +328,12 @@ export function SavedPostListByUserID( { userID }: { userID: string } ) {
                 <CardPostSkeleton />
                 <CardPostSkeleton />
                 <CardPostSkeleton />
-                <CardPostSkeleton />     
+                <CardPostSkeleton />    
             </div>
         );
     }
 
-    if ( totalPages <= 0 ) { // Tried `if ( ! posts )` but that didn't work for some reason.
+    if ( totalPosts <= 0 ) { // Tried `if ( ! posts )` but that didn't work for some reason.
         return (
             <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-lg px-5 py-5'>
                 <p className='text-center text-gray-300 font-medium antialiased w-full'>Looks like there&apos;s no posts here.</p>
@@ -367,6 +365,7 @@ export function SavedPostListByUserID( { userID }: { userID: string } ) {
                         communityId={post.community.id}
                         author={post.author}
                         community={post.community}
+                        href={post.href}
                       />
                       <hr className='mx-4 mt-1/2 mb-1/2' />
                     </div>

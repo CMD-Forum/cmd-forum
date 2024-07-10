@@ -1,12 +1,12 @@
 "use client";
 
+import { ArrowPathIcon } from '@heroicons/react/16/solid';
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 import { PostCommentType } from '@/types/types';
 
 import { PostComment } from './comment';
-import { createPortal } from 'react-dom';
-import { ArrowPathIcon } from '@heroicons/react/16/solid';
 
 export default function CommentList({ postID }: { postID: string }) {
 
@@ -46,6 +46,10 @@ export default function CommentList({ postID }: { postID: string }) {
     if ( isLoading ) {
         return (
             <div className='flex flex-col mt-4 gap-2'>
+                {createPortal(
+                    <button className='navlink !px-2 !bg-border animate-pulse !text-border' aria-label='Loading Comments'><ArrowPathIcon className='w-5 h-5' /></button>,
+                    document.getElementById("comment-refresh-container") || document.body
+                )}
                 <div className='h-20 w-full bg-border animate-pulse rounded' />
                 <div className='h-20 w-full bg-border animate-pulse rounded' />
                 <div className='h-20 w-full bg-border animate-pulse rounded' />
@@ -86,8 +90,69 @@ export default function CommentList({ postID }: { postID: string }) {
                       <PostComment  
                         comment={comment}
                       />
+                      <ReplyList commentID={comment.id} />
                     </div>
                   );
+            })}
+        </div>
+    );
+}
+
+export function ReplyList({ commentID }: { commentID: string }) {
+
+    const [replies, setReplies] = useState<PostCommentType>();
+    const [isLoading, setIsLoading] = useState(false);
+
+    try {        
+        useEffect(() => {
+            setIsLoading(true),
+            fetch("/api/comments/getReplies/", {
+                method: 'POST',
+                headers:{
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ "commentID": `${commentID}` })
+            })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                setReplies(data);
+                setIsLoading(false);
+            });
+        }, [commentID]);
+    } catch ( error ) {
+        return (
+            <p>Failed to fetch replies.</p>
+        );
+    }  
+
+    if ( isLoading ) {
+        return (
+            <div className='flex flex-col mt-4 gap-2'>
+                <div className='h-20 w-full bg-border animate-pulse rounded' />
+            </div>
+        );
+    }
+
+    // @ts-ignore
+    if ( ! replies ) {
+        return null;
+    }
+
+    return (
+        <div className='flex flex-col mt-2 gap-2 pl-4'>
+            {Array.isArray(replies) && replies.map((reply) => {
+                return (
+                    <div 
+                      key={reply.id}
+                    >
+                      <PostComment  
+                        comment={reply}
+                      />
+                      <ReplyList commentID={reply.id} />
+                    </div>
+                );
             })}
         </div>
     );

@@ -1,23 +1,21 @@
 import { 
-    ArchiveBoxXMarkIcon, 
-    ArrowUturnLeftIcon, 
-    EllipsisVerticalIcon, 
-    PencilSquareIcon, 
-    ShareIcon 
+    ArchiveBoxXMarkIcon,
+    EllipsisVerticalIcon,
+    PencilSquareIcon,
+    ShareIcon,
 } from "@heroicons/react/16/solid";
-import dayjs from "dayjs";
-import relativeTime from 'dayjs/plugin/relativeTime'
 import Link from "next/link";
 import { useState } from "react";
 
+import dayjs from "@/app/(general)/lib/dayjs";
 import { useSession } from "@/app/(general)/lib/sessioncontext";
 import { PostCommentType } from "@/types/types";
 
 import ProfileImage from "../../account/ProfileImage";
 import Dialog from "../../dialog/dialog";
 import Menu from "../../menu/menu";
-
-dayjs.extend(relativeTime);
+import CreateReply from "./create_reply";
+import EditComment from "./edit_comment";
 
 export function PostComment({ comment }: { comment: PostCommentType }) {
     const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
@@ -36,7 +34,7 @@ export function PostComment({ comment }: { comment: PostCommentType }) {
                     </Dialog.ButtonContainer>
                 </Dialog.Content>
             </Dialog.Controlled>
-            <div className="bg-transparent hover:bg-card active:bg-card hover:cursor-pointer h-fit rounded-lg p-4 transition-all border-l-1 border-border rounded-l-none">
+            <div className="bg-transparent hover:bg-card active:bg-card h-fit rounded-lg p-4 transition-all border-l-1 border-border rounded-l-none" id={comment.id}>
                 <div className="flex gap-2 mb-1 items-center">
                     <div className="flex gap-2 items-center">
                         {/* @ts-ignore */}
@@ -51,20 +49,28 @@ export function PostComment({ comment }: { comment: PostCommentType }) {
                             <PencilSquareIcon className="w-5 h-5 text-gray-300" aria-label="This comment has been edited." />
                         </div>
                     }
+                    { comment.edited && comment.updatedAt && 
+                        <p>{dayjs(comment.updatedAt).fromNow()}</p>
+                    }                    
                 </div>
                 <p>{comment.content}</p>
                 <div className="flex flex-row mt-3 gap-2">
-                    <button className="navlink small !text-gray-300 hover:!text-white transition-all"><ArrowUturnLeftIcon className="w-4 h-4" />Reply</button>
-                    { session.user?.id === comment.userId && 
-                        <button className="navlink small !text-gray-300 hover:!text-white transition-all"><PencilSquareIcon className="w-4 h-4" />Edit</button>
+
+                    {session.user?.id &&
+                        <CreateReply commentID={comment.id} userID={session.user?.id} postID={comment.postId} />
                     }
+
+                    { session.user?.id === comment.userId &&
+                        <EditComment commentID={comment.id} />
+                    }
+
                     <Menu defaultPlacement="bottom">
                         <Menu.Trigger><button className="navlink small !text-gray-300 hover:!text-white transition-all !px-1"><EllipsisVerticalIcon className="w-4 h-4" /></button></Menu.Trigger>
                         <Menu.Content>
                         {/* @ts-ignore */}
                         <Menu.Link text={comment.user.username} icon={<ProfileImage user={comment.user} imgSize={"5"} />} link={`/user/${comment.user.username}`}></Menu.Link>
                             <hr className='mt-1 !mb-1'/>
-                            <Menu.Share icon={<ShareIcon />} text={comment.content} title={"Command"} url={`${process.env.NEXT_PUBLIC_CURRENT_URL}comments/${comment.id}`} />
+                            <Menu.Share icon={<ShareIcon />} text={comment.content} title={"Command"} url={`${process.env.NEXT_PUBLIC_CURRENT_URL}posts/${comment.postId}#${comment.id}`} />
                             { session.user?.id === comment.userId 
                             ?
                                 <Menu.Button icon={<ArchiveBoxXMarkIcon />} text={"Delete"} onClick={() => setDeleteDialogOpen(true)} destructive={true} />
@@ -74,6 +80,7 @@ export function PostComment({ comment }: { comment: PostCommentType }) {
                         </Menu.Content>
                     </Menu>
                 </div>
+                <div id={`reply-submit-box-${comment.id}`} />
             </div>        
         </>
     )

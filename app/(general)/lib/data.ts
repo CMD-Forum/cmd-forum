@@ -493,13 +493,14 @@ export async function getTotalDownvotes({ postID }: { postID: string }) {
 
 // Comments
 
-export async function createComment({ postID, userID, content }: { postID: string, userID: string, content: string }) {
+export async function createComment({ postID, userID, content, replyTo }: { postID: string, userID: string, content: string, replyTo?: string }) {
     try {
         const newComment = await prisma.comment.create({
             data: {
                 userId: userID,
                 postId: postID,
                 content: content,
+                replyTo: replyTo || null,
             },
         });
 
@@ -528,19 +529,20 @@ export async function deleteComment({ commentID }: { commentID: string }) {
     }
 }
 
-export async function updateComment({ commentID, content }: { commentID: string, content: string }) {
+export async function editComment({ commentID, content }: { commentID: string, content: string }) {
     try {
-        const updatedComment = await prisma.comment.update({
+        const editedComment = await prisma.comment.update({
             where: {
                 id: commentID,
             },
             data: {
                 content: content,
+                updatedAt: new Date(),
                 edited: true,
             },
         });
 
-        return updatedComment
+        return editedComment
     } catch ( error ) {
         logError(error);
         return { error: error }
@@ -552,6 +554,7 @@ export async function getPostComments({ postID }: { postID: string }) {
         const postComments = await prisma.comment.findMany({
             where: {
                 postId: postID,
+                replyTo: null,
             },
             include: {
                 user: {
@@ -613,6 +616,57 @@ export async function getUserComments({ userID }: { userID: string }) {
         });
 
         return userComments
+    } catch ( error ) {
+        logError(error);
+        return { error: error }
+    }
+}
+
+export async function createReply({ commentID, userID, postID, content }: { commentID: string, userID: string, postID: string, content: string }) {
+    try {
+        const reply = await prisma.comment.create({
+            data: {
+                userId: userID,
+                postId: postID,
+                content: content,
+                replyTo: commentID,
+            },
+            include: {
+                user: {
+                    select: {
+                        id: true,
+                        username: true,
+                        image: true,
+                    }
+                }
+            }
+        });
+
+        return reply
+    } catch ( error ) {
+        logError(error);
+        return { error: error }
+    }
+}
+
+export async function getCommentReplies({ commentID }: { commentID: string }) {
+    try {
+        const replies = await prisma.comment.findMany({
+            where: {
+                replyTo: commentID,
+            },
+            include: {
+                user: {
+                    select: {
+                        id: true,
+                        username: true,
+                        image: true,
+                    }
+                }
+            }
+        });
+
+        return replies
     } catch ( error ) {
         logError(error);
         return { error: error }

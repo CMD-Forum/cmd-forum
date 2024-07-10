@@ -15,6 +15,9 @@
 
 ---
 
+>[!WARNING]
+> The API isn't secured so do not use this as an actual forum (for now, until API auth is added).
+
 ## Getting Started w/ Local Installation
 
 ### Prerequisites
