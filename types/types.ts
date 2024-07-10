@@ -2,6 +2,8 @@
  * This is a file for all the types.
  */
 
+import { Comment } from "@prisma/client";
+
 /**
  * PostAuthor
  * @memberof Post
@@ -424,4 +426,14 @@ export type og = {
      */
 
     html: string;
+}
+
+// Comments
+
+export interface PostCommentType extends Comment {
+    user: {
+        id: string;
+        username: string;
+        image: string;
+    }
 }

@@ -187,7 +187,9 @@ code {
 
 .navlink.small, .navlink-full.small, .navlink-destructive.small, .navlink-emphasis.small, .navlink-ghost.navlink.small {
   @apply py-1 #{!important};
-  @apply px-2 #{!important};
+  @apply px-2;
+  @apply text-xs #{!important};
+  @apply rounded-md #{!important};
 }
 
 .navlink-destructive {
@@ -445,7 +447,7 @@ input[type="checkbox"]:not(:disabled):checked {
 // MD
 
 .markdown-body, .wmde-markdown {
-  @apply bg-transparent #{!important};
+  @apply bg-background;
 }
 
 .markdown-body *, .wmde-markdown * {

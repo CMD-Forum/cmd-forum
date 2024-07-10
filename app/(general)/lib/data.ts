@@ -382,15 +382,15 @@ export async function checkIfVoted({ postID, userID }: { postID: string, userID:
     try {
         const upvote = await prisma.upvotes.findUnique({
             where: {
-                upvoteID: { userID, postID }
-            }
-        })
+                upvoteID: { userID, postID },
+            },
+        });
 
         const downvote = await prisma.downvotes.findUnique({
             where: {
-                downvoteID: { userID, postID }
-            }
-        })
+                downvoteID: { userID, postID },
+            },
+        });
         
         return { upvote: upvote ? true : false, downvote: downvote ? true : false }
     } catch ( error ) {
@@ -405,8 +405,8 @@ export async function upvote({ postID, userID }: { postID: string, userID: strin
             data: {
                 userID: userID,
                 postID: postID,
-            }
-        })
+            },
+        });
         
         return { upvote }
     } catch ( error ) {
@@ -420,9 +420,9 @@ export async function downvote({ postID, userID }: { postID: string, userID: str
         const downvote = await prisma.downvotes.create({
             data: {
                 userID: userID,
-                postID: postID
-            }
-        })
+                postID: postID,
+            },
+        });
         
         return { downvote }
     } catch ( error ) {
@@ -435,9 +435,9 @@ export async function removeUpvote({ postID, userID }: { postID: string, userID:
     try {
         await prisma.upvotes.delete({
             where: {
-                upvoteID: { userID, postID }
-            }
-        })
+                upvoteID: { userID, postID },
+            },
+        });
         
         return { message: "Removed Successfully" }
     } catch ( error ) {
@@ -450,9 +450,9 @@ export async function removeDownvote({ postID, userID }: { postID: string, userI
     try {
         await prisma.downvotes.delete({
             where: {
-                downvoteID: { userID, postID }
-            }
-        })
+                downvoteID: { userID, postID },
+            },
+        });
         
         return { message: "Removed Successfully" }
     } catch ( error ) {
@@ -465,9 +465,9 @@ export async function getTotalUpvotes({ postID }: { postID: string }) {
     try {
         const upvotes = await prisma.upvotes.count({
             where: {
-                postID: postID
-            }
-        })
+                postID: postID,
+            },
+        });
         
         return upvotes
     } catch ( error ) {
@@ -480,9 +480,9 @@ export async function getTotalDownvotes({ postID }: { postID: string }) {
     try {
         const downvotes = await prisma.downvotes.count({
             where: {
-                postID: postID
-            }
-        })
+                postID: postID,
+            },
+        });
         
         return downvotes
     } catch ( error ) {
@@ -491,17 +491,130 @@ export async function getTotalDownvotes({ postID }: { postID: string }) {
     }
 }
 
-// Testing Purposes
+// Comments
 
-export async function getJamsterJavaCommunityMemberOf() {
-    
-    const user = await prisma.user.findUnique({ where: { username: "JamsterJava" }, include: { memberships: true } })
+export async function createComment({ postID, userID, content }: { postID: string, userID: string, content: string }) {
+    try {
+        const newComment = await prisma.comment.create({
+            data: {
+                userId: userID,
+                postId: postID,
+                content: content,
+            },
+        });
 
-    if ( user ) {
-        console.log(user);
-        return user;
-    } else {
-        console.log("JamsterJava hasn't joined any communities.")
+        return newComment
+    } catch ( error ) {
+        logError(error);
+        return { error: error }
     }
+}
 
+export async function deleteComment({ commentID }: { commentID: string }) {
+    try {
+        const deletedComment = await prisma.comment.update({
+            where: {
+                id: commentID,
+            },
+            data: {
+                content: "[deleted]",
+            },
+        });
+
+        return deletedComment
+    } catch ( error ) {
+        logError(error);
+        return { error: error }
+    }
+}
+
+export async function updateComment({ commentID, content }: { commentID: string, content: string }) {
+    try {
+        const updatedComment = await prisma.comment.update({
+            where: {
+                id: commentID,
+            },
+            data: {
+                content: content,
+                edited: true,
+            },
+        });
+
+        return updatedComment
+    } catch ( error ) {
+        logError(error);
+        return { error: error }
+    }
+}
+
+export async function getPostComments({ postID }: { postID: string }) {
+    try {
+        const postComments = await prisma.comment.findMany({
+            where: {
+                postId: postID,
+            },
+            include: {
+                user: {
+                    select: {
+                        id: true,
+                        username: true,
+                        image: true,
+                    }
+                }
+            }
+        });
+
+        return postComments
+    } catch ( error ) {
+        logError(error);
+        return { error: error }
+    }
+}
+
+export async function getComment({ commentID }: { commentID: string }) {
+    try {
+        const comment = await prisma.comment.findMany({
+            where: {
+                id: commentID,
+            },
+            include: {
+                user: {
+                    select: {
+                        id: true,
+                        username: true,
+                        image: true,
+                    }
+                }
+            }
+        });
+
+        return comment
+    } catch ( error ) {
+        logError(error);
+        return { error: error }
+    }
+}
+
+export async function getUserComments({ userID }: { userID: string }) {
+    try {
+        const userComments = await prisma.comment.findMany({
+            where: {
+                userId: userID,
+            },
+            include: {
+                user: {
+                    select: {
+                        id: true,
+                        username: true,
+                        image: true,
+                    }
+                }
+            }
+        });
+
+        return userComments
+    } catch ( error ) {
+        logError(error);
+        return { error: error }
+    }
 }

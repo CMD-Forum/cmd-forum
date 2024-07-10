@@ -74,6 +74,7 @@ model Post {
   downvotes   Downvotes[]
   author      User      @relation(fields: [authorId], references: [id])    
   community   Community @relation(fields: [communityId], references: [id])
+  comments    Comment[]
 }
 
 model User {
@@ -97,9 +98,12 @@ model User {
   adminships         CommunityAdminship[]  /// Communities the user is an admin of.
   upvotes            Upvotes[]
   downvotes          Downvotes[]
+  commentUpvotes     CommentUpvotes[]
+  commentDownvotes   CommentDownvotes[]
   role               UserRole    @default(USER) /// If the user is a normal user or a site administrator (not to be confused with a community administrator).
   sessions           Session[]
   settings           UserSettings[]
+  comments           Comment[]
 }
 
 model Session {
@@ -151,6 +155,24 @@ model Downvotes {
   @@id(name: "downvoteID", [postID, userID])
 }
 
+model CommentUpvotes {
+  userID    String
+  commentID String
+  User      User    @relation(fields: [userID], references: [id])
+  Comment   Comment @relation(fields: [commentID], references: [id])
+
+  @@id([commentID, userID])
+}
+
+model CommentDownvotes {
+  userID    String
+  commentID String
+  User      User    @relation(fields: [userID], references: [id])
+  Comment   Comment @relation(fields: [commentID], references: [id])
+
+  @@id([commentID, userID])
+}
+
 model CommunityMembership {
   userId             String
   user               User        @relation(fields: [userId], references: [id])
@@ -167,4 +189,19 @@ model CommunityAdminship { /// Yeah, bad name but can't think of anything better
   community          Community   @relation(fields: [communityId], references: [id])
 
   @@id([userId, communityId])
+}
+
+model Comment {
+  id        String   @id @default(cuid()) @unique
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz(3)
+  edited    Boolean  @default(false)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id])
+  replyTo   String?
+  content   String
+  upvotes   CommentUpvotes[]
+  downvotes CommentDownvotes[]
 }
