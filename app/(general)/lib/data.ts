@@ -672,3 +672,18 @@ export async function getCommentReplies({ commentID }: { commentID: string }) {
         return { error: error }
     }
 }
+
+export async function checkIfReplies({ commentID }: { commentID: string }) {
+    try {
+        const replies = await prisma.comment.count({
+            where: {
+                replyTo: commentID,
+            },
+        });
+
+        return replies
+    } catch ( error ) {
+        logError(error);
+        return { error: error }
+    }
+}

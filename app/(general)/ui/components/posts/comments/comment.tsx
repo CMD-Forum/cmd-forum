@@ -35,26 +35,26 @@ export function PostComment({ comment }: { comment: PostCommentType }) {
                 </Dialog.Content>
             </Dialog.Controlled>
             <div className="bg-transparent hover:bg-card active:bg-card h-fit rounded-lg p-4 transition-all border-l-1 border-border rounded-l-none" id={comment.id}>
-                <div className="flex gap-2 mb-1 items-center">
-                    <div className="flex gap-2 items-center">
+                <div className="flex gap-1 mb-1 items-center">
+                    <div className="flex gap-1 items-center">
                         {/* @ts-ignore */}
-                        <ProfileImage user={comment.user} imgSize="5" alt={`Profile Image of ${comment.user.username}`} />
-                        <Link href={`/user/${comment.user.username}`} className="subtitle hover:underline" aria-label={comment.user.username}>{comment.user.username}</Link>                    
+                        <ProfileImage user={comment.user} imgSize="4" alt={`Profile Image of ${comment.user.username}`} />
+                        <Link href={`/user/${comment.user.username}`} className="subtitle hover:underline !text-xs" aria-label={comment.user.username}>{comment.user.username}</Link>                    
                     </div>
                     <p className='subtitle !text-xs'>•</p> 
-                    <p>{dayjs(comment.createdAt).fromNow()}</p>
+                    <p className="!text-xs">{dayjs(comment.createdAt).fromNow()}</p>
                     { comment.edited &&
-                        <div className="flex gap-2 items-center">
+                        <div className="flex gap-1 items-center">
                             <p className='!text-xs'>•</p> 
-                            <PencilSquareIcon className="w-5 h-5 text-gray-300" aria-label="This comment has been edited." />
+                            <PencilSquareIcon className="w-4 h-4 text-gray-300" aria-label="This comment has been edited." />
                         </div>
                     }
                     { comment.edited && comment.updatedAt && 
-                        <p>{dayjs(comment.updatedAt).fromNow()}</p>
+                        <p className="!text-xs">{dayjs(comment.updatedAt).fromNow()}</p>
                     }                    
                 </div>
                 <p>{comment.content}</p>
-                <div className="flex flex-row mt-3 gap-2">
+                <div className="flex flex-row mt-3 gap-1">
 
                     {session.user?.id &&
                         <CreateReply commentID={comment.id} userID={session.user?.id} postID={comment.postId} />
