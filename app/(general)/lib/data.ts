@@ -576,7 +576,7 @@ export async function getPostComments({ postID }: { postID: string }) {
 
 export async function getComment({ commentID }: { commentID: string }) {
     try {
-        const comment = await prisma.comment.findMany({
+        const comment = await prisma.comment.findUnique({
             where: {
                 id: commentID,
             },

@@ -44,7 +44,7 @@ export default function CreateComment({ postID, userID }: { postID: string, user
 
         if ( values.content ) {
             try {
-                const createdComment = await createComment({ postID: postID, userID: userID, content: values.content });
+                await createComment({ postID: postID, userID: userID, content: values.content });
                 setSuccess(true);
                 setLoading(false);
             } catch ( error ) {

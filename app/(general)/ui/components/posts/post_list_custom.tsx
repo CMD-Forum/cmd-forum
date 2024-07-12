@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect,useState } from 'react';
 
+import { useSession } from '@/app/(general)/lib/sessioncontext';
 import { CardPost } from '@/app/(general)/ui/components/posts/post';
 import { Post } from '@/types/types';
 
@@ -57,7 +58,7 @@ export default function PostListByUser( { username }: { username: string } ) {
             })
             .then((data) => {
                 setPosts(data.posts);
-                setTotalPosts(data.post_count);
+                setTotalPosts(data.postCount);
                 setTotalPages(Math.ceil(totalPosts / 10))
                 setIsLoading(false);
             });
@@ -261,7 +262,7 @@ export function PostListByCommunity( { communityID }: { communityID: string } ) 
 
 // SavedBy UserID
 
-export function SavedPostListByUserID( { userID }: { userID: string } ) {
+export function SavedPostList() {
 
     const [page, setPage] = useState(0);
     const [totalPosts, setTotalPosts] = useState(1);
@@ -270,6 +271,8 @@ export function SavedPostListByUserID( { userID }: { userID: string } ) {
 
     const [posts, setPosts] = useState<Post>();
     const [isLoading, setIsLoading] = useState(false);
+
+    const session = useSession();
 
     function nextPage() {
         setPageForwardAllowed(false);
@@ -291,9 +294,10 @@ export function SavedPostListByUserID( { userID }: { userID: string } ) {
             fetch("/api/posts/getAllSaved/byUserID", {
                 method: 'POST',
                 headers:{
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${session.session?.id}`,
                 },
-                body: JSON.stringify({ "page": `${page}`, "userID": `${userID}` })
+                body: JSON.stringify({ "page": `${page}`, "userID": `${session.user?.id}` })
             })
             .then((res) => {
                 return res.json();
@@ -304,7 +308,7 @@ export function SavedPostListByUserID( { userID }: { userID: string } ) {
                 setTotalPages(Math.ceil(totalPosts / 10))
                 setIsLoading(false);
             });
-        }, [page, totalPosts, userID]);
+        }, [page, totalPosts, session.user?.id, session.session?.id]);
     } catch ( error ) {
         return (
             <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-lg px-5 py-5'>

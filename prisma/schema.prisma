@@ -93,6 +93,7 @@ model User {
   profile_image      String      @default("/images/favicon/favicon.svg") /// Deprecated, do not use.
   image              String?     /// The profile image of the user.
   posts              Post[]      /// All posts made by the user.
+  public             Boolean     @default(true) /// Whether the user profile and posts are public.
   savedPosts         String[]    @default([]) /// Posts saved by the user.
   memberships        CommunityMembership[] /// Communities the user is a member of.
   adminships         CommunityAdminship[]  /// Communities the user is an admin of.

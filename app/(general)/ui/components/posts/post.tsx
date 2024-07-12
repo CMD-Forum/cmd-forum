@@ -2,14 +2,13 @@
 
 import { ArchiveBoxXMarkIcon, ChatBubbleLeftEllipsisIcon } from '@heroicons/react/16/solid';
 import { EllipsisVerticalIcon, ShareIcon } from '@heroicons/react/24/solid';
-import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
 import Link from 'next/link';
 import { useState } from 'react';
 import Markdown from 'react-markdown';
 import rehypeSanitize from 'rehype-sanitize';
 import remarkGfm from 'remark-gfm'
 
+import dayjs from '@/app/(general)/lib/dayjs'
 import { useSession } from "@/app/(general)/lib/sessioncontext";
 import { Post } from '@/types/types';
 
@@ -19,11 +18,9 @@ import Menu, { MenuButton, MenuLink, MenuShare } from '../menu/menu';
 import { SavePostButton } from '../posts/save_post_button';
 import { BackButtonNormal } from './back_button';
 import CommentList from './comments/comment_list';
+import CreateComment from './comments/create_comment';
 import OpengraphDisplay from './og_display';
 import VoteButton, { SignedOutVoteButton } from './vote_button';
-import CreateComment from './comments/create_comment';
-
-dayjs.extend(relativeTime);
 
 /**
  * Horizontal card display of the given post.
@@ -128,7 +125,7 @@ export function CardPost( post: Post ) {
                             <div className='flex flex-row gap-2'>
                                 { session.user?.id 
                                 ? 
-                                    <VoteButton postID={post.id} userID={session.user?.id} />
+                                    <VoteButton postID={post.id} userID={session.user?.id} sessionID={session.session.id} />
                                 :
                                     <SignedOutVoteButton postID={post.id} />
                                 }
@@ -267,7 +264,7 @@ export function FullPost( post: Post ) {
                             </Dialog.Controlled>
                             <div className='flex flex-row w-full h-fit rounded-lg mt-4 justify-between'>
                                 <div className='flex flex-row gap-2'>
-                                    <VoteButton postID={post.id} userID={session.user.id} />
+                                    <VoteButton postID={post.id} userID={session.user.id} sessionID={session.session.id} />
                                     <CreateComment postID={post.id} userID={session.user.id} />
                                     <SavePostButton userID={session.user?.id} postID={post.id} />
                                     <div id='comment-refresh-container' />

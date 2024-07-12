@@ -1,26 +1,51 @@
 import { NextResponse } from 'next/server'
 
+import { lucia } from '@/app/(general)/lib/auth';
 import { prisma } from '@/app/(general)/lib/db';
+import { logError } from '@/app/(general)/lib/utils';
 
 export async function POST( req: Request ) {
 
     try {
 
+        const authorizationHeader = req.headers.get("Authorization");
+        const sessionId = lucia.readBearerToken(authorizationHeader ?? "");
+
+        if ( ! sessionId ) {
+            return new NextResponse(null, {
+                status: 401
+            });
+        }   
+        
+        const { user } = await lucia.validateSession(sessionId);
+
+        if ( ! user?.id ) {
+            return new NextResponse(null, {
+                status: 401
+            });
+        }
+
         const body = await req.json();
-        let { userID, page } = body;
+        let { page } = body;
+
+        if ( !page || page === null || page === "" ) {
+            return NextResponse.json({ message: "Page is required." }, { status: 400 })
+        }
 
         const savedPostArray = await prisma.user.findUnique({
             where: {
-                id: userID,
+                id: user.id,
             },
             select: {
                 savedPosts: true,
             },
         })
 
-        if ( savedPostArray ) {
+        logError(savedPostArray);
+
+        if ( savedPostArray && savedPostArray.savedPosts.length !== 0 ) {
             const savedPosts = await prisma.post.findMany({
-                skip: page * 20,
+                skip: page * 10,
                 take: 10,
                 where: {
                     id: {
@@ -55,11 +80,13 @@ export async function POST( req: Request ) {
                 if (savedPostArray.savedPosts[i]) postCount++;
             }
 
+            
+
             return NextResponse.json({ savedPosts, postCount }, { status: 200 } )   
         }
 
     } catch (error) {
-        console.error(error);
+        logError(error);
         return NextResponse.json({ message: "Error occurred while fetching saved posts, please check your request for errors."}, { status: 500 });
     }
 

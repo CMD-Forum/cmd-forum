@@ -107,10 +107,10 @@ export function ReplyList({ commentID }: { commentID: string }) {
     const [replies, setReplies] = useState<PostCommentType>();
     const [isReplies, setIsReplies] = useState<boolean>();
     const [showReplies, setShowReplies] = useState<boolean>(false);
-    const [isLoading, setIsLoading] = useState(false);
+    // const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        setIsLoading(true);
+        // setIsLoading(true);
         fetch("/api/comments/hasReplies", {
             method: 'POST',
             headers: {
@@ -121,16 +121,16 @@ export function ReplyList({ commentID }: { commentID: string }) {
         .then((res) => {
             if (res.status === 200) {
                 setIsReplies(true);
-                setIsLoading(false);
+                // setIsLoading(false);
             } else {
                 setIsReplies(false);
-                setIsLoading(false);
+                // setIsLoading(false);
             }
         })
     }, [commentID]);
 
     const fetchReplies = () => {
-        setIsLoading(true),
+        // setIsLoading(true),
         fetch("/api/comments/getReplies/", {
             method: 'POST',
             headers:{
@@ -144,11 +144,11 @@ export function ReplyList({ commentID }: { commentID: string }) {
         .then((data) => {
             setReplies(data);
             setShowReplies(true);
-            setIsLoading(false);
+            // setIsLoading(false);
         })
         .catch((error) => {
             logError(error);
-            setIsLoading(false);
+            // setIsLoading(false);
             return (
                 <p>Failed to fetch replies.</p>
             );

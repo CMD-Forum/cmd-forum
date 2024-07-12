@@ -53,8 +53,8 @@ export async function POST( req: Request ) {
 
         const post_count = await prisma.post.count({
             where: {
-                communityId: communityID
-            }
+                communityId: communityID,
+            },
         });
               
         return NextResponse.json({ posts, post_count }, { status: 200 })

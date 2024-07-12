@@ -27,7 +27,7 @@ export async function POST(req: Request) {
         });
 
         if ( UserDetails ) {
-            return NextResponse.json({ UserDetails }, { status: 201 });
+            return NextResponse.json(UserDetails, { status: 201 });
         } else if ( ! UserDetails ) {
             return NextResponse.json({ message: "User was not found." }, { status: 404 });
         }

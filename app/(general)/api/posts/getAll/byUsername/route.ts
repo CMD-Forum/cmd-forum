@@ -52,7 +52,13 @@ export async function POST( req: Request ) {
             }
         });
 
-        const postCount = await prisma.post.count();  
+        const postCount = await prisma.post.count({
+            where: {
+                author: {
+                    username: username,
+                },
+            },
+        });  
               
         return NextResponse.json({posts, postCount}, { status: 200 })
 
