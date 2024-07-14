@@ -219,3 +219,32 @@ model Comment {
   upvotes   CommentUpvotes[]
   downvotes CommentDownvotes[]
 }
+
+enum ModlogAction {
+  PERM_BAN_USER
+  TEMP_BAN_USER
+  PIN_POST
+  PIN_COMMENT
+  DELETE_POST
+  DELETE_COMMENT
+  ADD_ADMIN
+  DELETE_ADMIN
+  EDIT_COMMUNITY
+  UNSPECIFIED
+}
+
+enum ModlogSubjectType {
+  USER
+  POST
+  UNSPECIFIED
+}
+
+model ModerationLog {
+  id          String   @id @default(cuid()) @unique
+  createdAt   DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime @default(now()) @updatedAt @db.Timestamptz(3)
+  adminId     String   @default("")
+  action      ModlogAction @default(UNSPECIFIED)
+  subjectType ModlogSubjectType @default(UNSPECIFIED)
+  subjectId   String   @default("")
+}
