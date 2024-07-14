@@ -79,6 +79,37 @@ export async function getCommunityByDisplayName( display_name: string ) {
 
 }
 
+// getCommunitySidebarInfo
+
+export async function getCommunitySidebarInfo({ communityID }: { communityID: string }) {
+    try {
+        const dbCommunity = await prisma.community.findUnique({ 
+            where: { 
+              id: communityID
+            },
+            include: {
+              admins: {
+                select: {
+                  createdAt: true,
+                  updatedAt: true,
+                  user: {
+                    select: {
+                      username: true,
+                      description: true,
+                      image: true,
+                    },
+                  },
+                },
+              },
+            },
+        });
+        return dbCommunity
+    } catch (error) {
+        logError(error);
+        return null;
+    }
+}
+
 // getPost
 
 export async function getPost({ postID }: { postID: string }) {
@@ -264,6 +295,32 @@ export async function getCommunityAdminIDs( { communityId }: { communityId: stri
         logMessage("Community has no administrators.");
     }
 
+}
+
+// getCommunityAdmins
+
+export async function getCommunityAdmins({ communityID }: { communityID: string }) {
+    try {
+        const admins = await prisma.communityAdminship.findMany({ 
+            where: { 
+                communityId: communityID 
+            },
+            include: {
+                user: {
+                    select: {
+                        username: true,
+                        image: true,
+                        adminships: true,
+                    },
+                },
+            },
+        });
+
+        return admins
+    } catch (error) {
+        logError(error);
+        return null;
+    }
 }
 
 // getAllCommunitys

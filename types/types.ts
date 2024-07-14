@@ -2,7 +2,7 @@
  * This is a file for all the types.
  */
 
-import { Comment } from "@prisma/client";
+import { Comment, Prisma } from "@prisma/client";
 
 /**
  * PostAuthor

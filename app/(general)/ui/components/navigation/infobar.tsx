@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import Markdown from "react-markdown";
 import rehypeSanitize from "rehype-sanitize";
 import remarkGfm from "remark-gfm";
@@ -15,22 +16,28 @@ export default function Infobar() {
     \n ## Contributing
     \n If you want to contribute or fork Command, visit the GitHub repository [here](https://github.com/CMD-Forum/cmd-forum).`
 
-    return (
-        <>
-            <nav className="hidden 2xl:flex sticky" role="navigation">         
-                <div 
-                    className={`bg-background p-4 sticky h-screen overflow-y-auto hide-scrollbar overflow-x-hidden w-[300px]`}
-                    role="navigation"
-                    aria-label="Infobar"
-                >
-                    <div className="overflow-y-auto overflow-x-hidden">
-                        <div className="markdown-body">
-                            <Markdown rehypePlugins={[rehypeSanitize]} remarkPlugins={[remarkGfm]}>{markdown}</Markdown>    
-                        </div>
-                    </div>
-                </div>                     
-            </nav>
-        </>
-    );
+    const pathname = usePathname();
 
+    if (pathname.startsWith("/c/") || pathname.startsWith("/posts/")) {
+        // Communitys have their own infobar, so this one isn't shown.
+        return null;
+    } else {
+        return (
+            <>
+                <nav className="hidden 2xl:flex sticky max-h-screen top-16" role="navigation">         
+                    <div 
+                        className={`bg-background p-4 hide-scrollbar overflow-x-hidden w-[300px] !max-h-fit`}
+                        role="navigation"
+                        aria-label="Infobar"
+                    >
+                        <div className="overflow-y-auto overflow-x-hidden">
+                            <div className="markdown-body">
+                                <Markdown rehypePlugins={[rehypeSanitize]} remarkPlugins={[remarkGfm]}>{markdown}</Markdown>    
+                            </div>
+                        </div>
+                    </div>                     
+                </nav>
+            </>
+        );
+    }
 }

@@ -38,16 +38,11 @@ export default async function ModerationPage({ params }: { params: { community: 
                     <div className='flex flex-col lg:pb-12 px-4 mb-6 gap-4'>
                         <p className="subtitle">Community ID: {community.id}</p>
 
-                        <LargeDropdown 
-                            title={"Administrators"} 
-                            description={"List of the community administrators."}
-                        >
-                            <CommunityAdministrators communityId={community.id} />      
-                        </LargeDropdown>
+                        <CommunityAdministrators communityId={community.id} />
 
-                        <LargeDropdown title={"Administration Logs"} description={"Records of all actions taken by the administrators."}>
+                        {/*<LargeDropdown title={"Administration Logs"} description={"Records of all actions taken by the administrators."}>
                             <ModlogList communityId={community.id} />      
-                        </LargeDropdown>
+                        </LargeDropdown>*/}
                     </div>
                 </div>
             </main>

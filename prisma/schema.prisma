@@ -49,6 +49,7 @@ model Community {
   description    String                @default("This community doesn't have a description.") /// Description of the community.
   rules          String[]              @default([]) /// Rules of the community.
   image          String                @default("/images/favicon/favicon.svg") /// Image that is shown for the community, defaults to the favicon.
+  bg_image       String                @default("/images/default_community_bg.png")
   public         Boolean               @default(true) /// If false, this community cannot be accessed and will not be shown. Currently unimplemented.
   admin_ids      String[]              @default([]) /// User CUIDS of the community administrator(s).
   admins         CommunityAdminship[]
@@ -143,6 +144,8 @@ model Upvotes {
   postID   String
   User     User   @relation(fields: [userID], references: [id])
   Post     Post   @relation(fields: [postID], references: [id])
+  createdAt          DateTime    @default(now()) @db.Timestamptz(3)
+  updatedAt          DateTime    @default(now()) @db.Timestamptz(3)
 
   @@id(name: "upvoteID", [postID, userID])
 }
@@ -152,6 +155,8 @@ model Downvotes {
   postID   String
   User     User   @relation(fields: [userID], references: [id])
   Post     Post   @relation(fields: [postID], references: [id])
+  createdAt          DateTime    @default(now()) @db.Timestamptz(3)
+  updatedAt          DateTime    @default(now()) @db.Timestamptz(3)
 
   @@id(name: "downvoteID", [postID, userID])
 }
@@ -161,6 +166,8 @@ model CommentUpvotes {
   commentID String
   User      User    @relation(fields: [userID], references: [id])
   Comment   Comment @relation(fields: [commentID], references: [id])
+  createdAt          DateTime    @default(now()) @db.Timestamptz(3)
+  updatedAt          DateTime    @default(now()) @db.Timestamptz(3)
 
   @@id([commentID, userID])
 }
@@ -170,6 +177,8 @@ model CommentDownvotes {
   commentID String
   User      User    @relation(fields: [userID], references: [id])
   Comment   Comment @relation(fields: [commentID], references: [id])
+  createdAt          DateTime    @default(now()) @db.Timestamptz(3)
+  updatedAt          DateTime    @default(now()) @db.Timestamptz(3)
 
   @@id([commentID, userID])
 }
@@ -179,6 +188,8 @@ model CommunityMembership {
   user               User        @relation(fields: [userId], references: [id])
   communityId        String
   community          Community   @relation(fields: [communityId], references: [id])
+  createdAt          DateTime    @default(now()) @db.Timestamptz(3)
+  updatedAt          DateTime    @default(now()) @db.Timestamptz(3)
 
   @@id([userId, communityId])
 }
@@ -188,6 +199,8 @@ model CommunityAdminship { /// Yeah, bad name but can't think of anything better
   user               User        @relation(fields: [userId], references: [id])
   communityId        String
   community          Community   @relation(fields: [communityId], references: [id])
+  createdAt          DateTime    @default(now()) @db.Timestamptz(3)
+  updatedAt          DateTime    @default(now()) @db.Timestamptz(3)
 
   @@id([userId, communityId])
 }
