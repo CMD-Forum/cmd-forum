@@ -142,14 +142,12 @@ export function CardPost( post: Post ) {
                                     <MenuLink text={post.community.name} icon={<img src={post.community.image} alt={post.community.name} />} link={`/c/${post.community.name}`}></MenuLink>
                                     <hr className='mt-1 !mb-1'/>
                                     <MenuShare icon={<ShareIcon />} text={post.title} title={"Command"} url={`${process.env.NEXT_PUBLIC_CURRENT_URL}posts/${post.id}`} />
-                                        { session.user?.id === post.authorId 
-                                        ?
+                                        { session.user?.id === post.authorId
+                                        &&
                                         <>
                                             <hr className='mt-1 !mb-1'/>
                                             <MenuButton icon={<ArchiveBoxXMarkIcon />} text={"Delete"} onClick={() => setDeleteDialogOpen(true)} destructive={true} />
                                         </>
-                                        :
-                                        null
                                         }
                                 </Menu.Content>
                             </Menu>
