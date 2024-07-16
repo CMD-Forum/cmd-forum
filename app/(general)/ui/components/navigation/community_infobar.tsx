@@ -21,7 +21,7 @@ import { JoinCommunityButton } from "../button";
 import MemberCount from "../community/memberCount";
 import PostCount from "../community/postCount";
 import Dialog from "../dialog/dialog";
-import LargeDropdown from "../large_dropdown";
+import { ModlogList } from "../moderation/modlog_list";
 
 export default function CommunitySideInfobar({ community }: { community: any }) {
 
@@ -33,7 +33,7 @@ export default function CommunitySideInfobar({ community }: { community: any }) 
             <>
                 <nav className="hidden 2xl:flex sticky max-h-screen top-16" role="navigation">         
                     <div 
-                        className={`bg-background p-4 hide-scrollbar overflow-x-hidden w-[300px] !max-h-fit`}
+                        className={`bg-background p-4 hide-scrollbar overflow-x-hidden w-[300px] h-screen`}
                         role="navigation"
                         aria-label="Infobar"
                     >
@@ -46,31 +46,6 @@ export default function CommunitySideInfobar({ community }: { community: any }) 
                                 <Markdown rehypePlugins={[rehypeSanitize]} remarkPlugins={[remarkGfm]}>{community.description || "This community hasn't set any content for the sidebar."}</Markdown>
                             </div>
 
-                            <div className="flex gap-1 mt-2 mb-2">
-                                {session &&
-                                    <JoinCommunityButton communityID={community.id} userID={session.user?.id} />
-                                }
-                                <Dialog>
-                                    <Dialog.Trigger><button className="navlink !px-2"><ShieldCheckIcon className="w-5 h-5" /></button></Dialog.Trigger>
-                                    <Dialog.Content>
-                                        <Dialog.Title>Moderation Logs</Dialog.Title>
-                                        <Dialog.Subtitle>c/{community.name}</Dialog.Subtitle>
-                                        <Dialog.DialogBody>
-                                            <LargeDropdown title={"Administration Logs"} description={"Records of all actions taken by the administrators."}>
-                                                {/*<ModlogList communityId={community.id} />*/}
-                                                <p>Sorry, this feature isn&apos;t implemented yet.</p>
-                                            </LargeDropdown>
-                                        </Dialog.DialogBody>
-                                        <Dialog.ButtonContainer>
-                                            <Dialog.CloseButton><button className="navlink-full">Close</button></Dialog.CloseButton>
-                                        </Dialog.ButtonContainer>
-                                    </Dialog.Content>
-                                </Dialog>
-                            </div>
-
-                            <div className="markdown-body mb-2">
-                                <h2 className="header-5 mt-1 mb-2">Info</h2>    
-                            </div>
                             <div className='flex flex-row gap-3 items-center mt-2 mb-2'>
                                 <div className='flex flex-row gap-3'>
                                     <div className='flex flex-row gap-1 items-center'>
@@ -94,39 +69,68 @@ export default function CommunitySideInfobar({ community }: { community: any }) 
                                     </div>
                                 </div>
                             </div>
-                            <div className="markdown-body mb-2">
-                                <h2 className="header-5 mt-1 mb-2">Rules</h2>    
-                            </div>
-                            {community.rules.length > 0 ?
-                                community.rules.map((rule: string, index: number) =>
-                                    <div key={index + 1} className="flex flex-col gap-1">
-                                        <p className="subtitle">{index + 1}. {rule}</p>
-                                    </div>                                    
-                                )
-                            :
-                                <p>This community has no rules. Remember, the site rules still apply.</p>
-                            }
 
-                            <div className="mb-2" />
-
-                            <div className="markdown-body mb-2">
-                                <h2 className="header-5 mt-1 mb-2">Administrators</h2>    
+                            <div className="flex gap-1 mt-4 mb-4">
+                                {session &&
+                                    <JoinCommunityButton communityID={community.id} userID={session.user?.id} />
+                                }
+                                <Dialog>
+                                    <Dialog.Trigger><button className="navlink !px-2"><ShieldCheckIcon className="w-5 h-5" /></button></Dialog.Trigger>
+                                    <Dialog.Content>
+                                        <Dialog.Title>Moderation Logs</Dialog.Title>
+                                        <Dialog.Subtitle>c/{community.name}</Dialog.Subtitle>
+                                        <Dialog.DialogBody>
+                                            <ModlogList communityId={community.id} />
+                                        </Dialog.DialogBody>
+                                        <Dialog.ButtonContainer>
+                                            <Dialog.CloseButton><button className="navlink-full">Close</button></Dialog.CloseButton>
+                                        </Dialog.ButtonContainer>
+                                    </Dialog.Content>
+                                </Dialog>
                             </div>
-                            {community.admins.length > 0 ?
-                                community.admins.map((admin: any) => {
-                                    return (
-                                        <div key={admin.userId} className="hover:bg-card active:bg-card border-0 border-border p-3 rounded flex flex-col gap-1 w-full">
-                                            <div className="flex gap-2">
-                                                <ProfileImage user={admin.user} imgSize={"5"} />
-                                                <Link href={`/user/${admin.user.username}`} className="transition-all subtitle hover:!text-white">{admin.user.username}</Link>                                        
+
+                            <div className="p-3 bg-card border-1 border-border rounded">
+                                <h2 className="header-5">Info</h2>
+                                {community.sidebar_md || <p>This community hasn&apos;t set an info text.</p> }
+                            </div>
+
+                            <div className="mb-2 mt-2" />
+
+                            <div className="p-3 bg-card border-1 border-border rounded">
+                                <h2 className="header-5">Rules</h2>
+                                {community.rules.length > 0 ?
+                                    community.rules.map((rule: string, index: number) =>
+                                        <div key={index + 1} className="flex flex-col gap-1">
+                                            <p className="subtitle">{index + 1}. {rule}</p>
+                                        </div>                                    
+                                    )
+                                :
+                                    <p>This community has no rules. Remember, the site rules still apply.</p>
+                                }                                
+                            </div>
+
+                            <div className="mb-2 mt-2" />
+
+                            <div className="p-3 bg-card border-1 border-border rounded">
+                                <h2 className="header-5 mb-2">Administrators</h2>
+                                {community.admins.length > 0 ?
+                                    community.admins.map((admin: any) => {
+                                        return (
+                                            <div className="flex flex-col gap-4" key={admin.userId || admin}>
+                                                <div className="hover:bg-card active:bg-card border-0 border-border rounded flex flex-col gap-1 w-full transition-all">
+                                                    <div className="flex gap-2">
+                                                        <ProfileImage user={admin.user} imgSize={"5"} />
+                                                        <Link href={`/user/${admin.user.username}`} className="transition-all subtitle hover:!text-white">{admin.user.username}</Link>                                        
+                                                    </div>
+                                                    <p>Since the {dayjs(admin.createdAt).format("Do [of] MMMM[,] YYYY")}.</p>
+                                                </div>
                                             </div>
-                                            <p>Since the {dayjs(admin.createdAt).format("Do [of] MMMM[,] YYYY")}.</p>
-                                        </div>
-                                    );
-                                })
-                            :
-                                <p>This community has no administrators.</p>
-                            }
+                                        );
+                                    })
+                                :
+                                    <p>This community has no administrators.</p>
+                                }
+                            </div>                                
                         </div>
                     </div>                     
                 </nav>

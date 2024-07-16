@@ -26,7 +26,7 @@ export default function Infobar() {
             <>
                 <nav className="hidden 2xl:flex sticky max-h-screen top-16" role="navigation">         
                     <div 
-                        className={`bg-background p-4 hide-scrollbar overflow-x-hidden w-[300px] !max-h-fit`}
+                        className={`bg-background p-4 hide-scrollbar overflow-x-hidden w-[300px] h-screen`}
                         role="navigation"
                         aria-label="Infobar"
                     >

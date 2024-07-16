@@ -11,7 +11,7 @@ import { CardPostSkeleton } from '../../skeletons/Post';
 
 export default function PostList() {
 
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState<number>(0);
     const [totalPosts, setTotalPosts] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [pageForwardAllowed, setPageForwardAllowed] = useState<boolean>(true);
@@ -31,7 +31,7 @@ export default function PostList() {
             setPage(page - 1);
             setPageForwardAllowed(true);
         }
-    }    
+    }
 
     try {        
         useEffect(() => {
