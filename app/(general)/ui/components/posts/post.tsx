@@ -19,6 +19,7 @@ import { SavePostButton } from '../posts/save_post_button';
 import { BackButtonNormal } from './back_button';
 import CommentList from './comments/comment_list';
 import CreateComment from './comments/create_comment';
+import { DeleteAsAdminButton, DeleteAsAuthorButton } from './delete_button';
 import OpengraphDisplay from './og_display';
 import VoteButton, { SignedOutVoteButton } from './vote_button';
 
@@ -63,6 +64,9 @@ import VoteButton, { SignedOutVoteButton } from './vote_button';
 export function CardPost( post: Post ) {
     const session = useSession();
     const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
+    const [adminDeleteDialogOpen, setAdminDeleteDialogOpen] = useState<boolean>(false);
+
+    const isAdmin = post.community.admins.some(admin => admin.userId === session.user?.id);
 
     return (
         <div className="flex flex-col sm:flex-row w-full items-center gap-4 relative group transition-all bg-transparent hover:bg-card active:bg-card hover:cursor-pointer border-0 border-border group-hover/title:!border-white h-fit rounded-lg p-6">
@@ -113,11 +117,26 @@ export function CardPost( post: Post ) {
                     <>
                         <Dialog.Controlled isOpen={deleteDialogOpen} setIsOpen={setDeleteDialogOpen}>
                             <Dialog.Content>
-                                <Dialog.Title>Delete this post? (Unimplemented)</Dialog.Title>
+                                <Dialog.Title>Delete this post?</Dialog.Title>
                                 <Dialog.Subtitle>This action cannot be reversed, choose wisely.</Dialog.Subtitle>
                                 <Dialog.ButtonContainer>
                                     <Dialog.CloseButton><button className='navlink'>Close</button></Dialog.CloseButton>
-                                    <button className='navlink-destructive' disabled>Delete</button>
+                                    { session.user?.id === post.authorId &&
+                                        <DeleteAsAuthorButton postID={post.id} btnClassName={"navlink-destructive"} />
+                                    }
+                                </Dialog.ButtonContainer>
+                            </Dialog.Content>
+                        </Dialog.Controlled>
+
+                        <Dialog.Controlled isOpen={adminDeleteDialogOpen} setIsOpen={setAdminDeleteDialogOpen}>
+                            <Dialog.Content>
+                                <Dialog.Title>Delete this post?</Dialog.Title>
+                                <Dialog.Subtitle>This will be recorded in the moderation logs.</Dialog.Subtitle>
+                                <Dialog.ButtonContainer>
+                                    <Dialog.CloseButton><button className='navlink'>Close</button></Dialog.CloseButton>
+                                    { isAdmin &&
+                                        <DeleteAsAdminButton postID={post.id}  btnClassName={"navlink-destructive"} />
+                                    }
                                 </Dialog.ButtonContainer>
                             </Dialog.Content>
                         </Dialog.Controlled>
@@ -142,13 +161,19 @@ export function CardPost( post: Post ) {
                                     <MenuLink text={post.community.name} icon={<img src={post.community.image} alt={post.community.name} />} link={`/c/${post.community.name}`}></MenuLink>
                                     <hr className='mt-1 !mb-1'/>
                                     <MenuShare icon={<ShareIcon />} text={post.title} title={"Command"} url={`${process.env.NEXT_PUBLIC_CURRENT_URL}posts/${post.id}`} />
-                                        { session.user?.id === post.authorId
-                                        &&
+                                    {session.user?.id === post.author.id || isAdmin && session.user?.id !== post.author.id ? <hr className='mt-1 !mb-1'/> : null}
+                                    { session.user?.id === post.authorId
+                                    &&
                                         <>
-                                            <hr className='mt-1 !mb-1'/>
                                             <MenuButton icon={<ArchiveBoxXMarkIcon />} text={"Delete"} onClick={() => setDeleteDialogOpen(true)} destructive={true} />
                                         </>
-                                        }
+                                    }
+                                    { isAdmin && session.user?.id !== post.author.id
+                                    &&
+                                        <>
+                                            <MenuButton icon={<ArchiveBoxXMarkIcon />} text={"Delete as Admin"} onClick={() => setAdminDeleteDialogOpen(true)} destructive={true} />
+                                        </>
+                                    }
                                 </Menu.Content>
                             </Menu>
                         </div>                    

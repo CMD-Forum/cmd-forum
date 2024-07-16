@@ -35,9 +35,14 @@ export async function POST( req: Request ) {
                         image: true,
                         public: true,
                         description: true,
-                    }
-                }
-            }
+                        admins: {
+                            select: {
+                                userId: true,
+                            },
+                        },
+                    },
+                },
+            },
         });
 
         const postCount = await prisma.post.count();

@@ -14,30 +14,22 @@ generator client {
   binaryTargets   = ["native", "rhel-openssl-1.0.x"]
 }
 
-generator docs { /// Thanks, prisma-docs-generator: https://github.com/pantharshit00/prisma-docs-generator
-  provider = "node node_modules/prisma-docs-generator"
-}
-
 datasource db {
   provider = "postgresql" /// Change if using a different database, obviously.
   url      = env("DATABASE_URL") /// Change this in your ``.env``.
 }
 
 enum UserRole {
-
   ADMIN
   MODERATOR
   USER
-
 }
 
 enum TwoFactorMethod {
-
   EMAIL_LINK
   EMAIL_CODE
   PHONE
   NONE
-
 }
 
 model Community {
@@ -59,23 +51,25 @@ model Community {
 }
 
 model Post {
-  id          String    @id @default(cuid()) @unique /// The CUID of the post.
-  createdAt   DateTime  @default(now()) @db.Timestamptz(3) /// When the post was created.
-  updatedAt   DateTime  @default(now()) @updatedAt @db.Timestamptz(3) /// When the post database entry was last updated.
-  title       String    @db.VarChar(255) /// The title of the post.
-  content     String    /// The main content of the post.
-  tagline     String?   /// The tagline of the post. Deprecated, do not use.
-  imageurl    String?   /// If the post is an image post, this is the image URL.
-  imagealt    String?   /// If the post is an image post, this is the image accessibility tag.
-  href        String?   /// If the post is a link post, this is the link url.
-  public      Boolean   @default(true) /// If false, this post cannot be accessed and will not be shown. Currently unimplemented.
-  authorId    String    /// The CUID of the posts author.
-  communityId String    @default("null") /// The CUID of the posts community.
-  upvotes     Upvotes[]
-  downvotes   Downvotes[]
-  author      User      @relation(fields: [authorId], references: [id])    
-  community   Community @relation(fields: [communityId], references: [id])
-  comments    Comment[]
+  id              String    @id @default(cuid()) @unique /// The CUID of the post.
+  createdAt       DateTime  @default(now()) @db.Timestamptz(3) /// When the post was created.
+  updatedAt       DateTime  @default(now()) @updatedAt @db.Timestamptz(3) /// When the post database entry was last updated.
+  title           String    @db.VarChar(255) /// The title of the post.
+  content         String    /// The main content of the post.
+  tagline         String?   /// The tagline of the post. Deprecated, do not use.
+  imageurl        String?   /// If the post is an image post, this is the image URL.
+  imagealt        String?   /// If the post is an image post, this is the image accessibility tag.
+  href            String?   /// If the post is a link post, this is the link url.
+  public          Boolean   @default(true) /// If false, this post cannot be accessed and will not be shown. Currently unimplemented.
+  authorId        String    /// The CUID of the posts author.
+  communityId     String    @default("null") /// The CUID of the posts community.
+  upvotes         Upvotes[]
+  downvotes       Downvotes[]
+  author          User      @relation(fields: [authorId], references: [id])    
+  community       Community @relation(fields: [communityId], references: [id])
+  comments        Comment[]
+  deletedByAuthor Boolean @default(false)
+  deletedByAdmin  Boolean @default(false)
 }
 
 model User {
@@ -236,6 +230,7 @@ enum ModlogAction {
 enum ModlogSubjectType {
   USER
   POST
+  COMMENT
   UNSPECIFIED
 }
 
@@ -243,8 +238,9 @@ model ModerationLog {
   id          String   @id @default(cuid()) @unique
   createdAt   DateTime @default(now()) @db.Timestamptz(3)
   updatedAt   DateTime @default(now()) @updatedAt @db.Timestamptz(3)
-  adminId     String   @default("")
-  action      ModlogAction @default(UNSPECIFIED)
-  subjectType ModlogSubjectType @default(UNSPECIFIED)
-  subjectId   String   @default("")
+  adminId     String   @default("") /// The UserId of the administrator who preformed this action.
+  communityId String   @default("") /// The communityId of the community where this action was preformed.
+  action      ModlogAction @default(UNSPECIFIED) /// The action that was taken. See `ModlogAction` enum.
+  subjectType ModlogSubjectType @default(UNSPECIFIED) /// Whether the action was taken on a user, post or comment (referred to as subject).
+  subjectId   String   @default("") /// The ID of the subject.
 }

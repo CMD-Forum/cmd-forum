@@ -46,8 +46,13 @@ export async function POST( req: Request ) {
                         display_name: true,
                         image: true,
                         public: true,
-                        description: true
-                    }
+                        description: true,
+                        admins: {
+                            select: {
+                                userId: true,
+                            },
+                        },
+                    },
                 }
             }
         });

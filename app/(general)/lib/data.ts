@@ -178,6 +178,129 @@ export async function createPost( props: createPostProps ) {
 
 }
 
+// deletePostAsAuthor
+
+export async function deletePostAsAuthor({ postID, userID }: { postID: string, userID: string }) {
+    
+    const post = await prisma.post.findUnique({
+        where: {
+            id: postID,
+        },
+    });
+
+    if ( post && post?.authorId === userID ) {
+        try {
+
+            await prisma.upvotes.deleteMany({
+                where: {
+                    postID: postID,
+                },
+            });
+
+            await prisma.downvotes.deleteMany({
+                where: {
+                    postID: postID,
+                },
+            });
+
+            await prisma.comment.deleteMany({
+                where: {
+                    postId: postID,
+                },
+            });
+
+            const deletedPost = await prisma.post.delete({
+                where: {
+                    id: postID,
+                },
+            });
+
+            return { success: "Post successfully deleted.", data: deletedPost, status: 200 }
+        } catch ( error ) {
+            logError(error);
+            return { error: process.env.NODE_ENV === "development" ? `${error}` : "Something went wrong.", status: 500 };
+        }
+    } else if ( !post ) {
+        return { error: "Post doesn't exist.", status: 404 }
+    } else if ( post.authorId !== userID ) {
+        return { error: "You are not authorized to delete this post.", status: 403 }
+    }
+
+}
+
+// deletePostAsAdmin
+
+export async function deletePostAsAdmin({ postID, userID }: { postID: string, userID: string }) {
+    
+    const post = await prisma.post.findUnique({
+        where: {
+            id: postID,
+        },
+        include: {
+            community: {
+                include: {
+                    admins: {
+                        select: {
+                            userId: true,
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    const authorized = post?.community.admins.some(admin => admin.userId === userID);
+
+    if ( post && authorized ) {
+        try {
+
+            await prisma.upvotes.deleteMany({
+                where: {
+                    postID: postID,
+                },
+            });
+
+            await prisma.downvotes.deleteMany({
+                where: {
+                    postID: postID,
+                },
+            });
+
+            await prisma.comment.deleteMany({
+                where: {
+                    postId: postID,
+                },
+            });
+
+            await prisma.moderationLog.create({
+                data: {
+                    adminId: userID,
+                    communityId: post.community.id,
+                    action: "DELETE_POST",
+                    subjectType: "POST",
+                    subjectId: post.id,
+                },
+            });
+
+            const deletedPost = await prisma.post.delete({
+                where: {
+                    id: postID,
+                },
+            });
+
+            return { success: "Post successfully deleted.", data: deletedPost, status: 200 }
+        } catch ( error ) {
+            logError(error);
+            return { error: process.env.NODE_ENV === "development" ? `${error}` : "Something went wrong.", status: 500 };
+        }
+    } else if ( !post ) {
+        return { error: "Post doesn't exist.", status: 404 }
+    } else if ( !authorized ) {
+        return { error: "You are not authorized to delete this post.", status: 403 }
+    }
+
+}
+
 // getAllPosts
 
 export async function getAllPostsFromUsername( username: string ) {

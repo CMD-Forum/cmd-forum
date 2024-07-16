@@ -83,6 +83,10 @@ export interface PostCommunity {
      */
     public: boolean;
 
+    admins: {
+        userId: string
+    }[]
+
 }
   
 // ---------------------------------------------------------------------------------------------------------------------------
@@ -435,5 +439,14 @@ export interface PostCommentType extends Comment {
         id: string;
         username: string;
         image: string;
+    }
+}
+
+// Error Handling
+
+export interface DataFunctionError {
+    error: {
+        error: string;
+        status: number;
     }
 }
