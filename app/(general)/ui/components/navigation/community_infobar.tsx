@@ -3,25 +3,29 @@
 import { 
     CalendarDaysIcon,
     ChatBubbleBottomCenterTextIcon,
+    CheckBadgeIcon,
+    ClipboardDocumentCheckIcon,
+    InformationCircleIcon,
     PencilSquareIcon,
     ShieldCheckIcon,
     UserIcon
 } from "@heroicons/react/16/solid";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Markdown from "react-markdown";
-import rehypeSanitize from "rehype-sanitize";
-import remarkGfm from "remark-gfm";
 
 import dayjs from "@/app/(general)/lib/dayjs";
 import { useSession } from "@/app/(general)/lib/sessioncontext";
 
+import Accordion from "../accordion/accordion";
 import ProfileImage from "../account/ProfileImage";
 import { JoinCommunityButton } from "../button";
 import MemberCount from "../community/memberCount";
 import PostCount from "../community/postCount";
 import Dialog from "../dialog/dialog";
 import { ModlogList } from "../moderation/modlog_list";
+import Markdown from "react-markdown";
+import rehypeSanitize from "rehype-sanitize";
+import remarkGfm from "remark-gfm";
 
 export default function CommunitySideInfobar({ community }: { community: any }) {
 
@@ -43,7 +47,7 @@ export default function CommunitySideInfobar({ community }: { community: any }) 
                                 <h2 className="header-2 overflow-hidden whitespace-nowrap text-ellipsis">{community.name}</h2>    
                             </div>
                             <div className="markdown-body mb-1">
-                                <Markdown rehypePlugins={[rehypeSanitize]} remarkPlugins={[remarkGfm]}>{community.description || "This community hasn't set any content for the sidebar."}</Markdown>
+                                <p>{community.description || "This community hasn't set any content for the sidebar."}</p>
                             </div>
 
                             <div className='flex flex-row gap-3 items-center mt-2 mb-2'>
@@ -89,15 +93,13 @@ export default function CommunitySideInfobar({ community }: { community: any }) 
                                 </Dialog>
                             </div>
 
-                            <div className="p-3 bg-card border-1 border-border rounded">
-                                <h2 className="header-5">Info</h2>
-                                {community.sidebar_md || <p>This community hasn&apos;t set an info text.</p> }
-                            </div>
+                            <Accordion title="Description" icon={<InformationCircleIcon />}>
+                                <div className="markdown-body">
+                                    <Markdown rehypePlugins={[rehypeSanitize]} remarkPlugins={[remarkGfm]}>{community.sidebar_md}</Markdown>    
+                                </div>
+                            </Accordion>
 
-                            <div className="mb-2 mt-2" />
-
-                            <div className="p-3 bg-card border-1 border-border rounded">
-                                <h2 className="header-5">Rules</h2>
+                            <Accordion title="Rules" icon={<ClipboardDocumentCheckIcon />}>
                                 {community.rules.length > 0 ?
                                     community.rules.map((rule: string, index: number) =>
                                         <div key={index + 1} className="flex flex-col gap-1">
@@ -107,34 +109,33 @@ export default function CommunitySideInfobar({ community }: { community: any }) 
                                 :
                                     <p>This community has no rules. Remember, the site rules still apply.</p>
                                 }                                
-                            </div>
+                            </Accordion>
 
-                            <div className="mb-2 mt-2" />
-
-                            <div className="p-3 bg-card border-1 border-border rounded">
-                                <h2 className="header-5 mb-2">Administrators</h2>
+                            <Accordion title="Administrators" icon={<CheckBadgeIcon />}>
                                 {community.admins.length > 0 ?
-                                    community.admins.map((admin: any) => {
-                                        return (
-                                            <div className="flex flex-col gap-4" key={admin.userId || admin}>
-                                                <div className="hover:bg-card active:bg-card border-0 border-border rounded flex flex-col gap-1 w-full transition-all">
-                                                    <div className="flex gap-2">
-                                                        <ProfileImage user={admin.user} imgSize={"5"} />
-                                                        <Link href={`/user/${admin.user.username}`} className="transition-all subtitle hover:!text-white">{admin.user.username}</Link>                                        
+                                    <div className="mt-1">
+                                        {community.admins.map((admin: any) => {
+                                            return (
+                                                <div className="flex flex-col gap-4" key={admin.userId || admin}>
+                                                    <div className="hover:bg-card active:bg-card border-0 border-border rounded flex flex-col gap-1 w-full transition-all p-2">
+                                                        <div className="flex gap-2">
+                                                            <ProfileImage user={admin.user} imgSize={"5"} />
+                                                            <Link href={`/user/${admin.user.username}`} className="transition-all subtitle hover:!text-white">{admin.user.username}</Link>                                        
+                                                        </div>
+                                                        <p className="text-sm">Since the {dayjs(admin.createdAt).format("Do [of] MMMM[,] YYYY")}.</p>
                                                     </div>
-                                                    <p>Since the {dayjs(admin.createdAt).format("Do [of] MMMM[,] YYYY")}.</p>
                                                 </div>
-                                            </div>
-                                        );
-                                    })
+                                            );
+                                        })}                                      
+                                    </div>
                                 :
                                     <p>This community has no administrators.</p>
                                 }
-                            </div>                                
+                            </Accordion>
                         </div>
                     </div>                     
                 </nav>
-            </>            
+            </>
         );
     } else {
         // Non community pages have a generic infobar, so this one isn't shown.

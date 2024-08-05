@@ -371,13 +371,14 @@ export async function getAllPostsFromCommunityID( id: string ) {
  * @returns {Community}
  */
 
-export async function createCommunity( { name, description, creatorUserID }: { name: string, description: string, creatorUserID: string } ) {
+export async function createCommunity( { name, description, sidebar_md, creatorUserID }: { name: string, description: string, sidebar_md: string, creatorUserID: string } ) {
 
     const community = await prisma.community.create({
         data: {
             name: name.toLowerCase(),
             display_name: name,
             description: description,
+            sidebar_md: sidebar_md,
         },
     });
 
