@@ -50,7 +50,7 @@ export default function Sidebar() {
 
     return (
         <>
-                <nav className="hidden 2xl:flex sticky max-h-screen top-16" role="navigation">         
+                <nav className="hidden md:flex sticky max-h-screen top-16" role="navigation">         
                     <div 
                         className={`bg-background p-4 sticky h-screen overflow-y-auto hide-scrollbar overflow-x-hidden w-[300px]`}
                         role="navigation"
