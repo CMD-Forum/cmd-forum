@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowTrendingDownIcon, ArrowTrendingUpIcon, ChartBarIcon, ChatBubbleLeftEllipsisIcon, ClockIcon, FireIcon, PencilSquareIcon, ViewColumnsIcon } from '@heroicons/react/16/solid';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 import { Post } from '@prisma/client';
 import Link from 'next/link';
@@ -8,6 +9,8 @@ import { useEffect, useState } from 'react';
 import { CardPost } from '@/app/(general)/ui/components/posts/post';
 
 import { CardPostSkeleton } from '../../skeletons/Post';
+import Select, { SelectContent } from '../select/select';
+import { Option } from '../select/select';
 
 export default function PostList() {
 
@@ -15,6 +18,9 @@ export default function PostList() {
     const [totalPosts, setTotalPosts] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [pageForwardAllowed, setPageForwardAllowed] = useState<boolean>(true);
+
+    const [sort, setSort] = useState<string>("Hot");
+    const [view, setView] = useState<string>("Normal");
 
     const [posts, setPosts] = useState<Post>();
     const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +47,7 @@ export default function PostList() {
                 headers:{
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ "page": `${page}` })
+                body: JSON.stringify({ "page": `${page}`, "sort": `${sort}` })
             })
             .then((res) => {
                 return res.json();
@@ -52,7 +58,7 @@ export default function PostList() {
                 setTotalPages(Math.ceil(totalPosts / 10))
                 setIsLoading(false);
             });
-        }, [page, totalPosts]);    
+        }, [page, totalPosts, sort]);    
     } catch ( error ) {
         return (
             <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-lg px-5 py-5'>
@@ -94,6 +100,36 @@ export default function PostList() {
 
     return (
         <div className='flex flex-col'>
+            <div className='flex gap-2 mb-2'>
+                <div className='flex flex-col pl-6 lg:px-0'>
+                    <div className='flex items-center gap-1 text-gray-300 mb-1'>
+                        <ChartBarIcon className='w-4 h-4' />
+                        <p>Sort</p>    
+                    </div>
+                    <Select onSelect={setSort} defaultLabel={sort}>
+                        <SelectContent>
+                            <Option label="Hot" icon={<FireIcon />} />
+                            <Option label="New" icon={<PencilSquareIcon />} />
+                            <Option label="Old" icon={<ClockIcon />} />
+                            <Option label="Top" icon={<ArrowTrendingUpIcon />} />
+                            <Option label="Controversial" icon={<ArrowTrendingDownIcon />} />
+                            <Option label="Comments" icon={<ChatBubbleLeftEllipsisIcon />} />
+                        </SelectContent>
+                    </Select>                
+                </div>
+                <div className='flex flex-col'>
+                    <div className='flex items-center gap-1 text-gray-300 mb-1'>
+                        <ViewColumnsIcon className='w-4 h-4' />
+                        <p>View</p>    
+                    </div>
+                    <Select onSelect={setView} defaultLabel={view} disabled={true}>
+                        <SelectContent>
+                            <Option label="Normal" />
+                            <Option label="Card" />
+                        </SelectContent>
+                    </Select>                
+                </div>
+            </div>
             {Array.isArray(posts) && posts.map((post) => {
                 return (
                     <div 

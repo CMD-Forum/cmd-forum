@@ -450,3 +450,14 @@ export interface DataFunctionError {
         status: number;
     }
 }
+
+// Sorting
+
+export enum SortOptions {
+    HOT,
+    NEW,
+    OLD,
+    TOP,
+    CONTROVERSIAL,
+    COMMENTS
+}

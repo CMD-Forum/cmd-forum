@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/16/solid';
+import { ArrowTrendingDownIcon, ArrowTrendingUpIcon, ChartBarIcon, ChatBubbleLeftEllipsisIcon, ChevronLeftIcon, ChevronRightIcon, ClockIcon, FireIcon, PencilSquareIcon, ViewColumnsIcon } from '@heroicons/react/16/solid';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect,useState } from 'react';
@@ -10,6 +10,8 @@ import { CardPost } from '@/app/(general)/ui/components/posts/post';
 import { Post } from '@/types/types';
 
 import { CardPostSkeleton } from '../../skeletons/Post';
+import Select, { SelectContent } from '../select/select';
+import { Option } from '../select/select';
 
 /**
  * PostListByUser
@@ -23,6 +25,9 @@ export default function PostListByUser( { username }: { username: string } ) {
     const [totalPosts, setTotalPosts] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [pageForwardAllowed, setPageForwardAllowed] = useState<boolean>(true);
+
+    const [sort, setSort] = useState<string>("Hot");
+    const [view, setView] = useState<string>("Normal");
 
     const [posts, setPosts] = useState<Post>();
     const [isLoading, setIsLoading] = useState<Boolean>(false);
@@ -51,7 +56,7 @@ export default function PostListByUser( { username }: { username: string } ) {
                 headers:{
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ "page": `${page}`, "username": `${username}` })
+                body: JSON.stringify({ "page": `${page}`, "username": `${username}`, "sort": `${sort}` })
             })
             .then((res) => {
                 return res.json();
@@ -62,7 +67,7 @@ export default function PostListByUser( { username }: { username: string } ) {
                 setTotalPages(Math.ceil(totalPosts / 10))
                 setIsLoading(false);
             });
-        }, [username, page, totalPosts]);
+        }, [username, page, totalPosts, sort]);
     } catch ( error ) {
         return (
             <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-lg px-5 py-5'>
@@ -104,6 +109,48 @@ export default function PostListByUser( { username }: { username: string } ) {
 
     return (
         <div className='flex flex-col'>
+            <div className='flex gap-2 mb-2'>
+                <div className='flex flex-col pl-6 lg:px-0'>
+                    <div className='flex items-center gap-1 text-gray-300 mb-1'>
+                        <ChartBarIcon className='w-4 h-4' />
+                        <p>Sort</p>    
+                    </div>
+                    <Select onSelect={setSort} defaultLabel={sort}>
+                        <SelectContent>
+                            <Option label="Hot" icon={<FireIcon />} />
+                            <Option label="New" icon={<PencilSquareIcon />} />
+                            <Option label="Old" icon={<ClockIcon />} />
+                            <Option label="Top" icon={<ArrowTrendingUpIcon />} />
+                            <Option label="Controversial" icon={<ArrowTrendingDownIcon />} />
+                            <Option label="Comments" icon={<ChatBubbleLeftEllipsisIcon />} />
+                        </SelectContent>
+                    </Select>                
+                </div>
+                <div className='flex flex-col'>
+                    <div className='flex items-center gap-1 text-gray-300 mb-1'>
+                        <ViewColumnsIcon className='w-4 h-4' />
+                        <p>View</p>    
+                    </div>
+                    <Select onSelect={setView} defaultLabel={view} disabled={true}>
+                        <SelectContent>
+                            <Option label="Normal" />
+                            <Option label="Card" />
+                        </SelectContent>
+                    </Select>
+                </div>
+                <div className='flex flex-col'>
+                    <div className='flex items-center gap-1 text-gray-300 mb-1'>
+                        <ViewColumnsIcon className='w-4 h-4' />
+                        <p>View</p>    
+                    </div>
+                    <Select onSelect={setView} defaultLabel={view} disabled={true}>
+                        <SelectContent>
+                            <Option label="Normal" />
+                            <Option label="Card" />
+                        </SelectContent>
+                    </Select>                
+                </div>
+            </div>
             {Array.isArray(posts) && posts.map((post: Post) => {
                 return (
                     <div 
@@ -147,6 +194,9 @@ export function PostListByCommunity( { communityID }: { communityID: string } ) 
     const [totalPages, setTotalPages] = useState(0);
     const [pageForwardAllowed, setPageForwardAllowed] = useState<boolean>(true);
 
+    const [sort, setSort] = useState<string>("Hot");
+    const [view, setView] = useState<string>("Normal");
+
     const [posts, setPosts] = useState<Post>();
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -174,7 +224,7 @@ export function PostListByCommunity( { communityID }: { communityID: string } ) 
                 headers:{
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ "page": `${page}`, "communityID": `${communityID}` })
+                body: JSON.stringify({ "page": `${page}`, "communityID": `${communityID}`, "sort": `${sort}` })
             })
             .then((res) => {
                 return res.json();
@@ -185,7 +235,7 @@ export function PostListByCommunity( { communityID }: { communityID: string } ) 
                 setTotalPages(Math.ceil(totalPosts / 10))
                 setIsLoading(false);
             });
-        }, [communityID, page, totalPosts]);
+        }, [communityID, page, sort, totalPosts]);
     } catch ( error ) {
         return (
             <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-lg px-5 py-5'>
@@ -227,6 +277,36 @@ export function PostListByCommunity( { communityID }: { communityID: string } ) 
 
     return (
         <div className='flex flex-col'>
+            <div className='flex gap-2 mb-2'>
+                <div className='flex flex-col pl-6 lg:px-0'>
+                    <div className='flex items-center gap-1 text-gray-300 mb-1'>
+                        <ChartBarIcon className='w-4 h-4' />
+                        <p>Sort</p>    
+                    </div>
+                    <Select onSelect={setSort} defaultLabel={sort}>
+                        <SelectContent>
+                            <Option label="Hot" icon={<FireIcon />} />
+                            <Option label="New" icon={<PencilSquareIcon />} />
+                            <Option label="Old" icon={<ClockIcon />} />
+                            <Option label="Top" icon={<ArrowTrendingUpIcon />} />
+                            <Option label="Controversial" icon={<ArrowTrendingDownIcon />} />
+                            <Option label="Comments" icon={<ChatBubbleLeftEllipsisIcon />} />
+                        </SelectContent>
+                    </Select>
+                </div>
+                <div className='flex flex-col'>
+                    <div className='flex items-center gap-1 text-gray-300 mb-1'>
+                        <ViewColumnsIcon className='w-4 h-4' />
+                        <p>View</p>    
+                    </div>
+                    <Select onSelect={setView} defaultLabel={view} disabled={true}>
+                        <SelectContent>
+                            <Option label="Normal" />
+                            <Option label="Card" />
+                        </SelectContent>
+                    </Select>                
+                </div>
+            </div>
             {Array.isArray(posts) && posts.map((post) => {
                 return (
                     <div 
@@ -269,6 +349,9 @@ export function SavedPostList() {
     const [totalPages, setTotalPages] = useState(1);
     const [pageForwardAllowed, setPageForwardAllowed] = useState<boolean>(true);
 
+    const [sort, setSort] = useState<string>("Hot");
+    const [view, setView] = useState<string>("Normal");
+
     const [posts, setPosts] = useState<Post>();
     const [isLoading, setIsLoading] = useState(false);
 
@@ -297,7 +380,7 @@ export function SavedPostList() {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${session.session?.id}`,
                 },
-                body: JSON.stringify({ "page": `${page}`, "userID": `${session.user?.id}` })
+                body: JSON.stringify({ "page": `${page}`, "userID": `${session.user?.id}`, "sort": `${sort}` })
             })
             .then((res) => {
                 return res.json();
@@ -308,7 +391,7 @@ export function SavedPostList() {
                 setTotalPages(Math.ceil(totalPosts / 10))
                 setIsLoading(false);
             });
-        }, [page, totalPosts, session.user?.id, session.session?.id]);
+        }, [page, totalPosts, session.user?.id, session.session?.id, sort]);
     } catch ( error ) {
         return (
             <div className='flex flex-col items-center justify-center w-full relative group transition-all bg-card h-[174px] rounded-lg px-5 py-5'>
@@ -350,6 +433,36 @@ export function SavedPostList() {
 
     return (
         <div className='flex flex-col'>
+            <div className='flex gap-2 mb-2'>
+                <div className='flex flex-col pl-6 lg:px-0'>
+                    <div className='flex items-center gap-1 text-gray-300 mb-1'>
+                        <ChartBarIcon className='w-4 h-4' />
+                        <p>Sort</p>    
+                    </div>
+                    <Select onSelect={setSort} defaultLabel={sort}>
+                        <SelectContent>
+                            <Option label="Hot" icon={<FireIcon />} />
+                            <Option label="New" icon={<PencilSquareIcon />} />
+                            <Option label="Old" icon={<ClockIcon />} />
+                            <Option label="Top" icon={<ArrowTrendingUpIcon />} />
+                            <Option label="Controversial" icon={<ArrowTrendingDownIcon />} />
+                            <Option label="Comments" icon={<ChatBubbleLeftEllipsisIcon />} />
+                        </SelectContent>
+                    </Select>
+                </div>
+                <div className='flex flex-col'>
+                    <div className='flex items-center gap-1 text-gray-300 mb-1'>
+                        <ViewColumnsIcon className='w-4 h-4' />
+                        <p>View</p>    
+                    </div>
+                    <Select onSelect={setView} defaultLabel={view} disabled={true}>
+                        <SelectContent>
+                            <Option label="Normal" />
+                            <Option label="Card" />
+                        </SelectContent>
+                    </Select>                
+                </div>
+            </div>
             {Array.isArray(posts) && posts.map((post) => {
                 return (
                     <div 

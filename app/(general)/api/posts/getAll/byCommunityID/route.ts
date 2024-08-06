@@ -8,10 +8,39 @@ export async function POST( req: Request ) {
 
         const body = await req.json();
 
-        let { communityID, page } = body;
+        let { communityID, page, sort } = body;
 
         if ( ! communityID ) {
             return NextResponse.json({ message: "CommunityID is required." }, { status: 400 });
+        }
+
+        if ( ! sort ) {
+            sort === "Hot"
+        }
+
+        let orderBy;
+        switch (sort) {
+            case "Hot":
+                orderBy = { upvotes: { _count: 'desc' } };
+                break;
+            case "New":
+                orderBy = { createdAt: 'desc' };
+                break;
+            case "Old":
+                orderBy = { createdAt: 'asc' };
+                break;
+            case "Top":
+                orderBy = { upvotes: { _count: 'desc' } };
+                break;                
+            case "Controversial":
+                orderBy = { downvotes: { _count: 'desc' } };
+                break;
+            case "Comments":
+                orderBy = { comments: { _count: 'desc' } };
+                break;
+            default:
+                orderBy = { createdAt: 'desc' };
+                break;
         }
 
         const posts = await prisma.post.findMany({
@@ -19,6 +48,8 @@ export async function POST( req: Request ) {
             // @ts-ignore
             skip: page * 10,
             take: 10,
+            // @ts-ignore
+            orderBy,
 
             where: {
                 community: {
