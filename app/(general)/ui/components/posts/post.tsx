@@ -69,7 +69,7 @@ export function CardPost( post: Post ) {
     const isAdmin = post.community.admins.some(admin => admin.userId === session.user?.id);
 
     return (
-        <div className="flex flex-col sm:flex-row w-full items-center gap-4 relative group transition-all bg-transparent hover:bg-card active:bg-card hover:cursor-pointer border-0 border-border group-hover/title:!border-white h-fit rounded-lg p-6">
+        <div className="flex flex-col sm:flex-row w-full items-center gap-4 relative group transition-all bg-card border-0 border-border group-hover/title:!border-white h-fit rounded-lg p-6">
             <div className="flex w-full bg-transparent h-fit flex-col">
                 <div className="text-sm z-20 w-fit flex flex-col">
                     <div className='flex flex-col'>

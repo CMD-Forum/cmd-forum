@@ -1,12 +1,13 @@
 "use client";
 
+import { CheckBadgeIcon, ClipboardDocumentCheckIcon, InformationCircleIcon } from "@heroicons/react/16/solid";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Markdown from "react-markdown";
 import rehypeSanitize from "rehype-sanitize";
 import remarkGfm from "remark-gfm";
+
 import Accordion from "../accordion/accordion";
-import { CheckBadgeIcon, ClipboardDocumentCheckIcon, InformationCircleIcon } from "@heroicons/react/16/solid";
-import Link from "next/link";
 
 export default function Infobar() {
 

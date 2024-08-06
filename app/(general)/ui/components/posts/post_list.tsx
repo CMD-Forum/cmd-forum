@@ -101,7 +101,7 @@ export default function PostList() {
     return (
         <div className='flex flex-col'>
             <div className='flex gap-2 mb-2'>
-                <div className='flex flex-col pl-6 lg:px-0'>
+                <div className='flex flex-col lg:px-0'>
                     <div className='flex items-center gap-1 text-gray-300 mb-1'>
                         <ChartBarIcon className='w-4 h-4' />
                         <p>Sort</p>    
@@ -130,32 +130,33 @@ export default function PostList() {
                     </Select>                
                 </div>
             </div>
-            {Array.isArray(posts) && posts.map((post) => {
-                return (
-                    <div 
-                      key={post.id}
-                    >
-                      <CardPost 
-                        id={post.id}
-                        createdAt={new Date(post.createdAt)}
-                        updatedAt={new Date(post.updatedAt)}
-                        title={post.title}
-                        content={post.content}
-                        tagline={post.tagline}
-                        imageurl={post.imageurl}
-                        imagealt={post.imagealt}
-                        public={true}
-                        authorId={post.author.id}
-                        communityId={post.community.id}
-                        author={post.author}
-                        community={post.community}
-                        href={post.href}
-                      />
-                      <hr className='mx-4 mt-1/2 mb-1/2' />
-                    </div>
-                  );
-            })}
-            <div className='flex gap-4 items-center px-6 mt-5'>
+            <div className='flex flex-col gap-2'>
+                {Array.isArray(posts) && posts.map((post) => {
+                    return (
+                        <div 
+                        key={post.id}
+                        >
+                        <CardPost 
+                            id={post.id}
+                            createdAt={new Date(post.createdAt)}
+                            updatedAt={new Date(post.updatedAt)}
+                            title={post.title}
+                            content={post.content}
+                            tagline={post.tagline}
+                            imageurl={post.imageurl}
+                            imagealt={post.imagealt}
+                            public={true}
+                            authorId={post.author.id}
+                            communityId={post.community.id}
+                            author={post.author}
+                            community={post.community}
+                            href={post.href}
+                        />
+                        </div>
+                    );
+                })}                
+            </div>
+            <div className='flex gap-4 items-center mt-5'>
                 <button onClick={() => lastPage()} className='navlink !px-2' disabled={ page === 0 ? true : false } aria-label='Last Page'><ChevronLeftIcon className='w-5 h-5' /></button>  
                 <p className='subtitle h-fit'>{ page + 1 } of { totalPages || "1" }</p>
                 <button onClick={() => nextPage()} className='navlink !px-2' disabled={ !pageForwardAllowed || page === totalPages - 1 } aria-label='Next Page'><ChevronRightIcon className='w-5 h-5' /></button>            
