@@ -26,7 +26,7 @@ export async function POST(req: Request) {
         }
 
         const body = await req.json();
-        const { name, description, image_url } = CreateCommunitySchema.parse(body);
+        const { name, short_description, image_url } = CreateCommunitySchema.parse(body);
 
         const CommunityNameExists = await prisma.community.findUnique({
             where: { name: name }
@@ -44,7 +44,7 @@ export async function POST(req: Request) {
             data: {
                 name: name.toLowerCase(),
                 display_name: name,
-                description: description,
+                description: short_description,
                 image: image_url,
             }
         });
